@@ -1095,7 +1095,9 @@ svg .flow.red{stroke:var(--red)}
 .t7 p{margin:18px 0}
 .t7 .t7-panel{position:absolute;inset:0;opacity:0;visibility:hidden;transform:none;transition:none}
 .t7:not(.st1) .t7-p0,.t7.st1:not(.st2) .t7-p1,.t7.st2:not(.st3) .t7-p2,.t7.st3 .t7-p3{opacity:1;visibility:visible}
-.t7 .t7-map{display:flex;gap:12px;margin:0 0 30px;align-items:center}
+.t7 .t7-map{display:flex;gap:12px;margin:0 0 78px;align-items:center}
+.t7 .t7-plan{position:relative;display:inline-flex}
+.t7 .t7-decision{position:absolute;top:calc(100% + 8px);left:0;white-space:nowrap;font-size:26px;letter-spacing:0;text-transform:none;padding:5px 10px;border-width:2px}
 .t7 .t7-warning{border-left:8px solid #ff3300;padding-left:22px;font-weight:800}
 .t7 .t7-stay{position:relative;margin:0 0 24px}
 .t7[data-n="25"] .t7-panel{top:90px}
@@ -1124,7 +1126,8 @@ svg .flow.red{stroke:var(--red)}
 .t7 .t7-debug>div{position:relative}
 .t7 .t7-debug>div:not(:first-child)::before{content:'→';position:absolute;left:-43px;top:75px;font-size:40px}
 .t7 .t7-box{border:3px solid;padding:28px 24px;min-height:180px;font:800 34px/1.3 Archivo;display:flex;align-items:center}
-.t7 .t7-sources{font-size:28px}
+.t7 .t7-sources{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.t7 .t7-sources .chip{font-size:28px;letter-spacing:0;text-transform:none}
 .t7 .t7-once{position:absolute;left:1180px;top:129px;width:22px;height:22px;background:#ff3300;pointer-events:none;z-index:2}
 .t7.active .t7-once.in{animation:t7-return 1s ease-in-out forwards}
 @keyframes t7-return{to{transform:translateX(-315px)}}
@@ -1246,15 +1249,15 @@ svg .flow.red{stroke:var(--red)}
     <h2>Run 2a: interview for the dashboard and save the spec</h2>
     <div class="t7-content ho">
     <div class="t7-panel t7-p0">
-      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="prompt"><div class="ph"><span>Prompt 1 (interview)</span><button>Copy</button></div><pre>Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.</pre></div><p>Answer briefly.</p>
     </div>
     <div class="t7-panel t7-p1" data-step="1">
-      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="prompt"><div class="ph"><span>Prompt 2 (spec)</span><button>Copy</button></div><pre>Write what we agreed to docs/spec.md. Use three sections: Goals, Out of scope, and How we'll know it works. Don't build anything yet. We'll use React + Vite, FastAPI (Python) and yfinance, with endpoints GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y, server on port 8000, page on port 5173.</pre></div><p>The last sentence is technical setup from the course — copy it as is.</p>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
-      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>You should see: Up to five questions, one at a time, a summary, then docs/spec.md. No code yet.</p><p>12 min · Stuck? s1-spec.</p>
     </div>
     </div>
@@ -1266,15 +1269,15 @@ svg .flow.red{stroke:var(--red)}
     <h2>Run 2b: get the plan, approve, edit or reject it, then save it</h2>
     <div class="t7-content ho">
 <p class="t7-warning t7-stay">Stay in this conversation — no /new until the plan is saved.</p>    <div class="t7-panel t7-p0">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>1. Tab: footer "plan". Send:</p><div class="prompt"><div class="ph"><span>Plan</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan to build it. Don't build anything yet.</pre></div>
     </div>
     <div class="t7-panel t7-p1" data-step="1">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>2. Check it against your spec: only price, change and 1-year chart? Nothing extra? Then approve, edit or reject.</p>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>3. Tab: footer "build". Send:</p><div class="prompt"><div class="ph"><span>Save</span><button>Copy</button></div><pre>Save that plan to docs/plan.md. Don't build anything yet.</pre></div><p>You should see: docs/plan.md.</p><p>12 min · Stuck? s1-spec.</p>
     </div>
     </div>
@@ -1294,7 +1297,11 @@ svg .flow.red{stroke:var(--red)}
     <div class="eyebrow">Run 3</div>
     <h2>When something breaks, remove secrets, paste the error, and ask the agent to explain it</h2>
     <div class="t7-content">
-<div class="t7-debug"><div><div class="t7-box">Copy the error</div><p class="t7-sources">opencode · server window · browser</p></div>
+<div class="t7-debug"><div><div class="t7-box">Copy the error</div><div class="t7-sources">
+  <span class="chip out">opencode</span>
+  <span class="chip out">server window</span>
+  <span class="chip out">browser</span>
+</div></div>
 <div data-step="1"><div class="t7-box">Remove keys and private data</div></div>
 <div data-step="2"><div class="t7-box">Ask: "Explain in plain words, then fix it."</div></div>
 <div data-step="3"><div class="t7-box">Repeat the check that failed</div></div></div>
@@ -1307,15 +1314,15 @@ svg .flow.red{stroke:var(--red)}
     <h2>Run 3a: build the dashboard and check its numbers</h2>
     <div class="t7-content ho">
     <div class="t7-panel t7-p0">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>Build mode. Send:</p><div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.</pre></div><p>It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p>
     </div>
     <div class="t7-panel t7-p1" data-step="1">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="t7-check">NISP.JK<br>prices in IDR<br>date and source shown<br>1-year chart</div>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
       <p>Date/source missing? Send:</p><div class="prompt"><div class="ph"><span>Iterate · UNTESTED</span><button>Copy</button></div><pre>Show the date and source of the price under the price card.</pre></div><p>Repeat the check.</p><p>15 min · Stuck? s1-dashboard.</p>
     </div>
     </div>
@@ -1327,15 +1334,15 @@ svg .flow.red{stroke:var(--red)}
     <h2>Run 3b: protect the key, then interview and plan the chatbot</h2>
     <div class="t7-content ho">
     <div class="t7-panel t7-p0">
-      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="prompt"><div class="ph"><span>Protect the key · UNTESTED</span><button>Copy</button></div><pre>Add .env to .gitignore and create backend/.env.example with LLM_BASE_URL, LLM_API_KEY and LLM_MODEL and no values. Don't create or open backend/.env.</pre></div><p>Copy backend/.env.example to backend/.env and fill in the class details.</p><p class="t7-warning">Never paste the key into the chat.</p>
     </div>
     <div class="t7-panel t7-p1" data-step="1">
-      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="prompt"><div class="ph"><span>Spec · UNTESTED</span><button>Copy</button></div><pre>Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP's latest available price and the last year of daily closes, with dates, then calls the AI service using the settings in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). If the data doesn't answer the question, it says so. No buy, sell or hold advice. No tool calling. Don't build yet.</pre></div>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>Plan → approve, edit or reject → save, as in Run 2.</p><p>12 min · Stuck? s1-dashboard.</p>
     </div>
     </div>
@@ -1347,19 +1354,19 @@ svg .flow.red{stroke:var(--red)}
     <h2>Run 3c: build and test the chatbot, then push without secrets</h2>
     <div class="t7-content ho">
     <div class="t7-panel t7-p0">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
       <div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the chatbot from docs/plan.md, then tell me how to open it.</pre></div>
     </div>
     <div class="t7-panel t7-p1" data-step="1">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>What is NISP's latest price? → matches the price card and its date.</p><p>Which stock are we talking about? → NISP (memory).</p>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
       <p>What was the close on &lt;a date last month&gt;? → matches the chart, or says it has no data.</p><p>Should I buy NISP? → no buy, sell or hold advice.</p>
     </div>
     <div class="t7-panel t7-p3" data-step="3">
-      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
       <p>Fix failures; repeat checks.</p><div class="prompt"><div class="ph"><span>Push · UNTESTED</span><button>Copy</button></div><pre>List the files you will commit. If backend/.env is in the list, stop and tell me. Otherwise commit with the message "NISP dashboard and chatbot" and push to GitHub.</pre></div><p class="t7-warning">Key leaked? Tell the facilitator — the key must be replaced.</p><p>14 min · Stuck? s1-chatbot.</p>
     </div>
     </div>
@@ -1376,7 +1383,7 @@ svg .flow.red{stroke:var(--red)}
     </div>
     <div class="t7-panel t7-p1" data-step="1">
 
-      <ul class="lines"><li>The model doesn't remember; opencode sends the context</li><li>AGENTS.md: the project's standing brief</li><li>Commit and push save your work to GitHub</li></ul><div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <ul class="lines"><li>The model doesn't remember; opencode sends the context</li><li>AGENTS.md: the project's standing brief</li><li>Commit and push save your work to GitHub</li></ul><div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
     </div>
     <div class="t7-panel t7-p2" data-step="2">
 
@@ -1395,7 +1402,7 @@ svg .flow.red{stroke:var(--red)}
     <div class="q-mv" style="offset-path:path('M300 180 L1000 160 L700 260 Z');animation-duration:9s;animation-timing-function:ease-in-out"><i style="display:block;width:30px;height:30px;background:#000;translate:-50% -50%"></i></div>
   </div>
   <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
-    <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex;background:#fff;padding:0 30px"><h2>Questions</h2><span style="color:#ff3300">?</span></div>
+    <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex;background:#fff;padding:0 30px"><h2 style="font:inherit;margin:0;letter-spacing:inherit;max-width:none">Questions</h2><span style="color:#ff3300">?</span></div>
   </div>
 </div></section>
 <section class="slide t7" data-n="33">
