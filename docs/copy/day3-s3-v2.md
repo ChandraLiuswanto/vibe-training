@@ -116,7 +116,7 @@ build:
 reveal: A — A one-off request is a prompt, loaded expertise is a skill, and a saved chain of steps is a workflow.
 notes:
 Read the three items aloud. Give thirty seconds, then take a show of hands for A, B and C, one at a time. Click to reveal. A is right. Item 1 is a one-off request, so it is a prompt. Item 2 is know-how the agent picks up when a task matches, so it is a skill. Item 3 starts a chain of four steps with one command, so it is a workflow. If someone picks C, they have a point worth honouring: under the hood, a saved command does send text to the agent. The difference is reuse. You write it once, save it, and run it again on any ticker. Item 3 is exactly what you will build in Run 3, so tell them to remember its shape.
-words: 45 · budget: 60 · exception: none
+words: 66 (incl. 21-word reveal) · budget: 60 · exception: quiz choices and answer reveal (allowed: quiz choices may exceed)
 status: n/a
 
 ## 7. A good analysis report has data, charts and an insight you can defend
@@ -129,7 +129,7 @@ Key stats
 Insight
 Every number traces to your database
 Sample
-diagram: A report page in the centre, built from four blocks stacked top to bottom: "Summary table" (a small grid of grey cells with round placeholder values and a small "Sample" tag), "Price chart" (a line drawn left to right), "Key stats" (three small tiles with grey bars, no numbers), "Insight" (one sentence drawn as a highlighted grey line). On the right edge, thin dotted lines run from each block to a small database cylinder; the caption "Every number traces to your database" sits under the page.
+diagram: A report page in the centre, built from four blocks stacked top to bottom: "Summary table" (a grid of 2 rows × 3 columns of blank grey cells, no numbers, with a small "Sample" tag), "Price chart" (a line drawn left to right), "Key stats" (three small tiles with grey bars, no numbers), "Insight" (one sentence drawn as a highlighted grey line). On the right edge, thin dotted lines run from each block to a small database cylinder; the caption "Every number traces to your database" sits under the page.
 build:
   0: the empty page and the database cylinder
   1: "Summary table" and "Price chart" drop in
@@ -238,7 +238,7 @@ build:
 reveal: C — The prices table shows that the price moved, not why.
 notes:
 Read the three claims aloud. Stress that these are sample numbers on a made-up report, not NISP's real figures. Give thirty seconds, then vote by hand. Click to reveal. C is the one the data does not prove. A and B could each be checked with a query on the prices table: the close at two dates, and the average of the volume column. C gives a cause. Your database has no column for trust or management. The sentence might even be true, but this report cannot show it. Then ask everyone to open their own report and look at its insight. Does it pass the "which rows prove this?" test? If not, ask the agent to rewrite it as a fact the data supports. Replace C with a real unsupported claim from the reference build once it is tested.
-words: 29 · budget: 60 · exception: none
+words: 40 (incl. 11-word reveal) · budget: 60 · exception: none
 status: n/a (claims are illustrative; C is a placeholder for a real claim from the reference build)
 
 ## 11. A report is for reading; a deck is for telling
@@ -356,7 +356,7 @@ After (v3)
 Title says the point
 One chart per slide
 Sample
-diagram: Two slide thumbnails side by side, both tagged "Sample". Left "Before (v1)": the title "Price chart", a crowded grid of round sample numbers, a small chart squeezed in a corner and several bullet lines. Right "After (v3)": a full-sentence title drawn as a bold grey bar with the label "Title says the point", and one large chart filling the slide, labelled "One chart per slide". A thin arrow from left to right.
+diagram: Two slide thumbnails side by side, both tagged "Sample". Left "Before (v1)": the title "Price chart", a crowded grid of 4 × 4 blank grey cells (no numbers), a small chart squeezed in a corner and several bullet lines. Right "After (v3)": a full-sentence title drawn as a bold grey bar with the label "Title says the point", and one large chart filling the slide, labelled "One chart per slide". A thin arrow from left to right.
 build:
   0: the "Before (v1)" thumbnail alone
   1: the arrow draws; the "After (v3)" thumbnail appears
@@ -393,7 +393,7 @@ visible:
 **Same loop:** brainstorm → **spec** → plan → build (see handout)
 **Spec:**
 ```text
-Add a workflow to docs/spec.md: a saved opencode command called stock-report that takes a ticker like TLKM.JK. It adds it with POST /api/watchlist, runs POST /api/refresh, makes the report and deck in reports/ like the NISP ones, and checks every number against the database. Don't build anything yet.
+Add a workflow to docs/spec.md: an opencode command called stock-report that takes a ticker like TLKM.JK. It adds the ticker with POST /api/watchlist (body {ticker}), runs POST /api/refresh, makes the report and deck in reports/ like the NISP ones, and checks every number against the database. Don't build anything yet.
 ```
 **Run it:**
 ```text
@@ -418,7 +418,7 @@ Read docs/spec.md and give me a numbered step-by-step plan for the stock-report 
 ```
 4. Build (Tab: Build mode, once approved):
 ```text
-Approved. Save that plan to docs/plan.md, then create the stock-report command from it. Tell me how to run it.
+Approved. Save that plan to docs/plan.md. Then create the command as .opencode/commands/stock-report.md, using $ARGUMENTS for the ticker, so /stock-report TLKM.JK works for any ticker. Tell me how to run it.
 ```
 5. Run it: the command on the slide. Check 3 TLKM numbers against your dashboard.
 6. Push:
@@ -426,8 +426,8 @@ Approved. Save that plan to docs/plan.md, then create the stock-report command f
 Commit all changes, including the TLKM report and deck, with the message "Stock report workflow". Then push to GitHub.
 ```
 notes:
-The last run puts it all together; the handout has all six steps. Brainstorm first, then on step 0 the spec. It names the command, the two endpoints that add the ticker and refresh its prices, the two output files, and the number check. In the plan, check it reuses what you built for NISP rather than starting over. Approve, edit or reject, then build. If the agent is unsure where to save the command, check the opencode docs for where commands live. On step 1: type a slash in opencode and the command should appear. If it does not, quit opencode and open it again in the project folder. Run it on TLKM.JK. Open both files and check three numbers against your dashboard. Then push. All prompts here are untested; rehearse the whole run. Anyone behind switches to checkpoint s3-workflow.
-words: 39 · budget: 60 · exception: fenced prompts not counted (48 + 2 words); brainstorm, plan, build and push prompts moved to handout to keep 2 prompts per slide
+The last run puts it all together; the handout has all six steps. Brainstorm first, then on step 0 the spec. It names the command, the two endpoints that add the ticker and refresh its prices, the two output files, and the number check. In the plan, check it reuses what you built for NISP rather than starting over. Approve, edit or reject, then build. The build prompt names where the command lives, .opencode/commands, and $ARGUMENTS, which carries the ticker you type after the command. On step 1: type a slash in opencode and look for stock-report. Rehearse this before class: check whether a command created mid-session appears straight away on your setup, and note what to do if not. Run it on TLKM.JK. Open both files and check three numbers against your dashboard. Then push. All prompts here are untested; rehearse the whole run. Anyone behind switches to checkpoint s3-workflow.
+words: 39 · budget: 60 · exception: fenced prompts not counted (50 + 2 words); brainstorm, plan, build and push prompts moved to handout to keep 2 prompts per slide
 status: UNTESTED (spec, run command, and all 4 handout prompts)
 
 ## 17. What should you still check by hand every time?
@@ -444,7 +444,7 @@ build:
 reveal: B — The agent's own check can be wrong, and only you can judge whether a claim is supported.
 notes:
 Read the question aloud and vote by hand. Click to reveal B. A is the tempting one: the command already checks every number against the database, so why check again? Because the check is done by the same agent that wrote the report, and in Run 1 you saw how confident it can sound. Three numbers against the dashboard takes a minute. C is too little: a file can exist and still be wrong. The claims are the part only you can judge. The database cannot tell the agent why a price moved, and a new ticker means a new insight sentence to test with "which rows prove this?" Ask the room to name one more thing they would check before sending a deck to their boss.
-words: 27 · budget: 60 · exception: none
+words: 45 (incl. 18-word reveal) · budget: 60 · exception: none
 status: n/a
 
 ## 18. In one day you built, upgraded and automated a business app
@@ -504,22 +504,23 @@ status: n/a
 | 3 | talk | 19 | 40 | no | 127 |
 | 4 | visual | 15 | 40 | no | 129 |
 | 5 | visual | 21 | 40 | no | 149 |
-| 6 | check | 45 | 60 | no | 130 |
+| 6 | check | 66 (incl. reveal) | 60 | yes — quiz-choice exception | 130 |
 | 7 | visual | 14 | 40 | no | 141 |
 | 8a | run | 39 | 60 | no | 145 |
 | 8b | run | 41 | 60 | no | 134 |
 | 9 | visual | 19 | 40 | no | 140 |
-| 10 | check | 29 | 60 | no | 140 |
+| 10 | check | 40 (incl. reveal) | 60 | no | 140 |
 | 11 | visual | 12 | 40 | no | 132 |
 | 12 | visual | 24 | 40 | no | 135 |
 | 13a | run | 40 | 60 | no | 139 |
 | 13b | run | 44 | 60 | no | 136 |
 | 14 | visual | 15 | 40 | no | 140 |
 | 15 | visual | 16 | 40 | no | 138 |
-| 16 | run | 39 | 60 | no | 141 |
-| 17 | check | 27 | 60 | no | 127 |
+| 16 | run | 39 | 60 | no | 151 |
+| 17 | check | 45 (incl. reveal) | 60 | no | 127 |
 | 18 | recap | 25 | 40 | no | 128 |
 | 19 | Q&A | 1 | 40 | no | 105 |
 | 20 | talk | 20 | 40 | no | 112 |
 
 slides: 22 · minutes: 180
+
