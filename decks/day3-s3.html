@@ -289,6 +289,10 @@ svg .flow.red{stroke:var(--red)}
 /* Per-slide state hooks: the runtime adds .st1 .st2 ... to the active slide as steps are reached.
    Slide-specific motion goes in the fragment via inline style + these classes in a <style> scoped with [data-n="id"] — NOT allowed;
    instead use [data-step] / .hl / .draw / loops. */
+
+/* .fold: element slides right by --dx and shrinks away when its slide reaches step 1 (cards folding into a chip) */
+.fold{transition:transform .9s cubic-bezier(.5,0,.3,1),opacity .9s ease}
+.slide.st1 .fold{transform:translateX(var(--dx)) scale(.4);opacity:0}
 </style></head><body><div class="deck-viewport"><div class="deck-stage">
 <section class="slide s-title" data-n="1"><div class="inner">
   <div class="eyebrow">Day 3 · Session 3</div>
@@ -307,7 +311,7 @@ svg .flow.red{stroke:var(--red)}
       <ellipse cx="180" cy="70" rx="120" ry="30" fill="#ff3300" stroke="#000" stroke-width="4"/>
       <path class="draw" data-step="1" pathLength="1" d="M330 160 H590" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah2)"/>
       <path class="draw" data-step="2" pathLength="1" d="M990 160 H1200" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah2)"/>
-      <path class="flow red" data-step="3" d="M1390 460 C1390 610, 180 610, 180 460" stroke-width="4" fill="none" marker-end="url(#ah2r)"/>
+      <path class="draw" pathLength="1" data-step="3" stroke="#ff3300" stroke-dasharray="1" d="M1390 460 C1390 610, 180 610, 180 460" stroke-width="4" fill="none" marker-end="url(#ah2r)"/>
     </svg>
     <div class="dot loop" data-step="3" style="offset-path:path('M300 160 H1300');animation-duration:4.5s"></div>
     <div class="at" style="left:180px;top:395px;text-align:center;font-size:30px;line-height:1.25;white-space:nowrap"><b style="font:800 30px Archivo">Your database:</b><br>stocks, prices</div>
@@ -377,13 +381,9 @@ svg .flow.red{stroke:var(--red)}
       <div class="dbox" style="position:absolute;left:1290px;top:345px;width:260px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2">check</div>
     </div>
     <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:0">
-      <div class="dbox seq" style="--d:0.35;position:absolute;left:300px;top:345px;width:260px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border-color:transparent;color:transparent">refresh</div>
-      <div class="dbox seq" style="--d:1.4;position:absolute;left:630px;top:345px;width:260px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border-color:transparent;color:transparent">report</div>
-      <div class="dbox seq" style="--d:2.45;position:absolute;left:960px;top:345px;width:260px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border-color:transparent;color:transparent">deck</div>
-      <div class="dbox seq" style="--d:3.5;position:absolute;left:1290px;top:345px;width:260px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border-color:transparent;color:transparent">check</div>
       <i class="packet" style="offset-path:path('M300 470 H1560');animation-duration:4s;animation-timing-function:linear"></i>
     </div>
-    <div class="at" style="left:430px;top:255px"><div data-step="2" class="fx-pop"><span class="chip pulse" style="display:inline-block;width:90px;height:52px;box-sizing:border-box;text-align:center"><span class="caret" style="color:#fff"></span></span></div></div>
+    <div class="at" style="left:430px;top:255px"><div data-step="2" class="fx-pop"><span class="chip pulse" style="display:inline-block;width:90px;height:52px;box-sizing:border-box;text-align:center"></span></div></div>
     <svg width="20" height="40" viewBox="0 0 20 40" style="position:absolute;left:420px;top:283px"><path class="draw" data-step="2" pathLength="1" d="M10 0 V36" stroke="#000" stroke-width="4" fill="none"/></svg>
   </div>
   <div class="punch" data-step="3">One command starts the chain</div>
@@ -402,12 +402,13 @@ svg .flow.red{stroke:var(--red)}
       <div style="font:800 40px Archivo">Skill:</div><div style="font-size:30px">expertise loaded when needed</div>
     </div>
     <div data-step="2" class="fx-pop" style="position:absolute;left:1060px;top:80px;width:500px;height:360px">
-      <div class="pulse" style="width:100%;height:100%;background:#ff3300;color:#fff;box-sizing:border-box;padding:16px 24px">
+      <div style="width:100%;height:100%;background:#ff3300;color:#fff;box-sizing:border-box;padding:16px 24px">
         <div style="font:800 40px Archivo">Workflow:</div><div style="font-size:30px">steps saved as a command</div>
       </div>
     </div>
-    <div class="at dim-prev" style="left:810px;top:120px"><div data-step="1" class="fx-fade"><svg class="float" width="70" height="150" viewBox="0 0 70 150"><circle cx="35" cy="20" r="18" fill="#ff3300"/><path d="M35 40 V95 M10 60 H60 M35 95 L14 148 M35 95 L56 148" stroke="#ff3300" stroke-width="8" fill="none"/></svg></div></div>
-    <div class="at" style="left:1310px;top:0px"><div data-step="2" class="fx-fade"><svg class="float" width="70" height="150" viewBox="0 0 70 150"><circle cx="35" cy="20" r="18" fill="#000"/><path d="M35 40 V95 M10 60 H60 M35 95 L14 148 M35 95 L56 148" stroke="#000" stroke-width="8" fill="none"/></svg></div></div>
+    <div class="at" style="left:810px;top:120px"><div data-step="1" class="fx-fade"><svg width="70" height="150" viewBox="0 0 70 150"><circle cx="35" cy="20" r="18" fill="#ff3300"/><path d="M35 40 V95 M10 60 H60 M35 95 L14 148 M35 95 L56 148" stroke="#ff3300" stroke-width="8" fill="none"/></svg></div></div>
+    <div data-step="2" class="fx-fade" style="position:absolute;left:766px;top:22px;width:88px;height:176px;background:#fff"></div>
+    <div class="at" style="left:1310px;top:0px"><div data-step="2" class="fx-left"><svg class="float" width="70" height="150" viewBox="0 0 70 150"><circle cx="35" cy="20" r="18" fill="#000"/><path d="M35 40 V95 M10 60 H60 M35 95 L14 148 M35 95 L56 148" stroke="#000" stroke-width="8" fill="none"/></svg></div></div>
     <!-- brackets -->
     <svg width="1600" height="60" viewBox="0 0 1600 60" style="position:absolute;left:0;top:455px">
       <path class="draw" data-step="1" pathLength="1" d="M64 4 V24 H1056 V4" stroke="#6b6b6b" stroke-width="4" fill="none"/>
@@ -458,9 +459,9 @@ svg .flow.red{stroke:var(--red)}
     <svg width="1600" height="500" viewBox="0 0 1600 500" style="position:absolute;left:0;top:0">
       <g data-step="4" class="fx-fade">
         <path class="flow rev" d="M1090 66 C1180 66, 1220 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
-        <path class="flow rev" d="M1090 180 C1170 180, 1210 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
-        <path class="flow rev" d="M1090 300 C1170 300, 1210 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
-        <path class="flow rev" d="M1090 420 C1180 420, 1220 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
+        <path stroke-dasharray="14 12" class="" d="M1090 180 C1170 180, 1210 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
+        <path stroke-dasharray="14 12" class="" d="M1090 300 C1170 300, 1210 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
+        <path stroke-dasharray="14 12" class="" d="M1090 420 C1180 420, 1220 250, 1270 250" stroke="#000" stroke-width="3" fill="none"/>
       </g>
       <path d="M1280 180 V310 A90 24 0 0 0 1460 310 V180" stroke="#000" stroke-width="4" fill="#fff"/>
       <path d="M1280 223 A90 24 0 0 0 1460 223 M1280 266 A90 24 0 0 0 1460 266" stroke="#000" stroke-width="4" fill="none"/>
@@ -517,9 +518,9 @@ svg .flow.red{stroke:var(--red)}
     <div style="position:absolute;left:40px;top:30px"><div style="position:relative;width:700px;height:176px;box-sizing:border-box;border:3px solid #000;background:#fff;padding:32px 40px;font:800 42px/1.2 Archivo;"><span style="color:#ff3300">Supported:</span> a number from your prices table<svg width="60" height="40" viewBox="0 0 60 40" style="position:absolute;left:70px;top:-40px"><path d="M0 41 L20 3 L48 41" fill="#fff" stroke="#000" stroke-width="3"/></svg></div></div>
     <div style="position:absolute;left:860px;top:30px"><div style="position:relative;width:700px;height:176px;box-sizing:border-box;border:3px solid #000;background:#fff;padding:32px 40px;font:800 42px/1.2 Archivo;">Unsupported: a reason the data can&#x27;t show<svg width="60" height="40" viewBox="0 0 60 40" style="position:absolute;left:70px;top:-40px"><path d="M0 41 L20 3 L48 41" fill="#fff" stroke="#000" stroke-width="3"/></svg></div></div>
     <div data-step="2" class="fx-fade" style="position:absolute;left:856px;top:-14px;width:708px;height:224px;background:#fff">
-      <div class="float" style="position:absolute;left:4px;top:44px;animation-duration:2.4s">
+      <div style="position:absolute;left:4px;top:44px">
         <div style="transform:rotate(6deg);transform-origin:0 100%;position:relative"><div style="position:relative;width:700px;height:176px;box-sizing:border-box;border:3px solid #000;background:#fff;padding:32px 40px;font:800 42px/1.2 Archivo;color:#6b6b6b;border-style:dashed">Unsupported: a reason the data can&#x27;t show<svg width="60" height="40" viewBox="0 0 60 40" style="position:absolute;left:70px;top:-40px"><path d="M0 41 L20 3 L48 41" fill="#fff" stroke="#000" stroke-width="3"/></svg></div>
-          <svg width="80" height="190" viewBox="0 0 80 190" style="position:absolute;left:580px;top:-8px"><path class="draw" pathLength="1" d="M40 0 L20 50 L56 90 L26 140 L46 190" fill="none" stroke="#ff3300" stroke-width="7"/></svg>
+          <svg class="float" width="80" height="190" viewBox="0 0 80 190" style="position:absolute;left:580px;top:-8px;animation-duration:2.4s"><path class="draw" pathLength="1" d="M40 0 L20 50 L56 90 L26 140 L46 190" fill="none" stroke="#ff3300" stroke-width="7"/></svg>
         </div>
       </div>
     </div>
@@ -563,7 +564,7 @@ svg .flow.red{stroke:var(--red)}
         <i style="display:block;height:76px;background:#000"></i><i style="display:block;height:76px;background:#d9d9d9"></i><i style="display:block;height:76px;background:#d9d9d9"></i><i style="display:block;height:76px;background:#d9d9d9"></i>
         <i style="display:block;height:30px;background:#d9d9d9"></i><i style="display:block;height:30px;background:#d9d9d9"></i><i style="display:block;height:30px;background:#d9d9d9"></i><i style="display:block;height:30px;background:#d9d9d9"></i>
       </div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px"><i style="display:block;height:14px;background:#bbb;width:100%"></i><i style="display:block;height:14px;background:#bbb;width:95%"></i><i style="display:block;height:14px;background:#bbb;width:100%"></i><i style="display:block;height:14px;background:#bbb;width:70%"></i></div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px"><i style="display:block;height:14px;background:#bbb;width:100%"></i><i style="display:block;height:14px;background:#bbb;width:70%"></i></div>
       <i style="display:block;height:16px;background:#ff3300;margin-top:22px"></i>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px"><i style="display:block;height:14px;background:#bbb;width:100%"></i><i style="display:block;height:14px;background:#bbb;width:60%"></i></div>
     </div>
@@ -572,8 +573,6 @@ svg .flow.red{stroke:var(--red)}
     <div data-step="2" class="fx-pop" style="position:absolute;left:970px;top:150px;width:300px;height:250px;box-sizing:border-box;border:3px solid #000;background:#fff;padding:20px 22px;display:flex;flex-direction:column;gap:16px;transition-delay:.6s"><i style="display:block;height:18px;width:70%;background:#000"></i><div style="flex:1;display:flex;align-items:center;justify-content:center"><i style="display:block;width:130px;height:130px;background:#000"></i></div></div>
     <div data-step="3" class="fx-pop" style="position:absolute;left:1300px;top:150px;width:300px;height:250px;box-sizing:border-box;border:3px solid #000;background:#fff;padding:20px 22px;display:flex;flex-direction:column;gap:16px;transition-delay:.6s"><i style="display:block;height:18px;width:70%;background:#000"></i><div style="flex:1;display:flex;align-items:center;justify-content:center"><i style="display:block;width:100%;height:20px;background:#ff3300"></i></div></div>
     <div data-step="1" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:600px"><i class="packet" style="offset-path:path('M500 110 C 580 110, 560 270, 636 270')"></i></div>
-    <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:600px"><i class="packet" style="offset-path:path('M500 250 C 700 470, 1050 520, 1110 404');animation-duration:3.2s"></i></div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:600px"><i class="packet" style="offset-path:path('M500 436 C 900 560, 1400 540, 1440 404');animation-duration:3.6s"></i></div>
     <div data-step="3" class="dcap fx-fade" style="position:absolute;left:640px;top:80px;text-transform:none;letter-spacing:0;font-size:34px;color:#ff3300">Deck: told aloud, one point per slide</div>
   </div>
 </div></section>
@@ -588,9 +587,9 @@ svg .flow.red{stroke:var(--red)}
       </div>
     </div>
     <div data-step="1" class="fx-right" style="position:absolute;left:540px;top:30px;width:1060px;border:3px solid #000;background:#fff;padding:16px 40px 8px;box-sizing:border-box">
-      <div class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0"><span class="chip seq" style="--d:0;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">What</span><span style="font-size:38px;line-height:1.25">titles state the point</span></div>
-      <div data-step=2 class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0;border-top:3px solid #000"><span class="chip seq" style="--d:1;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">Why</span><span style="font-size:38px;line-height:1.25">managers may read only the titles</span></div>
-      <div data-step=3 class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0;border-top:3px solid #000"><span class="chip seq" style="--d:2;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">Example</span><span style="font-size:38px;line-height:1.25">not &quot;Price chart&quot; but what the chart shows</span></div>
+      <div class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0"><span class="chip" style="--d:0;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">What</span><span style="font-size:38px;line-height:1.25">titles state the point</span></div>
+      <div data-step=2 class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0;border-top:3px solid #000"><span class="chip" style="--d:1;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">Why</span><span style="font-size:38px;line-height:1.25">managers may read only the titles</span></div>
+      <div data-step=3 class="fx-left" style="display:flex;gap:28px;align-items:center;padding:34px 0;border-top:3px solid #000"><span class="chip" style="--d:2;width:150px;flex:none;text-align:center;font-size:28px;border:3px solid #000">Example</span><span style="font-size:38px;line-height:1.25">not &quot;Price chart&quot; but what the chart shows</span></div>
       <div data-step="3" class="fx-pop" style="position:absolute;right:-3px;top:-42px;width:84px;height:84px;background:#1a9e3f;display:flex;align-items:center;justify-content:center"><svg width="56" height="56" viewBox="0 0 64 64"><path d="M8 34 L26 52 L58 12" fill="none" stroke="#fff" stroke-width="10"/></svg></div>
     </div>
   </div>
@@ -661,7 +660,7 @@ svg .flow.red{stroke:var(--red)}
       <defs><marker id="ah14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
       <path class="draw" data-step="1" pathLength="1" d="M30 20 H250" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah14)"/>
     </svg>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:660px;top:300px;width:280px;height:40px"><i class="packet" style="offset-path:path('M30 20 H230')"></i><i class="packet" style="offset-path:path('M30 20 H230');animation-delay:-1.2s"></i></div>
+    <div data-step="1" class="fx-fade" style="position:absolute;left:660px;top:300px;width:280px;height:40px"><i class="packet" style="offset-path:path('M30 20 H230')"></i></div>
     <!-- AFTER -->
     <div data-step="1" class="fx-right" style="position:absolute;left:940px;top:0;width:660px">
       <div class="dcap" style="margin-bottom:16px;color:#ff3300">After (v3)</div>
@@ -686,17 +685,8 @@ svg .flow.red{stroke:var(--red)}
   <div class="body" style="position:relative">
     <svg width="1600" height="460" viewBox="0 0 1600 460" style="position:absolute;left:0;top:0">
       <defs><marker id="ah15" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" data-step="1" pathLength="1" d="M922 30 L1010 90 L922 150" stroke="#ff3300" stroke-width="4" fill="none"/>
-      <path class="draw" data-step="1" pathLength="1" d="M1010 90 H1092" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah15)"/>
     </svg>
-    <div style="position:absolute;left:0;top:30px;height:120px;display:flex;align-items:center;gap:0;font:800 34px Archivo">
-      <span class="dbox" style="width:190px;box-sizing:border-box;text-align:center;margin:0;padding:34px 0;font:800 34px Archivo">refresh</span><span style="width:46px;text-align:center">→</span>
-      <span class="dbox" style="width:190px;box-sizing:border-box;text-align:center;margin:0;padding:34px 0;font:800 34px Archivo">report</span><span style="width:46px;text-align:center">→</span>
-      <span class="dbox" style="width:190px;box-sizing:border-box;text-align:center;margin:0;padding:34px 0;font:800 34px Archivo">check</span><span style="width:46px;text-align:center">→</span>
-      <span class="dbox" style="width:190px;box-sizing:border-box;text-align:center;margin:0;padding:34px 0;font:800 34px Archivo">deck</span>
-    </div>
-    <div data-step="1" style="position:absolute;left:0;top:30px;width:900px;height:120px;background:rgba(255,255,255,.72)"></div>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:1010px;top:90px;width:90px;height:4px"><i class="packet" style="offset-path:path('M0 0 H70')"></i></div>
+    <span class="dbox fold" style="position:absolute;left:0px;top:30px;width:190px;height:120px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:1260px;transition-delay:0.00s">refresh</span><span class="dbox fold" style="position:absolute;left:236px;top:30px;width:190px;height:120px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:1024px;transition-delay:0.12s">report</span><span class="dbox fold" style="position:absolute;left:472px;top:30px;width:190px;height:120px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:788px;transition-delay:0.24s">check</span><span class="dbox fold" style="position:absolute;left:708px;top:30px;width:190px;height:120px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:552px;transition-delay:0.36s">deck</span><span class="fold" style="position:absolute;left:190px;top:30px;width:46px;height:120px;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:1070px">→</span><span class="fold" style="position:absolute;left:426px;top:30px;width:46px;height:120px;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:834px">→</span><span class="fold" style="position:absolute;left:662px;top:30px;width:46px;height:120px;display:flex;align-items:center;justify-content:center;font:800 34px Archivo;--dx:598px">→</span>
     <div class="fx-left" data-step="1" style="position:absolute;left:1110px;top:30px;width:490px;height:120px;box-sizing:border-box;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font:500 34px 'JetBrains Mono',monospace;white-space:nowrap">/stock-report TLKM.JK</div>
     <div class="pulse fx-fade" data-step="3" style="position:absolute;left:1110px;top:30px;width:490px;height:120px"></div>
     <div data-step="2" style="position:absolute;left:0;top:250px;width:1600px;height:200px;box-sizing:border-box;border:6px dotted #9a9a9a;display:flex;align-items:center;justify-content:center;gap:28px;font:800 34px Archivo">
@@ -752,20 +742,20 @@ svg .flow.red{stroke:var(--red)}
       <div class="label" style="border:0;padding:0;color:#ff3300">Session 1:</div>
       <p style="font-size:34px;line-height:1.25;margin:0">built a dashboard and chatbot</p>
     </div>
-    <div data-step="1" style="position:absolute;left:30px;top:270px"><svg class="float" width="140" height="110" viewBox="0 0 140 110"><rect x="3" y="3" width="134" height="104" fill="#fff" stroke="#000" stroke-width="5"/><rect x="3" y="3" width="134" height="22" fill="#000"/><circle cx="16" cy="14" r="4" fill="#ff3300"/><rect x="18" y="44" width="60" height="12" fill="#d9d9d9"/><rect x="18" y="66" width="104" height="12" fill="#d9d9d9"/><rect x="18" y="88" width="80" height="8" fill="#d9d9d9"/></svg></div>
+    <div data-step="1" style="position:absolute;left:30px;top:270px"><svg width="140" height="110" viewBox="0 0 140 110"><rect x="3" y="3" width="134" height="104" fill="#fff" stroke="#000" stroke-width="5"/><rect x="3" y="3" width="134" height="22" fill="#000"/><circle cx="16" cy="14" r="4" fill="#ff3300"/><rect x="18" y="44" width="60" height="12" fill="#d9d9d9"/><rect x="18" y="66" width="104" height="12" fill="#d9d9d9"/><rect x="18" y="88" width="80" height="8" fill="#d9d9d9"/></svg></div>
 
     <div data-step="2" class="fx-left" style="position:absolute;left:570px;top:250px;width:460px;padding-top:28px">
       <div class="label" style="border:0;padding:0;color:#ff3300">Session 2:</div>
       <p style="font-size:34px;line-height:1.25;margin:0">added a database, watchlist and Wiki</p>
     </div>
-    <div data-step="2" style="position:absolute;left:570px;top:110px"><svg class="float" width="110" height="120" viewBox="0 0 90 100" style="animation-delay:-1s"><ellipse cx="45" cy="18" rx="38" ry="12" fill="#fff" stroke="#000" stroke-width="5"/><path d="M7 18 V80 a38 12 0 0 0 76 0 V18 M7 49 a38 12 0 0 0 76 0" fill="none" stroke="#000" stroke-width="5"/></svg></div>
+    <div data-step="2" style="position:absolute;left:570px;top:110px"><svg width="110" height="120" viewBox="0 0 90 100" style="animation-delay:-1s"><ellipse cx="45" cy="18" rx="38" ry="12" fill="#fff" stroke="#000" stroke-width="5"/><path d="M7 18 V80 a38 12 0 0 0 76 0 V18 M7 49 a38 12 0 0 0 76 0" fill="none" stroke="#000" stroke-width="5"/></svg></div>
 
     <div data-step="3" class="fx-left" style="position:absolute;left:1110px;top:100px;width:490px;padding-top:28px">
       <div class="label" style="border:0;padding:0;color:#ff3300">Session 3:</div>
       <p style="font-size:34px;line-height:1.25;margin:0">automated a report, deck and workflow</p>
     </div>
     <div data-step="3" style="position:absolute;left:1110px;top:10px;width:240px"><svg class="float" width="150" height="70" viewBox="0 0 150 70" style="animation-delay:-2s"><rect width="150" height="70" fill="#000"/><path d="M22 20 L40 35 L22 50" fill="none" stroke="#fff" stroke-width="6"/><rect x="52" y="44" width="30" height="6" fill="#ff3300"/></svg></div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:1110px;top:330px;font-size:32px;transition-delay:.6s">Checkpoint: <code class="pulse" style="display:inline-block;line-height:1;padding:6px 10px">s3-workflow</code></div>
+    <div data-step="3" class="fx-fade" style="position:absolute;left:1110px;top:330px;font-size:32px;transition-delay:.6s">Checkpoint: <code style="display:inline-block;line-height:1;padding:6px 10px">s3-workflow</code></div>
   </div>
 </div></section>
 <section class="slide" data-n="19"><div class="inner">
@@ -791,11 +781,11 @@ svg .flow.red{stroke:var(--red)}
       <p style="font-size:42px;line-height:1.3;margin:30px 0 0">Your back end serves other apps</p>
     </div>
     <div style="border-top:3px solid #000;padding-top:40px">
-      <svg class="float" width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-1s"><circle cx="45" cy="45" r="38" fill="none" stroke="#000" stroke-width="5"/><ellipse cx="45" cy="45" rx="16" ry="38" fill="none" stroke="#000" stroke-width="5"/><path d="M7 45 H83" stroke="#ff3300" stroke-width="5"/></svg>
+      <svg width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-1s"><circle cx="45" cy="45" r="38" fill="none" stroke="#000" stroke-width="5"/><ellipse cx="45" cy="45" rx="16" ry="38" fill="none" stroke="#000" stroke-width="5"/><path d="M7 45 H83" stroke="#ff3300" stroke-width="5"/></svg>
       <p style="font-size:42px;line-height:1.3;margin:30px 0 0">News from the web in your database and chatbot</p>
     </div>
     <div style="border-top:3px solid #000;padding-top:40px">
-      <svg class="float" width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-2s"><rect x="14" y="40" width="62" height="44" fill="#ff3300"/><path d="M26 40 V26 a19 19 0 0 1 38 0 V40" fill="none" stroke="#000" stroke-width="6"/><rect x="41" y="54" width="8" height="16" fill="#fff"/></svg>
+      <svg width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-2s"><rect x="14" y="40" width="62" height="44" fill="#ff3300"/><path d="M26 40 V26 a19 19 0 0 1 38 0 V40" fill="none" stroke="#000" stroke-width="6"/><rect x="41" y="54" width="8" height="16" fill="#fff"/></svg>
       <p style="font-size:42px;line-height:1.3;margin:30px 0 0">Login and roles</p>
     </div>
   </div></div>
