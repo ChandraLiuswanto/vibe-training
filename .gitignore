@@ -1,3 +1,7 @@
 financial-app/
 .scratch/
 .pi/
+
+tools/deck-check/node_modules/
+.review/*-shots/
+__pycache__/
