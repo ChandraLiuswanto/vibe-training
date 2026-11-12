@@ -136,6 +136,22 @@ def test_sequence_titles_notes():
     assert len(cd.check_titles([mk("1")], {"1": "other"})) == 1
     assert len(cd.check_notes([mk("1", notes="")])) == 1
 
+def test_inject_notes_replaces_json():
+    # Leaving stale keys/notes or emitting an unescaped closing script is a bug.
+    import json
+    import re
+    from inject_notes import inject_notes
+
+    md = (
+        '## 1. One\nnotes:\nCafé </script>\nwords: 1\n'
+        '## 2. Two\nnotes:\nSecond note\nwords: 2\n'
+    )
+    result = inject_notes(md, deck(notes={"1": "old"}))
+    raw = re.search(r'id="notes-data">(.*?)</script>', result, re.S).group(1)
+    assert json.loads(raw) == {"1": "Café </script>", "2": "Second note"}
+    assert "Café" in raw and "</" not in raw
+
+
 def test_cli_positional_deck_and_slides_filter(tmp_path, capsys):
     html = deck(sec("1", "One"), sec("2", "Two", "<p>Allow it</p>"), notes={"1": "a", "2": "b"})
     p = tmp_path / "d.html"
