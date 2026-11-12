@@ -303,7 +303,7 @@ svg .flow.red{stroke:var(--red)}
 .prompt.done::before{content:attr(data-done);display:block;padding:10px 24px;font:800 28px Archivo}
 .slide.active [data-step].in .draw{animation:drawin .9s ease .2s forwards}
 .slide.active .packet,.slide.active .pulse,.slide.active .float,.slide.active svg .flow{animation-iteration-count:3}
-@media (prefers-reduced-motion:reduce){.dot{animation:none;offset-distance:100%;animation-delay:0s}[style*="animation-delay"]{animation-delay:0s!important}}
+@media (prefers-reduced-motion:reduce){.dot,.dot.in,.slide.active .dot.loop.in{animation:none!important;offset-distance:100%!important;animation-delay:0s!important}[style*="animation-delay"]{animation-delay:0s!important}}
 
 /* Per-slide state hooks: the runtime adds .st1 .st2 ... to the active slide as steps are reached.
    Slide-specific motion goes in the fragment via inline style + these classes in a <style> scoped with [data-n="id"] — NOT allowed;
