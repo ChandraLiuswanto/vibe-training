@@ -67,19 +67,19 @@ status: n/a
 type: visual
 block: How an AI coding agent works · 4
 visible:
-Turn 1 sends: Question 1
-Turn 2 sends: Question 1 + Answer 1 + Question 2
-Turn 3 sends: everything so far + Question 3
-The app resends it. The model doesn't remember.
-diagram: Three horizontal rows, one per turn, each a row of small rounded boxes. Row "Turn 1 sends": one box "Question 1". Row "Turn 2 sends": three boxes "Question 1", "Answer 1", "Question 2". Row "Turn 3 sends": a longer box "everything so far" followed by "Question 3". Each row has an arrow on the right into one box "Model". Caption under the rows is the last line of visible.
+Turn 1: Capital of Japan? → Tokyo
+Turn 2: Capital of Japan? + Tokyo + How many people live there? → About 14 million
+No history: How many people live there? → Live where?
+The app resends history. The model remembers nothing.
+diagram: Three rows, each: label, the boxes the app sends (history in grey, the new question in black), an arrow, then the model's reply. Row "Turn 1": one question, reply "Tokyo". Row "Turn 2": the earlier question and answer in grey plus the new question, reply "About 14 million". Row "No history" (red label): only the new question, reply in a red box "Live where?". Caption under the rows in accent colour.
 build:
-  0: title, the "Model" box and the "Turn 1" row
-  1: "Turn 2" row slides in; its earlier boxes are copies of row 1
-  2: "Turn 3" row slides in, the longest
+  0: title and the "Turn 1" row
+  1: "Turn 2" row slides in; its grey boxes are copies of row 1; "About 14 million" pops in
+  2: "No history" row slides in; the red "Live where?" pops in
   3: caption appears in accent colour
 notes:
-"Stateless" means each request starts from zero. The model does not keep a file about you. On step 0: turn one sends only the first question. Ask: if the model remembers nothing, why does ChatGPT seem to remember our chat? On step 1, answer it: the chat app keeps the whole conversation and sends all of it again, plus your new message. On step 2, point at the rows getting longer. The model reads everything from the top each time, so it looks like it remembers. On step 3, say the caption. Two consequences: long chats cost more and run slower, and anything that is not in what gets sent does not exist for the model. We build exactly this into our chatbot later: the page sends the whole message list every turn.
-words: 31 · budget: 40 · exception: none
+"Stateless" means each request starts from zero. The model does not keep a file about you. On step 0: turn one sends one question and gets an answer. On step 1: the follow-up "How many people live there?" only makes sense because the app quietly sent the first question and answer again, in grey. So the model knows "there" means Tokyo. Ask: what happens if the app sends only the new question? On step 2: the model has no idea what "there" refers to. Same model, same question, no history. On step 3, say the caption. Two consequences: long chats cost more and run slower, and anything that is not in what gets sent does not exist for the model. We build exactly this into our chatbot later: the page sends the whole message list every turn, and you'll test it with "And a month ago?".
+words: 32 · budget: 40 · exception: none
 status: n/a
 
 ## 5. The context window is the most the model can read at once; when it fills, old details drop off
