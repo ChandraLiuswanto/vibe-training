@@ -1,0 +1,983 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 · Session 1 — Build your first AI Financial App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===== Swiss Modern theme — Day 3 decks ===== */
+:root{--slide-bg:#fff;--stage-bg:#d9d9d9;--ink:#000;--red:#ff3300;--grey:#6b6b6b;--rule:3px solid #000}
+.deck-stage{font-family:Nunito,system-ui,sans-serif;color:var(--ink)}
+.slide::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 159px,#f0f0f0 159px 160px);pointer-events:none}
+.inner{position:absolute;inset:96px 160px 120px;display:flex;flex-direction:column}
+/* type */
+.eyebrow{font:800 28px Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:36px;display:flex;align-items:center;gap:16px}
+.eyebrow::before{content:"";width:18px;height:18px;background:var(--red)}
+.eyebrow .tag{background:#000;color:#fff;padding:10px 22px}
+.eyebrow .tag.red{background:var(--red)}
+.eyebrow:has(.tag)::before{display:none}
+h1{font:800 150px/.95 Archivo,sans-serif;letter-spacing:-.04em;margin:0;max-width:1350px}
+h2{font:800 70px/1.05 Archivo,sans-serif;letter-spacing:-.025em;margin:0 0 64px;max-width:1560px}
+.body{flex:1;min-height:0}
+.lead{font:400 44px/1.3 Nunito,sans-serif;margin:0 0 28px;max-width:1450px}
+.lead b,.lines b{font-weight:800}
+.lines{list-style:none;margin:0;padding:0;font-size:42px;line-height:1.3}
+.lines li{padding:20px 0;border-top:var(--rule);max-width:1400px}
+.lines li:last-child{border-bottom:var(--rule)}
+.num{counter-reset:n}.num li{counter-increment:n;display:flex;gap:36px}.num li::before{content:counter(n,decimal-leading-zero);font:800 42px Archivo;color:var(--red);min-width:70px}
+.punch{font:800 48px/1.15 Archivo,sans-serif;margin-top:auto;padding-top:32px}
+.punch.red{color:var(--red)}
+code,.mono{font-family:"JetBrains Mono",monospace;font-size:.9em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.label{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:var(--rule);padding-top:12px;margin-bottom:12px}
+/* title / section */
+.s-title .inner{justify-content:flex-end}
+.s-title::after{content:"";position:absolute;right:160px;top:96px;width:320px;height:320px;border-radius:50%;background:var(--red)}
+.sub{font-size:40px;margin-top:44px}
+.s-section .inner{justify-content:center}
+.s-section h2{font-size:110px;max-width:1500px}
+/* diagram primitives */
+.dg{display:flex;gap:0;align-items:center}
+.dbox{padding:24px 34px;border:3px solid #000;font-size:32px;background:#fff;margin-right:-3px;line-height:1.2}
+.dbox.inv{background:#000;color:#fff}.dbox.red{background:var(--red);border-color:var(--red);color:#fff;font:800 32px Archivo}
+.dbox.ghost{border-style:dashed;color:var(--grey)}
+.darrow{font-size:44px;margin:0 24px;line-height:1}
+.dcap{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.06em}
+.dsmall{font-size:28px;color:var(--grey)}
+.chip{display:inline-block;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px;background:#000;color:#fff}
+.chip.red{background:var(--red)}.chip.out{background:#fff;color:#000;border:3px solid #000}
+/* hands-on */
+.ho{display:grid;grid-template-columns:480px 1fr;gap:80px;flex:1;min-height:0}
+.ho .k{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:var(--rule);padding-top:12px}
+.ho .left p{font-size:32px;line-height:1.35;margin:10px 0 30px}
+.ho .right{display:flex;flex-direction:column;gap:22px;min-height:0}
+.step{font-size:30px;line-height:1.3}.step b{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.04em;margin-right:10px}
+.prompt{border:3px solid #000;background:#fff}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:#000;color:#fff;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.08em}
+.prompt .ph button{font:800 26px Archivo;padding:8px 22px;border:0;background:var(--red);color:#fff;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+.prompt pre{margin:0;padding:26px 32px;font:500 30px/1.45 "JetBrains Mono",monospace;white-space:pre-wrap}
+.prompt.sm pre{font-size:26px;padding:18px 28px}
+/* check */
+.choices{display:flex;flex-direction:column;gap:22px}
+.choice{display:flex;gap:32px;align-items:center;border:3px solid #000;padding:24px 32px;font-size:36px;line-height:1.25;transition:background .25s,color .25s,opacity .25s}
+.choice .L{font:800 44px Archivo;min-width:48px}
+.slide.revealed .choice{opacity:.35}
+.slide.revealed .choice.correct{opacity:1;background:var(--red);border-color:var(--red);color:#fff}
+.reveal{margin-top:36px;font:800 38px/1.25 Archivo;opacity:0;transform:translateY(16px);transition:all .35s}
+.slide.revealed .reveal{opacity:1;transform:none}
+.question{font-size:38px;line-height:1.3;margin:0 0 32px}
+/* break */
+.s-break .inner{justify-content:center;align-items:flex-start}
+.timer{font:800 300px/1 Archivo;letter-spacing:-.04em}
+/* chrome */
+.pg{position:absolute;right:64px;bottom:44px;z-index:5;font:800 24px Archivo;opacity:.6}
+.foot{position:absolute;left:160px;bottom:44px;z-index:5;font:800 18px Archivo;letter-spacing:.1em;text-transform:uppercase;opacity:.45}
+.slide.active .r{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+.slide.active .r2{animation:rise .55s .15s cubic-bezier(.2,.7,.2,1) both}
+.slide.active .r3{animation:rise .55s .3s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+#notesbar{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#111;color:#eee;font:18px/1.5 Nunito,sans-serif;padding:16px 24px;z-index:50;display:none;white-space:pre-wrap}
+body.shownotes #notesbar{display:block}
+
+[data-countdown].done{color:var(--red)}
+</style></head><body><div class="deck-viewport"><div class="deck-stage">
+<section class="slide s-title" data-n="1"><div class="inner">
+  <div class="eyebrow r">Day 3 · Session 1</div>
+  <h1 class="r2">Build your first AI Financial App</h1>
+  <div class="sub r3">AI Vibe Coding for Business Users</div>
+</div></section>
+<section class="slide" data-n="2"><div class="inner">
+  <div class="eyebrow">Opening</div>
+  <h2>Today you build a BBCA dashboard and chatbot without writing code</h2>
+  <ul class="lines r">
+    <li>A dashboard: BBCA price, daily change, 1-year chart</li>
+    <li>A chatbot that answers questions about BBCA</li>
+    <li>Your project, saved on GitHub</li>
+  </ul>
+  <div class="punch r2">You direct. <span style="color:#ff3300">The AI writes the code.</span></div>
+</div></section>
+<section class="slide" data-n="3"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Demo</span></div>
+  <h2>This is the app you will have by the end of this session</h2>
+  <div class="body r" style="border:3px solid #000;display:flex;flex-direction:column">
+    <div style="background:#000;color:#fff;padding:14px 32px"><span class="dcap">Finished app</span></div>
+    <div style="flex:1;display:flex;align-items:center;padding:0 48px;font:800 48px/1.2 Archivo,sans-serif">BBCA price · daily change · 1-year chart · chat panel</div>
+  </div>
+</div></section>
+<section class="slide" data-n="4"><div class="inner">
+  <div class="eyebrow">Opening</div>
+  <h2>You will be at the keyboard for most of these three hours</h2>
+  <div class="two" style="gap:80px">
+    <ol class="lines num r">
+      <li>LLM basics</li>
+      <li>Fast vs smart models</li>
+      <li>Git and GitHub</li>
+    </ol>
+    <ol class="lines num r2" style="counter-reset:n 3">
+      <li>Skills</li>
+      <li>Build the dashboard, then the chatbot</li>
+      <li>Test, fix, push</li>
+    </ol>
+  </div>
+</div></section>
+<section class="slide" data-n="5"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>An LLM predicts the next words from the text you send it</h2>
+  <div class="body" style="display:flex;flex-direction:column;gap:56px;justify-content:center">
+    <div class="dg r"><span class="dcap" style="width:220px">Text in:</span><span class="dbox" style="font-size:54px;padding:32px 44px">"BBCA is the ticker of Bank Central ..."</span></div>
+    <div class="dg r2"><span class="dcap" style="width:220px">Text out:</span><span class="dbox red" style="font-size:54px;padding:32px 44px">"Asia"</span></div>
+  </div>
+  <div class="punch r3">Large language model = <span style="color:#ff3300">LLM</span></div>
+</div></section>
+<section class="slide" data-n="6"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>The model is stateless: it remembers nothing between requests</h2>
+  <div class="two body">
+    <div class="r">
+      <div class="label">Request 1:</div><p class="lead">"My name is Sari."</p>
+      <div class="label">Reply:</div><p class="lead">"Nice to meet you, Sari."</p>
+    </div>
+    <div class="r2">
+      <div class="label" style="border-color:#ff3300;color:#ff3300">Request 2, sent alone:</div><p class="lead">"What is my name?"</p>
+      <div class="label" style="border-color:#ff3300;color:#ff3300">Reply:</div><p class="lead" style="font-weight:800">"I don't know."</p>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="7"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>The app resends the whole conversation every turn, which looks like memory</h2>
+  <div class="body" style="display:flex;flex-direction:column;gap:30px">
+    <div class="dg r"><span class="dcap" style="width:260px">Turn 1 sends</span><span class="dbox">Question 1</span><span class="darrow" style="margin-left:auto">→</span><span class="dbox red">Model</span></div>
+    <div class="dg r2"><span class="dcap" style="width:260px">Turn 2 sends</span><span class="dbox">Question 1</span><span class="dbox">Answer 1</span><span class="dbox">Question 2</span><span class="darrow" style="margin-left:auto">→</span><span class="dbox red">Model</span></div>
+    <div class="dg r3"><span class="dcap" style="width:260px">Turn 3 sends</span><span class="dbox inv" style="padding:24px 90px">everything so far</span><span class="dbox">Question 3</span><span class="darrow" style="margin-left:auto">→</span><span class="dbox red">Model</span></div>
+  </div>
+  <div class="punch">The app does this. The model doesn't remember.</div>
+</div></section>
+<section class="slide" data-n="8"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 3 min</span></div>
+  <h2>Start a new opencode session and ask what you told it before</h2>
+  <div class="ho">
+    <div class="left">
+      <div class="k">Goal</div><p>See that a new session remembers nothing.</p>
+      <div class="k">You should see</div><p>The agent doesn't know.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right">
+      <div class="prompt"><div class="ph"><span>Prompt 1</span><button>Copy</button></div><pre>My favourite stock is BBCA and I work in the sales team. Just say OK. Don&#x27;t create or edit any files.</pre></div>
+      <div class="step"><b>Then type</b> <code>/new</code></div>
+      <div class="prompt"><div class="ph"><span>Prompt 2</span><button>Copy</button></div><pre>Which stock is my favourite, and which team do I work in?</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="9"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>The context window is the most text the model can read at once</h2>
+  <p class="lead r"><b>Context window</b> = everything the model reads for one reply</p>
+  <div class="label r2" style="margin-top:28px">It holds:</div>
+  <div class="dg r3" style="margin-top:12px;flex-wrap:wrap">
+    <span class="dbox inv" style="font-size:40px;padding:36px 40px">rules</span><span class="dbox" style="font-size:40px;padding:36px 40px">your messages</span><span class="dbox" style="font-size:40px;padding:36px 40px">its replies</span><span class="dbox" style="font-size:40px;padding:36px 40px">tool results</span><span class="dbox" style="font-size:40px;padding:36px 40px">files it opened</span>
+  </div>
+</div></section>
+<section class="slide" data-n="10"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>When the context fills up, old details get dropped or summarised</h2>
+  <div class="dg r"><span class="dbox inv" style="font-size:40px;padding:32px 40px">Window full</span><span class="darrow">→</span><span style="font-size:44px">oldest details are dropped or summarised.</span></div>
+  <p class="lead r2" style="margin-top:56px;font-size:48px">Early instructions can quietly disappear.</p>
+  <div class="punch r3"><span style="color:#ff3300">Fix:</span> start a /new session. Keep rules in AGENTS.md.</div>
+</div></section>
+<section class="slide" data-n="11"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 3 min</span></div>
+  <h2>Watch the context counter in opencode grow as you chat</h2>
+  <div class="ho">
+    <div class="left">
+      <div class="k">Goal</div><p>See the context counter rise.</p>
+      <div class="k">You should see</div><p>The counter rises after every reply.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Explain in plain words what a stock&#x27;s daily change and a 1-year price chart show. Use about 300 words. Don&#x27;t create any files.</pre></div>
+      <div class="step">Then ask two follow-up questions of your own.</div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="12"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>Every request is a list of messages: system, user, assistant, tool</h2>
+  <div class="r" style="border-bottom:3px solid #000">
+    <div style="display:grid;grid-template-columns:240px 1fr;align-items:center;border-top:3px solid #000;padding:16px 0"><span><span class="chip" style="font-size:28px;">system:</span></span><span style="font-size:34px">"You are a careful banking assistant."</span></div>
+    <div style="display:grid;grid-template-columns:240px 1fr;align-items:center;border-top:3px solid #000;padding:16px 0"><span><span class="chip" style="font-size:28px;background:#ff3300">user:</span></span><span style="font-size:34px">"What is BBCA?"</span></div>
+    <div style="display:grid;grid-template-columns:240px 1fr;align-items:center;border-top:3px solid #000;padding:16px 0"><span><span class="chip" style="font-size:28px;background:#fff;color:#000;border:3px solid #000">assistant:</span></span><span style="font-size:34px">"Bank Central Asia, a listed Indonesian bank."</span></div>
+    <div style="display:grid;grid-template-columns:240px 1fr;align-items:center;border-top:3px solid #000;padding:16px 0"><span><span class="chip" style="font-size:28px;background:#6b6b6b">tool:</span></span><span style="font-size:34px">(result of a tool the app ran)</span></div>
+  </div>
+  <div class="punch r2">One list. Sent every turn.</div>
+</div></section>
+<section class="slide" data-n="13"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>System sets the rules, user asks, assistant answers, tool reports results</h2>
+  <div class="body r" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:28px">
+    <div style="border:3px solid #000;padding:28px 36px;background:#000;color:#fff"><div style="font:800 44px Archivo,sans-serif;">system —</div><div style="font-size:38px;margin-top:8px">sets the rules</div></div><div style="border:3px solid #000;padding:28px 36px;"><div style="font:800 44px Archivo,sans-serif;color:#ff3300">user —</div><div style="font-size:38px;margin-top:8px">you ask</div></div><div style="border:3px solid #000;padding:28px 36px;"><div style="font:800 44px Archivo,sans-serif;color:#ff3300">assistant —</div><div style="font-size:38px;margin-top:8px">the model answers</div></div><div style="border:3px solid #000;padding:28px 36px;"><div style="font:800 44px Archivo,sans-serif;color:#ff3300">tool —</div><div style="font-size:38px;margin-top:8px">reports what a tool did</div></div>
+  </div>
+</div></section>
+<section class="slide" data-n="14"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2 style="margin-bottom:44px">With tool calling, the model asks for a tool and the app runs it</h2>
+  <div class="body" style="display:grid;grid-template-columns:1fr 800px;gap:60px;min-height:0">
+    <ol class="lines num r" style="font-size:30px;line-height:1.25;align-self:start">
+      <li style="padding:12px 0;gap:24px">App sends the messages to the model</li>
+      <li style="padding:12px 0;gap:24px">Model replies: "run read_file on docs/spec.md"</li>
+      <li style="padding:12px 0;gap:24px">App runs the tool</li>
+      <li style="padding:12px 0;gap:24px">App adds a tool message and asks again</li>
+      <li style="padding:12px 0;gap:24px">Model answers using the result</li>
+    </ol>
+    <div class="r2" style="position:relative;width:800px;height:540px">
+      <div class="dbox inv" style="position:absolute;left:0;top:0;width:160px;height:540px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:800 36px Archivo;margin:0">App</div>
+      <div class="dbox red" style="position:absolute;left:640px;top:0;width:160px;height:250px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0">Model</div>
+      <div class="dbox" style="position:absolute;left:640px;top:330px;width:160px;height:210px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font:800 36px Archivo;margin:0">Tool</div>
+      <svg style="position:absolute;left:0;top:0" width="800" height="540" viewBox="0 0 800 540">
+        <defs><marker id="a14" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#000"/></marker>
+        <marker id="a14r" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 z" fill="#ff3300"/></marker></defs>
+        <line x1="163" y1="60" x2="630" y2="60" stroke="#000" stroke-width="3" marker-end="url(#a14)"/><line x1="637" y1="140" x2="170" y2="140" stroke="#ff3300" stroke-width="3" marker-end="url(#a14r)"/><line x1="637" y1="220" x2="170" y2="220" stroke="#ff3300" stroke-width="3" marker-end="url(#a14r)"/><line x1="163" y1="420" x2="630" y2="420" stroke="#000" stroke-width="3" marker-end="url(#a14)"/><line x1="637" y1="500" x2="170" y2="500" stroke="#000" stroke-width="3" marker-end="url(#a14)"/>
+      </svg>
+      <div style="position:absolute;left:170px;width:460px;top:16px;text-align:center;font-size:28px;line-height:1.2;"><span class="chip" style="padding:2px 10px;margin-right:8px">1</span><span class="chip" style="padding:2px 10px;margin-right:8px">4</span>messages</div>
+      <div style="position:absolute;left:170px;width:460px;top:96px;text-align:center;font-size:28px;line-height:1.2;color:#ff3300;"><span class="chip red" style="padding:2px 10px;margin-right:8px">2</span><code>run read_file on docs/spec.md</code></div>
+      <div style="position:absolute;left:170px;width:460px;top:176px;text-align:center;font-size:28px;line-height:1.2;color:#ff3300;"><span class="chip red" style="padding:2px 10px;margin-right:8px">5</span>answer</div>
+      <div style="position:absolute;left:170px;width:460px;top:376px;text-align:center;font-size:28px;line-height:1.2;"><span class="chip" style="padding:2px 10px;margin-right:8px">3</span></div>
+      <div style="position:absolute;left:170px;width:460px;top:456px;text-align:center;font-size:28px;line-height:1.2;"><span class="chip" style="padding:2px 10px;margin-right:8px">4</span>tool message</div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="15"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2 style="margin-bottom:40px">A coding agent is an LLM calling tools in a loop until the task is done</h2>
+  <div class="body r" style="position:relative;width:1600px;height:480px;flex:none">
+    <svg style="position:absolute;left:0;top:0" width="1600" height="480" viewBox="0 0 1600 480">
+      <defs><marker id="a15" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L16,8 L0,16 z" fill="#000"/></marker>
+      <marker id="a15r" markerWidth="16" markerHeight="16" refX="13" refY="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L16,8 L0,16 z" fill="#ff3300"/></marker></defs>
+      <line x1="150" y1="60" x2="590" y2="60" stroke="#000" stroke-width="3" marker-end="url(#a15)"/>
+      <line x1="1003" y1="60" x2="1290" y2="60" stroke="#000" stroke-width="3" marker-end="url(#a15)"/>
+      <path d="M940,113 C1080,180 1150,260 1160,368" fill="none" stroke="#ff3300" stroke-width="3" marker-end="url(#a15r)"/>
+      <line x1="977" y1="430" x2="633" y2="430" stroke="#ff3300" stroke-width="3" marker-end="url(#a15r)"/>
+      <path d="M440,377 C450,260 520,180 660,121" fill="none" stroke="#ff3300" stroke-width="3" marker-end="url(#a15r)"/>
+    </svg>
+    <div class="dcap" style="position:absolute;left:0;top:44px;font-size:32px">Goal</div>
+    <div class="dbox red" style="position:absolute;left:600px;top:10px;width:400px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:34px">Model decides</div>
+    <div class="dbox inv" style="position:absolute;left:1300px;top:10px;width:300px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 34px Archivo">Task done</div>
+    <div class="dbox" style="position:absolute;left:980px;top:380px;width:360px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:34px">Runs a tool</div>
+    <div class="dbox" style="position:absolute;left:260px;top:380px;width:370px;height:100px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:34px">Reads the result</div>
+    <div style="position:absolute;left:600px;top:230px;width:400px;text-align:center;font:800 34px Archivo;color:#ff3300">↻ Decides again…</div>
+  </div>
+  <div class="punch r2">Stops when the task is done.</div>
+</div></section>
+<section class="slide" data-n="16"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>You bring the goal and the judgement; the agent does the typing</h2>
+  <div class="two" style="gap:60px">
+    <div class="r" style="border-top:12px solid #ff3300;padding-top:28px">
+      <div style="font:800 96px Archivo;letter-spacing:-.03em;margin-bottom:24px">You:</div>
+      <p class="lead" style="margin:0;font-size:52px">the goal, the choices, the approval</p>
+    </div>
+    <div class="r2" style="border-top:12px solid #000;padding-top:28px">
+      <div style="font:800 96px Archivo;letter-spacing:-.03em;margin-bottom:24px">Agent:</div>
+      <p class="lead" style="margin:0;font-size:52px">the typing, the files, the commands</p>
+    </div>
+  </div>
+  <div class="punch red r3">The agent can be wrong. You check.</div>
+</div></section>
+<section class="slide" data-n="17"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>AGENTS.md is a note the agent reads at the start of every session</h2>
+  <ul class="lines r">
+    <li><b><code>AGENTS.md</code>:</b> a plain text file in your project.</li>
+    <li>The agent reads it at the start of every session.</li>
+  </ul>
+  <div class="r2" style="margin-top:auto;border:3px solid #000;border-left:16px solid #ff3300;padding:28px 36px;max-width:1400px">
+    <span class="chip" style="margin-bottom:16px">Example rule:</span>
+    <div style="font:500 32px/1.45 'JetBrains Mono',monospace;margin-top:14px">"Explain what you will do in plain business language before doing it."</div>
+  </div>
+</div></section>
+<section class="slide" data-n="18"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Run /init to create AGENTS.md, then add one rule of your own</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Create AGENTS.md with one rule of your own.</p>
+      <div class="k">You should see</div><p>An AGENTS.md file that contains your rule.</p>
+      <div class="k">Stuck?</div><p>No reply after 2 minutes? Stop it and send the same prompt again.</p>
+    </div>
+    <div class="right r2">
+      <div class="step" style="font-size:32px"><b>Prompt 1:</b> type <code>/init</code> and press Enter.</div>
+      <div class="step" style="font-size:32px">A permission box appears? Choose <b style="font:800 32px Nunito;text-transform:none;letter-spacing:0;margin:0">Allow once</b> (Enter).</div>
+      <div class="prompt" style="margin-top:14px"><div class="ph"><span>Prompt 2</span><button>Copy</button></div><pre>Add one rule to AGENTS.md: Explain what you will do in plain business language before doing it.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="19"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2>The agent forgot your preference overnight. Why, and how do you fix it?</h2>
+  <div class="choices">
+    <div class="choice"><span class="L">A</span><span>The agent was tired. Remind it every morning.</span></div>
+    <div class="choice correct"><span class="L">B</span><span>A new session starts empty. Put the preference in AGENTS.md.</span></div>
+    <div class="choice"><span class="L">C</span><span>The model was updated. Wait for the next version.</span></div>
+  </div>
+  <div class="reveal">B — Nothing carries over between sessions except files, and AGENTS.md is read every time.</div>
+</div></section>
+<section class="slide" data-n="20"><div class="inner">
+  <div class="eyebrow">Model selection</div>
+  <h2>Fast models answer in seconds; smart models reason before they act</h2>
+  <div class="two" style="gap:0">
+    <div class="r" style="border:3px solid #000;padding:48px 48px 56px;margin-right:-3px">
+      <span class="chip out">Fast model:</span>
+      <p class="lead" style="margin:32px 0 0;font-size:50px">quick answers, good for small jobs</p>
+    </div>
+    <div class="r2" style="border:3px solid #000;padding:48px 48px 56px;background:#000;color:#fff">
+      <span class="chip red">Smart model:</span>
+      <p class="lead" style="margin:32px 0 0;font-size:50px">slower, thinks first, good for hard jobs</p>
+    </div>
+  </div>
+  <div class="punch r3">In opencode: type <code style="color:#ff3300">/models</code> to pick one.</div>
+</div></section>
+<section class="slide" data-n="21"><div class="inner">
+  <div class="eyebrow">Model selection</div>
+  <h2>Use fast models for small edits and smart models for planning and debugging</h2>
+  <div class="r" style="display:grid;grid-template-columns:260px 1fr;font-size:48px;line-height:1.3;border-top:3px solid #000;border-bottom:3px solid #000">
+    <div style="font:800 56px Archivo;padding:48px 0;border-bottom:3px solid #000">Fast:</div>
+    <div style="padding:48px 0;border-bottom:3px solid #000">rename a title, fix a typo, change a colour</div>
+    <div style="font:800 56px Archivo;padding:48px 0;color:#ff3300">Smart:</div>
+    <div style="padding:48px 0">write the plan, find why something breaks</div>
+  </div>
+  <div class="punch red r2">Wrong choice costs time, or quality.</div>
+</div></section>
+<section class="slide" data-n="22"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 4 min</span></div>
+  <h2>Give the same task to a fast and a smart model and compare</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Feel the difference between a fast and a smart model.</p>
+      <div class="k">You should see</div><p>Two answers. Compare speed and depth.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right r2">
+      <div class="step" style="font-size:30px"><b>Steps:</b> <code>/models</code> → [FAST MODEL] → send the prompt. Then <code>/new</code>, <code>/models</code> → [SMART MODEL] → send it again.</div>
+      <div class="prompt" style="margin-top:10px"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Give three risks of holding only one bank stock, such as BBCA. Explain each in one sentence. Don&#x27;t create any files.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="23"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2 style="margin-bottom:40px">Which model would you pick for each of these three tasks?</h2>
+  <p class="question">Tasks: (1) fix a typo in a page title (2) plan the whole dashboard (3) find out why the chart is empty</p>
+  <div class="choices">
+    <div class="choice correct"><span class="L">A</span><span>1 fast · 2 smart · 3 smart</span></div>
+    <div class="choice"><span class="L">B</span><span>1 smart · 2 fast · 3 fast</span></div>
+    <div class="choice"><span class="L">C</span><span>Fast for all three, to save time</span></div>
+  </div>
+  <div class="reveal">A — Small edits need speed. Planning and debugging need careful thinking.</div>
+</div></section>
+<section class="slide" data-n="24"><div class="inner">
+  <div class="eyebrow">Git</div>
+  <h2 style="margin-bottom:48px">Without version control, nobody knows which file is the real one</h2>
+  <div class="body" style="display:grid;grid-template-columns:960px 1fr;gap:40px;align-items:center">
+    <div class="r" style="position:relative;height:470px">
+      <div style="position:absolute;width:820px;height:110px;box-sizing:border-box;border:3px solid #000;background:#fff;display:flex;align-items:center;gap:28px;padding:0 36px;font:500 36px 'JetBrains Mono',monospace;left:0;top:0"><span style="flex:none;width:44px;height:52px;border:3px solid #000;background:linear-gradient(#000 0 0) 0 14px/100% 3px no-repeat,linear-gradient(#000 0 0) 0 28px/100% 3px no-repeat,linear-gradient(#000 0 0) 18px 0/3px 100% no-repeat"></span><span>Budget_final.xlsx</span></div>
+      <div style="position:absolute;width:820px;height:110px;box-sizing:border-box;border:3px solid #000;background:#fff;display:flex;align-items:center;gap:28px;padding:0 36px;font:500 36px 'JetBrains Mono',monospace;left:40px;top:110px"><span style="flex:none;width:44px;height:52px;border:3px solid #000;background:linear-gradient(#000 0 0) 0 14px/100% 3px no-repeat,linear-gradient(#000 0 0) 0 28px/100% 3px no-repeat,linear-gradient(#000 0 0) 18px 0/3px 100% no-repeat"></span><span>Budget_final_v2.xlsx</span></div>
+      <div style="position:absolute;width:820px;height:110px;box-sizing:border-box;border:3px solid #000;background:#fff;display:flex;align-items:center;gap:28px;padding:0 36px;font:500 36px 'JetBrains Mono',monospace;left:80px;top:220px"><span style="flex:none;width:44px;height:52px;border:3px solid #000;background:linear-gradient(#000 0 0) 0 14px/100% 3px no-repeat,linear-gradient(#000 0 0) 0 28px/100% 3px no-repeat,linear-gradient(#000 0 0) 18px 0/3px 100% no-repeat"></span><span>Budget_final_v2_REALLY.xlsx</span></div>
+      <div style="position:absolute;width:820px;height:110px;box-sizing:border-box;border:3px solid #000;background:#fff;display:flex;align-items:center;gap:28px;padding:0 36px;font:500 36px 'JetBrains Mono',monospace;left:120px;top:330px;box-shadow:8px 8px 0 #000"><span style="flex:none;width:44px;height:52px;border:3px solid #000;background:linear-gradient(#000 0 0) 0 14px/100% 3px no-repeat,linear-gradient(#000 0 0) 0 28px/100% 3px no-repeat,linear-gradient(#000 0 0) 18px 0/3px 100% no-repeat"></span><span>Budget_final_v2_Tom-edits.xlsx</span></div>
+      <div style="position:absolute;left:890px;top:296px;width:80px;height:80px;background:#ff3300;color:#fff;font:800 56px/80px Archivo;text-align:center">?</div>
+    </div>
+    <div class="punch r2" style="margin:0;padding:0;font-size:56px">Which one is latest? Who changed what?</div>
+  </div>
+</div></section>
+<section class="slide" data-n="25"><div class="inner">
+  <div class="eyebrow">Git</div>
+  <h2 style="margin-bottom:48px">Everyone works on a local copy and shares through one remote</h2>
+  <div class="body r" style="display:grid;grid-template-columns:1fr 300px 1fr;align-items:stretch;flex:none">
+    <div style="border:3px solid #000;border-bottom:16px solid #000;padding:36px 40px;position:relative">
+      <div style="font:800 56px Archivo;letter-spacing:-.02em">Your computer:</div>
+      <div class="chip out" style="margin:18px 0 22px;font-size:28px">local copy.</div>
+      <div style="font-size:38px">Only you see it.</div>
+      <div style="position:absolute;left:60px;bottom:-60px;width:16px;height:44px;background:#000"></div>
+      <div style="position:absolute;right:60px;bottom:-60px;width:16px;height:44px;background:#000"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+      <div style="font:800 110px/1 Archivo;color:#ff3300">⇄</div>
+      <div class="dcap" style="font-size:30px;color:#ff3300">push / pull</div>
+    </div>
+    <div style="border:3px solid #000;padding:36px 40px;background:#000;color:#fff;border-bottom:16px solid #ff3300;position:relative">
+      <div style="font:800 56px Archivo;letter-spacing:-.02em">GitHub:</div>
+      <div class="chip red" style="margin:18px 0 22px;font-size:28px">remote copy.</div>
+      <div style="font-size:38px">The team shares it.</div>
+      <div style="position:absolute;left:-3px;right:-3px;bottom:-60px;height:44px;border:3px solid #000;background:#fff;display:flex;justify-content:center;align-items:center"><span style="width:90px;height:10px;background:#000"></span></div>
+    </div>
+  </div>
+  <div class="punch r2">Nothing travels between them until you push or pull.</div>
+</div></section>
+<section class="slide" data-n="26"><div class="inner">
+  <div class="eyebrow">Git</div>
+  <h2 style="margin-bottom:40px">A commit is a save point with a note, and it stays on your computer</h2>
+  <div class="body r" style="position:relative;flex:none;height:340px">
+    <div style="position:absolute;left:40px;right:40px;top:0;height:290px;border:3px solid #d0d0d0;"></div>
+    <div style="position:absolute;left:-20px;right:-20px;top:290px;height:26px;background:#e6e6e6;"></div>
+    <div style="position:absolute;left:90px;right:90px;top:50px;display:flex;align-items:flex-start;justify-content:space-between">
+      <div style="width:360px"><div class="dbox" style="margin:0;text-align:center;font:800 40px Archivo">Commit 1</div><div style="font-size:34px;line-height:1.3;margin-top:22px;text-align:center">Created the budget file</div></div>
+      <div class="darrow" style="margin:28px 0 0;font-size:56px">→</div>
+      <div style="width:360px"><div class="dbox" style="margin:0;text-align:center;font:800 40px Archivo">Commit 2</div><div style="font-size:34px;line-height:1.3;margin-top:22px;text-align:center">Added March figures</div></div>
+      <div class="darrow" style="margin:28px 0 0;font-size:56px">→</div>
+      <div style="width:360px"><div class="dbox red" style="margin:0;text-align:center;font-size:40px">Commit 3</div><div style="font-size:34px;line-height:1.3;margin-top:22px;text-align:center">Fixed the totals</div></div>
+    </div>
+  </div>
+  <div class="punch r2">Saved on <span style="color:#ff3300">YOUR</span> computer only, until you push.</div>
+</div></section>
+<section class="slide" data-n="27"><div class="inner">
+  <div class="eyebrow">Git</div>
+  <h2 style="margin-bottom:36px">Push sends your commits to GitHub; pull brings your teammates' commits back</h2>
+  <div class="r" style="font-size:30px;font-weight:800;margin-bottom:10px">Push: your computer → GitHub</div>
+  <div class="r" style="display:grid;grid-template-columns:1fr 200px 1fr;margin-bottom:28px">
+    <div style="border:3px solid #000;padding:16px 24px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;align-content:flex-start"><span style="font:800 30px Archivo;flex-basis:100%;margin-bottom:2px">Your computer</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff">Commit 1</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff">Commit 2</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff">Commit 3</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="dcap" style="font-size:28px">push</span><span style="font:800 44px/1 Archivo">→</span></div>
+    <div style="border:3px solid #000;padding:16px 24px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;align-content:flex-start;background:#000;color:#fff"><span style="font:800 30px Archivo;flex-basis:100%;margin-bottom:2px">GitHub</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff;color:#000">Commit 1</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff;color:#000">Commit 2</span><span style="font-size:28px;border:3px solid #ff3300;padding:4px 12px;background:#ff3300;color:#fff;font-weight:800">Commit 3</span></div>
+  </div>
+  <div class="r2" style="font-size:30px;font-weight:800;margin-bottom:10px">Pull: GitHub → your computer</div>
+  <div class="r2" style="display:grid;grid-template-columns:1fr 200px 1fr;margin-bottom:36px">
+    <div style="border:3px solid #000;padding:16px 24px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;align-content:flex-start"><span style="font:800 30px Archivo;flex-basis:100%;margin-bottom:2px">Your computer</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff">Commit 1</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff">Commit 2</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="dcap" style="font-size:28px">pull</span><span style="font:800 44px/1 Archivo">←</span></div>
+    <div style="border:3px solid #000;padding:16px 24px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;align-content:flex-start;background:#000;color:#fff"><span style="font:800 30px Archivo;flex-basis:100%;margin-bottom:2px">GitHub</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff;color:#000">Commit 1</span><span style="font-size:28px;border:3px solid #000;padding:4px 12px;background:#fff;color:#000">Commit 2</span><span style="font-size:28px;border:3px solid #ff3300;padding:4px 12px;background:#ff3300;color:#fff;font-weight:800">Commit 3 (Tom)</span></div>
+  </div>
+  <div class="dg r3" style="margin-top:auto"><span class="dcap" style="font-size:30px;margin-right:28px">Routine:</span><span class="dbox" style="margin:0">pull</span><span class="darrow">→</span><span class="dbox" style="margin:0">edit</span><span class="darrow">→</span><span class="dbox" style="margin:0">commit</span><span class="darrow">→</span><span class="dbox red" style="margin:0">push</span></div>
+</div></section>
+<section class="slide" data-n="28"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 7 min</span></div>
+  <h2>Create your GitHub account</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Have a GitHub account you can sign in to.</p>
+      <div class="k">You should see</div><p>Your GitHub home page, signed in.</p>
+      <div class="k">Stuck?</div><p>Raise your hand. Already have an account? Skip ahead.</p>
+    </div>
+    <div class="right r2">
+      <div class="k" style="font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:3px solid #000;padding-top:12px">Steps</div>
+      <ol class="lines num" style="font-size:40px">
+        <li>Open github.com and choose Sign up.</li>
+        <li>Enter your email, a password and a username.</li>
+        <li>Open the email from GitHub and confirm it.</li>
+      </ol>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="29"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 7 min</span></div>
+  <h2>Ask opencode to commit your project and push it to GitHub</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Put your first commit on GitHub.</p>
+      <div class="k">You should see</div><p>A financial-app repo on github.com with AGENTS.md.</p>
+      <div class="k">Stuck?</div><p>Raise your hand. Checkpoint <code style="white-space:nowrap">s1-start</code>.</p>
+    </div>
+    <div class="right r2">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Commit all files in this project with the message &quot;Start project&quot;. Create a new GitHub repository called financial-app and push to it. Tell me if I need to sign in.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="30"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2>Which copy survives if your laptop breaks?</h2>
+  <p class="question">You pushed three commits yesterday. Today your laptop falls in a river.</p>
+  <div class="choices">
+    <div class="choice"><span class="L">A</span><span>Your local copy</span></div>
+    <div class="choice correct"><span class="L">B</span><span>The copy on GitHub</span></div>
+    <div class="choice"><span class="L">C</span><span>None of them: the work is gone</span></div>
+  </div>
+  <div class="reveal">B — GitHub still holds everything you pushed. Work you never pushed is lost.</div>
+</div></section>
+<section class="slide s-break" data-n="31"><div class="inner">
+  <div class="eyebrow">Break</div>
+  <h2 style="margin-bottom:24px">Break, 10 minutes</h2>
+  <div class="timer r" data-countdown="600">10:00</div>
+  <p class="lead r2" style="margin-top:40px">Back at: <b>[TIME]</b></p>
+</div></section>
+<section class="slide" data-n="32"><div class="inner">
+  <div class="eyebrow">Skills (focus block)</div>
+  <h2>You can instruct the agent four ways: prompt, AGENTS.md, skill, workflow</h2>
+  <div class="body r" style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;align-items:end">
+    <div class="dbox" style="height:200px;margin:0;display:flex;flex-direction:column;gap:14px"><b style="font:800 34px Archivo">Prompt</b><span style="font-size:28px">one task, right now</span></div>
+    <div class="dbox" style="height:280px;margin:0;display:flex;flex-direction:column;gap:14px"><b style="font:800 34px Archivo">AGENTS.md</b><span style="font-size:28px">rules for every session</span></div>
+    <div class="dbox red" style="height:360px;margin:0;display:flex;flex-direction:column;gap:14px"><b style="font:800 34px Archivo">Skill</b><span style="font:400 28px/1.25 Nunito">expertise loaded when a task needs it</span></div>
+    <div class="dbox inv" style="height:440px;margin:0;display:flex;flex-direction:column;gap:14px"><b style="font:800 34px Archivo">Workflow</b><span style="font-size:28px">many steps in order (Session 3)</span></div>
+  </div>
+</div></section>
+<section class="slide" data-n="33"><div class="inner">
+  <div class="eyebrow">Skills (focus block)</div>
+  <h2>A skill is packaged expertise the agent loads when a task needs it</h2>
+  <p class="lead r" style="font-size:56px;line-height:1.2;border-left:12px solid #ff3300;padding-left:40px">A skill = instructions for doing one kind of job well.</p>
+  <div class="r2" style="margin-top:80px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;font-size:40px">
+    <span class="chip">Examples:</span>
+    <span class="dbox" style="margin:0">how to brainstorm,</span>
+    <span class="dbox" style="margin:0">how to design a page,</span>
+    <span class="dbox" style="margin:0">how to write a report.</span>
+  </div>
+</div></section>
+<section class="slide" data-n="34"><div class="inner">
+  <div class="eyebrow">Skills (focus block)</div>
+  <h2>The agent sees only each skill's name and description until a task needs it</h2>
+  <div class="body" style="display:grid;grid-template-columns:560px 1fr 520px;align-items:center">
+    <div class="r" style="border:3px solid #000;padding:24px">
+      <div class="dcap" style="margin-bottom:16px">Agent's context</div>
+      <div class="dbox" style="margin:0 0 12px">name and description</div>
+      <div class="dbox inv" style="margin:0 0 12px">name and description</div>
+      <div class="dbox" style="margin:0">name and description</div>
+    </div>
+    <div class="r2" style="display:flex;flex-direction:column;align-items:center;padding:0 16px">
+      <div class="dcap" style="color:#ff3300;text-align:center">task matches: load it</div>
+      <div style="width:100%;display:flex;align-items:center"><div style="flex:1;border-top:3px solid #ff3300"></div><span style="color:#ff3300;font-size:44px;line-height:1;margin-left:-6px">▶</span></div>
+    </div>
+    <div class="r3" style="display:flex;gap:20px;align-items:center;height:400px">
+      <div class="dbox ghost" style="flex:1;height:320px;margin:0;background:#f0f0f0"></div>
+      <div class="dbox red" style="flex:1.4;height:400px;margin:0;display:flex;align-items:flex-end">full instructions</div>
+      <div class="dbox ghost" style="flex:1;height:320px;margin:0;background:#f0f0f0"></div>
+    </div>
+  </div>
+  <div class="two" style="gap:60px;font-size:32px">
+    <div><div class="label">Always loaded</div>each skill's name and description</div>
+    <div><div class="label">Loaded on demand</div>the full instructions</div>
+  </div>
+</div></section>
+<section class="slide" data-n="35"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 4 min</span></div>
+  <h2>Ask opencode which skills you have, then open one and read it</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>See your own skills and read one.</p>
+      <div class="k">You should see</div><p>A list of skills, then one explained.</p>
+      <div class="k">Stuck?</div><p>No skills in your list? Read your neighbour's.</p>
+    </div>
+    <div class="right r2">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>List the skills you have, with each name and one-line description. Then show me the full text of one skill and explain in plain words what it does.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="36"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Demo</span></div>
+  <h2>The same request gives a different result with a skill than without</h2>
+  <p class="lead r">Same folder, model and settings.</p>
+  <div class="two r2" style="gap:40px;margin-top:40px">
+    <div class="dbox" style="margin:0;font-size:40px;padding:48px 40px;min-height:260px"><div class="dcap" style="margin-bottom:16px">Run 1:</div>the request alone</div>
+    <div class="dbox inv" style="margin:0;font-size:40px;padding:48px 40px;min-height:260px"><div class="dcap" style="margin-bottom:16px;color:#ff3300">Run 2:</div>the request + &quot;Use the [SKILL NAME] skill&quot;</div>
+  </div>
+</div></section>
+<section class="slide" data-n="37"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2 style="margin-bottom:40px">Would a skill help here, or is a plain prompt enough?</h2>
+  <p class="question" style="margin-bottom:24px">Which job benefits most from a skill?</p>
+  <div class="choices">
+    <div class="choice"><span class="L">A</span><span>Ask what &quot;dividend&quot; means</span></div>
+    <div class="choice correct"><span class="L">B</span><span>Every week, write a client memo in your firm's fixed format</span></div>
+    <div class="choice"><span class="L">C</span><span>Rename one button on the dashboard</span></div>
+  </div>
+  <div class="reveal">B — A skill pays off for work you repeat in the same way. One-off questions need only a prompt.</div>
+</div></section>
+<section class="slide" data-n="38"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2>An agent builds what it guesses you want, so make it ask first</h2>
+  <div class="r" style="display:flex;flex-direction:column;gap:24px">
+    <div class="dbox" style="margin:0;align-self:flex-start;font:500 40px &quot;JetBrains Mono&quot;,monospace">&quot;Build me a stock dashboard&quot;</div>
+    <p class="lead" style="margin:0"><span style="color:#ff3300;font-weight:800">→</span> the agent guesses the data, the layout, the features.</p>
+  </div>
+  <div class="punch red r2">Better: let it ask you first.</div>
+</div></section>
+<section class="slide" data-n="39"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2>Every build follows six steps: brainstorm, spec, plan, execute, test, iterate</h2>
+  <div class="body r" style="position:relative">
+    <svg style="position:absolute;left:0;top:0" width="1600" height="120" viewBox="0 0 1600 120"><path d="M1490 110 C1490 10, 650 10, 650 100" fill="none" stroke="#ff3300" stroke-width="3"/><path d="M638 86 L650 108 L662 86" fill="none" stroke="#ff3300" stroke-width="3"/></svg>
+    <div class="dg" style="position:absolute;top:110px;left:0;right:0;justify-content:space-between">
+      <span class="dbox" style="margin:0;">Brainstorm</span><span class="darrow" style="margin:0">→</span>
+      <span class="dbox" style="margin:0;">Spec</span><span class="darrow" style="margin:0">→</span>
+      <span class="dbox red" style="margin:0;">Plan</span><span class="darrow" style="margin:0">→</span>
+      <span class="dbox" style="margin:0;">Execute</span><span class="darrow" style="margin:0">→</span>
+      <span class="dbox" style="margin:0;">Test</span><span class="darrow" style="margin:0">→</span>
+      <span class="dbox" style="margin:0;">Iterate</span>
+    </div>
+    <span class="chip out" style="position:absolute;top:226px;left:612px">Approve / Edit / Reject</span>
+  </div>
+  <div class="punch r2">Plan is where you approve, edit or reject.</div>
+</div></section>
+<section class="slide" data-n="40"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2>In a brainstorm the agent asks one question at a time and you answer in business terms</h2>
+  <div class="r" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;gap:32px;align-items:center"><span class="chip" style="min-width:120px;text-align:center">Agent:</span><span class="dbox" style="margin:0;font-size:38px">&quot;Who will use this?&quot;</span></div>
+    <div style="display:flex;gap:32px;align-items:center;margin-left:200px"><span class="chip red" style="min-width:120px;text-align:center">You:</span><span class="dbox inv" style="margin:0;font-size:38px">&quot;Our sales team, before client meetings.&quot;</span></div>
+  </div>
+  <div class="punch r2">One question. One short answer. No technical words.</div>
+</div></section>
+<section class="slide" data-n="41"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Ask opencode to brainstorm the BBCA dashboard with you, one question at a time</h2>
+  <div class="ho">
+    <div class="left">
+      <div class="k">Goal</div><p>Let the agent ask you what the dashboard should do.</p>
+      <div class="k">You should see</div><p>One short question per reply. No files created.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Let&#x27;s brainstorm a BBCA stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don&#x27;t write any code or files yet.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="42"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2>A spec says what to build and why; a plan says how, step by step</h2>
+  <div class="two">
+    <div class="r" style="border-top:12px solid #000;padding-top:24px"><div style="font:800 64px Archivo">Spec:</div><p class="lead" style="margin-top:12px">what and why.</p></div>
+    <div class="r2" style="border-top:12px solid #ff3300;padding-top:24px"><div style="font:800 64px Archivo;color:#ff3300">Plan:</div><p class="lead" style="margin-top:12px">how, in numbered steps.</p></div>
+  </div>
+  <div class="punch r3" style="font-weight:400;font-family:Nunito;padding-top:0;line-height:1.4;overflow:visible">Spec in <code>docs/spec.md</code>. Plan in <code>docs/plan.md</code>.</div>
+</div></section>
+<section class="slide" data-n="43"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2>A good spec lists goals, what&#x27;s out of scope, and how you&#x27;ll know it works</h2>
+  <div class="body" style="display:flex;flex-direction:column">
+    <div class="r" style="display:grid;grid-template-columns:460px 1fr;gap:48px;align-items:baseline;border-top:3px solid #000;padding:40px 0"><div style="font:800 44px Archivo">Goals:</div><div style="font-size:44px;line-height:1.3">show BBCA&#x27;s price, daily change and 1-year chart</div></div>
+    <div class="r2" style="display:grid;grid-template-columns:460px 1fr;gap:48px;align-items:baseline;border-top:3px solid #000;padding:40px 0"><div style="font:800 44px Archivo;color:#6b6b6b">Out of scope:</div><div style="font-size:44px;line-height:1.3">live prices, other stocks</div></div>
+    <div class="r3" style="display:grid;grid-template-columns:460px 1fr;gap:48px;align-items:baseline;border-top:3px solid #000;border-bottom:3px solid #000;padding:40px 0"><div style="font:800 44px/1.1 Archivo;color:#ff3300">How we&#x27;ll know it works:</div><div style="font-size:44px;line-height:1.3">the page loads with real BBCA numbers</div></div>
+  </div>
+</div></section>
+<section class="slide" data-n="44"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Ask the agent to write the spec to docs/spec.md, then read and correct it</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Get a written spec, then fix anything wrong.</p>
+      <div class="k">You should see</div><p>docs/spec.md with three sections. No app yet.</p>
+      <div class="k">Stuck?</div><p>Checkpoint <code>s1-spec</code>.</p>
+    </div>
+    <div class="right r2">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Write what we agreed to docs/spec.md. Use three sections: Goals, Out of scope, and How we&#x27;ll know it works. Don&#x27;t build anything yet. We&#x27;ll use React + Vite, FastAPI (Python) and yfinance, with endpoints GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y, server on port 8000, page on port 5173.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="45"><div class="inner">
+  <div class="eyebrow" style="margin-bottom:14px"><span class="tag">Hands-on · 5 min</span></div>
+  <h2 style="margin-bottom:18px">Switch opencode to Plan mode and ask for a step-by-step plan from the spec</h2>
+  <div class="ho" style="grid-template-columns:380px 1fr;gap:56px">
+    <div class="left r">
+      <div class="k">Goal</div><p>Get a plan you have checked, then save it.</p>
+      <div class="k">You should see</div><p>A numbered plan, then docs/plan.md.</p>
+      <div class="k">Stuck?</div><p>Checkpoint <code>s1-spec</code>.</p>
+    </div>
+    <div class="right r2" style="gap:10px">
+      <div class="step"><b>1. Plan mode.</b> Press Tab (footer says &quot;plan&quot;), then send:</div>
+      <div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Prompt</span><button>Copy</button></div><pre style="padding:12px 28px">Read docs/spec.md and give me a numbered step-by-step plan to build it. Don&#x27;t build anything yet.</pre></div>
+      <div class="step"><b>2. Read the plan.</b> Approve it, edit it, or reject it. To edit, send:</div>
+      <div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Prompt</span><button>Copy</button></div><pre style="padding:12px 28px">Add one more step at the end: write a short README that explains how to start the app. Show me the updated plan.</pre></div>
+      <div class="step"><b>3. Build mode.</b> Approved? Press Tab (footer says &quot;build&quot;), then send:</div>
+      <div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Prompt</span><button>Copy</button></div><pre style="padding:12px 28px">Save that plan to docs/plan.md. Don&#x27;t build anything yet.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="46"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2 style="margin-bottom:36px">Approve, edit or reject: what would you do with each of these three plans?</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:30px">
+    <div style="border-top:8px solid #000;padding-top:12px;font-size:30px;line-height:1.3"><b style="font:800 30px Archivo">Plan 1:</b> 8 steps that follow the spec.</div>
+    <div style="border-top:8px solid #000;padding-top:12px;font-size:30px;line-height:1.3"><b style="font:800 30px Archivo">Plan 2:</b> Same, plus a login screen nobody asked for.</div>
+    <div style="border-top:8px solid #000;padding-top:12px;font-size:30px;line-height:1.3"><b style="font:800 30px Archivo">Plan 3:</b> Builds a phone app. Ignores the spec.</div>
+  </div>
+  <div class="choices" style="gap:16px">
+    <div class="choice correct" style="padding:18px 32px"><span class="L">A</span><span>Approve 1 · Edit 2 · Reject 3</span></div>
+    <div class="choice" style="padding:18px 32px"><span class="L">B</span><span>Approve all three</span></div>
+    <div class="choice" style="padding:18px 32px"><span class="L">C</span><span>Reject 1 · Approve 2 · Edit 3</span></div>
+  </div>
+  <div class="reveal" style="margin-top:28px">A — Approve what matches the spec, edit what adds extras, reject what ignores it.</div>
+</div></section>
+<section class="slide" data-n="47"><div class="inner">
+  <div class="eyebrow">Brainstorm → Spec → Plan → Execute</div>
+  <h2 style="margin-bottom:40px">Your app has two parts: a React screen and a FastAPI back end that fetches data and talks to the AI</h2>
+  <div class="body" style="position:relative">
+    <svg style="position:absolute;left:0;top:0" width="1600" height="520" viewBox="0 0 1600 520">
+      <path d="M318 215 H858" stroke="#000" stroke-width="3" fill="none"/><path d="M844 203 L860 215 L844 227" stroke="#000" stroke-width="3" fill="none"/>
+      <path d="M318 315 H858" stroke="#000" stroke-width="3" stroke-dasharray="12 9" fill="none"/><path d="M844 303 L860 315 L844 327" stroke="#000" stroke-width="3" fill="none"/>
+      <path d="M1182 220 C1222 220, 1222 110, 1262 110" stroke="#ff3300" stroke-width="3" fill="none"/><path d="M1248 99 L1264 110 L1248 121" stroke="#ff3300" stroke-width="3" fill="none"/>
+      <path d="M1182 310 C1222 310, 1222 400, 1262 400" stroke="#ff3300" stroke-width="3" fill="none"/><path d="M1248 389 L1264 400 L1248 411" stroke="#ff3300" stroke-width="3" fill="none"/>
+    </svg>
+    <div class="dbox r" style="position:absolute;left:0;top:140;top:140px;width:300px;height:250px;margin:0;display:flex;flex-direction:column;justify-content:center;gap:12px;box-sizing:border-box">
+      <svg width="84" height="62" viewBox="0 0 84 62"><rect x="1.5" y="1.5" width="81" height="59" fill="#fff" stroke="#000" stroke-width="3"/><rect x="1.5" y="1.5" width="81" height="14" fill="#000"/><rect x="8" y="6" width="5" height="5" fill="#ff3300"/><rect x="17" y="6" width="5" height="5" fill="#fff"/></svg>
+      <b style="font:800 32px Archivo">Screen (React)</b><span class="mono" style="font-size:28px">port 5173</span>
+    </div>
+    <div class="r2" style="position:absolute;left:330px;top:95px;width:540px;font:500 28px/1.35 'JetBrains Mono',monospace">GET /api/quote/{ticker}, GET /api/history/{ticker}?period=1y</div>
+    <div class="r2" style="position:absolute;left:330px;top:332px;width:520px;font-size:28px;color:#6b6b6b">chat messages (later)</div>
+    <div class="dbox inv r" style="position:absolute;left:880px;top:140px;width:300px;height:250px;margin:0;display:flex;flex-direction:column;justify-content:center;gap:12px;box-sizing:border-box">
+      <b style="font:800 32px Archivo">Back end (FastAPI)</b><span class="mono" style="font-size:28px">port 8000</span>
+    </div>
+    <div class="dbox r3" style="position:absolute;left:1270px;top:40px;width:330px;height:150px;margin:0;display:flex;align-items:center;box-sizing:border-box;font-size:30px"><span><b style="font-weight:800">yfinance:</b> BBCA data</span></div>
+    <div class="dbox red r3" style="position:absolute;left:1270px;top:310px;width:330px;height:190px;margin:0;display:flex;flex-direction:column;justify-content:center;gap:8px;box-sizing:border-box;font:400 30px/1.25 Nunito"><span><b style="font:800 30px Archivo">The AI:</b> the LLM in</span><span style="display:flex;align-items:center;gap:12px"><span class="mono" style="font-size:28px">backend/.env</span><svg width="28" height="36" viewBox="0 0 28 36"><path d="M7 16 V10 a7 7 0 0 1 14 0 V16" stroke="#fff" stroke-width="3" fill="none"/><rect x="2" y="16" width="24" height="18" fill="#fff"/></svg></span></div>
+  </div>
+</div></section>
+<section class="slide" data-n="48"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 8 min</span></div>
+  <h2>Approve the plan, let the agent build the dashboard, then open it in your browser</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Build the dashboard from your approved plan.</p>
+      <div class="k">You should see</div><p>A page at localhost:5173 with BBCA&#x27;s price, change and chart.</p>
+      <div class="k">Stuck?</div><p>Checkpoint <code>s1-dashboard</code>.</p>
+    </div>
+    <div class="right r2">
+      <div class="prompt"><div class="ph"><span>Prompt (Build mode)</span><button>Copy</button></div><pre>Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="49"><div class="inner">
+  <div class="eyebrow" style="margin-bottom:12px"><span class="tag">Hands-on · 8 min</span></div>
+  <h2 style="margin-bottom:14px">Add the chatbot: update the spec, get a new plan, approve, build</h2>
+  <div class="r" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;align-content:start">
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="step"><b>1. Brainstorm:</b></div>
+      <div class="prompt sm"><div class="ph" style="padding:4px 20px"><span>Prompt</span><button style="padding:4px 18px">Copy</button></div><pre style="padding:10px 20px">Let&#x27;s brainstorm a chatbot for the BBCA dashboard. Ask me one question at a time, at most 2, in plain business language. Don&#x27;t write any code or files yet.</pre></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="step"><b>2. Spec</b> (read, correct):</div>
+      <div class="prompt sm"><div class="ph" style="padding:4px 20px"><span>Prompt</span><button style="padding:4px 18px">Copy</button></div><pre style="padding:10px 20px">Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds BBCA&#x27;s current data, then calls the LLM in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). No buy/sell advice, no tool calling. Don&#x27;t build yet.</pre></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="step"><b>3. Plan</b> (Tab: Plan mode; approve, edit or reject):</div>
+      <div class="prompt sm"><div class="ph" style="padding:4px 20px"><span>Prompt</span><button style="padding:4px 18px">Copy</button></div><pre style="padding:10px 20px">Read docs/spec.md and give me a step-by-step plan for the chatbot only. Don&#x27;t build yet.</pre></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="step"><b>4. Build</b> (Tab: Build mode, once approved):</div>
+      <div class="prompt sm"><div class="ph" style="padding:4px 20px"><span>Prompt</span><button style="padding:4px 18px">Copy</button></div><pre style="padding:10px 20px">Approved. Save that plan to docs/plan.md, then build the chatbot from it.</pre></div></div>
+  </div>
+  <div class="r2" style="margin-top:auto;display:grid;grid-template-columns:1.1fr 1.1fr .8fr;gap:28px;font-size:28px;line-height:1.3">
+    <div style="border-top:3px solid #000;padding-top:8px"><b style="font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;margin-right:10px">Goal</b> Add a chat panel through the same loop.</div>
+    <div style="border-top:3px solid #000;padding-top:8px"><b style="font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;margin-right:10px">You should see</b> A chat panel that answers questions about BBCA.</div>
+    <div style="border-top:3px solid #000;padding-top:8px"><b style="font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;margin-right:10px">Stuck?</b> Checkpoint <code style="white-space:nowrap">s1-chatbot</code>.</div>
+  </div>
+</div></section>
+<section class="slide" data-n="50"><div class="inner">
+  <div class="eyebrow">Test, debug, iterate</div>
+  <h2>When something breaks, paste the error and ask the agent to explain it</h2>
+  <ol class="lines num r" style="font-size:44px">
+    <li>Copy the whole error message.</li>
+    <li>Paste it to the agent.</li>
+    <li><span>Ask: <b>&quot;Explain this in plain words, then fix it.&quot;</b></span></li>
+    <li>Check that it worked.</li>
+  </ol>
+</div></section>
+<section class="slide" data-n="51"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Ask your chatbot three questions and fix one thing that&#x27;s wrong</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Test the chatbot and fix one problem.</p>
+      <div class="k">You should see</div><p>A fixed answer. No buy advice.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right r2">
+      <div class="step"><b>Ask the chatbot:</b></div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;font-size:30px">
+        <span style="font-size:30px;border-left:6px solid #ff3300;padding:2px 0 2px 20px">&quot;What is BBCA&#x27;s latest price?&quot; ·</span>
+        <span style="font-size:30px;border-left:6px solid #ff3300;padding:2px 0 2px 20px">&quot;And a month ago?&quot; ·</span>
+        <span style="font-size:30px;border-left:6px solid #ff3300;padding:2px 0 2px 20px">&quot;Should I buy BBCA?&quot;</span>
+      </div>
+      <div class="step" style="margin-top:8px"><b>Then ask opencode:</b></div>
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>The chatbot [describe what is wrong]. Explain the cause in plain words, then fix it.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="52"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 3 min</span></div>
+  <h2>Commit and push your working app</h2>
+  <div class="ho">
+    <div class="left r">
+      <div class="k">Goal</div><p>Save your working app on GitHub.</p>
+      <div class="k">You should see</div><p>New commit on github.com. No .env file there.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="right r2">
+      <div class="prompt"><div class="ph"><span>Prompt</span><button>Copy</button></div><pre>Commit all changes with the message &quot;BBCA dashboard and chatbot&quot;. Make sure backend/.env is not committed. Then push to GitHub.</pre></div>
+    </div>
+  </div>
+</div></section>
+<section class="slide" data-n="53"><div class="inner">
+  <div class="eyebrow">Close</div>
+  <h2>You built an app by directing an AI, not by writing code</h2>
+  <ul class="lines r" style="font-size:40px">
+    <li style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>Model is stateless; the app resends the conversation</span></li>
+    <li style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>AGENTS.md keeps standing rules</span></li>
+    <li style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>Git and GitHub keep your work safe</span></li>
+    <li style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>Brainstorm → Spec → Plan → Build → Test</span></li>
+  </ul>
+  <div class="r2" style="margin-top:auto;display:flex;align-items:center;gap:20px"><span class="chip" style="font-size:28px;padding:12px 20px">Checkpoint:</span><span class="mono" style="font-size:34px">s1-chatbot</span></div>
+</div></section>
+<section class="slide s-break" data-n="54"><div class="inner">
+  <div class="eyebrow">Close</div>
+  <h2 style="margin-bottom:24px">Questions</h2>
+  <div class="timer r" style="font-size:240px">Questions?</div>
+  <div class="r2" style="position:absolute;right:0;top:0;border:3px solid #000;padding:20px 32px;display:flex;align-items:baseline;gap:18px"><span class="dcap">Timer:</span><span data-countdown="300" style="font:800 64px Archivo;color:#ff3300">5:00</span></div>
+</div></section>
+<section class="slide" data-n="55"><div class="inner">
+  <div class="eyebrow">Close</div>
+  <h2>Next session: your app remembers prices and learns the rules</h2>
+  <div style="display:grid;grid-template-columns:340px 1fr;gap:60px;align-items:start">
+    <div class="r" style="background:#ff3300;color:#fff;font:800 48px Archivo;padding:28px 32px">Session 2:</div>
+    <ul class="lines r2" style="font-size:44px">
+      <li>A database that remembers prices</li>
+      <li>A watchlist: BBCA, BBRI, TLKM</li>
+      <li>A Wiki so the chatbot knows the rules</li>
+    </ul>
+  </div>
+</div></section>
+<div class="pg"></div></div></div><div id="notesbar"></div>
+<script type="application/json" id="notes-data">{"1": "Welcome everyone. Today you build a real app, and nobody writes code by hand. You tell an AI coding agent called opencode what you want, you check what it gives you, and you steer it. By the end of these three hours you will have a BBCA dashboard and a chatbot, saved on GitHub. Before we start, check that opencode opens on every laptop, Windows and Mac, and that it answers a simple \"hello\". Anyone whose model does not reply, raise your hand now, so we fix it before the first exercise.", "2": "Say what the day produces, in business words. BBCA is Bank Central Asia, a stock many of you know. The dashboard shows its latest price in rupiah, how much it moved today, and a one-year chart. The chatbot answers questions about that data. Then ask: how many of you have written code before? Few hands is fine. Make the point that your job is the same as a manager's: be clear about the goal, then judge the work. The agent does the typing. Mention that we show market data only. Nothing in the app tells anyone what to buy or sell.", "3": "You show the finished app. Have both servers running before class.\n1. Open the page from checkpoint s1-chatbot in the browser (localhost:5173).\n2. Point at the latest price in rupiah, the daily change, and the one-year chart.\n3. In the chat panel type: \"What is BBCA's latest price?\"\n4. Then type: \"And a month ago?\" The answer should still make sense.\n5. Say: none of this was written by hand. You will build it in the next hours.\nIf Yahoo is slow, the checkpoint ships cached data, so the page still loads. Only try \"Should I buy BBCA?\" if you rehearsed it.", "4": "Walk through the agenda quickly. Explain the rhythm: I explain for a few minutes, then you do it, then we check together. Elapsed times for orientation: LLM basics starts at 0:10, models at 0:45, Git at 0:55, break at 1:25 for ten minutes, skills at 1:35, the build at 1:55, test and push at 2:40, Q&A at 2:50. If you fall behind, do not stop. Raise your hand, and I will send you to a checkpoint, which is a saved version of the project you can switch to.", "5": "Start with what an LLM is: a very large text predictor. You send text, it predicts the most likely next words, one piece at a time. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real BBCA numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.", "6": "\"Stateless\" means each request starts from zero. The model does not keep a file about you. When you ask the second question, the model has no idea there was a first one, unless that first message is sent again. Most people expect software to remember, so this feels odd. Ask: if the model remembers nothing, why does ChatGPT seem to remember our chat? Let them guess for a moment, then move on. The next slide answers it. Keep the tone light; this is the most important idea in the first block.", "7": "This is the answer to the previous question. The chat app keeps the whole conversation, and every turn it sends all of it again, plus your new message. Point at the rows getting longer. The model reads everything from the top each time, so it looks like it remembers. Two consequences: long chats cost more and run slower, and anything that is not in what gets sent does not exist for the model. We will build exactly this into our chatbot later: the page sends the whole message list every turn. Keep the phrase \"the app resends it\" in their heads.", "8": "[UNTESTED PROMPT] First exercise, and it should be quick. Everyone opens opencode inside the empty financial-app folder. Check this before you start: some people will be in the wrong folder. Send prompt one, wait for the reply, then type /new, which starts a new session. Send prompt two. The agent should say it does not know. Ask a few people what they saw. Then connect it to slide 6: the second session never received the first message, so the model could not use it. If someone's agent does answer correctly, ask them whether they typed prompt two in the same session. This prompt is untested, so rehearse it first.", "9": "Every request has a limit on how much text the model can take in. That limit is the context window. Think of a desk: only what fits on the desk can be read. Everything counts toward it, not just your questions. The rules, the whole conversation so far, the answers, and any file the agent opened are all on the desk. I won't quote numbers because they differ per model and change often. In opencode there is a counter that shows how much you have used. We will watch it in a moment. Ask: what do you think fills it fastest, your questions or the files the agent reads?", "10": "When the desk is full, something has to go. Either the oldest material is cut off, or it is replaced by a short summary. Both lose detail. The risk for you: an instruction you gave an hour ago, like \"always show prices in rupiah\", may be gone without any warning. The agent does not tell you it forgot. Two habits help. Start a new session when a task is finished, instead of one endless chat. And put rules that must always apply into a file, which is the AGENTS.md we use in a few minutes. Ask: when would you start a new session?", "11": "[UNTESTED PROMPT] Tell them to look at the counter in opencode before they send anything, and note the number. Where it appears depends on the version and window size, so walk the room and point at it on a screen. Send the prompt. The counter jumps because the reply is long, and the whole conversation gets resent next turn. Ask follow-ups and watch it climb. Say it out loud: the number goes up with their words and the model's words. Do not state any limit; ask them to find, in the same place, whether opencode shows how full it is. Untested prompt, so rehearse it first.", "12": "Now look inside what gets sent. It is not one blob of text but a list of messages, and each message has a role. There are four roles. We will name them one by one on the next slide. For now notice that the list is ordered, and the whole list goes to the model every turn, which links back to the slides on statelessness. When you later read about \"prompts\" or \"context\", this list is what they mean. You do not need to write these lists yourself; opencode and our app build them. But knowing they exist explains why the agent behaves the way it does.", "13": "Take the four roles in turn. System: the rules and the role, written by whoever builds the app. In our chatbot, you will see this one again in Session 2, when you write your own. User: that is you. Assistant: the model's replies. Tool: the result of something the app ran on the model's behalf, like reading a file. Quick check: ask the room which role the AGENTS.md rules belong to, system or user. Most will guess system; that is close enough, since the agent loads it as standing instructions before your first message.", "14": "So how does an agent read files or run commands? Tool calling. The app, here opencode, tells the model which tools exist. The model asks for a tool: \"please run this tool with these inputs\". Then opencode runs it, then adds the result as a tool message and sends everything back. The model continues. Stress this: the model asks, opencode runs. The model never touches your computer itself, and opencode can ask you for permission first. This is also why a mistaken model is less scary than it sounds: you stay in the loop. Our chatbot will not use tools yet.", "15": "Put the last two slides together. An agent is the loop you see here. You give a goal. The model decides what to do next, usually a tool. The app runs it. The model reads the result and decides again. It repeats until it thinks the task is done. That is why one request can take a minute and touch many files. It is also why the first sentence of your request matters so much: every step in the loop builds on the goal you gave. If the goal is vague, the loop wanders. Next slide: what that means for your role.", "16": "This is the role split for the whole course. You bring the goal in business terms, you decide between options, and you approve or reject. The agent writes the files and runs the commands. Because the model predicts rather than verifies, it will sometimes be wrong with great confidence. So your judgement is not a formality. Ask yourself on every result: is this what I wanted, and how would I know? You do not need to read code for that. You can open the page, try the feature, and compare against what you asked. We practise that all day.", "17": "Since the model forgets between sessions, we need a place to keep standing instructions. That place is AGENTS.md, a plain text file in the project folder. opencode reads it at the start of every session and puts it in front of the model. Typical contents: what the project is, how to run it, and rules like the one on the slide. The rule on screen is the one you will add in a moment. It makes the agent say what it plans to do before it does it, which is very useful when you cannot read the code. Anything permanent goes here, not in a chat.", "18": "Everyone types /init in the empty financial-app folder. It took 43 to 55 seconds in our tests, and the file is short, because the folder is empty. Sometimes a box appears: \"Permission required, access external directory\". The agent occasionally looks at a path outside the project folder, and opencode asks first. Tell them to choose Allow once; it is highlighted, so Enter is enough. Rejecting can leave you with no file, and then you send /init again. Then send prompt two. Wording around the rule differs between people, and that is fine. Open AGENTS.md together and check the rule. If nothing moves for two minutes, stop the agent and resend the same prompt. Do not commit yet.", "19": "Read the question aloud. Give them thirty seconds to think, then ask for a show of hands for A, B and C. Take one vote at a time. Choice A makes people laugh; ask why a model cannot be tired. Click to reveal the answer. B is right because the session starts empty and only files carry knowledge forward. If someone argues for C, say updates are possible but not the usual cause. Then ask one person to say, in their own words, what rule they would add for their own work. This closes the LLM basics block and sets up model selection.", "20": "Models come in different sizes. A fast model replies in a few seconds and is fine for small, clear jobs. A smart model spends longer working things out before it acts, which helps when the task is unclear or the answer needs several steps. Show the picker: type /models in opencode and let them see the list on their own laptops. Names differ between people depending on which provider they use, so do not say \"everybody pick X\". Say \"pick one fast and one smart from your list\". Ask the room to find the two they will use in the next exercise. Do not talk about prices; ask them to look at the model list for hints.", "21": "Give the rule of thumb. Fast models for small edits where you can see the result straight away. Smart models for planning, when a bad plan wastes the whole build, and for debugging, when the cause is not obvious. Use a restaurant picture: a fast model is the quick cook who makes the toast; a smart model is the chef you ask for the new menu. A wrong choice shows up in two ways: a fast model on a hard job gives a shallow answer, a smart model on a trivial job makes you wait. Today the plan step in our build is where we use the smart model. Then you do the next exercise.", "22": "[UNTESTED PROMPT] Before class, replace [FAST MODEL] and [SMART MODEL] on this slide with real names from the model list your participants share. Walk them through the steps: choose the fast model with /models, send the prompt, note how long it took. Type /new so the second try starts clean. Pick the smart model, send the same prompt. Ask three people to compare: which was faster, which gave better reasons, and did it matter for this task? Likely answer: both are fine for a small question, and the difference shows on harder work. This prompt is untested, so rehearse it with both models first. Remind them the answers are general information, not investment advice.", "23": "Read the three tasks. Let people think for twenty seconds, then vote by raising hands for A, B or C. Choice C is tempting because fast feels efficient. Ask someone who voted C what happens if the plan is shallow: the whole build rests on it. Click to reveal A. Add the nuance that it is a rule of thumb, not a law: if a fast model keeps failing at a task, switch to a smart one before trying a tenth time. Switching models mid-session is allowed with /models. Then move on to Git, which keeps our work safe whatever model we use.", "24": "Ask: who has a folder that looks like this? Hands up. This is the problem version control solves. With copies like these, nobody knows which file is the real one, who changed what, or what was lost. Git is a tool that keeps one project, every version of it remembered, and one shared copy for the team. GitHub is a website that hosts that shared copy. Why this matters for an AI agent: the agent changes many files quickly, and you need a way to go back and a place where the work is safe. That is why we do Git before building anything big.", "25": "Explain with the desk and the filing cabinet from the Git demo. The local copy is your own desk: only you see it. The remote copy is the team's filing cabinet, which is GitHub: everyone can reach it. The key sentence is on the slide: nothing moves between the two until you decide to push or pull. Many beginners think saving a file shares it. It does not. Ask one person to explain in their own words where their opencode project is stored right now. Answer: only on their laptop. After the GitHub exercise there will be a second copy.", "26": "A commit is a save point. Not just the file, but the whole project at that moment, with a short note about what changed. Think of a game save with a name. You can go back to any commit. Commits live on your own computer. Nobody else can see them yet. With opencode you do not type Git commands. You ask the agent in plain English: \"commit my project with this message\". Show the idea that the note matters: next month, \"Fixed the totals\" tells you what happened; \"stuff\" tells you nothing. Ask the agent for a clear message. We do this on slide 29.", "27": "Push sends your commits up to GitHub. After that your teammates can see them. Pull is the reverse: it brings their commits down to your computer. Nothing arrives by itself, so pull before you start working. Today you work alone, so you will mostly push. The daily routine is pull, edit, commit, push. Ask the room which order breaks things if you swap it: if you edit first and pull later, your changes may clash with a teammate's. We do not go further in this course. The agent will do the Git commands for you.", "28": "Signup can be slow because GitHub sends a confirmation email. Start it now, and tell people to check their spam folder if the email is late. Anyone who already has an account can sign in to make sure the password still works. Suggest using a personal or work email they can open right now. Choose a username they will not mind showing: it appears in the web address of their projects. While people wait for the email, walk the room. If anyone is blocked, note their name and let them continue after the break. We need everyone signed in before the next slide. Facilitator guide has the fallback if GitHub signup fails for the whole room.", "29": "[UNTESTED PROMPT] This is the first push. The prompt asks for a commit with a clear message, a new repository, and the push. If the agent says you need to sign in to GitHub, follow its instructions on screen. Agree the sign-in method for Windows and Mac in the pre-session checklist. Confirm success the human way: open github.com, refresh, and look for the financial-app repository containing AGENTS.md. This prompt is untested and depends on how Git and GitHub sign-in are set up on the laptops, Windows and Mac, so rehearse it on both. Anyone stuck gets checkpoint s1-start. A repository can be private; say that people can decide.", "30": "Read the scenario with a straight face. Vote by hands. Choice A makes the room laugh; ask how a copy on a broken laptop can survive. Choice C is the fearful answer; this is exactly what Git protects against. Click to reveal B. Add the caveat from the reveal: GitHub only holds what you pushed. Anything committed but not pushed on the broken laptop is gone. So the habit is to push at the end of every work block, which we do again after the chatbot. Then announce the break: ten minutes. Anyone without a GitHub account should use it to finish signup.", "31": "Start the timer and write the return time on the board. Use the break to help anyone who is still stuck on GitHub signup or the first push. Check that every laptop still has opencode open in the financial-app folder. Check the LLM quota is fine. Suggest people stand up and stretch. When the timer reaches 1:00 remaining, call people back. Resume with the skills block. Do not start new content before most people are back, or you will have to repeat it. Keep the next block in mind: skills, then the big build, which is the heart of the day.", "32": "Welcome back. There are four ways to tell an agent what you want. A prompt is the message you type now. AGENTS.md is a standing note that applies to every session. A skill is a package of expertise that the agent loads only when a task needs it. A workflow strings many steps together; we build one in Session 3. Ask: you have already used two today. Which? Prompt and AGENTS.md. This slide is a map; the rest of this block is about skills, because they are the one most people have not met. Do not explain workflows yet.", "33": "A skill is a written playbook for one kind of job, packed so the agent can pick it up when needed. Think of a recipe card in a kitchen. The cook does not memorise every recipe, but picks the right card for the dish. Examples: a skill for brainstorming ideas before building, one for page design, one for writing a report. Skills differ by person because everyone has their own set. We do not provide a course skill kit. You will use whatever skills your opencode already has. If you have none, you still follow the course; today's prompts are built to work without any.", "34": "Connect this to the context window. If the agent loaded every skill in full at the start, the desk would fill up with text it does not need. So it sees only the name and a one-line description of each. When your request matches a description, it loads that one skill in full and follows it. One lesson: a skill is only found if its description is clear. Ask: where have you seen this idea before? AGENTS.md, which is always loaded, versus a skill, which is loaded on demand.", "35": "[UNTESTED PROMPT] Participants have different setups, so their lists will differ. Some may have many skills; some may have none, which is fine. For those people, ask them to look over a neighbour's screen. Walk the room and note interesting skills to mention afterwards. Ask two people to read out the name of one skill they found. The prompt asks the agent to explain in plain words, so no one needs to read the raw file, though they may look at it. Point out that the file is just text with a name, a description and instructions. This prompt is untested and depends on the agent finding skills, so rehearse it on your own setup first.", "36": "[UNTESTED PROMPT] Presenter demo using a skill on your own setup, for example a brainstorming or frontend-design skill. Rehearse it and keep screenshots as a backup.\n1. Use one empty folder, one model and one config. Start a new session for each run (/new).\n2. Run 1: \"I want a simple page for my sales team to see BBCA before a client meeting. Don't create files.\"\n3. Run 2: the same request, starting with \"Use the [SKILL NAME] skill.\"\n4. Show on screen that the skill was loaded before the agent answered.\n5. Compare the structure, such as questions first versus a straight answer. Wording varies from run to run anyway, so don't compare sentences. Verify on your setup first.", "37": "Vote by hands. A and C are one-off jobs that a plain prompt handles in seconds, so writing a skill would be wasted effort. B is a repeating job with a fixed format, which is where packaged expertise earns its keep. Click to reveal B. Add a second point: a skill helps only if the agent can find it and its description matches the job, so name skills clearly. Ask if anyone has a repeated task at work that would make a good skill. Collect two examples. Say that Session 3 takes this further with workflows. Then move on to the big part: building the app, starting with asking questions first.", "38": "Show how a vague request goes wrong. If you say \"build me a stock dashboard\", the agent fills every gap with a guess: which stocks, which period, what it looks like. It will usually build something, quickly, and it may be far from what you meant. Then you spend your time undoing. The fix costs two minutes: let it ask you questions first. This is the same thing a good business analyst does with a stakeholder. For the rest of the session you will see this pattern again and again, and it is the most useful habit of the day. Ask who has received work back that missed the point.", "39": "This is the method for the rest of Day 3. Brainstorm: the agent asks, you answer. Spec: a written description of what to build. Plan: step by step how. You approve, edit or reject the plan before anything is built. Execute: the agent builds. Test: you check the result in the browser. Iterate: you ask for changes. We use the same six steps for the dashboard now, the chatbot after, and the features of Sessions 2 and 3. Do not memorise them; they will be on the wall as a diagram. Notice that nothing gets built until step four.", "40": "Set up the exercise. In the brainstorm, the agent asks and you answer. One question at a time keeps the answers short and the thinking clear. Answer in business terms: who uses it, what decision it supports, how fresh the data needs to be. You do not need to name technology. If you do not know, say so: \"I don't know, suggest one.\" Tip: answer exactly what the agent asked, in one sentence. Answers that do not match still work, but they leave gaps in the spec later. It will ask at most five questions in our prompt. We keep the technology out of the brainstorm and add it in the spec step.", "41": "Everyone sends the prompt, exactly as written. In our tests the agent asked five short questions, about five seconds each, and then summarised what was agreed in three bullets. The first question was always the same: who will use this. Others vary, so let people answer what is actually asked. Sample answers: sales team preparing for client meetings; delayed price is fine if it shows the update time; mostly laptops; just the figures and the chart. Watch for anyone whose agent starts writing files; tell them to stop it and re-send. Do not worry if answers differ between neighbours. That variety is the point.", "42": "Two documents, two jobs. The spec is the contract between you and the agent: what we are building and why, in your words. The plan is the agent's proposal for how to build it, in numbered steps. You write, or at least correct, the spec, because it holds your intent. You review the plan, because it shows how the agent wants to spend the next hour. Both are files in the project, so they survive when a session ends. That solves the memory problem from the start of the session: a new session can read the spec and carry on. Ask: if you changed your mind about a feature, which document would you change first?", "43": "A spec needs only three parts. Goals say what the app must do. Out of scope says what it must not do, which stops the agent adding extras. How we'll know it works describes what you will see when it is right. Without this third part you cannot judge the result. The examples on the slide are plausible answers from our BBCA brainstorm; your own spec will differ, because your brainstorm answers differ. Remind people that they are the ones who judge: after the agent writes the spec, they read it and correct anything that is not what they meant. That correction step is the exercise.", "44": "Teach the sentence \"Don't build anything yet\". In our first test this sentence was missing, and the prompt said \"Build it\". The agent built the entire app: frontend, backend, tests. It took almost eight minutes. With \"Don't build anything yet\", three of three runs wrote only the spec in about half a minute. Agents like to be helpful, so you must say when not to act. The stack is named here, in one plain sentence, so you need not understand it. After it writes the spec, everybody opens docs/spec.md, reads it and fixes one thing: send a short correction prompt.", "45": "Tab switches opencode between two agents. Build can edit files. Plan can read and think but cannot edit files, so it is safe for planning. Step one takes about 20 seconds and returns a numbered list, eight steps in our tests, with the right ports and endpoints. Step two is the checkpoint: read it against your spec. Approve means go to step three. Edit means ask in plain words, as in the second prompt; it adds a ninth step and changes nothing else. Reject means say what is wrong, for example \"This plan builds more than the spec asks for. Make it shorter\", or ask for a new plan. Plan mode cannot write files, so saving needs Build mode: press Tab, send the third prompt, same session. A one-off \"Error: File not found\" is a typo the agent corrects itself. Keep \"Don't build anything yet\" in both prompts.", "46": "You are the decision-maker. Three outcomes for any plan: approve it as is, edit it by asking the agent to change something, or reject it and ask for a new one. Read the three plans aloud. Vote by hand. B is the lazy choice: approving everything means skipping the review. Click to reveal A. Plan 2 shows scope creep: the agent adds things you never asked for. Edit means you tell the agent: remove the login screen. Plan 3 contradicts the spec, so it is rejected. Tell everyone to read their own plan before approving: check the ports, endpoints and that nothing extra sneaks in. Only an approved plan gets saved to docs/plan.md and built.", "47": "Give them a mental picture of what the agent is about to build, without code. The screen is what you see in the browser. The back end is a small program running behind it. It fetches BBCA prices from Yahoo through yfinance, and later it talks to the AI for the chatbot. The two parts talk through endpoints, which are just named addresses, like two counters in a bank. The key to the AI lives only in the back end, in a file called .env, so nobody can see it in the browser. Ports are like door numbers: 5173 for the screen, 8000 for the back end. Both come from the spec you wrote.", "48": "[UNTESTED PROMPT] The plan was approved and saved on slide 45, so the prompt says \"Approved\". Each person glances at docs/plan.md once more; if they still want a change, they edit first and save again. Make sure they are in Build mode; Tab if not. Building takes a few minutes; the agent may ask permission to run commands, and they should allow it. While it works, walk the room. When it finishes, the agent should explain how to start the servers. They open localhost:5173 in the browser and check the price, the daily change and the one-year chart. Ask: do the numbers look plausible, in rupiah? This prompt is untested and relies on Python and Node being installed on every laptop; check that in the pre-session list. Anyone behind should switch to s1-dashboard.", "49": "[UNTESTED PROMPT] Same loop as the dashboard, at speed: brainstorm (one or two questions, answered in business terms), spec, plan, build. After step 2, everyone reads the spec update and corrects one thing. After step 3, they read the plan in Plan mode and approve, edit or reject it. The order is always approve, then save, then build. Step 4 overwrites the dashboard plan in docs/plan.md, which is fine because the dashboard is built. Before step 2, participants put the class LLM details into backend/.env; never paste the key into the chat. Connect it to slide 7: the page sends the whole message list every turn, and the backend adds BBCA's data, so no tools are needed. Eight minutes is tight, so send anyone behind to s1-chatbot. All four prompts are untested; rehearse them in order.", "50": "Things will break, and that is normal. The best habit is to avoid describing the problem from memory and paste the real error text instead; the agent can read it better than you can. Ask it to explain first. That way you learn what happened, and you can decide whether the fix makes sense. Where to find errors: in the opencode window, in the server window, and in the browser. If an error is not visible, describe what you saw instead: \"the chart is empty\". Then check the result yourself. A fix that is claimed but not tested is not a fix. If the agent seems stuck for two minutes, stop it and re-send.", "51": "[UNTESTED PROMPT] Each person types the three questions into the chat panel in the browser, not in opencode. Question two tests whether the page really resends the conversation, because \"a month ago\" only makes sense with the first answer. Question three tests the no-advice rule: a good answer declines and gives facts or risks instead. Find at least one thing that is wrong or could be better: the wording, the format, an answer that is wrong. Describe it in the bracket and send. If everything works, ask for a small improvement, such as showing prices as rupiah. The prompt is untested, so rehearse it with a deliberately broken chatbot.", "52": "[UNTESTED PROMPT] Same routine as before: commit, then push. The new part is the safety line. backend/.env holds the LLM key, and a key on GitHub can be copied by anyone who sees the repository. Teach this plainly: secrets never go to GitHub. After the push, ask participants to open the repository in their browser and confirm two things: the new commit is there, and there is no .env file in the backend folder. If a key was pushed by mistake, tell the facilitator straight away so it can be replaced. The prompt is untested; check the .gitignore result on your own rehearsal.", "53": "Do not re-teach; touch each point quickly and link it to what they did. The model forgets, so the app resends and AGENTS.md remembers. Git kept the work safe and GitHub holds the second copy. And the method: brainstorm, spec, plan, execute, test, iterate. You ran it twice today, for the dashboard and the chatbot. The synthesis: the work you did was judgement, not typing. Anyone who has not finished can switch to checkpoint s1-chatbot, which is the starting point for Session 2. Make sure everybody knows where to find the checkpoint link in the handout.", "54": "Open the floor. Start with a prompt if no one speaks: what surprised you today? Or: where would you use a dashboard like this at work? Collect parking-lot items on a flip chart. If a question needs a long answer, say you will cover it in Session 2 or the handout. Repeat questions before answering so the room hears them. Keep investment questions neutral: the app shows data; it does not advise. Check one more time that everyone has pushed, and that anyone behind has the s1-chatbot checkpoint.", "55": "Preview Session 2 in one minute. Today the app fetches prices live and forgets everything when it restarts. In Session 2 it keeps prices in a database and adds a watchlist. The chatbot will also learn from a Wiki, a set of pages from official Indonesian sources, so its answers can name where they came from. Same method: brainstorm, spec, plan, execute, test, iterate. Remind everyone to keep their project or use checkpoint s1-chatbot. Thank them and close. Mention the time of the next session and any homework: none."}</script>
+<script>(()=>{
+const stage=document.querySelector('.deck-stage'),slides=[...document.querySelectorAll('.slide')];
+const NOTES=JSON.parse(document.getElementById('notes-data').textContent);
+let i=0,t0=Date.now(),pw=null;const bar=document.getElementById('notesbar');
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`}
+function sync(){const n=slides[i].dataset.n;bar.textContent=`[${i+1}/${slides.length}] `+(NOTES[n]||'');
+ if(pw&&!pw.closed){const nx=slides[i+1];pw.document.getElementById('cur').textContent=`${i+1} / ${slides.length} — `+slides[i].querySelector('h1,h2').textContent;
+  pw.document.getElementById('nt').textContent=NOTES[n]||'';pw.document.getElementById('nx').textContent=nx?'Next: '+nx.querySelector('h1,h2').textContent:'End';}}
+let cd=null;
+function countdown(){clearInterval(cd);const el=slides[i].querySelector('[data-countdown]');if(!el)return;let left=+el.dataset.countdown;
+ const show=()=>{el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.toggle('done',left<=0)};show();
+ cd=setInterval(()=>{if(left>0){left--;show()}},1000)}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>{s.classList.toggle('active',k===i);if(k!==i)s.classList.remove('revealed')});
+ document.querySelectorAll('.pg').forEach(p=>p.textContent=(i+1)+' / '+slides.length);history.replaceState(null,'','#'+(i+1));countdown();sync()}
+function next(){const s=slides[i];if(s.querySelector('.choices')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
+function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
+ pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
+ setInterval(()=>{if(pw.closed)return;const s=Math.floor((Date.now()-t0)/1000);pw.document.getElementById('tm').textContent='Elapsed '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
+ pw.addEventListener('keydown',key);sync()}
+function key(e){if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();next()}else if(['ArrowLeft','PageUp'].includes(e.key))go(i-1);
+ else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key==='s'||e.key==='S')presenter();else if(e.key==='n'||e.key==='N')document.body.classList.toggle('shownotes')}
+document.querySelectorAll('.prompt button').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();
+ const t=b.closest('.prompt').querySelector('pre').textContent;try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
+ b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)}));
+addEventListener('resize',fit);addEventListener('hashchange',()=>{const h=parseInt(location.hash.slice(1));if(h>0&&h-1!==i)go(h-1)});addEventListener('keydown',key);
+stage.addEventListener('click',e=>{if(e.target.closest('button,a,pre'))return;next()});
+fit();const h=parseInt(location.hash.slice(1));go(h>0?h-1:0);
+})();
+</script></body></html>

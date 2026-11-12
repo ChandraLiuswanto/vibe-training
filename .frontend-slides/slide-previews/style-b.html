@@ -1,0 +1,207 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Build your first AI Financial App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=Nunito:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+:root{--slide-bg:#fff;--stage-bg:#ddd}
+.deck-stage{font-family:Nunito,sans-serif;color:#000}
+.slide::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 159px,#f0f0f0 159px 160px)}
+.inner{position:absolute;inset:100px 160px}
+.eyebrow{font:800 24px Archivo;letter-spacing:.1em;text-transform:uppercase;margin-bottom:40px}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:18px;background:#ff3300;margin-right:16px}
+h1{font:800 150px/.95 Archivo;letter-spacing:-.04em;margin:0;max-width:1300px}
+h2{font:800 70px/1.05 Archivo;letter-spacing:-.025em;margin:0 0 70px;max-width:1500px}
+.sub{font-size:40px;margin-top:44px}
+.s-title .inner{display:flex;flex-direction:column;justify-content:flex-end}
+.s-title::after{content:"";position:absolute;right:160px;top:100px;width:320px;height:320px;border-radius:50%;background:#ff3300}
+.ticker{display:flex;gap:30px;align-items:baseline;margin-top:60px;font-family:Archivo;border-top:3px solid #000;padding-top:24px}
+.ticker span{font-size:28px}.ticker b{font-size:52px}.ticker i{font-style:normal;font-size:30px;color:#ff3300}
+.rows{display:flex;flex-direction:column;gap:30px}
+.row{display:flex;align-items:center;gap:0}
+.lbl{width:240px;font:800 24px Archivo;text-transform:uppercase}
+.box{padding:24px 34px;border:3px solid #000;margin-right:-3px;font-size:32px;background:#fff}
+.box.wide{padding:24px 90px;background:#000;color:#fff}
+.arrow{font-size:44px;margin:0 24px 0 auto}
+.model{padding:24px 40px;background:#ff3300;color:#fff;font:800 32px Archivo}
+.caption{margin-top:64px;font:800 46px Archivo}
+.tag{background:#000;color:#fff;padding:10px 22px}
+.eyebrow:has(.tag)::before{display:none}
+.grid{display:grid;grid-template-columns:480px 1fr;gap:80px}
+.k{font:800 22px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:3px solid #000;padding-top:12px}
+.left p{font-size:34px;line-height:1.35;margin:10px 0 36px}
+.prompt{border:3px solid #000;background:#fff;align-self:start}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;background:#000;color:#fff;font:800 22px Archivo;text-transform:uppercase;letter-spacing:.08em}
+.ph button{font:800 22px Archivo;padding:10px 24px;border:0;background:#ff3300;color:#fff;cursor:pointer}
+pre{margin:0;padding:36px 40px;font:500 32px/1.5 "JetBrains Mono";white-space:pre-wrap}
+
+.slide.active .r{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}.slide.active .r:nth-child(2){animation-delay:.15s}.slide.active .r:nth-child(3){animation-delay:.3s}.slide.active .caption{animation-delay:.5s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.pg{position:absolute;right:64px;bottom:44px;z-index:5;font-size:22px;opacity:.55}
+</style></head><body><div class="deck-viewport"><div class="deck-stage">
+<section class="slide s-title"><div class="inner">
+  <div class="eyebrow">Day 3 · Session 1</div>
+  <h1>Build your first AI Financial App</h1>
+  <div class="sub">AI Vibe Coding for Business Users</div>
+  <div class="ticker"><span>BBCA.JK</span><b>5,325</b><i>+0.47%</i></div>
+</div></section>
+<section class="slide s-diagram"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>The app resends the whole conversation every turn, which looks like memory</h2>
+  <div class="rows">
+    <div class="row r"><span class="lbl">Turn 1 sends</span><span class="box">Question 1</span><span class="arrow">→</span><span class="model">Model</span></div>
+    <div class="row r"><span class="lbl">Turn 2 sends</span><span class="box">Question 1</span><span class="box">Answer 1</span><span class="box">Question 2</span><span class="arrow">→</span><span class="model">Model</span></div>
+    <div class="row r"><span class="lbl">Turn 3 sends</span><span class="box wide">everything so far</span><span class="box">Question 3</span><span class="arrow">→</span><span class="model">Model</span></div>
+  </div>
+  <div class="caption r">The app does this. The model doesn't remember.</div>
+</div></section>
+<section class="slide s-hands"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Ask opencode to brainstorm the BBCA dashboard with you, one question at a time</h2>
+  <div class="grid">
+    <div class="left">
+      <div class="k">Goal</div><p>Let the agent ask you what the dashboard should do.</p>
+      <div class="k">You should see</div><p>One short question per reply. No files created.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="prompt"><div class="ph"><span>Prompt</span><button onclick="navigator.clipboard.writeText(this.closest('.prompt').querySelector('pre').innerText);this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)">Copy</button></div><pre>Let's brainstorm a BBCA stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.</pre></div>
+  </div>
+</div></section>
+<div class="pg"></div></div></div><script>
+const stage=document.querySelector('.deck-stage'),slides=[...document.querySelectorAll('.slide')];let i=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));document.querySelector('.pg').textContent=(i+1)+' / '+slides.length}
+addEventListener('resize',fit);addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))go(i+1);if(['ArrowLeft','PageUp'].includes(e.key))go(i-1)});
+addEventListener('click',e=>{if(!e.target.closest('button'))go(i+1)});fit();go(0);
+</script></body></html>

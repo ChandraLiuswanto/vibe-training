@@ -1,0 +1,208 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Build your first AI Financial App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+
+:root{--slide-bg:#0B1220;--stage-bg:#05080f}
+.deck-stage{font-family:"IBM Plex Sans",sans-serif;color:#E6EDF7}
+.slide::before{content:"";position:absolute;inset:0;background:linear-gradient(#0B1220,#0B1220) padding-box,radial-gradient(1200px 600px at 85% 10%,rgba(0,200,140,.12),transparent 60%);background:radial-gradient(1200px 600px at 85% 0%,rgba(0,200,140,.13),transparent 60%),linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px) 0 0/100% 60px}
+.inner{position:absolute;inset:110px 140px}
+.eyebrow{font:600 24px "IBM Plex Mono";letter-spacing:.12em;text-transform:uppercase;color:#19D3A2;margin-bottom:36px}
+h1{font:700 132px/1.0 "IBM Plex Sans";letter-spacing:-.03em;margin:0;max-width:1350px}
+h2{font:700 66px/1.1 "IBM Plex Sans";letter-spacing:-.02em;margin:0 0 70px;max-width:1550px}
+.sub{font-size:40px;color:#8FA0B8;margin-top:40px}
+.s-title .inner{display:flex;flex-direction:column;justify-content:center}
+.ticker{position:absolute;left:0;right:0;bottom:-30px;display:flex;gap:30px;align-items:baseline;padding-top:28px;border-top:1px solid #22304A;font-family:"IBM Plex Mono"}
+.ticker span{font-size:28px;color:#8FA0B8}.ticker b{font-size:52px}.ticker i{font-style:normal;font-size:30px;color:#19D3A2}
+.ticker::after{content:"";flex:1;height:70px;margin-left:40px;background:linear-gradient(transparent,transparent);
+ -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 70' preserveAspectRatio='none'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='3' points='0,55 30,50 60,58 90,40 120,44 150,30 180,36 210,22 240,28 270,18 300,26 330,12 360,16 400,6'/%3E%3C/svg%3E") 0 0/100% 100%;background:#19D3A2}
+.rows{display:flex;flex-direction:column;gap:30px}
+.row{display:flex;align-items:center;gap:16px}
+.lbl{width:240px;font:600 24px "IBM Plex Mono";color:#8FA0B8}
+.box{padding:22px 32px;border-radius:8px;background:#121C2E;border:1px solid #22304A;font-size:32px}
+.box.wide{padding:22px 90px;color:#8FA0B8}
+.arrow{font-size:40px;color:#3A4A66;margin-left:auto}
+.model{padding:22px 40px;border-radius:8px;background:#19D3A2;color:#05140F;font:700 32px "IBM Plex Sans"}
+.caption{margin-top:64px;font:600 44px "IBM Plex Sans";color:#19D3A2}
+.tag{color:#0B1220;background:#F5B83D;padding:10px 22px;border-radius:6px}
+.grid{display:grid;grid-template-columns:520px 1fr;gap:70px}
+.k{font:600 22px "IBM Plex Mono";letter-spacing:.1em;text-transform:uppercase;color:#19D3A2}
+.left p{font-size:34px;line-height:1.35;margin:10px 0 40px;color:#C9D4E5}
+.prompt{border-radius:12px;background:#060B14;border:1px solid #22304A;overflow:hidden;align-self:start}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:18px 30px;border-bottom:1px solid #22304A;font:600 22px "IBM Plex Mono";color:#8FA0B8;text-transform:uppercase;letter-spacing:.1em}
+.ph button{font:600 22px "IBM Plex Mono";padding:10px 24px;border-radius:6px;border:1px solid #19D3A2;background:transparent;color:#19D3A2;cursor:pointer}
+pre{margin:0;padding:36px 40px;font:500 32px/1.5 "IBM Plex Mono";white-space:pre-wrap;color:#E6EDF7}
+pre::before{content:"> ";color:#19D3A2}
+.pg{font-family:"IBM Plex Mono";color:#8FA0B8}
+
+.slide.active .r{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}.slide.active .r:nth-child(2){animation-delay:.15s}.slide.active .r:nth-child(3){animation-delay:.3s}.slide.active .caption{animation-delay:.5s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.pg{position:absolute;right:64px;bottom:44px;z-index:5;font-size:22px;opacity:.55}
+</style></head><body><div class="deck-viewport"><div class="deck-stage">
+<section class="slide s-title"><div class="inner">
+  <div class="eyebrow">Day 3 · Session 1</div>
+  <h1>Build your first AI Financial App</h1>
+  <div class="sub">AI Vibe Coding for Business Users</div>
+  <div class="ticker"><span>BBCA.JK</span><b>5,325</b><i>+0.47%</i></div>
+</div></section>
+<section class="slide s-diagram"><div class="inner">
+  <div class="eyebrow">LLM basics</div>
+  <h2>The app resends the whole conversation every turn, which looks like memory</h2>
+  <div class="rows">
+    <div class="row r"><span class="lbl">Turn 1 sends</span><span class="box">Question 1</span><span class="arrow">→</span><span class="model">Model</span></div>
+    <div class="row r"><span class="lbl">Turn 2 sends</span><span class="box">Question 1</span><span class="box">Answer 1</span><span class="box">Question 2</span><span class="arrow">→</span><span class="model">Model</span></div>
+    <div class="row r"><span class="lbl">Turn 3 sends</span><span class="box wide">everything so far</span><span class="box">Question 3</span><span class="arrow">→</span><span class="model">Model</span></div>
+  </div>
+  <div class="caption r">The app does this. The model doesn't remember.</div>
+</div></section>
+<section class="slide s-hands"><div class="inner">
+  <div class="eyebrow"><span class="tag">Hands-on · 5 min</span></div>
+  <h2>Ask opencode to brainstorm the BBCA dashboard with you, one question at a time</h2>
+  <div class="grid">
+    <div class="left">
+      <div class="k">Goal</div><p>Let the agent ask you what the dashboard should do.</p>
+      <div class="k">You should see</div><p>One short question per reply. No files created.</p>
+      <div class="k">Stuck?</div><p>Raise your hand.</p>
+    </div>
+    <div class="prompt"><div class="ph"><span>Prompt</span><button onclick="navigator.clipboard.writeText(this.closest('.prompt').querySelector('pre').innerText);this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500)">Copy</button></div><pre>Let's brainstorm a BBCA stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.</pre></div>
+  </div>
+</div></section>
+<div class="pg"></div></div></div><script>
+const stage=document.querySelector('.deck-stage'),slides=[...document.querySelectorAll('.slide')];let i=0;
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));document.querySelector('.pg').textContent=(i+1)+' / '+slides.length}
+addEventListener('resize',fit);addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key))go(i+1);if(['ArrowLeft','PageUp'].includes(e.key))go(i-1)});
+addEventListener('click',e=>{if(!e.target.closest('button'))go(i+1)});fit();go(0);
+</script></body></html>
