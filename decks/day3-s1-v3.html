@@ -284,10 +284,95 @@ svg .flow.red{stroke:var(--red)}
 .wf.on{background:var(--red);border-color:var(--red);color:#fff}
 @media (prefers-reduced-motion:reduce){.flow,.packet,.dot.loop,.pulse,.float,.caret,.spin,.seq,.eff-hand,.eff-ptr,.eff-bar{animation:none!important}}
 @media print{.packet,.dot{display:none}}
-/* slide 5 conveyor: at step >=2 the kept blocks shift to --l2; the oldest (.drop) fall to the pile at (--l2,--t2) */
-.cw-b{will-change:left,top}
-.slide[data-n="6"].st2 .cw-b[data-step="1"]{left:var(--l2)!important}
-.slide[data-n="6"].st2 .cw-b.drop{top:var(--t2)!important;rotate:var(--r2);opacity:.3!important;text-decoration:line-through}
+
+/* ===== Task 5: concept block (all layout rules are local to slides 2–11) ===== */
+.c5-overlay{position:absolute;left:0;top:0;pointer-events:none}
+.c5-workflow{position:relative}
+.c5-wf-row{position:absolute;left:0;right:30px;top:160px;display:grid;grid-template-columns:repeat(5,250px);justify-content:space-between}
+.c5-wf-row .wf{height:140px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;font:800 34px Archivo;background:#f2f2f2;border-color:#999;color:#666;opacity:1;transform:none}
+.c5-spec{position:absolute;left:0;top:325px;font:500 28px 'JetBrains Mono',monospace}
+.c5-approve{position:absolute;left:285px;top:325px;white-space:nowrap}
+.c5-approve .chip{font-size:28px;text-transform:none;letter-spacing:0}
+.c5-run{position:absolute;top:460px;text-align:center;font:800 34px Archivo}
+.c5-run2{left:0;width:580px}.c5-run3{left:650px;width:920px}
+.slide[data-n="5"] .dg:first-child .link{transform:scaleX(1)}
+.c5-stack-layout{position:relative}
+.c5-stack-title{position:absolute;top:-8px;left:0;font:800 32px Archivo}
+.c5-stack{position:absolute;left:0;top:40px;width:970px;height:475px;border:3px solid #000;padding:14px;box-sizing:border-box;display:grid;grid-template-rows:65px 65px 65px 140px 65px;gap:10px}
+.c5-stack-row{box-sizing:border-box;display:flex;align-items:center;border:2px solid #000;padding:12px 22px;font-size:30px;line-height:1.25;background:#fff}
+.c5-stack-row.inv{background:#000;color:#fff}.c5-stack-row.history{background:#ddd}
+.c5-stack-send{position:absolute;left:990px;top:240px;width:190px;height:70px}
+.c5-once-packet{position:absolute;left:0;top:24px;width:22px;height:22px;background:#ff3300;transform:none}
+.slide.active[data-n="6"] .c5-once-packet.in{animation:c5-send .9s ease-in-out both}
+@keyframes c5-send{0%{translate:0 0;opacity:0}20%{opacity:1}85%{opacity:1}100%{translate:168px 0;opacity:0}}
+.c5-stack-model{position:absolute;left:1210px;top:170px;width:300px;height:210px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:48px!important}
+.c5-stack-bracket,.c5-grow-bracket{position:absolute;left:990px;border-left:3px solid #000;padding-left:16px;font:800 28px/1.2 Archivo;width:180px;box-sizing:border-box}
+.c5-stack-bracket{top:54px;height:215px;display:flex;align-items:flex-start;padding-top:8px}
+.c5-grow-bracket{top:279px;height:140px;display:flex;align-items:flex-end;padding-bottom:10px}
+.c5-simplified{position:absolute;left:0;top:535px;font-size:28px;color:#6b6b6b}
+.slide[data-n="6"] h2{margin-bottom:40px}
+.c5-context-layout{position:relative}
+.c5-window{position:absolute;left:100px;top:0;width:850px;height:425px;border:4px solid #000;background:#fff;box-sizing:border-box}
+.c5-window-label{position:absolute;left:22px;top:-22px;padding:0 12px;background:#fff;font:800 30px Archivo}
+.c5-fixed-rules{position:absolute;top:35px;left:25px;right:25px;display:grid;gap:8px}
+.c5-fixed-rules i{display:block;background:#000;height:28px}
+.c5-chat-block{position:absolute;top:148px;left:25px;right:25px;height:65px;background:#ccc;border:2px solid #999;box-sizing:border-box;transition:height .8s ease,background .6s ease}
+.slide[data-n="7"].st1 .c5-chat-block{height:195px}
+.slide[data-n="7"].st2 .c5-chat-block{height:60px;background:#ddd;border-left:14px solid #6b6b6b}
+.c5-reply{position:absolute;left:25px;bottom:20px;font-size:30px;color:#6b6b6b}
+.c5-context-callout{position:absolute;left:1030px;top:210px;width:520px;font-size:36px;line-height:1.25;border-left:4px solid #000;padding-left:28px;box-sizing:border-box}
+.slide[data-n="7"].st2 .c5-near{opacity:0;visibility:hidden}
+.c5-rules-stay{position:absolute;left:1030px;top:40px;font:800 34px Archivo}
+.c5-detail-warning{position:absolute;left:1030px;top:350px;color:#ff3300;font:800 32px Archivo}
+.c5-takeaway{font:800 32px/1.3 Archivo;border-top:4px solid #ff3300;padding:20px 0 0;margin-top:35px}
+.c5-tool-layout{position:relative}
+.c5-lane{position:absolute;top:0;width:300px;height:570px;border-left:2px dashed #ccc;box-sizing:border-box}
+.c5-lane-heading{box-sizing:border-box;padding:16px 14px;text-align:center;border:3px solid #000;background:#fff;font:800 32px/1.2 Archivo}
+.c5-lane-code{left:20px}.c5-lane-model{left:670px}.c5-lane-tool{left:1280px}
+.c5-lane-code .c5-lane-heading{background:#000;color:#fff}.c5-lane-model .c5-lane-heading{background:#ff3300;color:#fff;border-color:#ff3300}
+.c5-laptop-label{font-size:28px;text-align:center;margin-top:10px}
+.c5-tool-row{position:absolute;left:170px;height:66px;font-size:30px;line-height:1.1}
+.c5-tool-row>svg:not(.c5-permission-gate){position:absolute;left:0;top:44px;overflow:visible}
+/* Nested arrows must wait for their row's reveal; the global arrival draw would run them early. */
+.slide.active[data-n="8"] .c5-tool-row svg .draw{animation:none}
+.c5-tool-number{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-right:14px;border:2px solid #000;background:#fff;font:800 28px Archivo;box-sizing:border-box}
+.c5-tool-label{background:#fff;padding-right:12px}
+.c5-permission-gate{position:absolute;left:760px;top:39px}
+.slide[data-n="8"] h2{margin-bottom:42px}
+.c5-loop-layout{position:relative}
+.c5-brief-layout{position:relative}
+.slide[data-n="10"] .frame{position:absolute;inset:0 0 auto;height:450px;box-sizing:border-box;transform:none}
+.slide[data-n="10"] .frame.was{opacity:0;visibility:hidden;pointer-events:none}
+/* Frame 3 persists when its footer arrives at step 4. */
+.slide[data-n="10"].st4 .frame[data-step="3"]{opacity:1;visibility:visible}
+.c5-onboarding{display:flex;gap:100px;align-items:center;padding:10px 100px}
+.c5-new-card{border:3px solid #000;background:#fff;padding:32px;width:670px;box-sizing:border-box;font-size:34px}
+.c5-new-card svg{display:block;margin:24px 0}
+.c5-card-heading{font:800 40px/1.15 Archivo}
+.c5-analogy{font:800 44px/1.2 Archivo;max-width:550px}
+.c5-handover{display:flex;align-items:center;gap:90px;padding:40px 100px;background:#fff}
+.c5-handover p{font-size:36px}
+.slide.active[data-n="10"] .c5-handover.in .c5-document{animation:c5-hand-over .6s ease-out both}
+@keyframes c5-hand-over{from{translate:-60px 0}to{translate:0 0}}
+.c5-document{background:#000;width:300px;height:330px;flex:none;display:flex;flex-direction:column;justify-content:center;gap:30px;padding:45px;box-sizing:border-box}
+.c5-document i{height:10px;background:#fff}.c5-document i:last-child{width:60%}
+.c5-in-out{padding:15px 70px;background:#fff}
+.c5-lists{display:grid;grid-template-columns:1fr 1fr;gap:90px;margin-top:28px;font-size:34px}
+.c5-lists>div{border-top:4px solid #000;padding-top:20px}.c5-lists>div:last-child{border-color:#ff3300}
+.c5-lists b{font:800 34px Archivo}.c5-lists p{margin:22px 0}
+.c5-lifecycle{padding:70px 30px 0;background:#fff}
+.c5-cycle{display:flex;align-items:center;gap:18px;font-size:30px;line-height:1.25}
+.c5-cycle>div{padding:24px 20px;border:3px solid #000;background:#fff;flex:1}
+.c5-cycle>div:nth-child(3){flex:2}.c5-cycle>div:nth-child(5){flex:1.5}
+.c5-cycle>span{font-size:38px;color:#ff3300}
+.c5-lifecycle>svg{margin-top:22px}
+.c5-brief-footer{position:absolute;left:30px;right:30px;top:465px;border-top:4px solid #ff3300;padding-top:24px;font:800 36px/1.25 Archivo}
+.slide[data-n="11"] h2{margin-bottom:35px}
+.slide[data-n="11"] .question{font-size:32px;margin-bottom:24px}
+.slide[data-n="11"] .choice{font-size:32px;padding:19px 28px}
+.slide[data-n="11"].revealed .choice.correct{background:#1a713d;border-color:#1a713d}
+@media (prefers-reduced-motion:reduce){.c5-once-packet,.c5-document{animation:none!important}}
+
 
 /* slide 11b effort dial */
 .eff-ptr{transition:left 1.1s cubic-bezier(.3,.7,.2,1)}.eff-bar{transition:width 1.1s cubic-bezier(.3,.7,.2,1)}
@@ -319,7 +404,7 @@ svg .flow.red{stroke:var(--red)}
 </div></section>
 <section class="slide" data-n="2"><div class="inner">
   <div class="eyebrow">Opening</div>
-  <h2>Today you build a NISP dashboard and chatbot without writing code</h2>
+  <h2>Today you direct opencode to build a NISP dashboard and chatbot, without writing code</h2>
   <div class="body" style="display:flex;gap:0;align-items:stretch;min-height:0">
     <div style="flex:1;border:3px solid #000;display:flex;flex-direction:column;background:#fff">
       <div style="height:44px;background:#000;display:flex;align-items:center;gap:10px;padding:0 18px;flex:none">
@@ -335,7 +420,7 @@ svg .flow.red{stroke:var(--red)}
               <div class="dcap">Daily change</div>
               <div style="display:flex;align-items:center;gap:14px"><svg width="34" height="30" viewBox="0 0 34 30"><path d="M17 0L34 30H0z" fill="#1a9e4b"/></svg><i style="width:120px;height:30px;background:#d9d9d9"></i></div></div>
           </div>
-          <div style="flex:1;min-height:0;border:3px solid #000;position:relative;padding:16px 22px">
+          <div data-step="2" style="flex:1;min-height:0;border:3px solid #000;position:relative;padding:16px 22px">
             <div class="dcap">1-year chart</div>
             <svg viewBox="0 0 700 200" preserveAspectRatio="none" style="position:absolute;left:24px;right:24px;top:64px;bottom:20px;width:calc(100% - 48px);height:calc(100% - 84px)">
               <path class="draw" data-step="2" pathLength="1" d="M0 160 L40 150 L80 165 L120 130 L160 138 L200 110 L240 120 L280 90 L320 105 L360 70 L400 85 L440 60 L480 75 L520 45 L560 58 L600 30 L640 40 L700 12" stroke="#ff3300" stroke-width="4" fill="none" vector-effect="non-scaling-stroke" style="transition-duration:1.4s"/>
@@ -357,30 +442,31 @@ svg .flow.red{stroke:var(--red)}
       </div>
     </div>
   </div>
-  <div class="punch fx-fade" data-step="4">You direct. The AI writes the code.</div>
+  <div class="punch fx-fade" data-step="4">You direct. opencode writes the code.</div>
 </div></section>
 <section class="slide" data-n="3"><div class="inner">
-  <div class="eyebrow">Run 2</div>
-  <h2>Every build follows six steps: brainstorm, spec, plan, execute, test, iterate</h2>
-  <div class="body" style="position:relative">
-    <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0;pointer-events:none">
-      <defs><marker id="ah19" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
-      <marker id="ah19r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" pathLength="1" d="M210 255 H270" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah19)"/><path class="draw" pathLength="1" d="M490 255 H550" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah19)"/><path class="draw" pathLength="1" d="M770 255 H830" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah19)"/><path class="draw" pathLength="1" d="M1050 255 H1110" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah19)"/><path class="draw" pathLength="1" d="M1330 255 H1390" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah19)"/>
-      <path class="draw" data-step="3" pathLength="1" d="M1500 195 V80 H660 V188" stroke="#ff3300" stroke-width="5" fill="none" stroke-linejoin="miter" marker-end="url(#ah19r)" style="transition-delay:1s"/>
-      <path class="draw" data-step="1" pathLength="1" d="M0 440 V460 H760 V440" stroke="#000" stroke-width="4" fill="none"/>
-      <path class="draw" data-step="3" pathLength="1" d="M840 440 V460 H1600 V440" stroke="#000" stroke-width="4" fill="none"/>
+  <div class="eyebrow">Opening</div>
+  <h2>Your job today: interview, approve the plan, then test what the agent builds</h2>
+  <div class="body c5-workflow">
+    <svg width="1600" height="530" viewBox="0 0 1600 530" class="c5-overlay">
+      <defs><marker id="v3-wf-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker><marker id="v3-wf-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
+      <g stroke="#000" stroke-width="4" fill="none" marker-end="url(#v3-wf-head)"><path d="M258 230H326"/><path d="M588 230H656"/><path d="M918 230H986"/><path d="M1248 230H1316"/></g>
+      <path class="draw" data-step="3" pathLength="1" d="M1440 160V50H460V155" stroke="#ff3300" stroke-width="5" fill="none" marker-end="url(#v3-wf-red)"/>
+      <path class="draw" data-step="1" pathLength="1" d="M0 410V435H580V410" stroke="#000" stroke-width="3" fill="none"/>
+      <path class="draw" data-step="3" pathLength="1" d="M650 410V435H1570V410" stroke="#000" stroke-width="3" fill="none"/>
     </svg>
-    <div class="dbox hl" data-step="1" style="position:absolute;left:0px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0s">Brainstorm</div><div class="dbox hl" data-step="1" style="position:absolute;left:280px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0.35s">Spec</div><div class="dbox hl" data-step="1" style="position:absolute;left:560px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0.7s">Plan</div><div class="dbox hl" data-step="3" style="position:absolute;left:840px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0s">Execute</div><div class="dbox hl" data-step="3" style="position:absolute;left:1120px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0.35s">Test</div><div class="dbox hl" data-step="3" style="position:absolute;left:1400px;top:200px;width:200px;height:110px;box-sizing:border-box;margin:0;padding:0;display:flex;align-items:center;justify-content:center;background:#f2f2f2;border-color:#9a9a9a;color:#6b6b6b;opacity:1;transform:none;transition-delay:0.7s">Iterate</div>
-    <div class="dot loop" data-step="3" style="offset-path:path('M1500 195 V80 H660 V188');transition-delay:1.6s"></div>
-    <div class="at" style="left:660px;top:360px"><div data-step="2" class="fx-pop"><span class="chip red" style="font-size:28px;white-space:nowrap">Approve / Edit / Reject</span></div></div>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:0;width:760px;top:480px;text-align:center;font:800 32px Archivo;transition-delay:.9s">Run 2</div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:840px;width:760px;top:480px;text-align:center;font:800 32px Archivo;transition-delay:.9s">Run 3</div>
+    <div class="c5-wf-row">
+      <div class="wf hl" data-step="1">Interview</div><div class="wf hl" data-step="1" style="transition-delay:.25s">Plan</div>
+      <div class="wf hl" data-step="3">Execute</div><div class="wf hl" data-step="3" style="transition-delay:.2s">Test / Debug</div><div class="wf hl" data-step="3" style="transition-delay:.4s">Iterate</div>
+    </div>
+    <div data-step="1" class="c5-spec">→ docs/spec.md</div>
+    <div data-step="2" class="c5-approve"><span class="chip red">Approve / Edit / Reject</span></div>
+    <div data-step="1" class="c5-run c5-run2">Run 2</div><div data-step="3" class="c5-run c5-run3">Run 3</div>
   </div>
 </div></section>
 <section class="slide" data-n="4"><div class="inner">
   <div class="eyebrow">How an AI coding agent works</div>
-  <h2>An LLM predicts the next words from the text you send it</h2>
+  <h2>An LLM writes its answer one small piece of text at a time</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="300" viewBox="0 0 1600 300" style="position:absolute;left:0;top:0">
       <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
@@ -398,6 +484,7 @@ svg .flow.red{stroke:var(--red)}
       <div class="fx-pop" data-step="3" style="font:800 64px/1.1 Archivo,sans-serif;color:#ff3300">"NISP"</div>
     </div>
     <div data-step="2" class="fx-fade" style="position:absolute;left:1010px;top:300px;width:590px;display:flex;flex-direction:column;gap:14px">
+      <div class="dsmall">Illustration</div>
       <div style="display:flex;align-items:center;gap:20px;font-size:30px"><span style="width:170px;font-weight:800">NISP</span><i class="fill" data-step="2" style="height:28px;width:400px;background:#ff3300;transition-delay:.2s"></i></div>
       <div style="display:flex;align-items:center;gap:20px;font-size:30px;color:#6b6b6b"><span style="width:170px">Indonesia</span><i class="fill" data-step="2" style="height:28px;width:120px;background:#bdbdbd;transition-delay:.35s"></i></div>
       <div style="display:flex;align-items:center;gap:20px;font-size:30px;color:#6b6b6b"><span style="width:170px">Bank</span><i class="fill" data-step="2" style="height:28px;width:70px;background:#bdbdbd;transition-delay:.5s"></i></div>
@@ -407,125 +494,116 @@ svg .flow.red{stroke:var(--red)}
 </div></section>
 <section class="slide" data-n="5"><div class="inner">
   <div class="eyebrow">How an AI coding agent works</div>
-  <h2>The model is stateless, so the app resends the whole conversation every turn</h2>
+  <h2>The model doesn't remember earlier requests; opencode sends the context it needs</h2>
   <div class="body" style="display:grid;grid-template-columns:1fr 240px;align-items:stretch;min-height:0">
     <div style="display:flex;flex-direction:column;justify-content:space-around;padding:20px 0">
-      <div class="dg" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 1 sends</span><span class="dbox">Question 1</span><span class="link" style="margin-left:28px;position:relative"><i class="packet" style="offset-path:path('M0 2 H160')"></i></span></div>
-      <div class="dg" data-step="1" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 2 sends</span><span class="dbox">Question 1</span><span class="dbox">Answer 1</span><span class="dbox inv">Question 2</span><span class="link" style="margin-left:28px;position:relative"><i class="packet" style="offset-path:path('M0 2 H120');animation-delay:-.8s"></i></span></div>
-      <div class="dg" data-step="2" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 3 sends</span><span class="dbox" style="padding:24px 120px;background:#f2f2f2">everything so far</span><span class="dbox inv">Question 3</span><span class="link" style="margin-left:28px;position:relative"><i class="packet" style="offset-path:path('M0 2 H90');animation-delay:-1.6s"></i></span></div>
+      <div class="dg" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 1 sends</span><span class="dbox">Question 1</span><span class="link" style="margin-left:28px;position:relative"></span></div>
+      <div class="dg" data-step="1" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 2 sends</span><span class="dbox">Question 1</span><span class="dbox">Answer 1</span><span class="dbox inv">Question 2</span><span class="link" style="margin-left:28px;position:relative"></span></div>
+      <div class="dg" data-step="2" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 3 sends</span><span class="dbox" style="padding:24px 50px;background:#f2f2f2">the chat so far</span><span class="dbox inv">Question 3</span><span class="link" style="margin-left:28px;position:relative"></span></div>
     </div>
     <div class="dbox red" style="margin:0;display:flex;align-items:center;justify-content:center;font-size:48px">Model</div>
   </div>
-  <div class="punch red" data-step="3">The app resends it. The model doesn't remember.</div>
+  <div class="punch red" data-step="3">opencode resends it. The model doesn't remember.</div>
 </div></section>
 <section class="slide" data-n="6"><div class="inner">
-  <div class="eyebrow">How an AI coding agent works</div>
-  <h2 style="font-size:62px;margin-bottom:36px">The context window is the most the model can read at once; when it fills, old details drop off</h2>
-  <div class="body" style="position:relative">
-    <div style="position:absolute;left:300px;top:0;width:1000px" class="dcap">Context window</div>
-    <div class="cw" style="position:absolute;left:0;top:58px;width:1600px;height:140px">
-      <div class="cw-b drop" data-step="1" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:318px;width:170px;background:#ff3300;color:#fff;--l2:40px;--t2:230px;--r2:-7deg">rules</div>
-      <div class="cw-b drop" data-step="1" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:500px;width:250px;background:#000;color:#fff;transition-delay:.2s;--l2:20px;--t2:400px;--r2:5deg">your messages</div>
-      <div class="cw-b" data-step="1" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:762px;width:190px;border:3px solid #000;background:#fff;transition-delay:.4s;--l2:318px">its replies</div>
-      <div class="cw-b" data-step="1" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:964px;width:200px;background:#6b6b6b;color:#fff;transition-delay:.6s;--l2:520px">tool results</div>
-      <div class="cw-b" data-step="1" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:1176px;width:106px;background:#d9d9d9;transition-delay:.8s;--l2:732px">files</div>
-      <div class="cw-b fx-right" data-step="2" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:850px;width:250px;background:#000;color:#fff;transition-delay:.5s">your messages</div>
-      <div class="cw-b fx-right" data-step="2" style="display:flex;align-items:center;justify-content:center;font:800 30px Archivo,sans-serif;box-sizing:border-box;white-space:nowrap;height:140px;position:absolute;top:0;transition:left .9s cubic-bezier(.3,.7,.2,1),top .9s cubic-bezier(.3,.7,.2,1),rotate .9s,opacity .6s,transform .55s;left:1112px;width:170px;border:3px solid #000;background:#fff;font-size:28px;transition-delay:.7s">its replies</div>
+  <div class="eyebrow" aria-hidden="true"></div>
+  <h2>On every turn, opencode sends the model a stack: rules, skills, the chat so far, your message</h2>
+  <div class="body c5-stack-layout">
+    <div class="c5-stack-title">opencode</div>
+    <div class="c5-stack">
+      <div class="c5-stack-row inv" data-step="1">System prompt — opencode's own rules</div>
+      <div class="c5-stack-row inv" data-step="2">AGENTS.md — your project rules</div>
+      <div class="c5-stack-row inv" data-step="3">Skill list — names and descriptions only</div>
+      <div class="c5-stack-row history" data-step="4">Conversation so far — your messages, its replies, tool results</div>
+      <div class="c5-stack-row" data-step="5">Your new message</div>
     </div>
-    <div style="position:absolute;left:300px;top:40px;width:1000px;height:176px;border:5px solid #000;box-sizing:border-box;pointer-events:none"></div>
-    <div data-step="2" style="position:absolute;left:400px;top:270px;font-size:38px;transition-delay:1.1s"><b>Full →</b> oldest details dropped or summarised</div>
-    <div data-step="3" class="fx-pop" style="position:absolute;left:400px;top:400px;border:3px solid #1a9e4b;background:#e6f5ec;padding:24px 40px;font:800 40px Archivo,sans-serif">Fix: <span class="mono">/new</span> session. Rules in <span class="mono">AGENTS.md</span>.</div>
+    <div class="c5-stack-send"><svg width="190" height="70" viewBox="0 0 190 70"><defs><marker id="v3-stack-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs><path d="M0 35H180" stroke="#000" stroke-width="4" fill="none" marker-end="url(#v3-stack-head)"/></svg><i class="c5-once-packet" data-step="5"></i></div>
+    <div class="dbox red c5-stack-model">Model</div>
+    <div data-step="6" class="c5-stack-bracket">Sent every turn</div><div data-step="6" class="c5-grow-bracket">Grows</div>
+    <div class="c5-simplified">Simplified view</div>
   </div>
 </div></section>
 <section class="slide" data-n="7"><div class="inner">
-  <div class="eyebrow">How an AI coding agent works</div>
-  <h2>Every request is one list of messages: system, user, assistant, tool</h2>
-  <div class="body" style="display:flex;flex-direction:column;align-items:center;min-height:0">
-    <div style="width:1200px;max-width:100%;border:3px dashed #9a9a9a;padding:20px;display:flex;flex-direction:column;gap:16px;min-height:480px;box-sizing:border-box">
-      <div data-step="1" style="display:grid;grid-template-columns:24px 240px minmax(0,1fr);align-items:center;column-gap:32px;border:3px solid #000;padding:20px 30px;font-size:34px;line-height:1.2;background:#fff;box-sizing:border-box;width:100%;overflow:hidden"><i class="seq" style="--d:0;width:24px;height:24px;flex:none;border:3px solid #000"></i><span style="text-align:center;box-sizing:border-box;font:800 30px Archivo,sans-serif;padding:10px 0;text-transform:lowercase;background:#000;color:#fff">system</span><span>sets the rules</span></div>
-      <div data-step="2" style="display:grid;grid-template-columns:24px 240px minmax(0,1fr);align-items:center;column-gap:32px;border:3px solid #000;padding:20px 30px;font-size:34px;line-height:1.2;background:#fff;box-sizing:border-box;width:100%;overflow:hidden"><i class="seq" style="--d:1;width:24px;height:24px;flex:none;border:3px solid #000"></i><span style="text-align:center;box-sizing:border-box;font:800 30px Archivo,sans-serif;padding:10px 0;text-transform:lowercase;background:#ff3300;color:#fff">user</span><span>you ask</span></div>
-      <div data-step="2" style="display:grid;grid-template-columns:24px 240px minmax(0,1fr);align-items:center;column-gap:32px;border:3px solid #000;padding:20px 30px;font-size:34px;line-height:1.2;background:#fff;box-sizing:border-box;width:100%;overflow:hidden;transition-delay:.25s"><i class="seq" style="--d:2;width:24px;height:24px;flex:none;border:3px solid #000"></i><span style="text-align:center;box-sizing:border-box;font:800 30px Archivo,sans-serif;padding:10px 0;text-transform:lowercase;border:3px solid #000">assistant</span><span>the model answers</span></div>
-      <div data-step="3" style="display:grid;grid-template-columns:24px 240px minmax(0,1fr);align-items:center;column-gap:32px;border:3px solid #000;padding:20px 30px;font-size:34px;line-height:1.2;background:#fff;box-sizing:border-box;width:100%;overflow:hidden"><i class="seq" style="--d:3;width:24px;height:24px;flex:none;border:3px solid #000"></i><span style="text-align:center;box-sizing:border-box;font:800 30px Archivo,sans-serif;padding:10px 0;text-transform:lowercase;background:#6b6b6b;color:#fff">tool</span><span>reports what a tool did</span></div>
+  <div class="eyebrow">Context</div>
+  <h2>The context window has a limit, so old chat gets summarised; save decisions in files</h2>
+  <div class="body c5-context-layout">
+    <div class="c5-window"><div class="c5-window-label">Context window</div>
+      <div class="c5-fixed-rules"><i></i><i></i><i></i></div>
+      <div class="c5-chat-block"></div>
+      <div class="c5-reply">Room for the reply</div>
     </div>
+    <div class="c5-context-callout c5-near" data-step="1">Long chat → near the limit</div>
+    <div class="c5-context-callout c5-summary" data-step="2">Older chat → a short summary</div>
+    <div class="c5-rules-stay" data-step="2">Rules stay</div>
+    <div class="c5-detail-warning" data-step="3">Details can be lost</div>
   </div>
-  <div class="punch" data-step="3" style="text-align:center;display:flex;justify-content:center;align-items:center;gap:20px">One list. Sent every turn.</div>
+  <div class="c5-takeaway" data-step="4">Rules → AGENTS.md · requirements → spec · steps → plan.<br>/new starts clean, so save first.</div>
 </div></section>
 <section class="slide" data-n="8"><div class="inner">
-  <div class="eyebrow">How an AI coding agent works</div>
-  <h2>With tool calling, the model asks for a tool and the app runs it</h2>
-  <div class="body" style="position:relative">
-    <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0">
-      <defs><marker id="ah7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
-      <marker id="ah7r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" data-step="1" pathLength="1" d="M266 50 H1290" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah7)"/>
-      <path class="draw" data-step="2" pathLength="1" d="M1290 125 H266" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah7r)"/>
-      <path class="draw" data-step="3" pathLength="1" d="M266 420 H1290" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah7)"/>
-      <path class="draw" data-step="3" pathLength="1" d="M1290 510 H266" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah7)" style="transition-delay:0.9s"/>
-      <path class="draw" data-step="4" pathLength="1" d="M266 200 H1290" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah7)"/>
-      <path class="draw" data-step="5" pathLength="1" d="M1290 275 H266" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah7r)"/>
-    </svg>
-    <div class="dbox inv" style="position:absolute;left:0;top:0;width:260px;height:560px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 48px Archivo,sans-serif">App</div>
-    <div class="dbox red pulse" style="position:absolute;left:1300px;top:0;width:300px;height:310px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:48px">Model</div>
-    <div class="dbox" style="position:absolute;left:1300px;top:380px;width:300px;height:180px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font:800 48px Archivo,sans-serif">Tool</div>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:330px;top:6px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap"><span class="chip" style="font-size:26px;padding:4px 12px">1</span>messages</div>
-    <div data-step="2" class="fx-fade" style="position:absolute;left:330px;top:81px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap"><span class="chip red" style="font-size:26px;padding:4px 12px">2</span><span class="mono">"run read_file on docs/spec.md"</span></div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:330px;top:376px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap"><span class="chip" style="font-size:26px;padding:4px 12px">3</span>app runs it</div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:330px;top:466px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap;transition-delay:0.9s"><span class="chip" style="font-size:26px;padding:4px 12px">4</span>tool message</div>
-    <div data-step="4" class="fx-fade" style="position:absolute;left:330px;top:156px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap"><span class="chip" style="font-size:26px;padding:4px 12px">4</span></div>
-    <div data-step="5" class="fx-fade" style="position:absolute;left:330px;top:231px;display:flex;align-items:center;gap:14px;font-size:28px;line-height:1;white-space:nowrap"><span class="chip red" style="font-size:26px;padding:4px 12px">5</span>answer</div>
-    <div data-step="4" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:560px;pointer-events:none"><i class="packet" style="offset-path:path('M270 200 H1280')"></i></div>
+  <div class="eyebrow" aria-hidden="true"></div>
+  <h2>The model asks for a tool; opencode checks permission and runs it</h2>
+  <div class="body c5-tool-layout">
+    <svg width="0" height="0"><defs><marker id="v3-tool-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker><marker id="v3-tool-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs></svg>
+    <div class="c5-lane c5-lane-code"><div class="c5-lane-heading">opencode</div><div class="c5-laptop-label">on your laptop</div></div>
+    <div class="c5-lane c5-lane-model"><div class="c5-lane-heading">Model</div></div>
+    <div class="c5-lane c5-lane-tool"><div class="c5-lane-heading">Tool: read a file</div></div>
+    <div class="c5-tool-row" data-step="1" style="top:118px;width:650px"><span class="c5-tool-number">1</span><span class="c5-tool-label">Your message + list of tools</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M0 12H640" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="2" style="top:196px;width:650px"><span class="c5-tool-number">2</span><span class="c5-tool-label">Please read docs/spec.md</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M647 12H4" stroke="#ff3300" stroke-width="3" fill="none" marker-end="url(#v3-tool-red)"/></svg></div><div class="c5-tool-row" data-step="3" style="top:274px;width:1260px"><span class="c5-tool-number">3</span><span class="c5-tool-label">Check permission, then run</span><svg width="1260" height="24" viewBox="0 0 1260 24"><path class="draw" pathLength="1" d="M0 12H1250" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg><svg class="c5-permission-gate" width="32" height="30" viewBox="0 0 32 30" aria-label="Permission gate"><path d="M3 27V3H29V27 M3 12H29 M16 12V27" stroke="#000" stroke-width="3" fill="#fff"/></svg></div><div class="c5-tool-row" data-step="4" style="top:352px;width:1260px"><span class="c5-tool-number">4</span><span class="c5-tool-label">File text</span><svg width="1260" height="24" viewBox="0 0 1260 24"><path class="draw" pathLength="1" d="M1257 12H4" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="5" style="top:430px;width:650px"><span class="c5-tool-number">5</span><span class="c5-tool-label">Conversation + file text</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M0 12H640" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="6" style="top:508px;width:650px"><span class="c5-tool-number">6</span><span class="c5-tool-label">Answer, or another tool request</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M647 12H4" stroke="#ff3300" stroke-width="3" fill="none" marker-end="url(#v3-tool-red)"/></svg></div>
   </div>
 </div></section>
 <section class="slide" data-n="9"><div class="inner">
-  <div class="eyebrow">How an AI coding agent works</div>
-  <h2>A coding agent is an LLM calling tools in a loop until the task is done</h2>
-  <div class="body" style="position:relative">
-    <svg width="1600" height="520" viewBox="0 0 1600 520" style="position:absolute;left:0;top:0">
-      <defs><marker id="ah8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
-      <marker id="ah8r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" pathLength="1" d="M140 250 H594" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah8)"/>
-      <circle class="draw" pathLength="1" cx="800" cy="250" r="200" stroke="#000" stroke-width="4" fill="none" transform="rotate(-90 800 250)"/>
-      <path class="draw" data-step="3" pathLength="1" d="M1006 250 H1250" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah8r)"/>
+  <div class="eyebrow">The agent loop</div>
+  <h2>A coding agent repeats model decisions and tool actions, then you check the result</h2>
+  <div class="body c5-loop-layout">
+    <svg width="1600" height="480" viewBox="0 0 1600 480" class="c5-overlay"><defs><marker id="v3-loop-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
+      <path class="draw" pathLength="1" d="M110 230H335" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
+      <circle cx="600" cy="230" r="195" stroke="#000" stroke-width="4" fill="none"/>
+      <g data-step="1"><path d="M790 160L798 192L777 174 M695 405L663 416L680 389 M427 135L451 112L447 145" stroke="#000" stroke-width="4" fill="none"/></g>
+      <path class="draw" data-step="3" pathLength="1" d="M802 230H1000" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
+      <path class="draw" data-step="3" pathLength="1" d="M1270 230H1360" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
     </svg>
-    <div class="dcap at" style="left:80px;top:250px">Goal</div>
-    <div class="at" style="left:800px;top:50px"><div class="dbox red fx-pop pulse" data-step="1" style="margin:0;white-space:nowrap">Model decides</div></div>
-    <div class="at" style="left:973px;top:350px"><div class="dbox fx-pop" data-step="1" style="margin:0;white-space:nowrap">Runs a tool</div></div>
-    <div class="at" style="left:627px;top:350px"><div class="dbox fx-pop" data-step="1" style="margin:0;white-space:nowrap">Reads the result</div></div>
-    <div class="dot loop" data-step="2" style="offset-path:path('M800 50 A200 200 0 1 1 799.9 50')"></div>
-    <div class="at" style="left:1360px;top:250px"><div class="dbox inv fx-left" data-step="3" style="margin:0;white-space:nowrap">Task done</div></div>
+    <div class="dcap at" style="left:45px;top:230px">Goal</div>
+    <div class="at" style="left:600px;top:35px"><div class="dbox red" data-step="1" style="margin:0;white-space:nowrap">Model decides</div></div>
+    <div class="at" style="left:780px;top:345px"><div class="dbox inv" data-step="1" style="margin:0;width:260px;text-align:center">opencode runs a tool</div></div>
+    <div class="at" style="left:415px;top:345px"><div class="dbox red" data-step="1" style="margin:0;width:240px;text-align:center">Model reads the result</div></div>
+    <div class="dot loop" data-step="2" style="offset-path:path('M600 35 A195 195 0 1 1 599.9 35')"></div>
+    <div class="at" style="left:1135px;top:230px"><div class="dbox inv" data-step="3" style="margin:0;width:220px;text-align:center">Agent reports back</div></div>
+    <div class="at" style="left:1470px;top:230px"><div class="dbox" data-step="3" style="margin:0;white-space:nowrap">You test</div></div>
   </div>
-  <div class="punch" data-step="3">You: goal and judgement. Agent: typing.</div>
+  <div class="punch" data-step="3">Agent: proposes and does. You: decide and check.</div>
 </div></section>
 <section class="slide" data-n="10"><div class="inner">
-  <div class="eyebrow">How an AI coding agent works</div>
-  <h2>AGENTS.md is a note the agent reads at the start of every session</h2>
-  <div class="body" style="position:relative">
-    <div style="position:absolute;left:0;right:0;bottom:30px;display:flex;gap:120px">
-      <div data-step="2" class="hl" style="opacity:1;transform:none;flex:1;height:200px;border:3px solid #9a9a9a;background:#f2f2f2;color:#6b6b6b;display:flex;align-items:center;justify-content:center;font:800 36px Archivo,sans-serif;transition-delay:.5s">Session 1</div>
-      <div data-step="2" class="hl" style="opacity:1;transform:none;flex:1;height:200px;border:3px solid #9a9a9a;background:#f2f2f2;color:#6b6b6b;display:flex;align-items:center;justify-content:center;font:800 36px Archivo,sans-serif;transition-delay:.8s">Session 2</div>
-      <div data-step="2" class="hl" style="opacity:1;transform:none;flex:1;height:200px;border:3px solid #9a9a9a;background:#f2f2f2;color:#6b6b6b;display:flex;align-items:center;justify-content:center;font:800 36px Archivo,sans-serif;transition-delay:1.1s">Session 3</div>
+  <div class="eyebrow">Standing brief</div>
+  <h2>AGENTS.md is the project's standing brief, so keep it current</h2>
+  <div class="body c5-brief-layout">
+    <div class="frame c5-onboarding" data-step="0">
+      <div class="c5-new-card"><div class="c5-card-heading">New conversation</div><svg width="150" height="110" viewBox="0 0 150 110"><path d="M4 4H146V80H70L35 106V80H4Z" stroke="#000" stroke-width="4" fill="#fff"/></svg><div>Yesterday's chat isn't included</div></div>
+      <div class="c5-analogy">Like a new colleague on day one</div>
     </div>
-    <svg width="1600" height="520" viewBox="0 0 1600 520" style="position:absolute;left:0;top:0">
-      <defs><marker id="ah9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" data-step="2" pathLength="1" d="M680 120 C 400 150, 227 220, 227 330" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah9)" />
-      <path class="draw" data-step="2" pathLength="1" d="M800 150 V330" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah9)" style="transition-delay:.3s"/>
-      <path class="draw" data-step="2" pathLength="1" d="M920 120 C 1200 150, 1373 220, 1373 330" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah9)" style="transition-delay:.6s"/>
-    </svg>
-    <div class="at" style="left:800px;top:70px"><div data-step="1" class="fx-pop"><div class="float" style="position:relative;width:240px;height:150px;border:3px solid #000;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 22px;gap:12px;box-sizing:border-box">
-      <div style="font:800 30px Archivo,sans-serif">AGENTS.md</div><i style="height:10px;background:#d9d9d9"></i><i style="height:10px;width:70%;background:#d9d9d9"></i>
-    </div></div></div>
-    <div style="position:absolute;left:1000px;top:-10px;width:580px"><div data-step="3" class="fx-left" style="background:#fff;border:3px solid #000;border-left:14px solid #ff3300;padding:20px 26px;font-size:30px;line-height:1.3;rotate:1.5deg;box-shadow:none">"Explain what you will do in plain business language before doing it."</div></div>
+    <div class="frame c5-handover" data-step="1">
+      <div class="c5-document" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div><div class="c5-card-heading">AGENTS.md is handed over every turn</div><p>The project's standing brief</p></div>
+    </div>
+    <div class="frame c5-in-out" data-step="2">
+      <div class="c5-card-heading">AGENTS.md</div>
+      <div class="c5-lists"><div><b>In</b><p>What the project is</p><p>How to run and check it</p><p>Working rules</p></div><div><b>Out</b><p>Passwords and keys</p><p>Chat logs</p><p>Feature details (→ spec)</p></div></div>
+    </div>
+    <div class="frame c5-lifecycle" data-step="3">
+      <div class="c5-cycle"><div>/init drafts it</div><span>→</span><div>you spot a lasting rule or a repeated correction</div><span>→</span><div>ask the agent to update it</div><span>→</span><div>read the change</div><span>→</span><div>commit</div></div>
+      <svg width="1500" height="100" viewBox="0 0 1500 100" aria-hidden="true"><path d="M1430 5V75H75V5" stroke="#ff3300" stroke-width="4" fill="none"/><path d="M65 20L75 5L85 20" stroke="#ff3300" stroke-width="4" fill="none"/></svg>
+    </div>
+    <div class="c5-brief-footer" data-step="4">Today: ask the agent to edit AGENTS.md, then review it.</div>
   </div>
 </div></section>
 <section class="slide" data-n="11"><div class="inner">
   <div class="eyebrow"><span class="tag red">Check</span></div>
-  <h2>The agent forgot your preference overnight. Why, and how do you fix it?</h2>
+  <h2>Check: a new conversation ignored your preference. What do you do?</h2>
+  <p class="question">A new conversation ignored your "explain first" preference. What do you do?</p>
   <div class="choices">
-    <div class="choice"><span class="L">A</span><span>The agent was tired. Remind it every morning.</span></div>
-    <div class="choice correct"><span class="L">B</span><span>A new session starts empty. Put the preference in AGENTS.md.</span></div>
-    <div class="choice"><span class="L">C</span><span>The model was updated. Wait for the next version.</span></div>
+    <div class="choice"><span class="L">A</span><span>Repeat it at the start of every chat</span></div>
+    <div class="choice correct"><span class="L">B</span><span>Ask opencode to add it to AGENTS.md, review it, commit</span></div>
+    <div class="choice"><span class="L">C</span><span>Switch to a stronger model</span></div>
   </div>
-  <div class="reveal">B — Nothing carries over between sessions except files, and AGENTS.md is read every time.</div>
+  <div class="reveal">B — A new conversation doesn't include old chats. AGENTS.md is sent every turn.</div>
 </div></section>
 <section class="slide" data-n="12"><div class="inner">
   <div class="eyebrow">Models and Git</div>
