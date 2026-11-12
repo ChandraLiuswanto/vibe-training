@@ -1,7 +1,7 @@
-# Day 3 · Session 3 — slide copy v2 (visual, 3 runs)
+# Day 3 · Session 3 — slide copy v2 (visual, 2 runs + trainer demo)
 
 Course: AI Vibe Coding for Business Users · Session 3: AI-powered reports and presentations · 3 hours · English deck, speaker-led and hands-on.
-Sources: `docs/outlines/day3-s3-v2.md` (approved outline v2, 20 headlines, kept word for word), `docs/superpowers/specs/2026-11-11-day3-design.md` (§3 S3 objectives, §7 S3, §8 app and checkpoints), `docs/superpowers/plans/2026-11-11-day3-build.md` (fixed app interface, Task 5), `docs/copy/day3-s1-v2.md` (format and prompt style).
+Sources: `docs/outlines/day3-s3-v2.md` (approved outline v2, 20 headlines, kept word for word; slides 15, 16 and 18 from the 2026-11-12 demo-workflow design), `docs/superpowers/specs/2026-11-11-day3-design.md` (§3 S3 objectives, §7 S3, §8 app and checkpoints), `docs/superpowers/plans/2026-11-11-day3-build.md` (fixed app interface, Task 5), `docs/copy/day3-s1-v2.md` (format and prompt style).
 
 How to read this file:
 - `visible:` is the on-slide text. Every label the diagram shows is listed in `visible:`; the `diagram:` line says where it goes. Quoted labels in `diagram:` that are not in `visible:` are counted too.
@@ -20,7 +20,7 @@ diagram: none
 build:
   0: title, subtitle and session line together
 notes:
-Welcome back for the last session of the day. This morning you built a NISP dashboard and a chatbot. In Session 2 your app got a database, a watchlist and a Wiki. Now we use all of that. In the next three hours the AI writes a report from your own data, turns it into a PowerPoint deck, and then you save the whole job so it runs again with one command. Before we start, check that opencode opens and that your app still starts: the page on localhost:5173 and the server on port 8000. Anyone whose app does not start, raise your hand now; the next slide gives you a way back in. Same rhythm as before: I explain for a few minutes, you do it, we check together.
+Welcome back for the last session of the day. This morning you built a NISP dashboard and a chatbot. In Session 2 your app got a database, a watchlist and a Wiki. Now we use all of that. In the next three hours the AI writes a report from your own data, turns it into a PowerPoint deck, and then I show you a saved workflow that does the whole job with one command. Before we start, check that opencode opens and that your app still starts: the page on localhost:5173 and the server on port 8000. Anyone whose app does not start, raise your hand now; the next slide gives you a way back in. Same rhythm as before: I explain for a few minutes, you do it, we check together.
 words: 10 · budget: 40 · exception: none
 status: n/a
 
@@ -39,7 +39,7 @@ build:
   2: the arrow draws; the three slide cards fan out
   3: the loop arrow and its label appear; the travelling dot starts
 notes:
-Say what the session produces, in business words. On step 0: your database already holds two tables from Session 2. "stocks" is your watchlist; "prices" is the daily history. On step 1: in Run 1 the AI writes a NISP analysis report as a web page, built only from that database, and you check every number. On step 2: in Run 2 it turns the report into a PowerPoint deck, and you improve the deck with two rounds of feedback. On step 3: in Run 3 you save the steps as one opencode command, then run it on TLKM to get a new report and deck. Point out that the report describes data. Like the chatbot, it never tells anyone to buy or sell. The skill you practise all afternoon is judging the AI's work, not typing.
+Say what the session produces, in business words. On step 0: your database already holds two tables from Session 2. "stocks" is your watchlist; "prices" is the daily history. On step 1: in Run 1 the AI writes a NISP analysis report as a web page, built only from that database, and you check every number. On step 2: in Run 2 it turns the report into a PowerPoint deck, and you improve the deck with two rounds of feedback. On step 3: then I demo a saved workflow: one command that makes a new report and deck for TLKM while you watch. Point out that the report describes data. Like the chatbot, it never tells anyone to buy or sell. The skill you practise all afternoon is judging the AI's work, not typing.
 words: 14 · budget: 40 · exception: none
 status: n/a
 
@@ -63,13 +63,13 @@ status: n/a (recovery sentence from spec §8.6; [CHECKPOINT URL] is a placeholde
 
 ## 4. A prompt does one thing; a workflow runs many steps in order
 type: visual
-block: Workflows · 6
+block: Workflows · 7
 visible:
 Prompt: one request, one result
 Workflow: refresh → report → check → deck
 /stock-report
 One command starts the chain
-diagram: Two rows. Top row: a single box "Prompt: one request, one result" with a chat bubble going in and one document coming out. Bottom row: four boxes joined by arrowed lines, "refresh", "report", "check", "deck", with the label "Workflow:" on the left. A black command chip "/stock-report" sits above "refresh" with a line down to it. Check comes before deck, the same order used on slides 6 and 17 and in the Run 3 spec.
+diagram: Two rows. Top row: a single box "Prompt: one request, one result" with a chat bubble going in and one document coming out. Bottom row: four boxes joined by arrowed lines, "refresh", "report", "check", "deck", with the label "Workflow:" on the left. A black command chip "/stock-report" sits above "refresh" with a line down to it. Check comes before deck, the same order used on slides 14 and 15 and in the demo command.
 build:
   0: the top row: one prompt box, bubble in, document out
   1: the bottom row's four grey boxes appear; the arrows draw between them
@@ -82,7 +82,7 @@ status: n/a
 
 ## 5. Prompt, skill and workflow are three levels of reuse
 type: visual
-block: Workflows · 7
+block: Workflows · 8
 visible:
 Prompt: typed each time
 Skill: expertise loaded when needed
@@ -100,28 +100,7 @@ This is the staircase from this morning, now with the top step filled in. On ste
 words: 22 · budget: 40 · exception: none
 status: n/a
 
-## 6. Is each of these a prompt, a skill or a workflow?
-type: check
-block: Workflows · 7
-visible:
-1. "Summarise this report in three bullets."
-2. Your team's report-writing rules, used whenever a task fits.
-3. /stock-report TLKM.JK: refresh, report, check, deck.
-A. 1 prompt · 2 skill · 3 workflow
-B. 1 prompt · 2 workflow · 3 workflow
-C. 1 prompt · 2 skill · 3 prompt
-prompt / skill / workflow (answer tags)
-diagram: none; on reveal a small tag slides in after each item: "prompt", "skill", "workflow" (red), one after another.
-build:
-  0: question, the three items and the three choices
-  1: A highlights red; B and C fade; the three answer tags slide in; reveal line appears
-reveal: A — Rules used when they fit are a skill; a saved chain of steps is a workflow.
-notes:
-Read the three items aloud. Give thirty seconds, then take a show of hands for A, B and C, one at a time. Click to reveal: the labels appear next to each item. A is right. Item 1 is a one-off request, so it is a prompt. Item 2 is the tricky one: it sounds like a process, but it is know-how the agent picks up whenever a task fits, so it is a skill, not a workflow. That is why B tempts people. Item 3 is a saved chain of four steps started by one command, so it is a workflow. C tempts anyone who thinks 'it is just text I type': yes, a saved command sends text to the agent, but you wrote it once and reuse it on any ticker. Item 3 is exactly what you will build in Run 3, so tell them to remember its shape.
-words: 27 visible + 42 choices and reveal · budget: 60 · exception: quiz choices and answer reveal (allowed: quiz choices may exceed). Distractors are near-misses: B mistakes the skill for a workflow, C mistakes the saved command for a prompt.
-status: n/a
-
-## 7. A good analysis report has data, charts and an insight you can defend
+## 6. A good analysis report has data, charts and an insight you can defend
 type: visual
 block: Run 1 — report · 5
 visible:
@@ -143,7 +122,7 @@ Before we ask the AI for a report, agree what good looks like. On step 1: a summ
 words: 14 · budget: 40 · exception: none
 status: n/a
 
-## 8a. Run 1: spec the report, generate it from your database, and check every number
+## 7a. Run 1: spec the report, generate it from your database, and check every number
 type: run
 block: Run 1 — report · 15
 visible:
@@ -178,7 +157,7 @@ notes:
 words: 36 · budget: 60 · exception: fenced prompts not counted (43 + 17 words); brainstorm and plan prompts in the handout
 status: UNTESTED (spec, build, and both handout prompts)
 
-## 8b. Run 1: spec the report, generate it from your database, and check every number
+## 7b. Run 1: spec the report, generate it from your database, and check every number
 type: run
 block: Run 1 — report · 12
 visible:
@@ -209,7 +188,7 @@ notes:
 words: 60 · budget: 60 · exception: fenced prompts not counted (32 + 12 words)
 status: UNTESTED (both prompts). Confirm the dashboard shows latest close and day change (/api/quote) and a 1-year chart (/api/history) on the reference build.
 
-## 9. AI can write confident insights the data doesn't support
+## 8. AI can write confident insights the data doesn't support
 type: visual
 block: Run 1 — report · 6
 visible:
@@ -227,7 +206,7 @@ The numbers were the easy check. The words are harder. On step 0: two sentences 
 words: 19 · budget: 40 · exception: none
 status: n/a
 
-## 10. Which claim in this report does the data not prove?
+## 9. Which claim in this report does the data not prove?
 type: check
 block: Run 1 — report · 7
 visible:
@@ -246,7 +225,7 @@ Read the three claims aloud. Stress that these are sample numbers on a made-up r
 words: 5 visible + 41 choices and reveal · budget: 60 · exception: none
 status: n/a (claims are illustrative; C is a subtle half-supported claim, replace with a real one from the reference build once tested)
 
-## 11. A report is for reading; a deck is for telling
+## 10. A report is for reading; a deck is for telling
 type: visual
 block: Run 2 — deck + feedback · 5
 visible:
@@ -263,7 +242,7 @@ Your report is done. Now the same content has to work in a meeting. On step 0: a
 words: 12 · budget: 40 · exception: none
 status: n/a
 
-## 12. Give feedback like a brief: what, why and an example
+## 11. Give feedback like a brief: what, why and an example
 type: visual
 block: Run 2 — deck + feedback · 6
 visible:
@@ -279,12 +258,12 @@ build:
   3: the "Example" row fills in; the green tick appears
 notes:
 Feedback to an AI works like a brief to a colleague. On step 0: "make it better" gives the agent nothing to aim at, so it guesses, and you get random changes. On step 1: say what to change, specifically. Here: every slide title should state the point. On step 2: say why. The reason helps the agent make good choices you did not spell out. Here: managers may read only the titles. On step 3: give an example. Instead of the label "Price chart", a sentence like "The close rose 10% over the year". That number is a sample; their deck uses its own. The example shows the agent the standard you mean. Three parts: what, why, example. You will use exactly this pattern in Run 2, twice. Remind them: feedback is about form and story. It should never ask the agent to change a number.
-words: 25 · budget: 40 · exception: none (the 10% is the same labelled sample as slides 10 and 14)
+words: 25 · budget: 40 · exception: none (the 10% is the same labelled sample as slides 9 and 13)
 status: n/a
 
-## 13a. Run 2: turn the report into PowerPoint, then improve it in two feedback rounds
+## 12a. Run 2: turn the report into PowerPoint, then improve it in two feedback rounds
 type: run
-block: Run 2 — deck + feedback · 15
+block: Run 2 — deck + feedback · 20 (slide tag says 15 hands-on; +5 buffer, builder's call)
 visible:
 **Goal:** reports/NISP-deck.pptx, made from your report.
 **Spec:**
@@ -317,9 +296,9 @@ notes:
 words: 40 · budget: 60 · exception: fenced prompts not counted (39 + 17 words); brainstorm and plan prompts in the handout
 status: UNTESTED (spec, build, and both handout prompts)
 
-## 13b. Run 2: turn the report into PowerPoint, then improve it in two feedback rounds
+## 12b. Run 2: turn the report into PowerPoint, then improve it in two feedback rounds
 type: run
-block: Run 2 — deck + feedback · 18
+block: Run 2 — deck + feedback · 23 (slide tag says 18 hands-on; +5 buffer, builder's call)
 visible:
 **Goal:** A clearer deck after two feedback rounds, pushed.
 **Round 1** (example):
@@ -348,7 +327,7 @@ notes:
 words: 50 · budget: 60 · exception: fenced prompts not counted (49 + 16 words); round 2 example prompt in the handout
 status: UNTESTED (round 1, push, and the handout round 2 prompt)
 
-## 14. Feedback changed the deck from a data dump into a story
+## 13. Feedback changed the deck from a data dump into a story
 type: visual
 block: Run 2 — deck + feedback · 6
 visible:
@@ -359,7 +338,7 @@ The close rose 10% over the year
 Title says the point
 One chart per slide
 Sample
-diagram: Two slide thumbnails side by side, both tagged "Sample". Left "Before (v1)": the title "Price chart", a crowded grid of 4 × 4 blank grey cells (no numbers), a small chart squeezed in a corner and several bullet lines. A red arrow with a moving square. Right "After (v3)": the real sentence title "The close rose 10% over the year" (the same sample as slides 10 and 12), one large chart that draws itself. Two red labels pop in: "Title says the point" and "One chart per slide".
+diagram: Two slide thumbnails side by side, both tagged "Sample". Left "Before (v1)": the title "Price chart", a crowded grid of 4 × 4 blank grey cells (no numbers), a small chart squeezed in a corner and several bullet lines. A red arrow with a moving square. Right "After (v3)": the real sentence title "The close rose 10% over the year" (the same sample as slides 9 and 11), one large chart that draws itself. Two red labels pop in: "Title says the point" and "One chart per slide".
 build:
   0: the "Before (v1)" thumbnail alone
   1: the arrow draws; the "After (v3)" thumbnail appears
@@ -369,9 +348,9 @@ Show the effect of two rounds. On step 0: the first version is typical of a firs
 words: 23 · budget: 40 · exception: none
 status: n/a (mock thumbnails; placeholder until the reference v1/v3 exist)
 
-## 15. If you'll do it again next month, save it as a workflow; brainstorm → spec → plan is one too
+## 14. If you'll do it again next month, save it as a workflow; brainstorm → spec → plan is one too
 type: visual
-block: Run 3 — workflow · 6
+block: Demo — saved workflow · 3
 visible:
 refresh → report → check → deck
 /stock-report TLKM.JK
@@ -389,56 +368,55 @@ When is a workflow worth it? When you will do the same steps again. On step 0: l
 words: 23 · budget: 40 · exception: none
 status: n/a
 
-## 16. Run 3: save the steps as an opencode command and run it on TLKM
-type: run
-block: Run 3 — workflow · 24
+## 15. Watch: one saved command builds the TLKM report and deck
+type: demo (trainer)
+block: Demo — saved workflow · 9 (shared with slide 16: the agent works while slide 16 is taught)
 visible:
-**Goal:** One saved command that makes the report and deck for any ticker.
-**Spec:**
-```text
-Add a workflow to docs/spec.md: an opencode command, stock-report, that takes a ticker like TLKM.JK. It adds the ticker to my watchlist and refreshes its prices the way the app already does, checks every number against the database, then makes the report and deck in reports/ like my NISP ones, keeping the fixes from my feedback rounds. Don't build anything yet.
-```
-**Build** (after you approve the plan):
-```text
-Approved. Save that plan to docs/plan.md. Then create the command as .opencode/commands/stock-report.md, using $ARGUMENTS for the ticker. Tell me how to run it.
-```
-**Run it, then check 3 numbers and push:**
-```text
+Demo · Trainer
+Time · 9 min
 /stock-report TLKM.JK
-```
-**You should see:** (sketch: TLKM report, TLKM deck) Titles as sentences, like v3.
-**Stuck?** Restart opencode, or `s3-workflow`.
-diagram: Below the title, the loop as six chips joined by arrows: "brainstorm", "spec", "plan", "execute", "test", "iterate". Small grey captions under three chips: "handout" (brainstorm), "Plan mode" (plan), "Build mode" (execute). Chips turn red while current and black when done, so the tracker shows where the trainee is on each click. Step 0: brainstorm and spec red. Step 1: plan and execute red. Step 2: test red. Under "You should see", two file icons labelled "TLKM report" and "TLKM deck".
+I type it once; you watch.
+refresh → report → check → deck
+TLKM report
+TLKM deck
+diagram: A black command chip "/stock-report TLKM.JK" with the grey aside "I type it once; you watch." to its right. Below, four grey boxes "refresh", "report", "check", "deck" joined by arrows; from step 2 they light in order on a loop, like the chain on slide 4. Two result thumbnails pop in under "report" and "deck": a report page labelled "TLKM report" and a short slide strip labelled "TLKM deck".
 build:
-  0: goal, tracker and the spec prompt
-  1: the spec stays; the build prompt appears
-  2: the spec hides to make room; the run command, the expected files, and stuck line (restart opencode if /stock-report is not listed)
-handout:
-1. Brainstorm:
-```text
-Let's brainstorm saving our report and deck steps as a saved opencode command that works for any ticker. Ask me one question at a time, at most 3, in plain business language. Don't write any code or files yet.
-```
-2. Spec: the prompt on the slide. Read the update and correct one thing.
-3. Plan (Tab: Plan mode; approve, edit or reject):
-```text
-Read docs/spec.md and give me a numbered step-by-step plan for the stock-report command only. Don't build anything yet.
-```
-4. Build (Tab: Build mode, once approved): the prompt on the slide.
-5. Run it: the command on the slide. Check 3 TLKM numbers against your dashboard, and the insight sentence.
-6. Push:
-```text
-Commit all changes, including the TLKM report and deck, with the message "Stock report workflow". Then push to GitHub.
-```
+  0: tags, title, the command chip and the aside
+  1: the four step boxes and arrows appear
+  2: the boxes light in order; the two thumbnails pop in
 notes:
-[UNTESTED PROMPT] The last run puts it all together; the handout has all six steps. Brainstorm first, then on step 0 the spec, in plain words. It names the command, says to add the ticker to the watchlist and refresh its prices the way the app already does, puts the number check before the deck, and keeps the fixes from your feedback rounds so TLKM comes out at v3 quality, not v1. In the plan, check it reuses what you built for NISP rather than starting over. On step 1: approve, then the build prompt. It names where the command lives, .opencode/commands, and $ARGUMENTS, which carries the ticker you type after the command. On step 2: type a slash in opencode and look for stock-report. If it is not there, quit and reopen opencode. Rehearse this before class to confirm whether a restart is needed on your setup. Run it on TLKM.JK. Open both files: the deck titles should read as sentences, like your NISP v3. Check three numbers against your dashboard and the insight sentence. Then push. All prompts here are untested; rehearse the whole run. Anyone behind switches to checkpoint s3-workflow.
-words: 56 · budget: 60 · exception: fenced prompts not counted (61 + 23 + 2 words). The spec now uses plain words instead of endpoint names and carries the Run 2 feedback; the build prompt is back on the slide.
-status: UNTESTED (spec, build, run command, and the handout prompts). Folder .opencode/commands and $ARGUMENTS verified on opencode 1.19.5 (project log 2026-11-12); whether a new command appears without a restart is not yet verified.
+Trainer demo: trainees watch and type nothing. Before class, reset the demo folder with the run sheet in /data/training/deck/README.md, and start opencode in that folder. On step 0: type /stock-report TLKM.JK and press Enter. Say: this is the chain from the workflows slide, saved once as a command; the ticker is the only thing I type. On step 1: name the four steps it runs. Refresh loads TLKM prices into the database. Report writes the HTML page from the database only. Check lists every number with the query behind it and fixes any mismatch. Deck builds an HTML slide deck that opens in the browser. On step 2: the two thumbnails show what you will get. The run takes about 7 minutes, so leave it working: approve any permission prompts, then move to the next slide and teach it while the agent works. Then come back to this slide. Open reports/TLKM.JK-report.html and reports/TLKM.JK-deck.html in the browser. Point at the sentence titles and read out one of the 3 numbers the agent lists for spot-checking. If it errors or is still running after 9 minutes, stop it and open the copies in backup/ instead: backup/TLKM.JK-report.html and backup/TLKM.JK-deck.html. Their numbers will differ from a run in class, because refresh pulls the latest prices.
+words: 16 · budget: 40 · exception: none (wc.mjs skips the eyebrow tags; with them 20)
+status: Demo tested 12 Nov 2026 on opencode 1.19.5, model 9router/opus, 5 project skills in /data/training/deck/.opencode/skills: 407 s, about 7 minutes. Run time is provisional: the deck step now builds an HTML deck (reports/TLKM.JK-deck.html) and must be re-measured. The backup/ HTML deck must be recorded from that run.
+
+## 16. Need a skill or tool? Ask the agent to find it, or install it yourself
+type: visual
+block: Demo — saved workflow · inside slide 15's 9 (taught while the demo runs)
+visible:
+Ask the agent
+"Find a skill for clear writing and use it."
+Install it yourself
+The tool the agent asks for, like the PowerPoint library python-pptx
+Skills behind this deck:
+Coherence → presentation-creator
+Humanizer → clarity
+Design → frontend-slides
+diagram: Two bordered cards side by side. Left, red label "Ask the agent" over the quoted request. Right, red label "Install it yourself" over the tool line, with python-pptx in code type. Below, the caption "Skills behind this deck:" and three boxes in a row, each a job in bold and a skill name in mono type.
+build:
+  0: tag, title, the two cards and the caption
+  1: Coherence → presentation-creator pops in
+  2: Humanizer → clarity pops in
+  3: Design → frontend-slides pops in
+notes:
+The demo is still running in the background; we go back to it after this slide. Two ways to get a skill or tool you don't have yet. On step 0, left: ask the agent. Name the job, for example: find a skill for clear writing and use it. It may search for one and offer to install it; read what it wants to install before you say yes, the same way you read a plan. Right: sometimes the agent needs a tool, like the Python library for PowerPoint files from Run 2. Say yes when it asks, or install it yourself with the command it gives you. On steps 1 to 3: these are the three skills I used to build this deck, one per job. Coherence: presentation-creator shapes the story. Humanizer: clarity rewrites the wording so it reads like a person wrote it. Design: frontend-slides builds the slides. Remember the jobs, not the names: ask for a skill by the job you need done. Then go back to the demo slide and open the results.
+words: 36 · budget: 40 · exception: none
+status: n/a
 
 ## 17. What should you still check by hand every time?
 type: check
-block: Run 3 — workflow · 5
+block: Demo — saved workflow · 3
 visible:
-A. Nothing. The command checks every number against the database.
+A. Nothing. The workflow checks every number against the database.
 B. Three numbers against the dashboard, and the insight sentence.
 C. Every number in both files, one by one.
 checks itself / 1 minute ✓ / 30 minutes (answer tags)
@@ -448,18 +426,18 @@ build:
   1: B highlights red; A and C fade; the cost tags slide in; reveal line appears
 reveal: B — Spot-check the numbers; only you can judge the claim.
 notes:
-Read the question aloud and vote by hand. Click to reveal B; the tags show the cost of each answer. A is the tempting one: the command already checks every number against the database, so why check again? Because the check is done by the same agent that wrote the report, and in Run 1 you saw how confident it can sound. C is the opposite trap: checking every number by hand takes half an hour and you will stop doing it. Three numbers against the dashboard takes a minute and catches a broken query. The insight sentence is the part only you can judge. The database cannot tell the agent why a price moved, and a new ticker means a new insight to test with "which rows prove this?" Ask the room to name one more thing they would check before sending a deck to their boss.
+Read the question aloud and vote by hand. Click to reveal B; the tags show the cost of each answer. A is the tempting one: the workflow already checks every number against the database, so why check again? Because the check is done by the same agent that wrote the report, and in Run 1 you saw how confident it can sound. C is the opposite trap: checking every number by hand takes half an hour and you will stop doing it. Three numbers against the dashboard takes a minute and catches a broken query. The insight sentence is the part only you can judge. The database cannot tell the agent why a price moved, and a new ticker means a new insight to test with "which rows prove this?" Ask the room to name one more thing they would check before sending a deck to their boss.
 words: 0 visible + 41 choices and reveal · budget: 60 · exception: none
 status: n/a
 
-## 18. In one day you built, upgraded and automated a business app
+## 18. In one day you built and upgraded a business app, then saw it automated
 type: recap
 block: Close + Q&A · 5
 visible:
 Session 1: built a dashboard and chatbot
 Session 2: added a database, watchlist and Wiki
-Session 3: automated a report, deck and workflow
-Checkpoint: s3-workflow
+Session 3: wrote a report and deck, then watched them automated
+Checkpoint: s3-pptx
 diagram: Three columns rising left to right like the staircase from slide 5, one per session, each with its line from visible and a small icon: a browser for Session 1, a database cylinder for Session 2, a command chip for Session 3. A thin line joins them. The checkpoint line sits under the third column.
 build:
   0: title
@@ -467,20 +445,20 @@ build:
   2: Session 2 column appears
   3: Session 3 column appears; checkpoint line last
 notes:
-Do not re-teach; link each point to what they did. On step 1: this morning you built a NISP dashboard and a chatbot, and learned that the model forgets and the app resends the conversation. On step 2: in Session 2 the app got a memory: a database, a watchlist and a Wiki the chatbot cites. On step 3: this afternoon you turned that data into a report and a deck, checked the numbers and claims, and saved the job as a workflow that ran on TLKM. The synthesis: all day, the work you did was judgement. You decided what to build, read the plans, checked the numbers, and gave feedback like a manager. Anyone not finished can switch to checkpoint s3-workflow, the starting point for Day 4.
-words: 25 · budget: 40 · exception: none
+Do not re-teach; link each point to what they did. On step 1: this morning you built a NISP dashboard and a chatbot, and learned that the model forgets and the app resends the conversation. On step 2: in Session 2 the app got a memory: a database, a watchlist and a Wiki the chatbot cites. On step 3: this afternoon you turned that data into a report and a deck, checked the numbers and claims, then watched a saved workflow do the whole job for TLKM. The synthesis: all day, the work you did was judgement. You decided what to build, read the plans, checked the numbers, and gave feedback like a manager. Anyone not finished can switch to checkpoint s3-pptx, the starting point for Day 4.
+words: 28 · budget: 40 · exception: none
 status: n/a
 
 ## 19. Questions
 type: Q&A
-block: Close + Q&A · 14
+block: Close + Q&A · 19
 visible:
 Questions?
 diagram: Large "Questions?" heading. Around it, five small shapes keep moving on slow loops: three square speech bubbles drifting along different paths, one red "?" orbiting the heading, and one dot bouncing between the bubbles. No text inside the shapes.
 build:
   0: heading and moving shapes (they loop for as long as the slide is open)
 notes:
-Open the floor. If no one speaks, start with: which report at your work would you turn into a workflow first? Or: what did the AI get wrong today that surprised you? Collect parking-lot items on a flip chart. If a question needs a long answer, say you will cover it on Day 4 or in the handout. Repeat questions before answering so the room hears them. Keep investment questions neutral: the app and its reports describe data; they do not advise. Use the spare time to help anyone whose TLKM run failed, and check that everyone has pushed and has the s3-workflow checkpoint link.
+Open the floor. If no one speaks, start with: which report at your work would you turn into a workflow first? Or: what did the AI get wrong today that surprised you? Collect parking-lot items on a flip chart. If a question needs a long answer, say you will cover it on Day 4 or in the handout. Repeat questions before answering so the room hears them. Keep investment questions neutral: the app and its reports describe data; they do not advise. Use the spare time to help anyone whose deck run failed, and check that everyone has pushed and has the s3-pptx checkpoint link.
 words: 1 · budget: 40 · exception: none
 status: n/a
 
@@ -496,7 +474,7 @@ diagram: none
 build:
   0: all lines together
 notes:
-Preview Day 4 in one minute. Your app so far talks only to itself and to Yahoo for prices. On Day 4 it opens up. First, your FastAPI back end gets endpoints that other apps can use, and we tour its built-in documentation page. Second, the app collects news from the web into the database, so the chatbot can use it. Third, we put a login and user roles in front of the page and the back end. Same method all the way: brainstorm, spec, plan, build, check. Remind everyone to keep their project or use checkpoint s3-workflow. Thank them for a full day and close. Mention the time Day 4 starts.
+Preview Day 4 in one minute. Your app so far talks only to itself and to Yahoo for prices. On Day 4 it opens up. First, your FastAPI back end gets endpoints that other apps can use, and we tour its built-in documentation page. Second, the app collects news from the web into the database, so the chatbot can use it. Third, we put a login and user roles in front of the page and the back end. Same method all the way: brainstorm, spec, plan, build, check. Remind everyone to keep their project or use checkpoint s3-pptx. Thank them for a full day and close. Mention the time Day 4 starts.
 words: 20 · budget: 40 · exception: none
 status: n/a
 
@@ -504,28 +482,27 @@ status: n/a
 
 | id | type | words | budget | over? | notes words |
 |---|---|---|---|---|---|
-| 1 | title | 10 | 40 | no | 130 |
-| 2 | visual | 14 | 40 | no | 137 |
+| 1 | title | 10 | 40 | no | 132 |
+| 2 | visual | 14 | 40 | no | 134 |
 | 3 | talk | 19 | 40 | no | 127 |
 | 4 | visual | 16 | 40 | no | 164 |
 | 5 | visual | 22 | 40 | no | 154 |
-| 6 | check | 69 (incl. choices + reveal) | 60 | yes — quiz-choice exception | 151 |
-| 7 | visual | 14 | 40 | no | 141 |
-| 8a | run | 36 | 60 | no | 175 |
-| 8b | run | 60 | 60 | no | 199 |
-| 9 | visual | 19 | 40 | no | 140 |
-| 10 | check | 46 (incl. choices + reveal) | 60 | no | 164 |
-| 11 | visual | 12 | 40 | no | 132 |
-| 12 | visual | 25 | 40 | no | 147 |
-| 13a | run | 40 | 60 | no | 148 |
-| 13b | run | 50 | 60 | no | 172 |
-| 14 | visual | 23 | 40 | no | 161 |
-| 15 | visual | 23 | 40 | no | 170 |
-| 16 | run | 56 | 60 | no | 193 |
+| 6 | visual | 14 | 40 | no | 141 |
+| 7a | run | 36 | 60 | no | 175 |
+| 7b | run | 60 | 60 | no | 199 |
+| 8 | visual | 19 | 40 | no | 140 |
+| 9 | check | 46 (incl. choices + reveal) | 60 | no | 164 |
+| 10 | visual | 12 | 40 | no | 132 |
+| 11 | visual | 25 | 40 | no | 147 |
+| 12a | run | 40 | 60 | no | 148 |
+| 12b | run | 50 | 60 | no | 172 |
+| 13 | visual | 23 | 40 | no | 161 |
+| 14 | visual | 23 | 40 | no | 170 |
+| 15 | demo (trainer) | 16 | 40 | no | 211 |
+| 16 | visual | 36 | 40 | no | 177 |
 | 17 | check | 41 (incl. choices + reveal) | 60 | no | 148 |
-| 18 | recap | 25 | 40 | no | 128 |
+| 18 | recap | 28 | 40 | no | 128 |
 | 19 | Q&A | 1 | 40 | no | 105 |
 | 20 | talk | 20 | 40 | no | 112 |
 
-slides: 22 · minutes: 180
-
+slides: 22 · minutes: 180 (Opening 10 · Workflows 15 · Run 1 45 · break 10 · Run 2 60 · Demo 15 · Close + Q&A 25)
