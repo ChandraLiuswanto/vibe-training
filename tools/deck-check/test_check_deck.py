@@ -167,3 +167,24 @@ def test_live_as_verb_is_allowed():
     assert cd.check_banned([s]) == []
     s2 = cd.Slide(n="5", title="T", visible="live prices", notes="")
     assert len(cd.check_banned([s2])) == 1
+
+def test_s2_profile_bans_v2_overclaims():
+    s = mk("1", "allow them", notes="So the model answers from the page, not from memory.")
+    assert len(cd.check_banned([s], profile="s2")) == 2
+    assert cd.check_banned([mk("1", "", notes="So the model answers from the page, not from memory.")], profile="s1") == []
+
+def test_s2_profile_has_no_tested_prefixes():
+    s = mk("1")
+    s.pres = ["X"]
+    assert cd.check_prompts([s], ["X"], profile="s2") == []
+
+def test_placeholders_flag_brackets_except_fix():
+    s = mk("1")
+    s.pres = ["Replace from [CHECKPOINT URL]", 'message "<msg>"', "[What I did]. I expected …"]
+    assert len(cd.check_placeholders([s])) == 2
+
+def test_s2_v2_deck_fails_s2_profile():
+    slides = cd.load_slides((ROOT / "decks" / "day3-s2.html").read_text(encoding="utf-8"))
+    errs = cd.check_banned(slides, "s2")
+    assert any(e.startswith("slide 3:") and "CHECKPOINT URL" in e for e in errs)
+    assert any(e.startswith("slide 14:") and "answers from the page" in e for e in errs)
