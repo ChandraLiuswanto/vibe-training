@@ -279,9 +279,10 @@ def check_placeholders(slides):
     errs = []
     for s in slides:
         for pre in s.pres:
-            if pre.startswith("[What I did]"):
-                continue
+            # Two exemptions: spec 8.0 P-FIX (fix-template fill-ins) and 8 Run 2a (saved-prices line).
             chk = pre.replace('"Saved prices as of <date>"', "")
+            for tok in ("[What I did]", "[what should happen]", "[what happened]"):
+                chk = chk.replace(tok, "")
             if re.search(r"\[[A-Za-z][^\]{}]*\]|<[^>]+>", chk):
                 errs.append(f"slide {s.n}: placeholder in prompt: {pre[:50]}")
     return errs

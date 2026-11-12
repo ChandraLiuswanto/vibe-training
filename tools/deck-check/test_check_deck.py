@@ -180,12 +180,18 @@ def test_s2_profile_has_no_tested_prefixes():
 
 def test_placeholders_flag_brackets_except_fix():
     s = mk("1")
-    s.pres = ["Replace from [CHECKPOINT URL]", 'message "<msg>"', "[What I did]. I expected …"]
+    s.pres = ["Replace from [CHECKPOINT URL]", 'message "<msg>"', "[What I did]. I expected [what should happen], but I saw [what happened]. Explain the cause in plain words, then fix it."]
     errs = cd.check_placeholders([s])
     assert errs == [
         "slide 1: placeholder in prompt: Replace from [CHECKPOINT URL]",
         'slide 1: placeholder in prompt: message "<msg>"',
     ]
+
+def test_placeholders_fix_prefix_does_not_hide_others():
+    s = mk("1")
+    s.pres = ["[What I did]. Then open [CHECKPOINT URL]"]
+    assert cd.check_placeholders([s]) == [
+        "slide 1: placeholder in prompt: [What I did]. Then open [CHECKPOINT URL]"]
 
 def test_placeholders_allow_json_shapes():
     s = mk("1")

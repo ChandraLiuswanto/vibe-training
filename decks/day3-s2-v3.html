@@ -903,7 +903,7 @@ let cd=null;
 function countdown(){clearInterval(cd);const el=slides[i].querySelector('[data-countdown]');if(!el)return;let left=+el.dataset.countdown;const need=+(el.dataset.startStep||0);if(step<need){el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.remove('done');return}
  const show=()=>{el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.toggle('done',left<=0)};show();
  cd=setInterval(()=>{if(left>0){left--;show()}},1000)}
-function go(n,toEnd){i=Math.max(0,Math.min(slides.length-1,n));step=toEnd?maxStep(slides[i]):0;slides.forEach(s=>{s.querySelectorAll('[data-step]').forEach(e=>e.classList.remove('in','was'))});paint(slides[i]);slides.forEach((s,k)=>{s.classList.toggle('active',k===i);if(k!==i)s.classList.remove('revealed')});
+function go(n,toEnd){i=Math.max(0,Math.min(slides.length-1,n));step=toEnd?maxStep(slides[i]):0;slides.forEach(s=>{s.querySelectorAll('[data-step]').forEach(e=>{e.classList.remove('in','was');e.removeAttribute('inert')})});paint(slides[i]);slides.forEach((s,k)=>{s.classList.toggle('active',k===i);if(k!==i)s.classList.remove('revealed')});
  document.querySelectorAll('.pg').forEach(p=>p.textContent=(i+1)+' / '+slides.length);history.replaceState(null,'','#'+(i+1));countdown();sync()}
 let step=0;
 function maxStep(s){let m=0;s.querySelectorAll('[data-step]').forEach(e=>m=Math.max(m,+e.dataset.step));return m}
@@ -912,7 +912,7 @@ function paint(s){for(let k=1;k<=9;k++)s.classList.toggle('st'+k,step>=k);s.quer
 function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);countdown();return}
  if(s.querySelector('.choices')&&!s.querySelector('.reveal[data-step]')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
 function prev(){const s=slides[i];if(s.classList.contains('revealed')){s.classList.remove('revealed');return}if(step>0){step--;paint(s);countdown();return}go(i-1,true)}
-function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
+function presenter(){pw=window.open('','s2notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
  pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
  setInterval(()=>{if(pw.closed)return;const s=Math.floor((Date.now()-t0)/1000);pw.document.getElementById('tm').textContent='Elapsed '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
  pw.addEventListener('keydown',key);sync()}
