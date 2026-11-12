@@ -11,7 +11,7 @@ How to read this file:
 - `words:` is the largest number of visible non-title words on screen at any one step, counted as AGENTS.md says: split on spaces, so stand-alone separators such as `·`, `→`, `—` count as words when they are shown. Table cells are written with `·` between them in this file only; the deck shows each cell as its own grid cell with no `·` glyph, and the count does not include those separators. Quiz choices are listed in `visible:` but not counted, with the reason in `exception:`.
 - Budgets (AGENTS.md): 40 per reveal step on teaching slides, 60 on run and check slides.
 - `status: UNTESTED` means a prompt has not been run in opencode; rehearse it before class. Every S2 prompt is UNTESTED.
-- Vocabulary (spec §5.5): "the model" · "opencode" · "your financial app" · "AI service" · "latest available price". New in S2, defined once on first use: database (slide 6), ticker and `.JK` (slide 8), Wiki (slide 18), system prompt (slide 17).
+- Vocabulary (spec §5.5): "the model" · "opencode" · "your financial app" · "AI service" · "latest available price". New in S2, defined once on first use: database (slide 6), ticker and `.JK` (slide 6 notes; `.JK` again on slide 8), Wiki (slide 18), system prompt (slide 17).
 - Workflow names, exactly: Interview → Plan (Approve / Edit / Reject) → Execute → Test / Debug → Iterate.
 - Sample numbers in diagrams are made up, tagged `Sample`, and are not real NISP prices.
 
@@ -25,7 +25,7 @@ diagram: none
 build:
   0: title, subtitle and session line together
 notes:
-Welcome back. In Session 1 you built a NISP dashboard and a chatbot by directing opencode, and you saved it on GitHub. This session upgrades that same app in two ways. First, it gets a memory: a database that keeps prices, and a watchlist of the stocks you follow. Second, the chatbot gets reference text: a small Wiki built from official Indonesian pages, and a system prompt that you write yourself. The method is the same as this morning: Interview, Plan, Execute, Test / Debug, Iterate. Before we start, check that opencode opens on every laptop and that your app from Session 1 still starts. Anyone whose app does not start, raise your hand now; the next slides show what happens then.
+Welcome back. In Session 1 you built a NISP dashboard and a chatbot by directing opencode, and you may have saved it on GitHub. This session upgrades that same app in two ways. First, it gets a memory: a database that keeps prices, and a watchlist of the stocks you follow. Second, the chatbot gets reference text: a small Wiki built from official Indonesian pages, and a system prompt that you write yourself. The method is the same as this morning: Interview, Plan, Execute, Test / Debug, Iterate. Before we start, check that opencode opens on every laptop and that your app from Session 1 still starts. Anyone whose app does not start, raise your hand now; the next slides show what happens then.
 words: 11 · budget: 40 · exception: none
 status: n/a
 
@@ -37,8 +37,8 @@ Your app from Session 1
 Database: price history
 Watchlist: NISP · BBRI · TLKM
 Wiki: OJK and IDX pages
-Answers with a source
-diagram: Centre: a laptop browser frame "Your app from Session 1" showing the small dashboard and chat panel. Below it a cylinder icon "Database: price history" plugs into the frame with a short connector. To the right of the dashboard a narrow list card "Watchlist: NISP · BBRI · TLKM" slides in. Next to the chat panel a book icon "Wiki: OJK and IDX pages" opens. A speech bubble from the chat panel ends with a small link chip: "Answers with a source".
+Shows its source link
+diagram: Centre: a laptop browser frame "Your app from Session 1" showing the small dashboard and chat panel. Below it a cylinder icon "Database: price history" plugs into the frame with a short connector. To the right of the dashboard a narrow list card "Watchlist: NISP · BBRI · TLKM" slides in. Next to the chat panel a book icon "Wiki: OJK and IDX pages" opens. A speech bubble from the chat panel ends with a small link chip: "Shows its source link".
 build:
   0: the browser frame with the Session 1 app
   1: the database cylinder plugs in under the frame; the three watchlist rows fill one by one
@@ -133,7 +133,7 @@ build:
   2: the three rows fill in one at a time, top to bottom; the "Sample" tag appears
   3: one row highlights with the label "Row", then one column with the label "Column"
 notes:
-A database is a place the app writes down what it must remember. Ours is SQLite, which keeps it in one file, app.db, in the back end folder. Other databases are set up differently; this is how our app does it. On step 1: a database holds tables. This one is called prices, and its columns say what we store: the ticker, the date and the closing price. On step 2: each row is one record, here one day for NISP. Point at the Sample tag: these numbers are made up for the picture, not real prices. On step 3: the two words to keep are row, one record, and column, one kind of value. You don't need to open the file yourself. Today you ask the agent to look inside it and tell you in plain words.
+A database is a place the app writes down what it must remember. Ours is SQLite, which keeps it in one file, app.db, in the back end folder. Other databases are set up differently; this is how our app does it. On step 1: a database holds tables. This one is called prices, and its columns say what we store: the ticker, the date and the closing price. The ticker is the stock's code; .JK marks a stock listed in Jakarta, in the codes Yahoo Finance uses: NISP.JK. On step 2: each row is one record, here one day for NISP. Point at the Sample tag: these numbers are made up for the picture, not real prices. On step 3: the two words to keep are row, one record, and column, one kind of value. You don't need to open the file yourself. Today you ask the agent to look inside it and tell you in plain words.
 words: 28 · budget: 40 · exception: none
 status: n/a
 
@@ -157,7 +157,7 @@ build:
   2: A highlights green; the Tuesday row and the close column highlight inside the grid; B and C fade; the reveal line appears
 notes:
 Read the question aloud and point at the grid. Give the room twenty seconds, then take a show of hands for A, B and C. Many people mix the two up, so do not rush. Click to reveal. A is right: a row runs across and holds one record, here NISP on Tuesday. A column runs down and holds one kind of value, here the closing price for every day. B swaps them; if someone chose B, trace one row with your finger, then one column. C is never right. Remind everyone that the numbers are samples. Then ask one person: if we add BBRI tomorrow, do we get new rows or a new column? Answer: new rows, one per day, with BBRI.JK in the ticker column.
-words: 41 · budget: 60 · exception: quiz choices (A, B, C) are not counted; the 41 = question (12) + grid and Sample tag (10) + reveal line (19)
+words: 41 · budget: 60 · exception: quiz choices (A, B, C) are not counted; the 41 = question (13) + grid and Sample tag (10) + reveal line (18)
 status: n/a
 
 ## 8. Our app uses two tables, linked by the ticker
@@ -174,9 +174,9 @@ NISP.JK · Mon · 1,150
 NISP.JK · Tue · 1,155
 NISP.JK · Wed · 1,160
 Sample
-Same ticker: one stock, many daily rows
+Same ticker — one stock, many daily rows
 .JK = listed in Jakarta (Yahoo code)
-diagram: Two table cards side by side, cells as grid cells. Left card "stocks": header "ticker · name · added"; row "NISP.JK · Bank OCBC NISP"; a greyed row "BBRI.JK" with a small tag "Run 2" (the tag stands for "added in Run 2"). Right card "prices": header "ticker · date · close"; three readable rows; a grey "Sample" tag. On click 2 the `NISP.JK` cell in the left card and the three `NISP.JK` cells on the right highlight, joined by a connector labelled "Same ticker: one stock, many daily rows". No travelling strip.
+diagram: Two table cards side by side, cells as grid cells. Left card "stocks": header "ticker · name · added"; row "NISP.JK · Bank OCBC NISP"; a greyed row "BBRI.JK" with a small tag "Run 2" (the tag stands for "added in Run 2"). Right card "prices": header "ticker · date · close"; three readable rows; a grey "Sample" tag. On click 2 the `NISP.JK` cell in the left card and the three `NISP.JK` cells on the right highlight, joined by a connector labelled "Same ticker — one stock, many daily rows". No travelling strip.
 build:
   0: the "stocks" table
   1: the "prices" table slides in
@@ -184,7 +184,7 @@ build:
   3: the note ".JK = listed in Jakarta (Yahoo code)" appears
 notes:
 Our app uses two tables; other designs are possible. On step 0: the first table, stocks, is the list of stocks the app follows. Today it has NISP; BBRI is greyed because you add it in Run 2. On step 1: the second table, prices, holds one row for each stock for each day. These prices are made up, tagged Sample. On step 2: the ticker links them. A ticker is the stock's code. Every row in prices says which stock it belongs to by repeating that code, so one stock has many daily rows. On step 3: the .JK ending marks a stock listed in Jakarta, in the codes Yahoo Finance uses: NISP.JK. The full column list, including open, high, low and volume, is in the Run 1 spec prompt. You don't need to remember it.
-words: 39 · budget: 40 · exception: none
+words: 40 · budget: 40 · exception: none
 status: n/a
 
 ## 9. Free Yahoo data can fail, so the app shows saved prices and their date
@@ -208,7 +208,7 @@ build:
   3: the badge "Saved prices · as of 12 Nov" (with "Sample") and, beside it, the message "No saved prices yet → "No data yet — try again later""
 notes:
 Before Run 1, one honest point about the data. On step 0: our prices come from Yahoo Finance through yfinance, a free tool maintained by volunteers. It is not an official Yahoo product. On step 1: it can be slow or limited, Yahoo may limit a room of thirty people asking at once, and the data can change without notice. On step 2: the database you build in Run 1 is what the app falls back on. On step 3: when the app shows saved prices it says so, with the date, so users know the numbers may not be today's. If the database has nothing yet, the app says "No data yet" rather than showing a blank page. This is why Run 1 saves the prices, and why Run 2's spec prompt asks for the date label. The date in the badge is a sample. Ask: why does the date matter for a business user? Because old numbers shown as if they were current can mislead people.
-words: 38 · budget: 40 · exception: none
+words: 37 · budget: 40 · exception: none
 status: n/a
 
 ## 10. Worked example: read one saved price row and check its date
@@ -217,17 +217,17 @@ block: Why an app needs memory · 4
 visible:
 Sample — yours will differ
 Tables: stocks (1 row), prices (~240 rows)
-Latest NISP.JK row: 11 Nov · close 1,160
+Latest NISP.JK row: 11 Nov, close 1,160
 Is the date the last trading day?
 About one row per trading day in a year?
 Check the date and the count, not whether the price looks "right".
-diagram: A chat-style card showing the agent's answer to the Run 1 "look inside" prompt: header tag "Sample — yours will differ", then the line "Tables: stocks (1 row), prices (~240 rows)" and the line "Latest NISP.JK row: 11 Nov · close 1,160". Marker callouts point at the date and at the row count. At the last click the two markers are replaced by the takeaway line under the card.
+diagram: A chat-style card showing the agent's answer to the Run 1 "look inside" prompt: header tag "Sample — yours will differ", then the line "Tables: stocks (1 row), prices (~240 rows)" and the line "Latest NISP.JK row: 11 Nov, close 1,160". Marker callouts point at the date and at the row count. At the last click the two markers are replaced by the takeaway line under the card.
 build:
   0: the answer card with the tag
   1: a marker on the date: "Is the date the last trading day?"
   2: a marker on the count: "About one row per trading day in a year?"
   3: the two markers fade and are replaced by the takeaway "Check the date and the count, not whether the price looks "right"."
 notes:
-Presenter demo. Use the reference app at checkpoint s2-database: send the same look-inside prompt as Run 1b ("Show me what's inside the database in plain words: each table, how many rows it has, and the latest NISP.JK row. Don't change anything.") and read the answer with the room. [UNTESTED prompt.] If the reference app is not ready, use the slide card. Its numbers are made-up samples, so say so; yours will differ. Step 1: is the date the last trading day? If it is old, the refresh did not work or Yahoo returned nothing new. Step 2: a year has about 240 trading days, so about 240 rows is plausible, and 3 rows or 3,000 is not. Step 3: the date and the count catch missing or duplicated data. They do not prove that a price is correct, so don't judge by whether it looks right. In Run 1b participants do exactly this, on their own database.
-words: 36 · budget: 40 · exception: none (peak at click 2, card 20 + both markers 16; click 3 is 32)
-status: UNTESTED (the look-inside prompt used in the demo is Run 1b's)
+Presenter demo. Use the reference app at checkpoint s2-database: send the same look-inside prompt as Run 1b ("Show me what's inside the database in plain words: each table, how many rows it has, and the latest NISP.JK row. Don't change anything.") and read the answer with the room. [UNTESTED prompt.] If the reference app is not ready, use the slide card. Its numbers are made-up samples, so say so; yours will differ. Step 1: is the date the last trading day? If it is old, the refresh did not work or Yahoo returned nothing new. Step 2: a year has about 240 trading days, so about 240 rows is plausible, and 3 rows or 3,000 is not. Step 3: the date and the count catch missing or duplicated data. They do not prove that a price is correct, so don't judge by whether it looks right. In Run 1b participants do exactly this, on their own database. The look-inside prompt is the Run 1b one, so it is UNTESTED until rehearsed.
+words: 35 · budget: 40 · exception: none
+status: UNTESTED
