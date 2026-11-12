@@ -1,6 +1,6 @@
 # S2 v3 deck — verification report
 
-Deck: `decks/day3-s2-v3.html` (branch `s2-v3`, replaces `decks/day3-s2.html`). Date: 2026-11-12.
+Deck: `decks/day3-s2.html` (built as `decks/day3-s2-v3.html` on branch `s2-v3`; v2 moved to `tools/deck-check/fixtures/day3-s2-v2.html`). Date: 2026-11-12.
 
 ## Automated checks
 - Lint (`check_deck.py` with outline, copy, prompts, `--profile s2`): **0 errors**. Titles match the outline, notes on every slide, no banned phrases, only the five workflow names, prompts verbatim from `prompts/s2.md`, timing 180 min (run 110).

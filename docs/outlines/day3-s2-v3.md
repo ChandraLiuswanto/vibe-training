@@ -1,7 +1,7 @@
 # Day 3 · Session 2 — outline v3 (review fixes, worked examples, safer wording)
 
 Source: spec `docs/superpowers/specs/2026-11-12-day3-s2-v3-deck-design.md` §6 (headlines copied verbatim).
-Input deck: `decks/day3-s2.html` (24 slides). Output deck: `decks/day3-s2-v3.html` (27 slides, `data-n` 1…27).
+Input deck: `decks/day3-s2.html` (24 slides). Output deck: `decks/day3-s2-v3.html` (renamed to `decks/day3-s2.html` on merge; v2 kept as `tools/deck-check/fixtures/day3-s2-v2.html`) (27 slides, `data-n` 1…27).
 Finding IDs (P0-1, P1-3, P2-7 …) refer to `docs/reviews/2026-11-12-day3-s2-review.md`. "From" = v2 `data-n`.
 
 ## Slide sequence and timing

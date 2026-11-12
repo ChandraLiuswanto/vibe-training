@@ -208,7 +208,7 @@ def test_placeholders_allow_saved_prices_date_label():
     ]
 
 def test_s2_v2_deck_fails_s2_profile():
-    slides = cd.load_slides((ROOT / "decks" / "day3-s2.html").read_text(encoding="utf-8"))
+    slides = cd.load_slides((ROOT / "tools" / "deck-check" / "fixtures" / "day3-s2-v2.html").read_text(encoding="utf-8"))
     errs = cd.check_banned(slides, "s2")
     assert any(e.startswith("slide 3:") and "CHECKPOINT URL" in e for e in errs)
     assert any(e.startswith("slide 14:") and "answers from the page" in e for e in errs)
