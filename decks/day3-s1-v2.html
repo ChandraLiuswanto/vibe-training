@@ -265,7 +265,7 @@ svg .flow.red{stroke:var(--red)}
 .slide.active .dot.loop.in,.slide.active .dot.loop:not([data-step]){opacity:1;animation:travel 3.2s linear infinite}
 /* 4. Pulse ring on the "active" thing: .pulse */
 .slide.active .pulse{animation:pulse 1.8s ease-out infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,51,0,.55)}100%{box-shadow:0 0 0 26px rgba(255,51,0,0)}}
+@keyframes pulse{0%,100%{outline:3px solid rgba(255,51,0,0);outline-offset:0}50%{outline:3px solid rgba(255,51,0,.9);outline-offset:10px}}
 /* 5. Gentle bob for icons/cards: .float (put on an inner element, not one using transform for position) */
 .slide.active .float{animation:bob 3s ease-in-out infinite}
 @keyframes bob{50%{translate:0 -10px}}
@@ -323,7 +323,7 @@ svg .flow.red{stroke:var(--red)}
       <div data-step="4" class="fx-fade" style="display:flex;align-items:center">
         <svg width="110" height="40" viewBox="0 0 110 40" style="flex:none"><defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
           <path class="flow red" d="M6 20 H98" stroke-width="5" fill="none" marker-end="url(#ah2)"/></svg>
-        <div class="dbox inv pulse" style="margin:0;flex:1;text-align:center;font:800 32px/1.2 Archivo,sans-serif">Saved on GitHub</div>
+        <div class="dbox inv" style="margin:0;flex:1;text-align:center;font:800 32px/1.2 Archivo,sans-serif">Saved on GitHub</div>
       </div>
     </div>
   </div>
@@ -343,7 +343,7 @@ svg .flow.red{stroke:var(--red)}
       <div class="dcap" style="margin-bottom:14px">Text in:</div>
       <div style="font:500 32px/1.4 'JetBrains Mono',monospace"><span class="fx-fade" data-step="1">"BBCA</span> <span class="fx-fade" data-step="1" style="transition-delay:.2s">is</span> <span class="fx-fade" data-step="1" style="transition-delay:.4s">the</span> <span class="fx-fade" data-step="1" style="transition-delay:.6s">ticker</span> <span class="fx-fade" data-step="1" style="transition-delay:.8s">of</span> <span class="fx-fade" data-step="1" style="transition-delay:1s">Bank</span> <span class="fx-fade" data-step="1" style="transition-delay:1.2s">Central</span> <span class="fx-fade" data-step="1" style="transition-delay:1.4s">..."</span></div>
     </div>
-    <div class="dbox red pulse" style="position:absolute;left:700px;top:50px;width:200px;height:200px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:56px">LLM</div>
+    <div class="dbox red" style="position:absolute;left:700px;top:50px;width:200px;height:200px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:56px">LLM</div>
     <div style="position:absolute;left:1010px;top:40px;width:590px;height:220px;border:3px solid #000;padding:20px 28px;box-sizing:border-box">
       <div class="dcap" style="margin-bottom:14px">Text out:</div>
       <div class="fx-pop" data-step="3" style="font:800 64px/1.1 Archivo,sans-serif;color:#ff3300">"Asia"</div>
@@ -365,7 +365,7 @@ svg .flow.red{stroke:var(--red)}
       <div class="dg" data-step="1" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 2 sends</span><span class="dbox">Question 1</span><span class="dbox">Answer 1</span><span class="dbox inv">Question 2</span><span class="link" style="margin-left:28px;position:relative"><i class="packet" style="offset-path:path('M0 2 H120');animation-delay:-.8s"></i></span></div>
       <div class="dg" data-step="2" style="width:100%"><span class="dcap" style="width:250px;flex:none">Turn 3 sends</span><span class="dbox" style="padding:24px 120px;background:#f2f2f2">everything so far</span><span class="dbox inv">Question 3</span><span class="link" style="margin-left:28px;position:relative"><i class="packet" style="offset-path:path('M0 2 H90');animation-delay:-1.6s"></i></span></div>
     </div>
-    <div class="dbox red pulse" style="margin:0;display:flex;align-items:center;justify-content:center;font-size:48px">Model</div>
+    <div class="dbox red" style="margin:0;display:flex;align-items:center;justify-content:center;font-size:48px">Model</div>
   </div>
   <div class="punch red" data-step="3">The app resends it. The model doesn't remember.</div>
 </div></section>
@@ -475,7 +475,7 @@ svg .flow.red{stroke:var(--red)}
     <div class="at" style="left:800px;top:70px"><div data-step="1" class="fx-pop"><div class="float" style="position:relative;width:240px;height:150px;border:3px solid #000;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 22px;gap:12px;box-sizing:border-box">
       <div style="font:800 30px Archivo,sans-serif">AGENTS.md</div><i style="height:10px;background:#d9d9d9"></i><i style="height:10px;width:70%;background:#d9d9d9"></i>
     </div></div></div>
-    <div style="position:absolute;left:1000px;top:-10px;width:580px"><div data-step="3" class="fx-left" style="background:#ffe14d;border:3px solid #000;padding:20px 26px;font-size:30px;line-height:1.3;rotate:1.5deg;box-shadow:6px 6px 0 #000">"Explain what you will do in plain business language before doing it."</div></div>
+    <div style="position:absolute;left:1000px;top:-10px;width:580px"><div data-step="3" class="fx-left" style="background:#fff;border:3px solid #000;border-left:14px solid #ff3300;padding:20px 26px;font-size:30px;line-height:1.3;rotate:1.5deg;box-shadow:none">"Explain what you will do in plain business language before doing it."</div></div>
   </div>
 </div></section>
 <section class="slide" data-n="10"><div class="inner">
@@ -628,8 +628,6 @@ svg .flow.red{stroke:var(--red)}
     <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:340px;pointer-events:none">
       <div style="position:absolute;left:840px;width:320px;top:72px;text-align:center;font:800 30px Archivo;white-space:nowrap">push → GitHub</div>
       <i class="packet ink" style="offset-path:path('M850 130 H1150')"></i>
-      <i class="packet ink" style="offset-path:path('M850 130 H1150');animation-delay:-.4s"></i>
-      <i class="packet ink" style="offset-path:path('M850 130 H1150');animation-delay:-.8s"></i>
     </div>
     <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:340px;pointer-events:none">
       <div style="position:absolute;left:840px;width:320px;top:266px;text-align:center;font:800 30px Archivo;white-space:nowrap;color:#ff3300">pull ← GitHub</div>
@@ -639,15 +637,15 @@ svg .flow.red{stroke:var(--red)}
     <!-- routine -->
     <div data-step="4" class="dg" style="position:absolute;left:0;right:0;bottom:0">
       <span class="dcap" style="margin-right:32px">Routine:</span>
-      <span class="dbox seq" style="--d:0;margin:0">pull</span><span class="darrow">→</span>
-      <span class="dbox seq" style="--d:1;margin:0">edit</span><span class="darrow">→</span>
-      <span class="dbox seq" style="--d:2;margin:0">commit</span><span class="darrow">→</span>
-      <span class="dbox seq" style="--d:3;margin:0">push</span>
+      <span class="dbox " style="margin:0">pull</span><span class="darrow">→</span>
+      <span class="dbox " style="margin:0">edit</span><span class="darrow">→</span>
+      <span class="dbox " style="margin:0">commit</span><span class="darrow">→</span>
+      <span class="dbox " style="margin:0">push</span>
     </div>
   </div>
 </div></section>
 <section class="slide" data-n="14a"><div class="inner">
-  <div class="eyebrow"><span class="tag red pulse">Run 1 · GitHub and AGENTS.md</span><span class="tag">13 min</span></div>
+  <div class="eyebrow"><span class="tag red pulse">Run 1 · GitHub and AGENTS.md</span><span class="tag">Time · 13 min</span></div>
   <h2 style="font-size:56px;margin-bottom:40px;max-width:none">Run 1: create your GitHub account, add AGENTS.md with one rule, and push</h2>
   <div class="ho" style="grid-template-columns:520px 1fr;gap:80px">
     <div class="left">
@@ -666,7 +664,7 @@ svg .flow.red{stroke:var(--red)}
   </div>
 </div></section>
 <section class="slide" data-n="14b"><div class="inner">
-  <div class="eyebrow"><span class="tag red pulse">Run 1 · GitHub and AGENTS.md</span><span class="tag">12 min</span></div>
+  <div class="eyebrow"><span class="tag red pulse">Run 1 · GitHub and AGENTS.md</span><span class="tag">Time · 12 min</span></div>
   <h2 style="font-size:56px;margin-bottom:36px;max-width:none">Run 1: create your GitHub account, add AGENTS.md with one rule, and push</h2>
   <div class="ho" style="grid-template-columns:420px 1fr;gap:64px">
     <div class="left">
@@ -711,7 +709,8 @@ svg .flow.red{stroke:var(--red)}
   <div class="body" style="position:relative">
     <!-- context box -->
     <div style="position:absolute;left:0;top:70px;width:1000px;height:490px;border:4px solid #000;box-sizing:border-box;padding:20px 28px">
-      <div class="dcap" style="margin-bottom:18px">Always loaded: name + description</div>
+      <div class="dcap" style="margin-bottom:6px;color:#6b6b6b">Agent&#x27;s context</div>
+      <div class="dcap" style="margin-bottom:14px">Always loaded: name + description</div>
       <div style="width:560px">
       <div class="hl" data-step="2" style="border:3px solid #000;padding:10px 18px;margin-bottom:16px;background:#fff"><div style="font:800 30px Archivo">brainstorming</div><i style="display:block;height:8px;background:#ccc;margin-top:8px;width:85%"></i><i style="display:block;height:8px;background:#ccc;margin-top:6px;width:60%"></i></div>
       <div style="border:3px solid #000;padding:10px 18px;margin-bottom:16px"><div style="font:800 30px Archivo">page design</div><i style="display:block;height:8px;background:#ccc;margin-top:8px;width:80%"></i><i style="display:block;height:8px;background:#ccc;margin-top:6px;width:55%"></i></div>
@@ -735,7 +734,7 @@ svg .flow.red{stroke:var(--red)}
     </svg>
     <div data-step="3" class="fx-fade" style="position:absolute;left:620px;top:8px;width:960px;text-align:right;white-space:nowrap;font:800 32px/1.2 Archivo;color:#ff3300">Task matches → full instructions load</div>
     <div data-step="3" class="fx-right" style="position:absolute;left:640px;top:250px;width:320px;height:280px">
-      <div class="float pulse" style="width:100%;height:100%;background:#ff3300;box-sizing:border-box;padding:26px 24px"><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px;width:80%"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;width:60%"></i></div>
+      <div class="" style="width:100%;height:100%;background:#ff3300;box-sizing:border-box;padding:26px 24px"><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px;width:80%"></i><i style="display:block;height:10px;background:#fff;margin-bottom:18px"></i><i style="display:block;height:10px;background:#fff;width:60%"></i></div>
     </div>
   </div>
 </div></section>
@@ -890,7 +889,7 @@ svg .flow.red{stroke:var(--red)}
   </div>
 </div></section>
 <section class="slide" data-n="21a"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">10 min</span></div>
+  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">Time · 10 min</span></div>
   <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 2: brainstorm the dashboard, write the spec, then plan it</h2>
   <div class="ho" style="grid-template-columns:380px 1fr;gap:56px">
     <div class="left">
@@ -906,7 +905,7 @@ svg .flow.red{stroke:var(--red)}
   </div>
 </div></section>
 <section class="slide" data-n="21b"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">10 min</span></div>
+  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">Time · 10 min</span></div>
   <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 2: brainstorm the dashboard, write the spec, then plan it</h2>
   <div class="ho" style="grid-template-columns:380px 1fr;gap:56px">
     <div class="left">
@@ -960,7 +959,7 @@ svg .flow.red{stroke:var(--red)}
     <div class="dsmall" data-step="1" style="position:absolute;left:440px;top:60px;width:320px;text-align:center;font:500 28px 'JetBrains Mono';color:#000;line-height:1.2">GET /api/quote · /api/history</div>
     <div class="dsmall" data-step="3" style="position:absolute;left:440px;top:350px;width:320px;text-align:center;font-size:28px">chat messages (later)</div>
     <!-- back end -->
-    <div data-step="1" class="fx-pop" style="position:absolute;left:780px;top:130px;width:290px;transition-delay:.5s"><div class="dbox inv pulse" style="margin:0;height:220px;display:flex;flex-direction:column;justify-content:center;font:800 32px Archivo">Back end (FastAPI)<span style="font:500 28px 'JetBrains Mono';color:#bbb;margin-top:10px">port 8000</span></div></div>
+    <div data-step="1" class="fx-pop" style="position:absolute;left:780px;top:130px;width:290px;transition-delay:.5s"><div class="dbox inv" style="margin:0;height:220px;display:flex;flex-direction:column;justify-content:center;font:800 32px Archivo">Back end (FastAPI)<span style="font:500 28px 'JetBrains Mono';color:#bbb;margin-top:10px">port 8000</span></div></div>
     <!-- right -->
     <div data-step="2" class="fx-right" style="position:absolute;left:1220px;top:60px;width:380px"><div class="dbox" style="margin:0">yfinance: BBCA data</div></div>
     <div data-step="3" class="fx-right" style="position:absolute;left:1220px;top:310px;width:380px"><div class="dbox red" style="margin:0;line-height:1.3">The AI: the LLM in <span style="white-space:nowrap">backend/.env <svg width="26" height="30" viewBox="0 0 26 30" style="vertical-align:-4px"><rect x="2" y="12" width="22" height="16" fill="#fff"/><path d="M7 12 V8 a6 6 0 0 1 12 0 V12" stroke="#fff" stroke-width="3" fill="none"/></svg></span></div></div>
@@ -968,7 +967,7 @@ svg .flow.red{stroke:var(--red)}
   </div>
 </div></section>
 <section class="slide" data-n="24a"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">14 min</span></div>
+  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">Time · 14 min</span></div>
   <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 3: build the dashboard, then add the chatbot through the same loop</h2>
   <div class="ho" style="grid-template-columns:420px 1fr;gap:56px">
     <div class="left">
@@ -983,7 +982,7 @@ svg .flow.red{stroke:var(--red)}
   </div>
 </div></section>
 <section class="slide" data-n="24b"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">18 min</span></div>
+  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">Time · 18 min</span></div>
   <h2 style="font-size:46px;margin-bottom:22px;white-space:nowrap;max-width:none">Run 3: build the dashboard, then add the chatbot through the same loop</h2>
   <div class="ho" style="grid-template-columns:340px 1fr;gap:44px">
     <div class="left">
@@ -1029,7 +1028,7 @@ svg .flow.red{stroke:var(--red)}
         <div style="border:3px solid #000;height:230px;box-sizing:border-box;display:flex;flex-direction:column">
           <div style="height:30px;background:#000;display:flex;align-items:center;gap:8px;padding-left:12px"><i style="width:10px;height:10px;background:#fff;display:block"></i><i style="width:10px;height:10px;background:#fff;display:block"></i><i style="width:10px;height:10px;background:#fff;display:block"></i></div>
           <div style="flex:1;padding:16px 24px;display:flex;flex-direction:column;justify-content:space-between">
-            <svg class="float" width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#1a9e45"/><path d="M15 29 L24 38 L42 19" stroke="#fff" stroke-width="6" fill="none"/></svg>
+            <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#1a9e45"/><path d="M15 29 L24 38 L42 19" stroke="#fff" stroke-width="6" fill="none"/></svg>
             <span style="font:800 34px/1.15 Archivo">Check it worked</span>
           </div>
         </div>
@@ -1044,7 +1043,7 @@ svg .flow.red{stroke:var(--red)}
     <li data-step="1" class="fx-left" style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>The model is stateless; the app resends the conversation</span></li>
     <li data-step="1" class="fx-left" style="display:flex;gap:28px;transition-delay:.15s"><span style="color:#ff3300;font-weight:800">✓</span><span>AGENTS.md keeps standing rules</span></li>
     <li data-step="1" class="fx-left" style="display:flex;gap:28px;transition-delay:.3s"><span style="color:#ff3300;font-weight:800">✓</span><span>Git and GitHub keep your work safe</span></li>
-    <li data-step="1" class="fx-left" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;transition-delay:.45s"><span style="color:#ff3300;font-weight:800">✓</span><span style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;font:800 30px Archivo"><span class="chip out seq" style="--d:0;font-size:28px">Brainstorm</span>→<span class="chip out seq" style="--d:1;font-size:28px">Spec</span>→<span class="chip out seq" style="--d:2;font-size:28px">Plan</span>→<span class="chip out seq" style="--d:3;font-size:28px">Execute</span>→<span class="chip out seq" style="--d:4;font-size:28px">Test</span>→<span class="chip out seq" style="--d:5;font-size:28px">Iterate</span></span></li>
+    <li data-step="1" class="fx-left" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;transition-delay:.45s"><span style="color:#ff3300;font-weight:800">✓</span><span style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;font:800 30px Archivo"><span class="chip out " style="--d:0;font-size:28px">Brainstorm</span>→<span class="chip out " style="--d:1;font-size:28px">Spec</span>→<span class="chip out " style="--d:2;font-size:28px">Plan</span>→<span class="chip out " style="--d:3;font-size:28px">Execute</span>→<span class="chip out " style="--d:4;font-size:28px">Test</span>→<span class="chip out " style="--d:5;font-size:28px">Iterate</span></span></li>
   </ul>
   <div class="punch" data-step="1" style="transition-delay:.6s;padding-bottom:8px">Checkpoint: <code style="display:inline-block;line-height:1">s1-chatbot</code></div>
 </div></section>
@@ -1053,7 +1052,8 @@ svg .flow.red{stroke:var(--red)}
   <div style="flex:1;display:flex;align-items:center">
     <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex"><h2 style="font:inherit;margin:0;letter-spacing:inherit">Questions</h2><span style="color:#ff3300">?</span></div>
   </div>
-  <div style="position:absolute;right:0;bottom:0;border-top:3px solid #000;padding-top:14px;text-align:right"><div class="dcap">Timer:</div><div class="pulse" data-countdown="300" style="font:800 110px/1.1 Archivo;padding:6px 18px">5:00</div></div>
+  <div style="position:absolute;right:0;bottom:0;border-top:3px solid #000;padding-top:14px;text-align:right"><div class="dcap">Timer:</div><div class="pulse" data-countdown="300" data-start-step="1" style="font:800 110px/1.1 Archivo;padding:6px 18px">5:00</div></div>
+  <i data-step="1" class="fx-fade" style="position:absolute;width:0;height:0"></i>
 </div></section>
 <section class="slide" data-n="28"><div class="inner">
   <div class="eyebrow">Close + Q&amp;A</div>
@@ -1085,7 +1085,7 @@ function sync(){const n=slides[i].dataset.n;bar.textContent=`[${i+1}/${slides.le
  if(pw&&!pw.closed){const nx=slides[i+1];pw.document.getElementById('cur').textContent=`${i+1} / ${slides.length} — `+slides[i].querySelector('h1,h2').textContent;
   pw.document.getElementById('nt').textContent=NOTES[n]||'';pw.document.getElementById('nx').textContent=nx?'Next: '+nx.querySelector('h1,h2').textContent:'End';}}
 let cd=null;
-function countdown(){clearInterval(cd);const el=slides[i].querySelector('[data-countdown]');if(!el)return;let left=+el.dataset.countdown;
+function countdown(){clearInterval(cd);const el=slides[i].querySelector('[data-countdown]');if(!el)return;let left=+el.dataset.countdown;const need=+(el.dataset.startStep||0);if(step<need){el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.remove('done');return}
  const show=()=>{el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.toggle('done',left<=0)};show();
  cd=setInterval(()=>{if(left>0){left--;show()}},1000)}
 function go(n,toEnd){i=Math.max(0,Math.min(slides.length-1,n));step=toEnd?maxStep(slides[i]):0;slides.forEach(s=>{s.querySelectorAll('[data-step]').forEach(e=>e.classList.remove('in','was'))});paint(slides[i]);slides.forEach((s,k)=>{s.classList.toggle('active',k===i);if(k!==i)s.classList.remove('revealed')});
@@ -1094,9 +1094,9 @@ let step=0;
 function maxStep(s){let m=0;s.querySelectorAll('[data-step]').forEach(e=>m=Math.max(m,+e.dataset.step));return m}
 function paint(s){s.querySelectorAll('[data-step]').forEach(e=>{const k=+e.dataset.step;e.classList.toggle('in',k<=step);e.classList.toggle('was',k<step)});
  const ind=document.querySelector('.steps-ind');if(ind){const m=maxStep(s);ind.style.display=m?'flex':'none';ind.innerHTML=Array.from({length:m+1},(_,k)=>`<i class="${k<=step?'on':''}"></i>`).join('')}}
-function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);return}
+function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);countdown();return}
  if(s.querySelector('.choices')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
-function prev(){const s=slides[i];if(step>0){step--;paint(s);return}go(i-1,true)}
+function prev(){const s=slides[i];if(s.classList.contains('revealed')){s.classList.remove('revealed');return}if(step>0){step--;paint(s);countdown();return}go(i-1,true)}
 function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
  pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
  setInterval(()=>{if(pw.closed)return;const s=Math.floor((Date.now()-t0)/1000);pw.document.getElementById('tm').textContent='Elapsed '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
