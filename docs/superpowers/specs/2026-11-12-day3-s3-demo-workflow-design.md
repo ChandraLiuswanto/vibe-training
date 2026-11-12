@@ -1,6 +1,6 @@
 # Day 3 · Session 3 — Run 3 becomes a trainer demo
 
-Date: 2026-11-12 · Status: draft for approval
+Date: 2026-11-12 · Status: approved 2026-11-12 (design, including the headline section, approved by the owner in chat)
 
 ## Intent
 
@@ -78,6 +78,8 @@ Total: 22 slides counting 7a/7b/12a/12b (unchanged: one cut, one added).
 ## Timing (180 min)
 
 Workflows 20 → 15 (quiz cut). Run 3 35 → 15 (demo 8, skills slide 3, quiz 4). This frees 25 min.
+
+Superseded: the demo timing and cutoff here are replaced by `docs/outlines/day3-s3-v2.md` (slides 15 + 16 share one 9-min slot; 7-min cutoff, then open `backup/`).
 
 **Builder's call, open to change:** give 10 min to a break after Run 1, 10 to Run 2, and 5 to Q&A.
 

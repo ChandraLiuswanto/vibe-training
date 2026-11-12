@@ -1,4 +1,6 @@
-# Day 3 · Session 3 — outline v2 (draft for approval)
+# Day 3 · Session 3 — outline v2
+
+Headlines approved 2026-11-12 with the design (`docs/superpowers/specs/2026-11-12-day3-s3-demo-workflow-design.md`).
 
 These are the Session 1 v2 rules applied to Session 3:
 - about 22 slides
@@ -34,18 +36,18 @@ Legend: [visual] = animated diagram · [run] = participant hands-on · [demo] = 
 ## Demo — a saved workflow (trainer)
 14. If you'll do it again next month, save it as a workflow; brainstorm → spec → plan is one too [visual: steps fold into one command]
 15. Watch: one saved command builds the TLKM report and deck [demo, trainer only]
-16. Need a skill or tool? Ask the agent to find it, or install it yourself [visual; taught while the demo runs]
+16. Ask the agent to find a skill or tool, or install it yourself [visual; taught while the demo runs]
 17. What should you still check by hand every time? [check]
 
 Demo block:
-- Folder: `/data/training/deck` (run sheet in its README.md). opencode 1.19.5, model `9router/opus`, 5 project skills in `.opencode/skills/`.
+- Folder: `/data/training/deck` (run sheet in its README.md). opencode 1.19.5, model `9router/opus`, 4 project skills in `.opencode/skills/`.
 - On slide 15 the trainer types `/stock-report TLKM.JK`. The command runs refresh → report → check → deck: `reports/TLKM.JK-report.html` and an HTML slide deck, `reports/TLKM.JK-deck.html`, built with the frontend-slides skill, both opened in the browser.
 - The run takes about 4 minutes (227 s measured 12 Nov 2026, HTML deck step). The trainer teaches slide 16 while it runs, then goes back and opens both files.
 - Fallback: if it errors or passes 7 minutes, open the copies in `backup/`.
 - Trainees type nothing in this block. Run 2 stays PowerPoint (`NISP-deck.pptx`); the end-of-session checkpoint is `s3-pptx`.
 
 ## Close
-18. In one day you built and upgraded a business app, then saw it automated [recap visual: S1 → S2 → S3]
+18. In one day you built and upgraded a business app, then saw its reporting automated [recap visual: S1 → S2 → S3]
 19. Questions [Q&A, moving shapes]
 20. Day 4: connect your app to other services and the web
 

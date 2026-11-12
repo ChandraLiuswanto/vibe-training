@@ -21,7 +21,7 @@ build:
   0: title, subtitle and session line together
 notes:
 Welcome back for the last session of the day. This morning you built a NISP dashboard and a chatbot. In Session 2 your app got a database, a watchlist and a Wiki. Now we use all of that. In the next three hours the AI writes a report from your own data, turns it into a PowerPoint deck, and then I show you a saved workflow that does the whole job with one command. Before we start, check that opencode opens and that your app still starts: the page on localhost:5173 and the server on port 8000. Anyone whose app does not start, raise your hand now; the next slide gives you a way back in. Same rhythm as before: I explain for a few minutes, you do it, we check together.
-words: 10 · budget: 40 · exception: none
+words: 6 (wc.mjs, eyebrow skipped) · budget: 40 · exception: none
 status: n/a
 
 ## 2. Today the AI turns your app's data into a report and a slide deck
@@ -76,7 +76,7 @@ build:
   2: the "/stock-report" chip pops in; the boxes light red one after another, refresh → report → check → deck, on a loop
   3: caption appears
 notes:
-Compare two ways of getting work done. On step 0: a prompt is what you have typed all day. One request, one result, and then the agent waits for you. On step 1: a workflow is a chain of steps saved in a fixed order. Ours, by the end of today, will refresh the prices, write the report, check the numbers, then build the deck. Checking comes before the deck so a wrong number never reaches a slide. On step 2: the command /stock-report starts it, and the boxes light up in order. You type one command instead of four prompts. It is still the agent doing the work, so it can stop and ask you, or fail, and you still read what it made. On step 3: the caption. One command starts the whole chain. Ask the room: which of your monthly tasks are the same steps every time? A monthly sales summary, a board pack, a branch report. Those are workflow candidates.
+Compare two ways of getting work done. On step 0: a prompt is what you have typed all day. One request, one result, and then the agent waits for you. On step 1: a workflow is a chain of steps saved in a fixed order. The one I'll show you at the end will refresh the prices, write the report, check the numbers, then build the deck. Checking comes before the deck so a wrong number never reaches a slide. On step 2: the command /stock-report starts it, and the boxes light up in order. You type one command instead of four prompts. It is still the agent doing the work, so it can stop and ask you, or fail, and you still read what it made. On step 3: the caption. One command starts the whole chain. Ask the room: which of your monthly tasks are the same steps every time? A monthly sales summary, a board pack, a branch report. Those are workflow candidates.
 words: 16 · budget: 40 · exception: none
 status: n/a
 
@@ -203,7 +203,7 @@ build:
   3: the red question appears
 notes:
 The numbers were the easy check. The words are harder. On step 0: two sentences from a report. Both sound equally sure of themselves. On step 1: the left one is a fact your database can prove, such as how much the close changed over the year. You can point at the rows. On step 2: the right one gives a reason, such as investors trusting the bank or a market mood. Your database holds dates and prices. It holds nothing about why people bought or sold, so the claim stands on nothing, even though it reads well. AI models are good at writing sentences that sound right. On step 3: one question catches most of these. Ask the agent, or yourself: which rows prove this? If the answer is none, cut the sentence or rewrite it as a fact.
-words: 19 · budget: 40 · exception: none
+words: 26 (wc.mjs, counts the duplicate animation layer) · budget: 40 · exception: none
 status: n/a
 
 ## 9. Which claim in this report does the data not prove?
@@ -379,17 +379,17 @@ I type it once; you watch.
 refresh → report → check → deck
 TLKM report
 TLKM deck
-diagram: A black command chip "/stock-report TLKM.JK" with the grey aside "I type it once; you watch." to its right. Below, four grey boxes "refresh", "report", "check", "deck" joined by arrows; from step 2 they light in order on a loop, like the chain on slide 4. Two result thumbnails pop in under "report" and "deck": a report page labelled "TLKM report" and a short slide strip labelled "TLKM deck".
+diagram: A black command chip "/stock-report TLKM.JK" with the grey aside "I type it once; you watch." to its right. Below, four grey boxes "refresh", "report", "check", "deck" joined by arrows; from step 2 they light in order on a loop, like the chain on slide 4. Two result thumbnails pop in under "report" and "deck": a report page labelled "TLKM report" and a browser window showing a chart slide, labelled "TLKM deck" (the demo builds an HTML deck).
 build:
   0: tags, title, the command chip and the aside
   1: the four step boxes and arrows appear
-  2: the boxes light in order; the two thumbnails pop in
+  2: the boxes light in order (each box switches colour in one jump, no fade); the two thumbnails pop in
 notes:
-Trainer demo: trainees watch and type nothing. Before class, reset the demo folder with the run sheet in /data/training/deck/README.md, and start opencode in that folder. On step 0: type /stock-report TLKM.JK and press Enter. Say: this is the chain from the workflows slide, saved once as a command; the ticker is the only thing I type. On step 1: name the four steps it runs. Refresh loads TLKM prices into the database. Report writes the HTML page from the database only. Check lists every number with the query behind it and fixes any mismatch. Deck builds an HTML slide deck that opens in the browser. On step 2: the two thumbnails show what you will get. The run takes about 4 minutes, so leave it working: approve any permission prompts, then move to the next slide and teach it while the agent works. Then come back to this slide. Open reports/TLKM.JK-report.html and reports/TLKM.JK-deck.html in the browser. Point at the sentence titles and read out one of the 3 numbers the agent lists for spot-checking. If it errors or is still running after 7 minutes, stop it and open the copies in backup/ instead: backup/TLKM.JK-report.html and backup/TLKM.JK-deck.html. Their numbers will differ from a run in class, because refresh pulls the latest prices.
+Trainer demo: trainees watch and type nothing. Before class, reset the demo folder with the run sheet in /data/training/deck/README.md, and start opencode in that folder. On step 0: type /stock-report TLKM.JK and press Enter. Say: this is the chain from the workflows slide, saved once as a command; the ticker is the only thing I type. On step 1: name the four steps it runs. Refresh loads TLKM prices into the database. Report writes the HTML page from the database only. Check lists every number with the query behind it and fixes any mismatch. Deck builds an HTML slide deck that opens in the browser. On step 2: the two thumbnails show what you will get. The run takes about 4 minutes, so leave it working: its permission prompts are pre-allowed in the demo folder, so move to the next slide and teach it while the agent works. Then come back to this slide. Open reports/TLKM.JK-report.html and reports/TLKM.JK-deck.html in the browser. Point at the sentence titles. Then, in a second terminal in the same folder, take one of the 3 queries the agent lists, run it with sqlite3 prices.db, and compare the result with the report. Say: this is the one-minute check from the quiz coming up. If it errors or is still running after 7 minutes, stop it and open the copies in backup/ instead: backup/TLKM.JK-report.html and backup/TLKM.JK-deck.html. Their numbers will differ from a run in class, because refresh pulls the latest prices.
 words: 16 · budget: 40 · exception: none (wc.mjs skips the eyebrow tags; with them 20)
-status: Demo tested 12 Nov 2026 on opencode 1.19.5, model 9router/opus, 5 project skills in /data/training/deck/.opencode/skills: 227 s, about 4 minutes, with the deck step building an HTML deck (reports/TLKM.JK-deck.html). The backup/ report and HTML deck were recorded from that run (12 Nov 2026).
+status: Demo tested 12 Nov 2026 on opencode 1.19.5, model 9router/opus, 4 project skills in /data/training/deck/.opencode/skills: 227 s, about 4 minutes, with the deck step building an HTML deck (reports/TLKM.JK-deck.html). The backup/ report and HTML deck were recorded from that run (12 Nov 2026).
 
-## 16. Need a skill or tool? Ask the agent to find it, or install it yourself
+## 16. Ask the agent to find a skill or tool, or install it yourself
 type: visual
 block: Demo — saved workflow · inside slide 15's 9 (taught while the demo runs)
 visible:
@@ -403,12 +403,12 @@ Humanizer → clarity
 Design → frontend-slides
 diagram: Two bordered cards side by side. Left, red label "Ask the agent" over the quoted request. Right, red label "Install it yourself" over the tool line, with python-pptx in code type. Below, the caption "Skills behind this deck:" and three boxes in a row, each a job in bold and a skill name in mono type.
 build:
-  0: tag, title, the two cards and the caption
-  1: Coherence → presentation-creator pops in
+  0: tag, title and the two cards
+  1: the caption "Skills behind this deck:" fades in with Coherence → presentation-creator
   2: Humanizer → clarity pops in
   3: Design → frontend-slides pops in
 notes:
-The demo is still running in the background; we go back to it after this slide. Two ways to get a skill or tool you don't have yet. On step 0, left: ask the agent. Name the job, for example: find a skill for clear writing and use it. It may search for one and offer to install it; read what it wants to install before you say yes, the same way you read a plan. Right: sometimes the agent needs a tool, like the Python library for PowerPoint files from Run 2. Say yes when it asks, or install it yourself with the command it gives you. On steps 1 to 3: these are the three skills I used to build this deck, one per job. Coherence: presentation-creator shapes the story. Humanizer: clarity rewrites the wording so it reads like a person wrote it. Design: frontend-slides builds the slides. Remember the jobs, not the names: ask for a skill by the job you need done. Then go back to the demo slide and open the results.
+The demo is still running in the background; we go back to it after this slide. Two ways to get a skill or tool you don't have yet. On step 0, left: ask the agent. Name the job, for example: find a skill for clear writing and use it. It may search for one and offer to install it; read what it wants to install before you say yes, the same way you read a plan. Between steps, glance at the opencode terminal; if it is waiting on a prompt, approve it. Right: sometimes the agent needs a tool, like the Python library for PowerPoint files from Run 2. Say yes when it asks, or install it yourself with the command it gives you. On steps 1 to 3: these are the three skills I used to build this deck, one per job. Coherence: presentation-creator shapes the story. Humanizer: clarity rewrites the wording so it reads like a person wrote it. Design: frontend-slides builds the slides. Remember the jobs, not the names: ask for a skill by the job you need done. Then go back to the demo slide and open the results.
 words: 36 · budget: 40 · exception: none
 status: n/a
 
@@ -430,7 +430,7 @@ Read the question aloud and vote by hand. Click to reveal B; the tags show the c
 words: 0 visible + 41 choices and reveal · budget: 60 · exception: none
 status: n/a
 
-## 18. In one day you built and upgraded a business app, then saw it automated
+## 18. In one day you built and upgraded a business app, then saw its reporting automated
 type: recap
 block: Close + Q&A · 5
 visible:
@@ -480,17 +480,19 @@ status: n/a
 
 ## Word count check
 
+Counted with `.scratch/s3-review/wc.mjs` on the built deck: visible non-title text, skipping the eyebrow, code blocks and quiz choices (those are listed separately). Slide 8 counts a duplicate animation layer.
+
 | id | type | words | budget | over? | notes words |
 |---|---|---|---|---|---|
-| 1 | title | 10 | 40 | no | 132 |
+| 1 | title | 6 | 40 | no | 132 |
 | 2 | visual | 14 | 40 | no | 134 |
 | 3 | talk | 19 | 40 | no | 127 |
-| 4 | visual | 16 | 40 | no | 164 |
+| 4 | visual | 16 | 40 | no | 166 |
 | 5 | visual | 22 | 40 | no | 154 |
 | 6 | visual | 14 | 40 | no | 141 |
 | 7a | run | 36 | 60 | no | 175 |
 | 7b | run | 60 | 60 | no | 199 |
-| 8 | visual | 19 | 40 | no | 140 |
+| 8 | visual | 26 | 40 | no | 140 |
 | 9 | check | 46 (incl. choices + reveal) | 60 | no | 164 |
 | 10 | visual | 12 | 40 | no | 132 |
 | 11 | visual | 25 | 40 | no | 147 |
@@ -498,8 +500,8 @@ status: n/a
 | 12b | run | 50 | 60 | no | 172 |
 | 13 | visual | 23 | 40 | no | 161 |
 | 14 | visual | 23 | 40 | no | 170 |
-| 15 | demo (trainer) | 16 | 40 | no | 211 |
-| 16 | visual | 36 | 40 | no | 177 |
+| 15 | demo (trainer) | 16 | 40 | no | 244 |
+| 16 | visual | 36 | 40 | no | 193 |
 | 17 | check | 41 (incl. choices + reveal) | 60 | no | 148 |
 | 18 | recap | 28 | 40 | no | 128 |
 | 19 | Q&A | 1 | 40 | no | 105 |
