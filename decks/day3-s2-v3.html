@@ -313,6 +313,23 @@ svg .flow.red{stroke:var(--red)}
 /* Per-slide state hooks: the runtime adds .st1 .st2 ... to the active slide as steps are reached.
    Slide-specific motion goes in the fragment via inline style + these classes in a <style> scoped with [data-n="id"] — NOT allowed;
    instead use [data-step] / .hl / .draw / loops. */
+
+/* S2 v3 slides 17-25 */
+.slide[data-n="17"].st1 .sys17{visibility:hidden}
+.slide[data-n="21"] .wfmap,.slide[data-n="23"] .wfmap{display:none}
+.slide[data-n="21"] .mA,.slide[data-n="23"] .mA,.slide[data-n="22"] .mA{display:block}
+.slide[data-n="21"].st3 .wfmap{display:none}.slide[data-n="21"].st3 .mB{display:block}
+.slide[data-n="23"].st1 .wfmap{display:none}.slide[data-n="23"].st1 .mB{display:block}
+.slide[data-n="23"].st3 .wfmap{display:none}.slide[data-n="23"].st3 .mC{display:block}
+.slide[data-n="23"] .left .chip{font-size:26px;text-transform:none;letter-spacing:0;margin:0 0 18px}
+.w20{position:relative}
+.c20{border:3px solid #000;background:#fff;padding:22px 30px;max-width:1300px}.c20 p{font-size:38px;margin:8px 0}.c20 .chip{color:#6b6b6b;border-color:#9a9a9a;font-size:28px}
+.l20{margin-top:20px}.l20 .chip{font-size:30px;text-transform:none;letter-spacing:0}
+.pg20,.ck20{position:absolute;left:0;top:380px;width:1400px;box-sizing:border-box}
+.pg20{border:3px solid #000;background:#fff}.pg20 p{font-size:38px;line-height:1.3;margin:0;padding:24px 30px}.pg20 mark{background:#ffe600;color:#000}
+.bar20{height:46px;background:#000;display:flex;align-items:center;padding:0 14px;gap:12px}.bar20 i{display:block;height:22px;background:#fff}.bar20 i:first-child{width:18px;background:#ff3300}.bar20 i:last-child{flex:1}
+.ck20{display:flex;gap:18px;align-items:center;flex-wrap:wrap;border-top:3px solid #000;padding-top:24px;font-size:38px}
+.slide[data-n="20"].st3 .pg20{display:none}
 /* S2 v3 run slides 11-15 */
 .run h2{font-size:48px;margin-bottom:18px;max-width:none}
 .run .ho{grid-template-columns:430px 1fr;gap:48px}
@@ -627,7 +644,7 @@ svg .flow.red{stroke:var(--red)}
 </div></section>
 <section class="slide" data-n="16"><div class="inner">
   <div class="eyebrow">Why the chatbot needs knowledge</div>
-  <h2>A chatbot knows what it was trained on, not your rules</h2>
+  <h2>The model's training is not a reliable source for current rules</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="470" viewBox="0 0 1600 470" style="position:absolute;left:0;top:0">
       <rect x="330" y="10" width="620" height="440" fill="#fff" stroke="#000" stroke-width="4"/>
@@ -644,21 +661,21 @@ svg .flow.red{stroke:var(--red)}
         <i class="" style="display:block;width:34px;height:96px;border:3px dashed #ff3300;background:#fff3ef;animation-delay:-1s"></i>
         <i class="" style="display:block;width:40px;height:104px;border:3px dashed #ff3300;background:#fff3ef;animation-delay:-2s"></i>
       </div>
-      <div style="position:absolute;left:1210px;top:120px;width:390px;font-size:30px;line-height:1.3;color:#ff3300;font-weight:700">Missing: your rules · recent OJK pages · your app&#x27;s data</div>
+      <div style="position:absolute;left:1210px;top:120px;width:390px;font-size:30px;line-height:1.3;color:#ff3300;font-weight:700">May be missing: your company&#x27;s rules · recent OJK pages · your app&#x27;s data</div>
     </div>
   </div>
   <div data-step="3" style="display:flex;justify-content:center;margin-top:12px">
     <div style="position:relative;border:3px solid #000;padding:18px 34px;font:800 40px Archivo;display:flex;align-items:center;gap:22px;background:#fff">
-      <span class="pulse" style="display:inline-flex;width:56px;height:56px;background:#ff3300;color:#fff;align-items:center;justify-content:center;font:800 40px Archivo">?</span>Result: guesses, or out of date
+      <span class="pulse" style="display:inline-flex;width:56px;height:56px;background:#ff3300;color:#fff;align-items:center;justify-content:center;font:800 40px Archivo">?</span>Result: may be incomplete or out of date
     </div>
   </div>
 </div></section>
 <section class="slide" data-n="17"><div class="inner">
-  <div class="eyebrow">Why the chatbot needs knowledge</div>
-  <h2>The system message sets the chatbot&#x27;s role and rules; you write it</h2>
+  <div class="eyebrow"></div>
+  <h2>The system prompt tells the chatbot its role and rules, and we test that it follows them</h2>
   <div class="body" style="position:relative">
     <div style="position:absolute;left:0;top:40px;width:460px;border:3px dashed #9a9a9a;padding:20px;display:flex;flex-direction:column;gap:18px;box-sizing:border-box">
-      <div style="display:grid;grid-template-columns:1fr;align-items:center;border:3px solid #000;padding:18px 26px;background:#fff;box-sizing:border-box;height:200px;align-content:center"><span style="text-align:center;box-sizing:border-box;font:800 32px Archivo,sans-serif;padding:12px 0;text-transform:lowercase;background:#000;color:#fff">system</span></div>
+      <div style="display:grid;grid-template-columns:1fr;align-items:center;border:3px solid #000;padding:18px 26px;background:#fff;box-sizing:border-box;height:200px;align-content:center"><span style="text-align:center;box-sizing:border-box;font:800 32px Archivo,sans-serif;padding:12px 0;text-transform:lowercase;background:#000;color:#fff" class="sys17">system</span></div>
       <div style="display:grid;grid-template-columns:1fr;align-items:center;border:3px solid #000;padding:18px 26px;background:#fff;box-sizing:border-box;opacity:.45"><span style="text-align:center;box-sizing:border-box;font:800 32px Archivo,sans-serif;padding:12px 0;text-transform:lowercase;background:#ff3300;color:#fff">user</span></div>
       <div style="display:grid;grid-template-columns:1fr;align-items:center;border:3px solid #000;padding:18px 26px;background:#fff;box-sizing:border-box;opacity:.45"><span style="text-align:center;box-sizing:border-box;font:800 32px Archivo,sans-serif;padding:12px 0;text-transform:lowercase;border:3px solid #000">assistant</span></div>
     </div>
@@ -670,14 +687,16 @@ svg .flow.red{stroke:var(--red)}
       <div style="position:absolute;inset:0;background:#000;color:#fff;padding:30px 40px;box-sizing:border-box">
         <div style="font:800 40px Archivo;text-transform:lowercase">system: role and rules (you write it)</div>
       </div>
+      <div data-step="4" class="fx-fade" style="position:absolute;left:40px;top:430px;width:900px;font:800 34px Archivo;color:#fff">It can still be wrong, so we test.</div>
       <div data-step="2" class="fx-pop" style="position:absolute;left:44px;top:170px;width:400px;background:#fff;color:#000;padding:26px 28px;font-size:34px;line-height:1.3;box-sizing:border-box;rotate:-2deg"><b style="font:800 34px Archivo">Role:</b> answer stock questions for business users</div>
-      <div data-step="3" class="fx-pop" style="position:absolute;left:490px;top:180px;width:450px;background:#ff3300;color:#fff;padding:26px 28px;font-size:34px;line-height:1.3;box-sizing:border-box;rotate:2deg"><b style="font:800 34px Archivo">Rules:</b> name the source · say I don&#x27;t know · no buy/sell advice</div>
+      <div data-step="3" class="fx-pop" style="position:absolute;left:490px;top:180px;width:450px;background:#ff3300;color:#fff;padding:26px 28px;font-size:34px;line-height:1.3;box-sizing:border-box;rotate:2deg"><b style="font:800 34px Archivo">Rules:</b> name the source, say if unsure, no buy/sell advice</div>
     </div>
+    <div data-step="1" class="fx-fade" style="position:absolute;left:0;top:560px"><span class="chip out">Training prototype⁠ —⁠ not investment advice.</span></div>
   </div>
 </div></section>
 <section class="slide" data-n="18"><div class="inner">
-  <div class="eyebrow">Why the chatbot needs knowledge</div>
-  <h2>A Wiki is a set of pages the chatbot reads before it answers</h2>
+  <div class="eyebrow"></div>
+  <h2>A Wiki lets the app send matching official text with each question</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="500" viewBox="0 0 1600 500" style="position:absolute;left:0;top:0">
       <defs><marker id="ah14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
@@ -693,7 +712,7 @@ svg .flow.red{stroke:var(--red)}
     </div>
     <!-- 2 Wiki folder -->
     <div data-step="1" class="fx-pop" style="position:absolute;left:440px;top:0;width:320px;height:500px">
-      <div style="position:absolute;left:-40px;top:30px;width:400px;text-align:center;font-size:30px;line-height:1.2;color:#ff3300;font-weight:800">Find the matching Wiki page</div>
+      <div style="position:absolute;left:-40px;top:30px;width:400px;text-align:center;font-size:30px;line-height:1.2;color:#ff3300;font-weight:800">Keyword match</div>
       <div data-step="1" class="dot fx-fade" style="z-index:2;offset-path:path('M160 300 V175');offset-rotate:0deg;width:90px;height:110px;margin:0;border-radius:0;border:3px solid #ff3300;background:#fff;box-sizing:border-box;animation-duration:1s;animation-delay:.5s;animation-iteration-count:1;animation-fill-mode:both;animation-timing-function:ease-out">
         <i style="position:absolute;left:14px;top:20px;width:56px;height:6px;background:#ff3300"></i><i style="position:absolute;left:14px;top:40px;width:46px;height:6px;background:#cfcfcf"></i><i style="position:absolute;left:14px;top:60px;width:56px;height:6px;background:#cfcfcf"></i>
       </div>
@@ -705,7 +724,7 @@ svg .flow.red{stroke:var(--red)}
     </div>
     <!-- 3 Model -->
     <div data-step="2" class="fx-pop" style="position:absolute;left:860px;top:200px;width:320px;height:200px">
-      <div class="dbox red" style="margin:0;height:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;font-size:34px">Page + question → model</div>
+      <div class="dbox red" style="margin:0;height:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;font-size:34px">question + matching page → model</div>
     </div>
     <!-- step 2: the lifted page leaves its place (cover fades in) and travels once into the model, with the question chip -->
     
@@ -715,17 +734,20 @@ svg .flow.red{stroke:var(--red)}
     <div data-step="2" class="dot fx-fade" style="z-index:4;offset-path:path('M300 330 C460 480 900 500 1060 400');offset-rotate:0deg;width:44px;height:32px;margin:0;border-radius:0;background:#000;animation-duration:1.6s;animation-iteration-count:1;animation-fill-mode:forwards;animation-timing-function:ease-in-out"></div>
     <!-- 4 Answer -->
     <div data-step="3" class="fx-right" style="position:absolute;left:1280px;top:210px;width:320px">
-      <div style="border:3px solid #000;background:#000;color:#fff;padding:24px 20px;text-align:center;font:800 36px/1.2 Archivo">Answer + source link</div>
+      <div style="border:3px solid #000;background:#000;color:#fff;padding:24px 20px;text-align:center;font:800 36px/1.2 Archivo">Answer + page link</div>
       <svg width="40" height="30" viewBox="0 0 40 30" style="display:block;margin-left:230px;margin-top:-3px"><path d="M40 0 L40 28 L6 0" fill="#000"/></svg>
       <div class="pulse" style="display:inline-flex;align-items:center;gap:8px;margin:6px 0 0 24px;border:3px solid #ff3300;padding:8px 14px">
         <svg width="44" height="24" viewBox="0 0 44 24"><rect x="2" y="4" width="22" height="16" rx="8" fill="none" stroke="#ff3300" stroke-width="4"/><rect x="20" y="4" width="22" height="16" rx="8" fill="none" stroke="#ff3300" stroke-width="4"/></svg>
       </div>
     </div>
+    <svg data-step="4" class="fx-fade" width="1600" height="620" viewBox="0 0 1600 620" style="position:absolute;left:0;top:0;pointer-events:none"><path class="draw" pathLength="1" d="M500 395 C 490 460, 420 520, 400 540" stroke="#6b6b6b" stroke-width="4" fill="none" marker-end="url(#ah14)"/></svg>
+    <div data-step="4" class="fx-pop" style="position:absolute;left:1000px;top:430px;width:600px;border:3px solid #ff3300;padding:10px 18px;font:800 28px/1.25 Archivo;color:#ff3300;background:#fff;box-sizing:border-box">The model can still misread the page — open the link.</div>
+    <div data-step="4" class="fx-pop" style="position:absolute;left:0;top:500px;width:400px;background:#e6e6e6;padding:12px 18px;font:700 28px/1.25 Nunito;color:#333;box-sizing:border-box">No matching page → "This Wiki doesn&#x27;t cover that."</div>
   </div>
 </div></section>
 <section class="slide" data-n="19"><div class="inner">
   <div class="eyebrow">Why the chatbot needs knowledge</div>
-  <h2 style="margin-bottom:40px">Only official sources go in: ojk.go.id and idx.co.id, each page with its link</h2>
+  <h2 style="margin-bottom:40px">Only OJK and IDX pages go in, each with its link and the date you checked it</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="600" viewBox="0 0 1600 600" style="position:absolute;left:0;top:0">
       <defs><marker id="ah15r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
@@ -761,108 +783,52 @@ svg .flow.red{stroke:var(--red)}
       <div style="position:relative;border:3px solid #000;background:#fff;padding:18px 24px;font-size:34px;white-space:nowrap">social posts <span data-step="2" class="fx-fade" style="color:#ff3300;font-weight:800">✗</span><div data-step="2" class="fx-fade" style="position:absolute;inset:-3px;background:rgba(255,255,255,.6);border:3px solid #ff3300"></div></div>
     </div>
     <!-- page card with URL bar -->
-    <div data-step="3" class="fx-pop" style="position:absolute;left:1100px;top:420px;width:500px;height:180px;border:3px solid #000;background:#fff;box-sizing:border-box">
+    <div data-step="3" class="fx-pop" style="position:absolute;left:1060px;top:410px;width:540px;height:210px;border:3px solid #000;background:#fff;box-sizing:border-box">
       <div style="height:52px;background:#000;display:flex;align-items:center;padding:0 14px;gap:12px"><i style="width:18px;height:18px;background:#ff3300;display:block"></i><i style="flex:1;height:26px;background:#fff;display:block"></i></div>
-      <div style="padding:20px 24px;display:flex;flex-direction:column;gap:16px"><i style="height:14px;background:#d0d0d0;display:block;width:90%"></i><i style="height:14px;background:#d0d0d0;display:block;width:75%"></i><i style="height:14px;background:#d0d0d0;display:block;width:82%"></i></div>
+      <div style="padding:12px 18px;font:700 28px/1.25 Nunito">Title · URL · Last updated (if shown) · Checked on &lt;date&gt;</div>
     </div>
-    <div data-step="3" class="fx-left" style="position:absolute;left:0;top:528px;width:960px;font:800 44px/1.15 Archivo;text-align:right">One Wiki page per source, URL at the top</div>
-    <!-- new cards keep arriving -->
-    <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:0;height:0">
-      <i class="packet" style="offset-path:path('M60 274 H690');animation-duration:5s;width:44px;height:30px;margin:-15px 0 0 -22px"></i>
-    </div>
+    <div data-step="3" class="fx-left" style="position:absolute;left:0;top:528px;width:960px;font:800 44px/1.15 Archivo;text-align:right">Each Wiki page starts with this header</div>
+
   </div>
 </div></section>
 <section class="slide" data-n="20"><div class="inner">
-  <div class="eyebrow">Run 3 — Wiki + system prompt</div>
-  <h2 style="margin-bottom:28px">Before and after: the same question, now with a source</h2>
-  <div class="body" style="position:relative">
-    <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0">
-      <defs><marker id="ah18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
-      <g data-step="1" class="fx-fade"><path class="draw" pathLength="1" d="M720 70 C 560 80, 420 90, 400 150" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah18)"/></g>
-      <g data-step="2" class="fx-fade"><path class="draw" pathLength="1" d="M880 70 C 1040 80, 1180 90, 1200 150" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah18)"/></g>
-    </svg>
-    <!-- question bubble -->
-    <div class="at" style="left:800px;top:50px"><div class="" style="position:relative;background:#000;color:#fff;font:800 36px Archivo;padding:22px 40px;white-space:nowrap">Same question<i style="position:absolute;left:36px;bottom:-24px;border-top:26px solid #000;border-right:26px solid transparent"></i></div></div>
-    <!-- before -->
-    <div data-step="1" class="fx-left" style="position:absolute;left:40px;top:170px;width:700px;height:330px;border:3px solid #000;background:#fff;box-sizing:border-box;padding:26px 30px;display:flex;flex-direction:column;gap:22px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px"><span style="font:800 32px/1.2 Archivo">Before: an answer, no source</span><span style="flex:none;background:#e6e6e6;color:#6b6b6b;font:800 26px Archivo;padding:4px 12px">Illustrative</span></div>
-      <i style="display:block;height:18px;background:#d0d0d0;width:92%"></i>
-      <i style="display:block;height:18px;background:#d0d0d0;width:80%"></i>
-      <i style="display:block;height:18px;background:#d0d0d0;width:86%"></i>
-      <i style="display:block;height:18px;background:#d0d0d0;width:55%"></i>
-    </div>
-    <!-- after -->
-    <div data-step="2" class="fx-right" style="position:absolute;left:860px;top:170px;width:700px;height:330px;border:3px solid #000;background:#fff;box-sizing:border-box;padding:26px 30px;display:flex;flex-direction:column;gap:22px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px"><span style="font:800 32px/1.2 Archivo">After: an answer from the Wiki + its URL</span><span style="flex:none;background:#e6e6e6;color:#6b6b6b;font:800 26px Archivo;padding:4px 12px">Illustrative</span></div>
-      <i style="display:block;height:18px;background:#d0d0d0;width:92%"></i>
-      <i style="display:block;height:18px;background:#d0d0d0;width:74%"></i>
-      <div class="pulse" style="margin-top:6px;width:500px;height:52px;border:3px solid #ff3300;display:flex;align-items:center;gap:12px;padding:0 12px;box-sizing:border-box"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M9 13 L13 9 M7 10 L4 13 A3 3 0 0 0 9 18 L12 15 M15 12 L18 9 A3 3 0 0 0 13 4 L10 7" stroke="#ff3300" stroke-width="3" fill="none"/></svg><i style="flex:1;height:12px;background:#ffc2b0;display:block"></i></div>
-    </div>
-  </div>
-  <div class="punch" data-step="3" style="display:flex;align-items:center;gap:24px;border-top:3px solid #000;padding-top:22px;font-size:40px"><span style="color:#ff3300">Compare:</span> <span>source · matches the page · says I don't know</span></div>
-</div></section>
-<section class="slide" data-n="21"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 3 · Wiki + system prompt</span><span class="tag">Time · 20 min</span></div>
-  <h2 style="font-size:50px;margin-bottom:20px;max-width:none">Run 3: ask three OJK questions, build the Wiki from official sources, then ask again</h2>
-  <div class="ho" style="grid-template-columns:280px 1fr;gap:36px">
-    <div class="left">
-      <div class="k">Goal</div><p>Baseline, then a Wiki plan.</p>
-      <div data-step="2"><div class="k">You should see</div><p>Only ojk.go.id or idx.co.id URLs.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-watchlist</code>.</p></div>
-    </div>
-    <div class="right" style="gap:12px">
-      <div class="step" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:28px"><b>Loop:</b><span class="chip out" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip out" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:4px 12px">build</span><span>(handout)</span></div>
-      <div class="step" style="font-size:28px"><b>1. Ask your chatbot; note each answer:</b><br>"What does OJK supervise?" · "What is an auto-rejection limit on IDX?" · "What should I check before investing?"</div>
-      <div data-step="1"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>2. Brainstorm, then spec:</span><button>Copy</button></div><pre style="padding:12px 24px">Add a Wiki to docs/spec.md: Markdown pages in wiki/, one page per official source, ojk.go.id or idx.co.id only, each with its source URL at the top. The chatbot reads the matching pages before it answers. I&#x27;ll write the system prompt. Don&#x27;t build anything yet.</pre></div></div>
-      <div data-step="2"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>3. Plan, save, find pages:</span><button>Copy</button></div><pre style="padding:12px 24px">Find official investor-education pages on ojk.go.id and idx.co.id that explain what OJK supervises, what an auto-rejection limit is, and what to check before investing. Search if you can; otherwise open those sites directly. List each URL with a one-line summary. Don&#x27;t save anything yet.</pre></div></div>
-    </div>
+  <div class="eyebrow"></div>
+  <h2 style="margin-bottom:24px">Worked example: check one answer against its source page</h2>
+  <div class="body w20">
+    <div class="c20"><span class="chip out">Illustrative</span><p><b>Question:</b> What is OJK?</p><p><b>Answer:</b> An independent state institution that regulates and supervises.</p></div>
+    <div data-step="1" class="fx-pop l20"><span class="chip out">Source: ojk.go.id — Task and Functions</span></div>
+    <div data-step="2" class="fx-pop pg20"><div class="bar20"><i></i><i></i></div><p>“OJK is an independent state institution that has the function, duty, and authority to <mark>regulate, supervise, examine, and investigate</mark>.”</p></div>
+    <div data-step="3" class="fx-pop ck20"><b>Source shown?</b><span>·</span><b>Matches the page?</b><span>·</span><b>Says “not covered” when it isn't?</b></div>
   </div>
 </div></section>
-<section class="slide" data-n="22"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 3 · Wiki + system prompt</span><span class="tag">Time · 20 min</span></div>
-  <h2 style="font-size:50px;margin-bottom:20px;max-width:none">Run 3: ask three OJK questions, build the Wiki from official sources, then ask again</h2>
-  <div class="ho" style="grid-template-columns:280px 1fr;gap:36px">
-    <div class="left">
-      <div class="k">Goal</div><p>Baseline, then a Wiki plan.</p>
-      <div data-step="2"><div class="k">You should see</div><p>Only ojk.go.id or idx.co.id URLs.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-watchlist</code>.</p></div>
-    </div>
-    <div class="right" style="gap:12px">
-      <div class="step" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:28px"><b>Loop:</b><span class="chip out" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip out" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:4px 12px">build</span><span>(handout)</span></div>
-      <div class="step" style="font-size:28px"><b>1. Ask your chatbot; note each answer:</b><br>"What does OJK supervise?" · "What is an auto-rejection limit on IDX?" · "What should I check before investing?"</div>
-      <div data-step="1"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>2. Brainstorm, then spec:</span><button>Copy</button></div><pre style="padding:12px 24px">Add a Wiki to docs/spec.md: Markdown pages in wiki/, one page per official source, ojk.go.id or idx.co.id only, each with its source URL at the top. The chatbot reads the matching pages before it answers. I&#x27;ll write the system prompt. Don&#x27;t build anything yet.</pre></div></div>
-      <div data-step="2"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>3. Plan, save, find pages:</span><button>Copy</button></div><pre style="padding:12px 24px">Find official investor-education pages on ojk.go.id and idx.co.id that explain what OJK supervises, what an auto-rejection limit is, and what to check before investing. Search if you can; otherwise open those sites directly. List each URL with a one-line summary. Don&#x27;t save anything yet.</pre></div></div>
-    </div>
-  </div>
+<section class="slide run" data-n="21"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 3 — Teach the chatbot</span><span class="tag">15 min</span></div>
+  <h2>Run 3a: record three answers, then interview and plan the Wiki</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out aprv">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="k">Goal</div><p>record three answers, interview, plan the Wiki.</p><div data-step="5"><div class="k">You should see</div><p>Three answers written down, an updated spec, a saved plan. No Wiki yet.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-wiki.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Record answers" data-done-at="1"><div class="cb">1. In your browser, ask your chatbot these three questions. Write down each answer:<br>"What does OJK supervise?" · "What is an auto-rejection limit on IDX?" · "What should I check before investing in a stock?"</div></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Interview" data-done-at="2"><div class="ph"><span>2. Interview — send:</span><button>Copy</button></div><pre>Let&#x27;s brainstorm a Wiki for my chatbot: short pages from official ojk.go.id and idx.co.id investor-education pages only, each with its link. Ask me one question at a time, at most 3, in plain business language. Don&#x27;t write any code or files yet.</pre></div></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Update the spec" data-done-at="3"><div class="ph"><span>3. Update the spec — send:</span><button>Copy</button></div><pre>Add a Wiki to docs/spec.md: Markdown pages in wiki/, one page per official page, from ojk.go.id or idx.co.id only. Each page starts with its title, URL, last-updated date if the page shows one, and the date we checked it. For each question, the back end picks matching Wiki pages by keyword and sends them with the question. If no page matches, the chatbot says the Wiki doesn&#x27;t cover it. I&#x27;ll write the system prompt. Don&#x27;t build anything yet.</pre></div><p class="aft">Course setup — copy as is; the agent handles the details.</p></div><div class="stp" data-step="3"><div class="prompt" data-done="✓ Plan" data-done-at="4"><div class="ph"><span>4. Plan mode (press Tab) — send:</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan for the Wiki only. Don&#x27;t build anything yet.</pre></div></div><div class="stp" data-step="4"><div class="prompt" data-done="✓ Save" data-done-at="5"><div class="ph"><span>5. Build mode (press Tab) — send:</span><button>Copy</button></div><pre>Approved. Save that plan to docs/plan.md. Don&#x27;t build anything yet.</pre></div></div></div></div>
 </div></section>
-<section class="slide" data-n="23"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 3 · Wiki + system prompt</span><span class="tag">Time · 17 min</span></div>
-  <h2 style="font-size:50px;margin-bottom:20px;max-width:none">Run 3: ask three OJK questions, build the Wiki from official sources, then ask again</h2>
-  <div class="ho" style="grid-template-columns:300px 1fr;gap:40px">
-    <div class="left">
-      <div class="k">Goal</div><p>Wiki pages, your system prompt, better answers.</p>
-      <div data-step="2"><div class="k">You should see</div><p>Answers that name a Wiki page and its URL.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-wiki</code>.</p></div>
-    </div>
-    <div class="right" style="gap:22px">
-      <div class="prompt"><div class="ph" style="padding:6px 24px"><span>1. Build the Wiki:</span><button>Copy</button></div><pre>Turn the pages you found into Wiki pages in wiki/, one Markdown file per page, with its URL at the top. Only use what the page says. Then connect the Wiki to the chatbot as the plan says.</pre></div>
-      <div data-step="1"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>2. Your system prompt <span style="text-transform:none;font-weight:500">(edit the wording if you like):</span></span><button>Copy</button></div><pre>Set the chatbot&#x27;s system prompt to: You answer questions about Indonesian stocks for business users, using the Wiki and the app&#x27;s data. Cite the Wiki page URL you used. If you don&#x27;t know, say so. If asked what to buy or sell, give facts and risks only, no recommendation.</pre></div></div>
-      <div class="step" data-step="2" style="font-size:30px"><b>3. Ask the same three questions again.</b> Then push (handout).</div>
-    </div>
-  </div>
+<section class="slide run" data-n="22"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 3 — Teach the chatbot</span><span class="tag">15 min</span></div>
+  <h2>Run 3b: find official pages, check each one, build the Wiki</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="k">Goal</div><p>find official pages, check them, build the Wiki.</p><div data-step="3"><div class="k">You should see</div><p>wiki/ with one page for each approved page, each starting with its title, URL and dates; the chatbot connected.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-wiki.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Find pages" data-done-at="1"><div class="ph"><span>1. Find pages — send:</span><button>Copy</button></div><pre>Find official investor-education pages on ojk.go.id and idx.co.id that explain what OJK supervises, what an auto-rejection limit is, and what to check before investing. For each, give the URL, the page title, the last-updated date if shown, and a one-line summary. Don&#x27;t save anything yet.</pre></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Check addresses" data-done-at="2"><div class="cb">2. Check: every address on ojk.go.id or idx.co.id? Open each one. Drop anything else.</div></div></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Build the Wiki" data-done-at="3"><div class="ph"><span>3. Build mode (press Tab) — send:</span><button>Copy</button></div><pre>Turn the pages I approved into Wiki pages in wiki/, one Markdown file per page, with the header from the spec. Only use what the page says. Then connect the Wiki to the chatbot as the plan says.</pre></div><p class="aft">It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p></div></div></div>
+</div></section>
+<section class="slide run" data-n="23"><div class="inner">
+  <div class="eyebrow"><span class="tag">15 min</span></div>
+  <h2>Run 3c: write your system prompt, check answers against their pages, then push</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mC"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div><div class="k">Goal</div><p>set the rules, test them, push.</p><span class="chip out">Training prototype⁠ —⁠ not investment advice.</span><div data-step="5"><div class="k">You should see</div><p>Each answer should link a supporting Wiki page; “not covered” for the staff question; no recommendation.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-wiki.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ System prompt" data-done-at="1"><div class="ph"><span>1. Set the system prompt — send:</span><button>Copy</button></div><pre>Set the chatbot&#x27;s system prompt to: You answer questions about Indonesian stocks for business users, using the Wiki pages and the app&#x27;s data that come with each question. Give the Wiki page URL you used. If they don&#x27;t cover the question, say so. If asked what to buy or sell, give facts and risks only, no recommendation.</pre></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Three answers checked" data-done-at="2"><div class="cb">2. Ask the same three questions. For each answer: open the link · find the sentence that supports it.</div></div></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Two tests" data-done-at="3"><div class="cb">3. Ask: Our bank's staff share trading limit? → Wiki doesn't cover it. Ask: Should I buy NISP? → facts and risks only. Recommends? Don't use it.</div></div></div><div class="stp" data-step="3"><p class="aft">Fix what failed, then re-ask.</p><div class="prompt" data-done="✓ Check files" data-done-at="4"><div class="ph"><span>4. Check files — send:</span><button>Copy</button></div><pre>List the files you would commit, and point out anything that looks like a key or password. Don&#x27;t commit or push yet.</pre></div><p class="aft">Read the list. backend/.env or a key in it? Stop and raise your hand.</p></div><div class="stp" data-step="4"><div class="prompt" data-done="✓ Push" data-done-at="5"><div class="ph"><span>5. List clean? Push — send:</span><button>Copy</button></div><pre>Commit those files with the message &quot;Wiki and system prompt&quot; and push to GitHub.</pre></div><p class="aft">Key leaked? Tell the facilitator — the key must be replaced.</p></div></div></div>
 </div></section>
 <section class="slide" data-n="24"><div class="inner">
   <div class="eyebrow"><span class="tag red">Check</span></div>
-  <h2>The chatbot quotes a rule but gives no source. Is that good enough?</h2>
+  <h2>A regulatory answer needs a source you can open and check</h2>
+  <p class="qq" style="font:800 40px/1.25 Archivo;margin:0 0 24px">The chatbot quotes a rule but gives no source. Is that good enough?</p>
   <div class="choices">
     <div class="choice"><span class="L">A</span><span>Yes. It sounds right.</span></div>
-    <div class="choice correct"><span class="L">B</span><span>No. Ask which Wiki page it used. No page? Fix the system prompt or add the page.</span></div>
+    <div class="choice correct"><span class="L">B</span><span>No. Find which page the app sent, open it, and check the rule. No page? Add a checked official page.</span></div>
     <div class="choice"><span class="L">C</span><span>No. Switch to a bigger model.</span></div>
   </div>
-  <div class="reveal">B — An answer without a source cannot be checked, and the system prompt says to name one.</div>
+  <div class="reveal">B — A regulatory answer needs a source that actually supports it. A link alone is not proof.</div>
 </div></section>
 <section class="slide" data-n="25"><div class="inner">
-  <div class="eyebrow">Close + Q&amp;A</div>
+  <div class="eyebrow"></div>
   <h2 style="margin-bottom:28px">Data lives in the database, knowledge in the Wiki, behaviour in the system prompt</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="480" viewBox="0 0 1600 480" style="position:absolute;left:0;top:0">
@@ -894,7 +860,7 @@ svg .flow.red{stroke:var(--red)}
       <svg width="90" height="80" viewBox="0 0 90 80"><rect x="8" y="14" width="74" height="54" fill="none" stroke="#fff" stroke-width="5"/><path d="M45 2 V14" stroke="#fff" stroke-width="5"/><rect x="24" y="32" width="10" height="10" fill="#fff"/><rect x="56" y="32" width="10" height="10" fill="#fff"/><path d="M30 54 H60" stroke="#fff" stroke-width="5"/></svg>
     </div>
   </div>
-  <div class="punch" data-step="3" style="font-size:40px">Checkpoint: <code style="display:inline-block;line-height:1">s2-wiki</code></div>
+  <div class="punch" data-step="4" style="font-size:34px;line-height:1.25">Finish check: watchlist survives a restart · answers show a checked source · latest commit on GitHub — or checkpoint <code style="display:inline-block;line-height:1">s2-wiki</code>.</div>
 </div></section>
 <section class="slide" data-n="26"><div class="inner">
   <div class="eyebrow">Close + Q&amp;A</div>
