@@ -442,7 +442,7 @@ visible:
 **Goal:** Agree what to build, then write it down.
 **Prompt 1 (brainstorm):**
 ```text
-Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
+Let's brainstorm a NISP (Bank OCBC NISP, NISP.JK) stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
 ```
 Answer each question in one short sentence.
 **Prompt 2 (spec):**
@@ -458,7 +458,7 @@ build:
   1: Prompt 2, "You should see", time and stuck line
 notes:
 Everyone sends prompt one exactly as written. In our tests the agent asked five short questions, about five seconds each, then summarised in three bullets. The first question was about the audience. Others vary, so answer what is actually asked. Sample answers: sales team before client meetings; delayed is fine if it shows the update time; mostly laptops. Watch for anyone whose agent starts writing files. Never reply "Yes, go ahead" after the summary; that invites a build. Click to prompt two. Teach "Don't build anything yet": without it, our first test built the whole app in eight minutes. With it, three of three runs wrote only the spec in about half a minute. The stack is named in one plain sentence, so you need not understand it. Everybody opens docs/spec.md, reads it and corrects one thing.
-words: 40 · budget: 60 · exception: fenced prompts not counted (42 + 47 words)
+words: 40 · budget: 60 · exception: fenced prompts not counted (46 + 47 words)
 status: tested
 
 ## 21b. Run 2: brainstorm the dashboard, write the spec, then plan it
