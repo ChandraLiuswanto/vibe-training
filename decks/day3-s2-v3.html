@@ -313,6 +313,40 @@ svg .flow.red{stroke:var(--red)}
 /* Per-slide state hooks: the runtime adds .st1 .st2 ... to the active slide as steps are reached.
    Slide-specific motion goes in the fragment via inline style + these classes in a <style> scoped with [data-n="id"] — NOT allowed;
    instead use [data-step] / .hl / .draw / loops. */
+/* S2 v3 run slides 11-15 */
+.run h2{font-size:48px;margin-bottom:18px;max-width:none}
+.run .ho{grid-template-columns:430px 1fr;gap:48px}
+.run .ho .left p{font-size:30px;margin:6px 0 20px}
+.run .eyebrow{margin-bottom:16px}
+.run .right{gap:10px;justify-content:flex-start}
+.run .stp[data-step]:not(.in),.run .left [data-step]:not(.in){display:none}
+.run .prompt .ph,.run .prompt .ph button{font-size:28px}
+.run .prompt .ph{padding:6px 20px}
+.run .prompt pre{font-size:28px;line-height:1.35;padding:14px 22px}
+.run .aft{font-size:30px;line-height:1.3;margin:8px 0 6px;font-weight:700}
+.run .prompt.done + .aft{display:none}
+.run .cb{padding:12px 22px;font:700 30px/1.3 Nunito}
+.run .prompt.done .cb{display:none}
+.run .prompt.done::before{padding:6px 24px}
+.run .wfmap{margin:0 0 22px;min-height:96px}
+.run .wfmap .wf{font-size:28px;padding:4px 12px;margin:0 6px 8px 0}
+.run .t7-plan{position:relative;display:inline-flex;flex-direction:column;align-items:flex-start}
+.run .aprv{font-size:28px;letter-spacing:0;text-transform:none;padding:2px 10px;border-width:2px;margin-top:2px}
+.slide.q15 .body{display:flex;flex-direction:column;gap:14px}
+.q15 .qq{font:800 40px/1.25 Archivo;margin:0}
+.q15 .chs.choices{display:flex;flex-direction:column;gap:14px}
+.q15 .choice{padding:14px 28px;font-size:34px}
+.q15 .reveal{margin-top:6px;font-size:34px}
+.q15.st1 .choice{opacity:.35}.q15.st1 .choice.correct{opacity:1;background:var(--red);border-color:var(--red);color:#fff}
+.slide[data-n="11"] .wfmap{display:none}.slide[data-n="11"] .mA{display:block}
+.slide[data-n="11"].st2 .wfmap{display:none}.slide[data-n="11"].st2 .mB{display:block}
+.slide[data-n="12"] .wfmap{display:none}.slide[data-n="12"] .mA{display:block}
+.slide[data-n="12"].st1 .wfmap{display:none}.slide[data-n="12"].st1 .mB{display:block}
+.slide[data-n="13"] .wfmap{display:none}.slide[data-n="13"] .mA{display:block}
+.slide[data-n="13"].st2 .wfmap{display:none}.slide[data-n="13"].st2 .mB{display:block}
+.slide[data-n="13"].st3 .wfmap{display:none}.slide[data-n="13"].st3 .mC{display:block}
+.slide[data-n="14"] .wfmap{display:none}.slide[data-n="14"] .mA{display:block}
+.slide[data-n="14"].st5 .wfmap{display:none}.slide[data-n="14"].st5 .mB{display:block}
 </style></head><body><div class="deck-viewport"><div class="deck-stage">
 <section class="slide s-title" data-n="1"><div class="inner">
   <div class="eyebrow">Day 3 · Session 2</div>
@@ -561,82 +595,35 @@ svg .flow.red{stroke:var(--red)}
     <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:360px;width:1500px;font:800 46px/1.2 Archivo">Check the date and the count, not whether the price looks "right".</div>
   </div>
 </div></section>
-<section class="slide" data-n="11"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 1 · Database</span><span class="tag">Time · 15 min</span></div>
-  <h2 style="font-size:50px;margin-bottom:20px;max-width:none">Run 1: brainstorm the watchlist, update the spec, then save NISP&#x27;s price history to a database</h2>
-  <div class="ho" style="grid-template-columns:450px 1fr;gap:44px">
-    <div class="left">
-      <div class="k">Goal</div><p style="font-size:29px;margin:6px 0 16px">Agree the database, write it into the spec, plan it.</p>
-      <div data-step="2"><div class="k">Then</div><p style="font-size:29px;margin:6px 0 16px">Plan mode (Tab), plan, approve, edit or reject (handout).</p>
-      <div class="k">You should see</div><p style="font-size:29px;margin:6px 0 16px">Three questions, a summary, an updated docs/spec.md, a plan. No database yet.</p>
-      <div class="k">Stuck?</div><p style="font-size:29px;margin:6px 0 0">Checkpoint <code>s1-chatbot</code>, then continue.</p></div>
-    </div>
-    <div class="right" style="gap:14px">
-      <div style="display:flex;align-items:center;gap:10px;font:800 28px Archivo"><span class="chip red" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip red" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:1px 12px">build</span></div>
-      <div class="prompt"><div class="ph" style="padding:6px 24px"><span>Prompt 1 (brainstorm)</span><button>Copy</button></div><pre>Let&#x27;s brainstorm a watchlist for the app. It should keep each stock&#x27;s daily price history in a database, so the app remembers it after a restart. Ask me one question at a time, at most 3, in plain business language. Don&#x27;t write any code or files yet.</pre></div>
-      <div data-step="1"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>Prompt 2 (spec)</span><button>Copy</button></div><pre>Add the price database to docs/spec.md. Use SQLite in backend/data/app.db with two tables: stocks (ticker, name, added_at) and prices (ticker, date, open, high, low, close, volume). POST /api/refresh fills prices from yfinance and returns rows_added. Start with NISP.JK. Don&#x27;t build anything yet.</pre></div></div>
-    </div>
-  </div>
+<section class="slide run" data-n="11"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 1 — Save prices</span><span class="tag">15 min</span></div>
+  <h2>Run 1a: interview for the price database, update the spec, approve the plan</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out aprv">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="k">Goal</div><p>interview, update the spec, approve a plan.</p><div data-step="3"><div class="k">You should see</div><p>Up to 3 questions, an updated docs/spec.md, a plan. No database yet.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-database.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Interview" data-done-at="1"><div class="ph"><span>1. Interview — send:</span><button>Copy</button></div><pre>Let&#x27;s brainstorm saving price history for my financial app. It should keep each stock&#x27;s daily prices in a database, so the app still has them after a restart. Ask me one question at a time, at most 3, in plain business language. Don&#x27;t write any code or files yet.</pre></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Update the spec" data-done-at="2"><div class="ph"><span>2. Update the spec — send:</span><button>Copy</button></div><pre>Add the price database to docs/spec.md. Use SQLite in backend/data/app.db with two tables: stocks (ticker, name, added_at) and prices (ticker, date, open, high, low, close, volume). Keep one row per ticker and date, so refreshing twice adds no duplicates. Store prices as Yahoo gives them, in IDR. POST /api/refresh fills prices from yfinance and returns rows_added. Start with NISP.JK. Don&#x27;t build anything yet.</pre></div><p class="aft">Course setup — copy as is; the agent handles the details.</p></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Plan" data-done-at="3"><div class="ph"><span>3. Plan mode (press Tab) — send:</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan for the price database only. Don&#x27;t build anything yet.</pre></div></div></div></div>
 </div></section>
-<section class="slide" data-n="12"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 1 · Database</span><span class="tag">Time · 20 min</span></div>
-  <h2 style="font-size:50px;margin-bottom:20px;max-width:none">Run 1: brainstorm the watchlist, update the spec, then save NISP&#x27;s price history to a database</h2>
-  <div class="ho" style="grid-template-columns:460px 1fr;gap:48px">
-    <div class="left">
-      <div class="k">Goal</div><p>Build the database, fill it with NISP, look inside.</p>
-      <div data-step="2"><div class="k">Then</div><p>Commit and push (handout).</p>
-      <div class="k">You should see</div><p>Two tables, a row count, the latest NISP row.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-database</code>.</p></div>
-    </div>
-    <div class="right" style="gap:16px">
-      <div class="prompt"><div class="ph"><span>Prompt 1 (build, Tab: Build mode)</span><button>Copy</button></div><pre>Approved. Save that plan to docs/plan.md, then build the price database from it. Fill it with NISP.JK&#x27;s last year of prices and tell me how many rows were added.</pre></div>
-      <div data-step="1"><div class="prompt"><div class="ph"><span>Prompt 2 (look inside)</span><button>Copy</button></div><pre>Show me what&#x27;s inside the database in plain words: each table, how many rows it has, and the latest NISP.JK row. Don&#x27;t change anything.</pre></div></div>
-    </div>
-  </div>
+<section class="slide run" data-n="12"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 1 — Save prices</span><span class="tag">20 min</span></div>
+  <h2>Run 1b: build the database, look inside, refresh twice, push safely</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div><div class="k">Goal</div><p>build it, look inside, test it, push.</p><div data-step="5"><div class="k">You should see</div><p>Two tables, about one row per trading day, a recent latest NISP row; a second refresh adds no duplicates.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-database.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Build" data-done-at="1"><div class="ph"><span>1. Build mode (press Tab) — send:</span><button>Copy</button></div><pre>Approved. Save that plan to docs/plan.md, then build the price database from it. Fill it with NISP.JK&#x27;s last year of prices and tell me how many rows were added.</pre></div><p class="aft">It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Look inside" data-done-at="2"><div class="ph"><span>2. Look inside — send:</span><button>Copy</button></div><pre>Show me what&#x27;s inside the database in plain words: each table, how many rows it has, and the latest NISP.JK row. Don&#x27;t change anything.</pre></div><p class="aft">Two tables? About one row per trading day? A recent latest date?</p></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Refresh again" data-done-at="3"><div class="ph"><span>3. Refresh again — send:</span><button>Copy</button></div><pre>Refresh the prices again and tell me how many rows were added. Don&#x27;t change anything else.</pre></div><p class="aft">Expect 0 or a few new days, not a full year.</p></div><div class="stp" data-step="3"><div class="prompt" data-done="✓ Check files" data-done-at="4"><div class="ph"><span>4. Check files — send:</span><button>Copy</button></div><pre>List the files you would commit, and point out anything that looks like a key or password. Don&#x27;t commit or push yet.</pre></div><p class="aft">Read the list. backend/.env or a key in it? Stop and raise your hand.</p></div><div class="stp" data-step="4"><div class="prompt" data-done="✓ Push" data-done-at="5"><div class="ph"><span>5. List clean? Push — send:</span><button>Copy</button></div><pre>Commit those files with the message &quot;Price database&quot; and push to GitHub.</pre></div><p class="aft">Key leaked? Tell the facilitator — the key must be replaced.</p></div></div></div>
 </div></section>
-<section class="slide" data-n="13"><div class="inner">
-  <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 2 · Watchlist</span><span class="tag">Time · 12 min</span></div>
-  <h2 style="font-size:52px;margin-bottom:20px;max-width:none">Run 2: build a watchlist page, add BBRI and TLKM, remove one, and push</h2>
-  <div class="ho" style="grid-template-columns:350px 1fr;gap:40px">
-    <div class="left">
-      <div class="k">Goal</div><p>A watchlist page that reads from the database.</p>
-      <div data-step="1"><div class="k">You should see</div><p>A watchlist page with NISP.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-database</code>, then continue.</p></div>
-    </div>
-    <div class="right" style="gap:12px">
-      <div class="step" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:28px"><b>Loop:</b><span class="chip out" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip out" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:4px 12px">build</span><span>(handout)</span></div>
-      <div class="prompt"><div class="ph" style="padding:6px 24px"><span>Spec</span><button>Copy</button></div><pre>Add a watchlist to docs/spec.md. Keep the quote, history and chat endpoints unchanged. New: GET /api/watchlist → [{ticker, name, price, change_pct}]; POST /api/watchlist {ticker} → {ticker}, also saving its price history; DELETE /api/watchlist/{ticker} → 204. Prices come from the database. Reject unknown tickers. Don&#x27;t build anything yet.</pre></div>
-      <div data-step="1"><div class="prompt"><div class="ph" style="padding:6px 24px"><span>Build (after you approve the plan)</span><button>Copy</button></div><pre>Approved. Save that plan to docs/plan.md, then build the watchlist from it. Adding a ticker must also save its price history. Then tell me how to open the watchlist page.</pre></div></div>
-    </div>
-  </div>
+<section class="slide run" data-n="13"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 2 — Watchlist</span><span class="tag">15 min</span></div>
+  <h2>Run 2a: spec, plan and build a watchlist the dashboard follows</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out aprv">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mC"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div><div class="k">Goal</div><p>a watchlist the dashboard follows.</p><div data-step="4"><div class="k">You should see</div><p>Questions asked, spec updated, plan approved, a watchlist page with NISP and its price date, and a NISP card on the dashboard.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-watchlist.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Interview" data-done-at="1"><div class="ph"><span>1. Interview — send:</span><button>Copy</button></div><pre>Let&#x27;s brainstorm a watchlist for my financial app. I want to follow NISP, BBRI and TLKM, add or remove stocks myself, and see them on the dashboard. Ask me one question at a time, at most 3, in plain business language. Don&#x27;t write any code or files yet.</pre></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ Update the spec" data-done-at="2"><div class="ph"><span>2. Update the spec — send:</span><button>Copy</button></div><pre>Add a watchlist to docs/spec.md. Keep the quote, history and chat endpoints working. New: GET /api/watchlist → [{ticker, name, price, change_pct, price_date}]; POST /api/watchlist {ticker}, which also saves that stock&#x27;s price history; DELETE /api/watchlist/{ticker}. Prices come from the database. The dashboard shows one price card for each stock on the watchlist, so adding or removing a stock changes the dashboard after a refresh. Show the date of each price. If Yahoo fails, keep showing saved prices labelled &quot;Saved prices as of &lt;date&gt;&quot;; with no saved prices, say &quot;No data yet&quot;. Accept IDX tickers ending in .JK only; otherwise say &quot;Enter the IDX ticker, for example NISP.JK&quot; and save nothing. Don&#x27;t build anything yet.</pre></div><p class="aft">Course setup — copy as is; the agent handles the details.</p></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Plan" data-done-at="3"><div class="ph"><span>3. Plan mode (press Tab) — send:</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan for the watchlist only. Don&#x27;t build anything yet.</pre></div></div><div class="stp" data-step="3"><div class="prompt" data-done="✓ Build" data-done-at="4"><div class="ph"><span>4. Build mode (press Tab) — send:</span><button>Copy</button></div><pre>Approved. Save that plan to docs/plan.md, then build the watchlist from it. Then tell me how to open the watchlist page.</pre></div><p class="aft">It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p></div></div></div>
 </div></section>
-<section class="slide" data-n="14"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 2 · Watchlist</span><span class="tag">Time · 12 min</span></div>
-  <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 2: build a watchlist page, add BBRI and TLKM, remove one, and push</h2>
-  <div class="ho" style="grid-template-columns:400px 1fr;gap:56px">
-    <div class="left">
-      <div class="k">Goal</div><p>Change the watchlist and see the dashboard follow.</p>
-      <div data-step="1"><div class="k">You should see</div><p>Added stocks with history; the removed one gone.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s2-watchlist</code>.</p></div>
-    </div>
-    <div class="right" style="gap:16px">
-      <div class="k" style="font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:3px solid #000;padding-top:12px">Steps on the page</div>
-      <div class="step"><b>1.</b>Add BBRI.JK, then TLKM.JK.</div>
-      <div class="step"><b>2.</b>Try NISP without .JK: expect a clear message.</div>
-      <div class="step"><b>3.</b>Remove one stock. Refresh the dashboard.</div>
-      <div data-step="1" style="margin-top:12px"><div class="prompt"><div class="ph"><span>Push</span><button>Copy</button></div><pre>Commit all changes with the message "Watchlist page". Make sure backend/.env is not committed. Then push to GitHub.</pre></div></div>
-    </div>
-  </div>
+<section class="slide run" data-n="14"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 2 — Watchlist</span><span class="tag">15 min</span></div>
+  <h2>Run 2b: test it like a user, including a restart, then push</h2>
+  <div class="ho"><div class="left"><div class="wfmap mA"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div><div class="wfmap mB"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div><div class="k">Goal</div><p>test it like a user, then push.</p><div data-step="7"><div class="k">You should see</div><p>BBRI and TLKM added, NISP alone rejected, BBRI removed, data still there after a restart.</p><div class="k">Stuck?</div><p>Raise your hand — we move you to checkpoint s2-watchlist.</p></div></div><div class="right"><div class="stp"><div class="prompt" data-done="✓ Add" data-done-at="1"><div class="cb">1. Add BBRI.JK, then TLKM.JK. Each appears on the watchlist and the dashboard, with history.</div></div></div><div class="stp" data-step="1"><div class="prompt" data-done="✓ NISP alone" data-done-at="2"><div class="cb">2. Type NISP (no .JK). You see: Enter the IDX ticker, for example NISP.JK. Nothing is saved.</div></div></div><div class="stp" data-step="2"><div class="prompt" data-done="✓ Remove" data-done-at="3"><div class="cb">3. Remove BBRI.JK. Refresh the dashboard. Its card is gone.</div></div></div><div class="stp" data-step="3"><div class="prompt" data-done="✓ Restart" data-done-at="4"><div class="cb">4. Stop the back end, start it again, reopen the app. The watchlist and prices are still there.</div></div></div><div class="stp" data-step="4"><div class="prompt" data-done="✓ Fill in" data-done-at="5"><div class="ph"><span>A step failed? Fill in the brackets before sending:</span><button>Copy</button></div><pre>[What I did]. I expected [what should happen], but I saw [what happened]. Explain the cause in plain words, then fix it.</pre></div></div><div class="stp" data-step="5"><div class="prompt" data-done="✓ Check files" data-done-at="6"><div class="ph"><span>5. Check files — send:</span><button>Copy</button></div><pre>List the files you would commit, and point out anything that looks like a key or password. Don&#x27;t commit or push yet.</pre></div><p class="aft">Read the list. backend/.env or a key in it? Stop and raise your hand.</p></div><div class="stp" data-step="6"><div class="prompt" data-done="✓ Push" data-done-at="7"><div class="ph"><span>6. List clean? Push — send:</span><button>Copy</button></div><pre>Commit those files with the message &quot;Watchlist page&quot; and push to GitHub.</pre></div><p class="aft">Key leaked? Tell the facilitator — the key must be replaced.</p></div></div></div>
 </div></section>
-<section class="slide" data-n="15"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Check</span></div>
-  <h2>You removed a stock but it&#x27;s still on the dashboard. What do you tell the agent?</h2>
-  <div class="choices">
-    <div class="choice"><span class="L">A</span><span>"It&#x27;s broken. Fix it."</span></div>
-    <div class="choice correct"><span class="L">B</span><span>"I removed TLKM from the watchlist, but the dashboard still shows it after a refresh. Explain why in plain words, then fix it."</span></div>
-    <div class="choice"><span class="L">C</span><span>"Rebuild the whole app."</span></div>
-  </div>
-  <div class="reveal">B — It says what you did, what you expected and what you saw, and asks for the cause before the fix.</div>
+<section class="slide run q15" data-n="15"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Run 2 — Watchlist</span><span class="tag">5 min</span></div>
+  <h2>A useful bug report says what you did, what you expected and what you saw</h2>
+  <div class="body"><p class="qq">You removed a stock but it&#x27;s still on the dashboard. What do you tell the agent?</p>
+  <div class="chs choices"><div class="choice"><span class="L">A</span><span>"It&#x27;s broken. Fix it."</span></div>
+  <div class="choice correct"><span class="L">B</span><span>"I removed TLKM from the watchlist, but the dashboard still shows it after a refresh. Explain why in plain words, then fix it."</span></div>
+  <div class="choice"><span class="L">C</span><span>"Rebuild the whole app."</span></div></div>
+  <div class="reveal" data-step="1">B — It says what you did, what you expected and what you saw, and asks for the cause before the fix.</div>
+  <div class="stp" data-step="2"><div class="prompt"><div class="ph"><span>Fill in the brackets before sending:</span><button>Copy</button></div><pre>[What I did]. I expected [what should happen], but I saw [what happened]. Explain the cause in plain words, then fix it.</pre></div></div></div>
 </div></section>
 <section class="slide" data-n="16"><div class="inner">
   <div class="eyebrow">Why the chatbot needs knowledge</div>
@@ -952,10 +939,10 @@ function go(n,toEnd){i=Math.max(0,Math.min(slides.length-1,n));step=toEnd?maxSte
  document.querySelectorAll('.pg').forEach(p=>p.textContent=(i+1)+' / '+slides.length);history.replaceState(null,'','#'+(i+1));countdown();sync()}
 let step=0;
 function maxStep(s){let m=0;s.querySelectorAll('[data-step]').forEach(e=>m=Math.max(m,+e.dataset.step));return m}
-function paint(s){for(let k=1;k<=9;k++)s.classList.toggle('st'+k,step>=k);s.querySelectorAll('[data-step]').forEach(e=>{const k=+e.dataset.step;e.classList.toggle('in',k<=step);e.classList.toggle('was',k<step);e.toggleAttribute('inert',k>step)});
+function paint(s){for(let k=1;k<=9;k++)s.classList.toggle('st'+k,step>=k);s.querySelectorAll('[data-done-at]').forEach(e=>e.classList.toggle('done',step>=+e.dataset.doneAt));s.querySelectorAll('[data-step]').forEach(e=>{const k=+e.dataset.step;e.classList.toggle('in',k<=step);e.classList.toggle('was',k<step);e.toggleAttribute('inert',k>step)});
  const ind=document.querySelector('.steps-ind');if(ind){const m=maxStep(s);ind.style.display=m?'flex':'none';ind.innerHTML=Array.from({length:m+1},(_,k)=>`<i class="${k<=step?'on':''}"></i>`).join('')}}
 function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);countdown();return}
- if(s.querySelector('.choices')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
+ if(s.querySelector('.choices')&&!maxStep(s)&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
 function prev(){const s=slides[i];if(s.classList.contains('revealed')){s.classList.remove('revealed');return}if(step>0){step--;paint(s);countdown();return}go(i-1,true)}
 function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
  pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
