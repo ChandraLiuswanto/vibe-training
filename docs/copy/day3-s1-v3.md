@@ -585,18 +585,18 @@ visible:
 Screen (in your browser)
 React · 5173
 Back end
-FastAPI · 8000
-yfinance: NISP data
+FastAPI · yfinance · 8000
+Yahoo Finance: NISP data
 AI service (LLM)
 backend/.env — service address, model name, secret key. Not the AI.
-diagram: Laptop boundary contains screen and back end; yfinance data source and red AI service box are outside it. Settings card beside back end, no padlock in label. Unlabelled arrows avoid extra visible words.
+diagram: Laptop boundary contains screen and back end; Yahoo Finance data source and red AI service box are outside it. Settings card beside back end, no padlock in label. Unlabelled arrows avoid extra visible words.
 build:
   0: laptop and Screen, with React and port
   1: Back end, FastAPI and port, joined to screen
   2: data source and arrows; one data packet returns and stops
   3: AI service and settings card appear
 notes:
-On step 0, point at the screen: this is what you open in your browser. On step 1, the back end is a program on your laptop that handles requests from the screen. localhost means this laptop; 5173 and 8000 are the ports we chose. On step 2, the back end fetches NISP prices through yfinance and sends the data to the screen. On step 3, the AI service is outside the laptop. backend/.env holds its address, model name and secret key, not the model itself. The file does not protect itself; we keep it out of chat and Git. If someone opens the wrong address, check which server and port opencode told them to use.
+On step 0, point at the screen: this is what you open in your browser. On step 1, the back end is a program on your laptop that handles requests from the screen. localhost means this laptop; 5173 and 8000 are the ports we chose. On step 2, the back end fetches NISP prices from Yahoo Finance, using a Python library called yfinance, and sends the data to the screen. On step 3, the AI service is outside the laptop. backend/.env holds its address, model name and secret key, not the model itself. The file does not protect itself; we keep it out of chat and Git. If someone opens the wrong address, check which server and port opencode told them to use.
 words: 29 · budget: 40 · exception: none
 status: n/a
 
@@ -690,27 +690,34 @@ Approved. Build the chatbot from docs/plan.md, then tell me how to open it.
 ```
 Current: Test / Debug
 What is NISP's latest price? → matches the price card and its date.
-Which stock are we talking about? → NISP (memory).
+Say "My name is Rina", then ask "What is my name?" → Rina (memory).
 What was the close on <a date last month>? → matches the chart, or says it has no data.
 Should I buy NISP? → no buy, sell or hold advice.
 Current: Iterate
 Fix failures; repeat checks.
+Check files:
+```text
+List the files you would commit, and point out anything that looks like a key or password. Don't commit or push yet.
+```
+Read the list. backend/.env or a key in it? Stop and raise your hand.
+List clean? Send:
 Push:
 ```text
-List the files you will commit. If backend/.env is in the list, stop and tell me. Otherwise commit with the message "NISP dashboard and chatbot" and push to GitHub.
+Commit those files with the message "NISP dashboard and chatbot" and push to GitHub.
 ```
 Key leaked? Tell the facilitator — the key must be replaced.
 14 min · Stuck? s1-chatbot.
-diagram: Workflow mini-map (.wf) stays above replacement panels: build; first two tests; last two tests; iterate/push. Current step named on each. The visible angle-bracket date is the spec's existing test template, not a new placeholder.
+diagram: Workflow mini-map (.wf) stays above replacement panels: build; first two tests; last two tests; iterate/check files; push. Current step named on each. The visible angle-bracket date is the spec's existing test template, not a new placeholder.
 build:
   0: mini-map, Current: Execute and build prompt
   1: Current: Test / Debug and first two tests replace build panel
   2: last two tests replace first two; Current: Test / Debug remains
-  3: Current: Iterate, fix/recheck line, push prompt, key warning, time and stuck line replace tests
+  3: Current: Iterate, fix/recheck line, check-files prompt and stop line replace tests
+  4: push prompt, key warning, time and stuck line replace the check-files panel
 notes:
-On step 0, send the build prompt only after the chatbot plan is saved. On step 1, ask the first two questions in your financial app, in the same chat: price and date must match the card, then the stock must remain NISP. Point at the dashboard date and source. On step 2, replace the date template with a real date last month; compare with the chart or accept an honest no-data answer. The advice question must not produce buy, sell or hold advice. On step 3, fix failures and repeat checks before pushing. Read the listed files; backend/.env must be absent. If a key leaked, stop and tell me so it is replaced. Help anyone behind reach checkpoint s1-chatbot.
+On step 0, send the build prompt only after the chatbot plan is saved. On step 1, ask the first two questions in your financial app, in the same chat: price and date must match the card, then tell it a name and ask for it back: that only works if your financial app resends the conversation, because the stock is always NISP anyway. Point at the dashboard date and source. On step 2, replace the date template with a real date last month; compare with the chart or accept an honest no-data answer. The advice question must not produce buy, sell or hold advice. On step 3, fix failures and repeat checks, then ask for the file list without committing. Read it yourself: backend/.env or anything that looks like a key must be absent. On step 4, only then commit and push. If a key leaked, stop and tell me so it is replaced. Help anyone behind reach checkpoint s1-chatbot.
 words: 45 · budget: 60 · exception: none
-status: UNTESTED (build and push prompts)
+status: UNTESTED (build, check-files and push prompts)
 
 ## 31. You built a financial app by directing an AI and checking its work
 type: recap

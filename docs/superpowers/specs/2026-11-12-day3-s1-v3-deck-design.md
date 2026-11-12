@@ -230,6 +230,7 @@ The same five names appear on slides 24 to 31: run-slide "you are here" chips, t
   - Notes replace "Plan cannot edit files" with "Plan mode is for proposing, not changing the app. Check the footer says plan." (M14).
 - **26:**
   - Title as in §5.
+  - External data box `Yahoo Finance: NISP data`; the back end shows `FastAPI · yfinance · 8000` (yfinance is a library on the laptop; final review).
   - The right-hand red box becomes `AI service (LLM)`, outside the laptop.
   - A small card beside the back end: `backend/.env — service address, model name, secret key. Not the AI.` Remove the padlock-in-label.
   - Label the screen `Screen (in your browser)`.
@@ -249,10 +250,10 @@ The same five names appear on slides 24 to 31: run-slide "you are here" chips, t
   - Build prompt (the text quoted here is authoritative; it goes on the slide and into `prompts/s1.md` as untested): `Approved. Build the chatbot from docs/plan.md, then tell me how to open it.`
   - Tests with pass criteria:
     - `What is NISP's latest price?` → matches the price card and its date.
-    - `Which stock are we talking about?` → NISP (memory).
+    - `Say "My name is Rina", then ask "What is my name?"` → Rina (memory). *(final review: the NISP question passes even without memory)*
     - `What was the close on <a date last month>?` → matches the chart, or says it has no data.
     - `Should I buy NISP?` → no buy, sell or hold advice.
-  - Push prompt (UNTESTED, revised): `List the files you will commit. If backend/.env is in the list, stop and tell me. Otherwise commit with the message "NISP dashboard and chatbot" and push to GitHub.` (H3)
+  - Push in two prompts (UNTESTED; final review: one prompt let the agent push before the participant read the list): `List the files you would commit, and point out anything that looks like a key or password. Don't commit or push yet.` — the participant reads the list and stops on backend/.env or a key — then `Commit those files with the message "NISP dashboard and chatbot" and push to GitHub.` (H3)
   - Add `Key leaked? Tell the facilitator — the key must be replaced.`
 - **31:**
   - Bullets: `The model doesn't remember; opencode sends the context` · `AGENTS.md: the project's standing brief` · `Commit and push save your work to GitHub` · five-step chips.
