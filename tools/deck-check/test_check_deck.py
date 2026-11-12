@@ -181,7 +181,16 @@ def test_s2_profile_has_no_tested_prefixes():
 def test_placeholders_flag_brackets_except_fix():
     s = mk("1")
     s.pres = ["Replace from [CHECKPOINT URL]", 'message "<msg>"', "[What I did]. I expected …"]
-    assert len(cd.check_placeholders([s])) == 2
+    errs = cd.check_placeholders([s])
+    assert errs == [
+        "slide 1: placeholder in prompt: Replace from [CHECKPOINT URL]",
+        'slide 1: placeholder in prompt: message "<msg>"',
+    ]
+
+def test_placeholders_allow_json_shapes():
+    s = mk("1")
+    s.pres = ["GET /api/watchlist → [{ticker, name}]"]
+    assert cd.check_placeholders([s]) == []
 
 def test_s2_v2_deck_fails_s2_profile():
     slides = cd.load_slides((ROOT / "decks" / "day3-s2.html").read_text(encoding="utf-8"))
