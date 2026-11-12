@@ -281,7 +281,8 @@ def check_placeholders(slides):
         for pre in s.pres:
             if pre.startswith("[What I did]"):
                 continue
-            if re.search(r"\[[A-Za-z][^\]{}]*\]|<[^>]+>", pre):
+            chk = pre.replace('"Saved prices as of <date>"', "")
+            if re.search(r"\[[A-Za-z][^\]{}]*\]|<[^>]+>", chk):
                 errs.append(f"slide {s.n}: placeholder in prompt: {pre[:50]}")
     return errs
 

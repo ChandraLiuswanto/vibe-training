@@ -192,6 +192,15 @@ def test_placeholders_allow_json_shapes():
     s.pres = ["GET /api/watchlist → [{ticker, name}]"]
     assert cd.check_placeholders([s]) == []
 
+def test_placeholders_allow_saved_prices_date_label():
+    s = mk("1")
+    s.pres = ['Show "Saved prices as of <date>" under the table', 'Show "<date>" alone', 'Say "Saved prices as of <day>"']
+    errs = cd.check_placeholders([s])
+    assert errs == [
+        'slide 1: placeholder in prompt: Show "<date>" alone',
+        'slide 1: placeholder in prompt: Say "Saved prices as of <day>"',
+    ]
+
 def test_s2_v2_deck_fails_s2_profile():
     slides = cd.load_slides((ROOT / "decks" / "day3-s2.html").read_text(encoding="utf-8"))
     errs = cd.check_banned(slides, "s2")
