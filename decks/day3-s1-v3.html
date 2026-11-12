@@ -396,11 +396,22 @@ svg .flow.red{stroke:var(--red)}
 .slide[data-n="15"] .c6-commits>div{width:200px;font-size:30px;line-height:1.25}
 .slide[data-n="15"] .c6-commits i,.slide[data-n="15"] .c6-copydots i{display:block;border-radius:50%;width:42px;height:42px;background:#000;margin-bottom:28px}
 .slide[data-n="15"] .c6-remote{border:4px solid #000;padding:25px;font:800 30px Archivo;min-height:220px}
-.slide[data-n="15"] .c6-copydots{display:flex;gap:35px}
+.slide[data-n="15"] .c6-square{border-radius:0!important}
+.slide[data-n="15"] .c6-diamond{border-radius:0!important;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.slide[data-n="15"] .c6-transfers{position:absolute;inset:0;pointer-events:none}
+.slide[data-n="15"] .c6-transfer{position:absolute;top:156px;width:42px;height:42px;background:#000;border-radius:50%}
+.slide[data-n="15"] .c6-transfer:nth-child(1){left:1129px;--from-x:-759px}
+.slide[data-n="15"] .c6-transfer:nth-child(2){left:1206px;--from-x:-618px}
+.slide[data-n="15"] .c6-transfer:nth-child(3){left:1283px;--from-x:-477px}
+.slide.active[data-n="15"].st3 .c6-transfer{animation:c6-push-commit 1.8s ease-in-out 1 both}
+@keyframes c6-push-commit{from{transform:translateX(var(--from-x))}to{transform:translateX(0)}}
+.slide[data-n="15"] .c6-tom-local{position:absolute;left:630px;top:300px;display:flex;align-items:center;gap:18px;font:800 30px Archivo;color:#ff3300}
+.slide[data-n="15"] .c6-tom-local i{width:42px;height:42px;border-radius:50%;background:#ff3300;flex:none}
+.slide.active[data-n="15"].st4 .c6-tom-local{animation:c6-pull-commit 1.8s ease-in-out 1 both}
+@keyframes c6-pull-commit{0%,15%{transform:translate(500px,-50px)}100%{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.slide[data-n="15"] .c6-transfer,.slide[data-n="15"] .c6-tom-local{animation:none!important;transform:none!important}}
 .slide[data-n="15"] .c6-push,.slide[data-n="15"] .c6-pull{position:absolute;left:930px;top:370px;font:800 30px Archivo}
 .slide[data-n="15"] .c6-pull{top:430px;color:#ff3300}
-.slide[data-n="15"] .packet{animation:none;margin-top:15px}
-.slide.active[data-n="15"].st3 .c6-push .packet,.slide.active[data-n="15"].st4 .c6-pull .packet{animation:travel 2s ease-in-out 1 forwards}
 .slide[data-n="16"] .c6-frame{position:absolute;inset:0;background:#fff;border:4px solid #000;padding:48px;font-size:40px;line-height:1.35;box-sizing:border-box}
 .slide[data-n="16"] .c6-rule{font:800 44px/1.2 Archivo;border-bottom:4px solid #000;padding-bottom:28px}
 .slide[data-n="16"] .c6-start p{max-width:1300px}
@@ -648,141 +659,434 @@ svg .flow.red{stroke:var(--red)}
   </div>
   <div class="reveal">B — A new conversation doesn't include old chats. AGENTS.md is sent every turn.</div>
 </div></section>
-<section class="slide" data-n="12"><div class="inner">
-  <div class="eyebrow">Models and Git</div>
-  <h2>Use a quick model for small edits and a stronger one for planning and debugging</h2>
-  <div class="body" style="position:relative">
-    <!-- lanes -->
-    <div style="position:absolute;left:0;top:0;width:1600px;height:210px;background:#f2f2f2;border-top:3px solid #000;border-bottom:3px dashed #9a9a9a"></div>
-    <div style="position:absolute;left:0;top:220px;width:1600px;height:210px;background:#f2f2f2;border-bottom:3px solid #000"></div>
-    <div style="position:absolute;left:30px;top:20px;display:flex;align-items:center;gap:20px"><span style="font:800 44px Archivo,sans-serif">Quick</span><span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[FAST MODEL]</span></div>
-    <div style="position:absolute;left:30px;top:240px;display:flex;align-items:center;gap:20px"><span style="font:800 44px Archivo,sans-serif">Stronger</span><span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[SMART MODEL]</span></div>
-    <!-- fast chips + car -->
-    <div style="position:absolute;left:30px;top:130px;display:flex;gap:24px">
-      <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">rename a title</span>
-      <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">fix a typo</span>
-      <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.3s">change a colour</span>
-    </div>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:210px">
-      <div class="packet" style="width:90px;height:44px;margin:-22px 0 0 -45px;background:transparent;animation-duration:1.6s;offset-path:path('M920 152 H1540')">
-        <svg width="90" height="44" viewBox="0 0 90 44"><path d="M4 30 L14 12 H58 L76 24 H86 V34 H4z" fill="#ff3300"/><circle cx="22" cy="36" r="7"/><circle cx="68" cy="36" r="7"/><path d="M-18 18 H0 M-26 28 H-4" stroke="#ff3300" stroke-width="4"/></svg>
+<section class="slide" data-n="12">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>Use a quick model for small edits and a stronger one for planning and debugging</h2>
+    <div class="body" style="position:relative">
+      <!-- lanes -->
+      <div style="position:absolute;left:0;top:0;width:1600px;height:210px;background:#f2f2f2;border-top:3px solid #000;border-bottom:3px dashed #9a9a9a">
+      </div>
+      <div style="position:absolute;left:0;top:220px;width:1600px;height:210px;background:#f2f2f2;border-bottom:3px solid #000">
+      </div>
+      <div style="position:absolute;left:30px;top:20px;display:flex;align-items:center;gap:20px">
+        <span style="font:800 44px Archivo,sans-serif">Quick</span>
+        <span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[FAST MODEL]</span>
+      </div>
+      <div style="position:absolute;left:30px;top:240px;display:flex;align-items:center;gap:20px">
+        <span style="font:800 44px Archivo,sans-serif">Stronger</span>
+        <span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[SMART MODEL]</span>
+      </div>
+      <!-- fast chips + car -->
+      <div style="position:absolute;left:30px;top:130px;display:flex;gap:24px">
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">rename a title</span>
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">fix a typo</span>
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.3s">change a colour</span>
+      </div>
+      <div data-step="1" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:210px">
+        <div class="packet" style="width:90px;height:44px;margin:-22px 0 0 -45px;background:transparent;animation-duration:1.6s;offset-path:path('M920 152 H1540')">
+          <svg width="90" height="44" viewBox="0 0 90 44">
+            <path d="M4 30 L14 12 H58 L76 24 H86 V34 H4z" fill="#ff3300"/>
+            <circle cx="22" cy="36" r="7"/>
+            <circle cx="68" cy="36" r="7"/>
+            <path d="M-18 18 H0 M-26 28 H-4" stroke="#ff3300" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+      <!-- smart chips + truck + thought -->
+      <div style="position:absolute;left:30px;top:340px;display:flex;gap:24px">
+        <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">write the plan</span>
+        <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">find why something breaks</span>
+      </div>
+      <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:220px;width:1600px;height:210px">
+        <div class="packet" style="width:110px;height:60px;margin:-30px 0 0 -55px;background:transparent;animation-duration:9s;animation-timing-function:linear;offset-path:path('M720 140 H1120')">
+          <svg width="110" height="60" viewBox="0 0 110 60">
+            <rect x="2" y="10" width="68" height="36" fill="#000"/>
+            <path d="M70 22 H92 L106 36 V46 H70z" fill="#000"/>
+            <circle cx="22" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+            <circle cx="88" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="at" style="left:1300px;top:300px">
+        <div data-step="2" class="fx-pop" style="transition-delay:.4s">
+          <div class="float">
+            <svg width="140" height="110" viewBox="0 0 140 110">
+              <ellipse cx="80" cy="42" rx="56" ry="36" fill="#fff" stroke="#000" stroke-width="4"/>
+              <circle cx="30" cy="88" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+              <circle cx="14" cy="104" r="5" fill="#000"/>
+              <circle cx="60" cy="42" r="6" fill="#ff3300"/>
+              <circle cx="80" cy="42" r="6" fill="#ff3300"/>
+              <circle cx="100" cy="42" r="6" fill="#ff3300"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- badge -->
+      <div data-step="3" class="fx-pop" style="position:absolute;right:0;top:455px;background:#000;color:#fff;padding:22px 34px;font:800 40px Archivo,sans-serif">Switch with <span class="mono" style="color:#ff3300">/models</span>
       </div>
     </div>
-    <!-- smart chips + truck + thought -->
-    <div style="position:absolute;left:30px;top:340px;display:flex;gap:24px">
-      <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">write the plan</span>
-      <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">find why something breaks</span>
-    </div>
-    <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:220px;width:1600px;height:210px">
-      <div class="packet" style="width:110px;height:60px;margin:-30px 0 0 -55px;background:transparent;animation-duration:9s;animation-timing-function:linear;offset-path:path('M720 140 H1120')">
-        <svg width="110" height="60" viewBox="0 0 110 60"><rect x="2" y="10" width="68" height="36" fill="#000"/><path d="M70 22 H92 L106 36 V46 H70z" fill="#000"/><circle cx="22" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/><circle cx="88" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/></svg>
-      </div>
-    </div>
-    <div class="at" style="left:1300px;top:300px"><div data-step="2" class="fx-pop" style="transition-delay:.4s"><div class="float">
-      <svg width="140" height="110" viewBox="0 0 140 110"><ellipse cx="80" cy="42" rx="56" ry="36" fill="#fff" stroke="#000" stroke-width="4"/><circle cx="30" cy="88" r="9" fill="#fff" stroke="#000" stroke-width="4"/><circle cx="14" cy="104" r="5" fill="#000"/><circle cx="60" cy="42" r="6" fill="#ff3300"/><circle cx="80" cy="42" r="6" fill="#ff3300"/><circle cx="100" cy="42" r="6" fill="#ff3300"/></svg>
-    </div></div></div>
-    <!-- badge -->
-    <div data-step="3" class="fx-pop" style="position:absolute;right:0;top:455px;background:#000;color:#fff;padding:22px 34px;font:800 40px Archivo,sans-serif">Switch with <span class="mono" style="color:#ff3300">/models</span></div>
   </div>
-</div></section>
-<section class="slide" data-n="13"><div class="inner">
-  <div class="eyebrow">Models and Git</div>
-  <h2>On supported models, higher effort lets the model reason more before answering</h2>
-  <div class="body" style="position:relative">
-    <!-- dial -->
-    <div style="position:absolute;left:100px;top:60px;width:1100px;height:6px;background:#000"></div>
-    <div style="position:absolute;left:100px;top:40px;width:6px;height:46px;background:#000"></div>
-    <div style="position:absolute;left:647px;top:40px;width:6px;height:46px;background:#000"></div>
-    <div style="position:absolute;left:1194px;top:40px;width:6px;height:46px;background:#000"></div>
-    <div class="dcap" style="position:absolute;left:103px;top:100px;transform:translateX(-50%)">low</div>
-    <div class="dcap" style="position:absolute;left:650px;top:100px;transform:translateX(-50%)">medium</div>
-    <div class="dcap" style="position:absolute;left:1197px;top:100px;transform:translateX(-50%)">high</div>
-    <div class="eff-ptr" style="position:absolute;top:12px;left:103px;width:0;height:0">
-      <div style="position:absolute;left:-22px;top:0;width:44px;height:44px;background:#ff3300;border:4px solid #000;box-sizing:border-box"></div>
-    </div>
-    <!-- thinking bar -->
-    <div class="dcap" style="position:absolute;left:100px;top:190px;color:#6b6b6b">thinking</div>
-    <div style="position:absolute;left:100px;top:236px;width:1100px;height:40px;border:3px solid #000;box-sizing:border-box">
-      <div class="eff-bar" style="height:100%;width:6%;background:#ff3300"></div>
-    </div>
-    <!-- clock -->
-    <svg width="90" height="90" viewBox="0 0 90 90" style="position:absolute;left:1240px;top:210px"><circle cx="45" cy="45" r="38" fill="#fff" stroke="#000" stroke-width="5"/><line class="eff-hand" x1="45" y1="45" x2="45" y2="16" stroke="#ff3300" stroke-width="6" style="transform-origin:45px 45px"/></svg>
-    <!-- lines -->
-    <div style="position:absolute;left:100px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #000;padding-top:16px"><b>Low effort:</b> quicker replies, small edits</div>
-    <div data-step="1" class="fx-right" style="position:absolute;left:680px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #ff3300;padding-top:16px"><b style="color:#ff3300">High effort:</b> reasons more, usually slower; plans and hard bugs</div>
-    <div data-step="2" class="fx-pop" style="position:absolute;left:100px;top:470px;display:flex;align-items:center;gap:24px;font-size:36px"><span style="font:600 40px 'JetBrains Mono',monospace;border:3px solid #000;border-bottom-width:8px;padding:8px 20px">Ctrl+T</span><span>cycles the options your model offers</span></div>
-  </div>
-</div></section>
-<section class="slide" data-n="14"><div class="inner">
-  <div class="eyebrow">Models and Git</div>
-  <h2>Everyone works on a local copy and shares through GitHub</h2>
-  <div class="body" style="position:relative">
-    <!-- step 0: messy pile in the centre -->
-    <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-6deg)"></div>
-    <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(4deg)"></div>
-    <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-1deg);padding:24px 20px;box-sizing:border-box">
-      <div class="mono" style="font-size:28px;font-weight:500">Budget_final_v2_REALLY.xlsx</div>
-      <div style="margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-        <i style="height:16px;background:#d6d6d6"></i><i style="height:16px;background:#d6d6d6"></i><i style="height:16px;background:#d6d6d6"></i><i style="height:16px;background:#d6d6d6"></i>
-        <i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i>
-        <i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i>
-        <i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i><i style="height:16px;background:#e6e6e6"></i>
+</section>
+<section class="slide" data-n="13">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>On supported models, higher effort lets the model reason more before answering</h2>
+    <div class="body" style="position:relative">
+      <!-- dial -->
+      <div style="position:absolute;left:100px;top:60px;width:1100px;height:6px;background:#000">
       </div>
-    </div>
-    <div class="at" style="left:1060px;top:80px;font:800 120px/1 Archivo,sans-serif;color:#ff3300">?</div>
-
-    <!-- step 1: pile goes; laptop appears -->
-    <div data-step="1" class="fx-fade" style="position:absolute;left:480px;top:0;width:640px;height:440px;background:repeating-linear-gradient(90deg,#fff 0 159px,#f0f0f0 159px 160px)"></div>
-    <div data-step="1" class="fx-left" style="position:absolute;left:0;top:0;width:520px;height:440px">
-      <svg width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
-        <rect x="100" y="40" width="320" height="200" fill="#fff" stroke="#000" stroke-width="4"/>
-        <path d="M60 240 H460 L480 270 H40 Z" fill="#000"/>
-        <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(-6 260 140)"/>
-        <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(5 260 140)"/>
-        <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3"/>
-        <path d="M205 120 H315 M205 140 H315 M205 160 H285" stroke="#bbb" stroke-width="8"/>
+      <div style="position:absolute;left:100px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div style="position:absolute;left:647px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div style="position:absolute;left:1194px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div class="dcap" style="position:absolute;left:103px;top:100px;transform:translateX(-50%)">low</div>
+      <div class="dcap" style="position:absolute;left:650px;top:100px;transform:translateX(-50%)">medium</div>
+      <div class="dcap" style="position:absolute;left:1197px;top:100px;transform:translateX(-50%)">high</div>
+      <div class="eff-ptr" style="position:absolute;top:12px;left:103px;width:0;height:0">
+        <div style="position:absolute;left:-22px;top:0;width:44px;height:44px;background:#ff3300;border:4px solid #000;box-sizing:border-box">
+        </div>
+      </div>
+      <!-- thinking bar -->
+      <div class="dcap" style="position:absolute;left:100px;top:190px;color:#6b6b6b">thinking</div>
+      <div style="position:absolute;left:100px;top:236px;width:1100px;height:40px;border:3px solid #000;box-sizing:border-box">
+        <div class="eff-bar" style="height:100%;width:6%;background:#ff3300">
+        </div>
+      </div>
+      <!-- clock -->
+      <svg width="90" height="90" viewBox="0 0 90 90" style="position:absolute;left:1240px;top:210px">
+        <circle cx="45" cy="45" r="38" fill="#fff" stroke="#000" stroke-width="5"/>
+        <line class="eff-hand" x1="45" y1="45" x2="45" y2="16" stroke="#ff3300" stroke-width="6" style="transform-origin:45px 45px"/>
       </svg>
-      <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">Your computer</div>
-      <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">local copy</div>
+      <!-- lines -->
+      <div style="position:absolute;left:100px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #000;padding-top:16px">
+        <b>Low effort:</b> quicker replies, small edits</div>
+      <div data-step="1" class="fx-right" style="position:absolute;left:680px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #ff3300;padding-top:16px">
+        <b style="color:#ff3300">High effort:</b> reasons more, usually slower; plans and hard bugs</div>
+      <div data-step="2" class="fx-pop" style="position:absolute;left:100px;top:470px;display:flex;align-items:center;gap:24px;font-size:36px">
+        <span style="font:600 40px 'JetBrains Mono',monospace;border:3px solid #000;border-bottom-width:8px;padding:8px 20px">Ctrl+T</span>
+        <span>cycles the options your model offers</span>
+      </div>
     </div>
-
-    <!-- step 2: GitHub -->
-    <div data-step="2" class="fx-right" style="position:absolute;left:1080px;top:0;width:520px;height:440px">
-      <svg class="float" width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
-        <path d="M150 150 C90 150 90 80 150 82 C160 30 240 20 268 62 C300 30 380 45 375 95 C430 95 435 150 380 150 Z" fill="#fff" stroke="#000" stroke-width="4"/>
-        <rect x="170" y="120" width="180" height="150" fill="#fff" stroke="#000" stroke-width="4"/>
-        <path d="M170 170 H350 M170 220 H350" stroke="#000" stroke-width="4"/>
-        <path d="M240 145 H280 M240 195 H280 M240 245 H280" stroke="#ff3300" stroke-width="6"/>
-      </svg>
-      <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">GitHub</div>
-      <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">shared copy</div>
-    </div>
-
-    <!-- step 3: push / pull arrow -->
-    <svg width="1600" height="440" viewBox="0 0 1600 440" style="position:absolute;left:0;top:0;pointer-events:none">
-      <defs><marker id="ah12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
-      <path class="draw" data-step="3" pathLength="1" d="M490 160 H1110" stroke="#ff3300" stroke-width="6" fill="none" marker-start="url(#ah12)" marker-end="url(#ah12)"/>
-    </svg>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:440px;pointer-events:none">
-      <i class="packet" style="offset-path:path('M520 160 H1080')"></i>
-      <i class="packet ink" style="offset-path:path('M1080 160 H520');animation-delay:-1.2s"></i>
-    </div>
-    <div class="at" style="left:800px;top:110px"><div data-step="3" class="fx-fade" style="font:800 44px Archivo,sans-serif;white-space:nowrap;color:#ff3300">push / pull</div></div>
   </div>
-  <div class="punch" data-step="3">Saving alone doesn't upload your work.</div>
-</div></section>
-<section class="slide" data-n="15"><div class="inner"><div class="eyebrow">Models and Git</div><h2>A commit is a save point on your laptop; push copies it to GitHub, pull brings changes back</h2><div class="body c6-git">
-<div class="c6-states"><div>Saved on laptop</div><div data-step="1">→ Committed (save point)</div><div data-step="3">→ Pushed (on GitHub)</div></div>
-<div class="c6-git-zones"><div class="c6-files"><svg width="150" height="130" viewBox="0 0 150 130"><path d="M20 5H110L135 30V125H20Z" fill="#fff" stroke="#000" stroke-width="4"/><path d="M40 50H110M40 70H110M40 90H90" stroke="#bbb" stroke-width="8"/></svg><div class="c6-env">.env<span data-step="1">: left out</span></div></div>
-<div class="c6-commits"><div data-step="1" class="fx-pop"><i></i>Created the budget file</div><div data-step="2" class="fx-pop"><i></i>Added March figures</div><div data-step="2" class="fx-pop"><i></i>Fixed the totals</div></div>
-<div data-step="3" class="c6-remote"><div class="c6-copydots"><i></i><i></i><i></i></div><div data-step="4" class="fx-pop" style="margin-top:48px;color:#ff3300">● Tom's change</div></div></div>
-<div data-step="3" class="c6-push">push →<i class="packet ink" style="offset-path:path('M0 0 H240')"></i></div><div data-step="4" class="c6-pull">← pull<i class="packet" style="offset-path:path('M240 0 H0')"></i></div>
-<div data-step="5" class="dg" style="position:absolute;bottom:0;width:100%"><span class="dbox">pull</span><svg width="50" height="30" viewBox="0 0 50 30"><path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/></svg><span class="dbox">edit</span><svg width="50" height="30" viewBox="0 0 50 30"><path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/></svg><span class="dbox">commit</span><svg width="50" height="30" viewBox="0 0 50 30"><path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/></svg><span class="dbox">push</span></div></div></div></section>
-<section class="slide" data-n="16"><div class="inner"><div class="eyebrow">Run 1</div><h2>Run 1a: sign up to GitHub and draft AGENTS.md with /init</h2><div class="body ho c6-run" style="display:block;position:relative"><div class="c6-frame c6-start"><div class="c6-rule">github.com → Sign up. Confirm email.</div><p>opencode must be open in the financial-app folder (the path shown ends in financial-app).</p><div class="dbox black">Type /init.</div></div><div data-step="1" class="c6-frame c6-permission"><div class="c6-rule">Permission box?</div><p>Read the path. Inside financial-app? <strong>Allow once.</strong></p><p>Anything else or unsure? Raise your hand.</p><p style="color:#ff3300">Never &quot;Allow always&quot;.</p></div><div data-step="2" class="c6-frame"><div class="c6-rule">AGENTS.md exists.</div><p>12 min · Stuck? Raise your hand.</p></div></div></div></section>
-<section class="slide" data-n="17"><div class="inner"><div class="eyebrow">Run 1</div><h2>Run 1b: add your rule, check it, then push to a private repository</h2><div class="body ho" style="grid-template-columns:420px 1fr;gap:64px"><div class="left"><div data-step="1"><div class="k">You should see</div><p>A private financial-app repo on github.com with AGENTS.md.</p><p>14 min · Stuck? Raise your hand. Checkpoint <code>s1-start</code>.</p></div></div><div class="right"><div class="prompt sm"><div class="ph"><span>Prompt 1</span><button>Copy</button></div><pre>Add one rule to AGENTS.md: Explain what you will do in plain business language before doing it.</pre></div><div style="font-size:32px;line-height:1.35;border-left:6px solid #ff3300;padding-left:24px">Open AGENTS.md. Is your rule there? Then send Prompt 2.</div><div data-step="1"><div class="prompt sm"><div class="ph"><span>Prompt 2</span><button>Copy</button></div><pre>Commit all files in this project with the message &quot;Start project&quot;. Create a new private GitHub repository called financial-app and push to it. Tell me if I need to sign in.</pre></div></div></div></div></div></section>
-<section class="slide" data-n="18"><div class="inner"><div class="eyebrow">Skills</div><h2>Choose how to instruct the agent by the job: this task, project rules, expertise or a sequence</h2><div class="body"><div class="c6-cards"><div><div data-step="1" class="fx-pop"><h3>Prompt</h3><p>this task</p></div></div><div><div data-step="1" class="fx-pop"><h3>AGENTS.md</h3><p>standing project rules</p></div></div><div><div data-step="2" class="fx-pop"><h3>Skill</h3><p>reusable expertise</p></div></div><div><div data-step="3" class="fx-pop"><h3>Workflow</h3><p>a repeatable sequence</p><span class="chip out">Session 3</span></div></div></div></div><div data-step="3" class="punch">They work together.</div></div></section>
-<section class="slide" data-n="19"><div class="inner"><div class="eyebrow">Skills</div><h2>The agent sees each skill's name and description, and loads the full skill when it decides one fits</h2><div class="body c6-skills"><div class="c6-request" data-step="1">Help me plan a dashboard</div><div class="c6-context"><div class="dcap">Context</div><div class="c6-skill-row c6-match">brainstorming — ask before proposing</div><div class="c6-skill-row">page design — arrange a readable page</div><div class="c6-skill-row">report writing — structure findings</div></div><div class="c6-shelf"><div class="dcap">Not loaded</div><div class="c6-books"><i></i><i></i><i></i></div></div><div class="c6-loaded"><div class="dcap">Full skill</div><p>Ask one question at a time.</p><p>Summarise the agreed requirements.</p></div><svg width="1600" height="520" viewBox="0 0 1600 520" class="c6-skill-arrow"><path data-step="2" class="draw" pathLength="1" d="M990 200H1120L1100 180M1120 200L1100 220" fill="none" stroke="#ff3300" stroke-width="5"/></svg><i data-step="3" style="position:absolute;width:0;height:0"></i></div></div></section>
-<section class="slide" data-n="20"><div class="inner"><div class="eyebrow">Skills</div><h2>A brainstorming skill makes &quot;ask questions first&quot; a repeatable habit</h2><div class="body c6-example"><div class="c6-example-request"><span class="chip out">Illustration</span><span>Request: NISP page for client meetings</span></div><div class="c6-panels"><div><div class="c6-panel-title">Straight answer</div><div data-step="1" class="fx-fade c6-panel-copy">Show price.<br>Add change.<br>Draw chart.</div></div><div><div class="c6-panel-title" style="background:#ff3300">Questions first</div><div data-step="2" class="fx-fade c6-panel-copy">Who uses it?<br>How fresh?<br>Which device?</div><div data-step="3" class="fx-pop c6-summary"><strong>Summary</strong><br>Sales team.<br>Dated prices.<br>Laptop page.</div></div></div></div></div></section>
+</section>
+<section class="slide" data-n="14">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>Everyone works on a local copy and shares through GitHub</h2>
+    <div class="body" style="position:relative">
+      <!-- step 0: messy pile in the centre -->
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-6deg)">
+      </div>
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(4deg)">
+      </div>
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-1deg);padding:24px 20px;box-sizing:border-box">
+        <div class="mono" style="font-size:28px;font-weight:500">Budget_final_v2_REALLY.xlsx</div>
+        <div style="margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+        </div>
+      </div>
+      <div class="at" style="left:1060px;top:80px;font:800 120px/1 Archivo,sans-serif;color:#ff3300">?</div>
+      <!-- step 1: pile goes; laptop appears -->
+      <div data-step="1" class="fx-fade" style="position:absolute;left:480px;top:0;width:640px;height:440px;background:repeating-linear-gradient(90deg,#fff 0 159px,#f0f0f0 159px 160px)">
+      </div>
+      <div data-step="1" class="fx-left" style="position:absolute;left:0;top:0;width:520px;height:440px">
+        <svg width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
+          <rect x="100" y="40" width="320" height="200" fill="#fff" stroke="#000" stroke-width="4"/>
+          <path d="M60 240 H460 L480 270 H40 Z" fill="#000"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(-6 260 140)"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(5 260 140)"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3"/>
+          <path d="M205 120 H315 M205 140 H315 M205 160 H285" stroke="#bbb" stroke-width="8"/>
+        </svg>
+        <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">Your computer</div>
+        <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">local copy</div>
+      </div>
+      <!-- step 2: GitHub -->
+      <div data-step="2" class="fx-right" style="position:absolute;left:1080px;top:0;width:520px;height:440px">
+        <svg class="float" width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
+          <path d="M150 150 C90 150 90 80 150 82 C160 30 240 20 268 62 C300 30 380 45 375 95 C430 95 435 150 380 150 Z" fill="#fff" stroke="#000" stroke-width="4"/>
+          <rect x="170" y="120" width="180" height="150" fill="#fff" stroke="#000" stroke-width="4"/>
+          <path d="M170 170 H350 M170 220 H350" stroke="#000" stroke-width="4"/>
+          <path d="M240 145 H280 M240 195 H280 M240 245 H280" stroke="#ff3300" stroke-width="6"/>
+        </svg>
+        <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">GitHub</div>
+        <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">shared copy</div>
+      </div>
+      <!-- step 3: push / pull arrow -->
+      <svg width="1600" height="440" viewBox="0 0 1600 440" style="position:absolute;left:0;top:0;pointer-events:none">
+        <defs>
+          <marker id="ah12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="#ff3300"/>
+        </marker>
+        </defs>
+        <path class="draw" data-step="3" pathLength="1" d="M490 160 H1110" stroke="#ff3300" stroke-width="6" fill="none" marker-start="url(#ah12)" marker-end="url(#ah12)"/>
+      </svg>
+      <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:440px;pointer-events:none">
+        <i class="packet" style="offset-path:path('M520 160 H1080')">
+      </i>
+        <i class="packet ink" style="offset-path:path('M1080 160 H520');animation-delay:-1.2s">
+      </i>
+      </div>
+      <div class="at" style="left:800px;top:110px">
+        <div data-step="3" class="fx-fade" style="font:800 44px Archivo,sans-serif;white-space:nowrap;color:#ff3300">push / pull</div>
+      </div>
+    </div>
+    <div class="punch" data-step="3">Saving alone doesn't upload your work.</div>
+  </div>
+</section>
+<section class="slide" data-n="15">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>A commit is a save point on your laptop; push copies it to GitHub, pull brings changes back</h2>
+    <div class="body c6-git">
+      <div class="c6-states">
+        <div>Saved on laptop</div>
+        <div data-step="1">→ Committed (save point)</div>
+        <div data-step="3">→ Pushed (on GitHub)</div>
+      </div>
+      <div class="c6-git-zones">
+        <div class="c6-files">
+          <svg width="150" height="130" viewBox="0 0 150 130">
+            <path d="M20 5H110L135 30V125H20Z" fill="#fff" stroke="#000" stroke-width="4"/>
+            <path d="M40 50H110M40 70H110M40 90H90" stroke="#bbb" stroke-width="8"/>
+          </svg>
+          <div class="c6-env">.env<span data-step="1">: left out</span>
+          </div>
+        </div>
+        <div class="c6-commits">
+          <div data-step="1" class="fx-pop">
+            <i class="c6-circle">
+          </i>Created the budget file</div>
+          <div data-step="2" class="fx-pop">
+            <i class="c6-square">
+          </i>Added March figures</div>
+          <div data-step="2" class="fx-pop">
+            <i class="c6-diamond">
+          </i>Fixed the totals</div>
+        </div>
+        <div class="c6-remote">
+        </div>
+      </div>
+      <div data-step="3" class="c6-transfers" aria-label="The same three commits copied to GitHub">
+        <i class="c6-transfer c6-circle">
+      </i>
+        <i class="c6-transfer c6-square">
+      </i>
+        <i class="c6-transfer c6-diamond">
+      </i>
+      </div>
+      <div data-step="4" class="c6-tom-local">
+        <i>
+      </i>Tom's change</div>
+      <div data-step="3" class="c6-push">push →</div>
+      <div data-step="4" class="c6-pull">← pull</div>
+      <div data-step="5" class="dg" style="position:absolute;bottom:0;width:100%">
+        <span class="dbox">pull</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">edit</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">commit</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">push</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="16">
+  <div class="inner">
+    <div class="eyebrow">Run 1</div>
+    <h2>Run 1a: sign up to GitHub and draft AGENTS.md with /init</h2>
+    <div class="body ho c6-run" style="display:block;position:relative">
+      <div class="c6-frame c6-start">
+        <div class="c6-rule">github.com → Sign up. Confirm email.</div>
+        <p>opencode must be open in the financial-app folder (the path shown ends in financial-app).</p>
+        <div class="dbox black">Type /init.</div>
+      </div>
+      <div data-step="1" class="c6-frame c6-permission">
+        <div class="c6-rule">Permission box?</div>
+        <p>Read the path. Inside financial-app? <strong>Allow once.</strong>
+      </p>
+        <p>Anything else or unsure? Raise your hand.</p>
+        <p style="color:#ff3300">Never &quot;Allow always&quot;.</p>
+      </div>
+      <div data-step="2" class="c6-frame">
+        <div class="c6-rule">AGENTS.md exists.</div>
+        <p>12 min · Stuck? Raise your hand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="17">
+  <div class="inner">
+    <div class="eyebrow">Run 1</div>
+    <h2>Run 1b: add your rule, check it, then push to a private repository</h2>
+    <div class="body ho" style="grid-template-columns:420px 1fr;gap:64px">
+      <div class="left">
+        <div data-step="1">
+          <div class="k">You should see</div>
+          <p>A private financial-app repo on github.com with AGENTS.md.</p>
+          <p>14 min · Stuck? Raise your hand. Checkpoint <code>s1-start</code>.</p>
+        </div>
+      </div>
+      <div class="right">
+        <div class="prompt sm">
+          <div class="ph">
+            <span>Prompt 1</span>
+            <button>Copy</button>
+          </div>
+          <pre>Add one rule to AGENTS.md: Explain what you will do in plain business language before doing it.</pre>
+        </div>
+        <div style="font-size:32px;line-height:1.35;border-left:6px solid #ff3300;padding-left:24px">Open AGENTS.md. Is your rule there? Then send Prompt 2.</div>
+        <div data-step="1">
+          <div class="prompt sm">
+            <div class="ph">
+              <span>Prompt 2</span>
+              <button>Copy</button>
+            </div>
+            <pre>Commit all files in this project with the message &quot;Start project&quot;. Create a new private GitHub repository called financial-app and push to it. Tell me if I need to sign in.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="18">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>Choose how to instruct the agent by the job: this task, project rules, expertise or a sequence</h2>
+    <div class="body">
+      <div class="c6-cards">
+        <div>
+          <div data-step="1" class="fx-pop">
+            <h3>Prompt</h3>
+            <p>this task</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="1" class="fx-pop">
+            <h3>AGENTS.md</h3>
+            <p>standing project rules</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="2" class="fx-pop">
+            <h3>Skill</h3>
+            <p>reusable expertise</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="3" class="fx-pop">
+            <h3>Workflow</h3>
+            <p>a repeatable sequence</p>
+            <span class="chip out">Session 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-step="3" class="punch">They work together.</div>
+  </div>
+</section>
+<section class="slide" data-n="19">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>The agent sees each skill's name and description, and loads the full skill when it decides one fits</h2>
+    <div class="body c6-skills">
+      <div class="c6-request" data-step="1">Help me plan a dashboard</div>
+      <div class="c6-context">
+        <div class="dcap">Context</div>
+        <div class="c6-skill-row c6-match">brainstorming — ask before proposing</div>
+        <div class="c6-skill-row">page design — arrange a readable page</div>
+        <div class="c6-skill-row">report writing — structure findings</div>
+      </div>
+      <div class="c6-shelf">
+        <div class="dcap">Not loaded</div>
+        <div class="c6-books">
+          <i>
+        </i>
+          <i>
+        </i>
+          <i>
+        </i>
+        </div>
+      </div>
+      <div class="c6-loaded">
+        <div class="dcap">Full skill</div>
+        <p>Ask one question at a time.</p>
+        <p>Summarise the agreed requirements.</p>
+      </div>
+      <svg width="1600" height="520" viewBox="0 0 1600 520" class="c6-skill-arrow">
+        <path data-step="2" class="draw" pathLength="1" d="M990 200H1120L1100 180M1120 200L1100 220" fill="none" stroke="#ff3300" stroke-width="5"/>
+      </svg>
+      <i data-step="3" style="position:absolute;width:0;height:0">
+    </i>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="20">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>A brainstorming skill makes &quot;ask questions first&quot; a repeatable habit</h2>
+    <div class="body c6-example">
+      <div class="c6-example-request">
+        <span class="chip out">Illustration</span>
+        <span>Request: NISP page for client meetings</span>
+      </div>
+      <div class="c6-panels">
+        <div>
+          <div class="c6-panel-title">Straight answer</div>
+          <div data-step="1" class="fx-fade c6-panel-copy">Show price.<br>Add change.<br>Draw chart.</div>
+        </div>
+        <div>
+          <div class="c6-panel-title" style="background:#ff3300">Questions first</div>
+          <div data-step="2" class="fx-fade c6-panel-copy">Who uses it?<br>How fresh?<br>Which device?</div>
+          <div data-step="3" class="fx-pop c6-summary">
+            <strong>Summary</strong>
+            <br>Sales team.<br>Dated prices.<br>Laptop page.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="slide" data-n="21"><div class="inner">
   <div class="eyebrow">Run 2</div>
   <h2>An agent builds what it guesses you want, so make it ask first</h2>
