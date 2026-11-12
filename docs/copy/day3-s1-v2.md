@@ -90,11 +90,11 @@ Context window
 rules · your messages · its replies · tool results · files
 Full → oldest details dropped or summarised
 Fix: /new session. Rules in AGENTS.md.
-diagram: A long horizontal bar outlined in grey, labelled "Context window". Coloured blocks fill it from the left, each labelled: "rules", "your messages", "its replies", "tool results", "files". When the bar is full, new blocks push in from the right and the leftmost blocks tip over the left edge and fall, fading. Caption line under the bar, then the fix line in a green box.
+diagram: A fixed-size frame labelled "Context window", like a window you look through. Blocks arrive in time order and line up left to right inside it: "rules" (first, red), "your messages", "its replies", "tool results", "files". When the frame is full, new blocks ("your messages", "its replies") slide in from the right, everything shifts left, and the oldest blocks, starting with "rules", slide out of the left edge into a faded, struck-through area. Caption line under the frame, then the fix line in a green box.
 build:
-  0: the empty "Context window" bar
-  1: blocks fill it one by one, left to right
-  2: more blocks push in; the oldest fall off the left edge; "Full →" caption appears
+  0: the empty frame
+  1: the five blocks arrive one by one, left to right, until the frame is full
+  2: two new blocks slide in from the right; the row shifts left and "rules" plus the oldest message slide out and fade; "Full →" caption appears
   3: the green "Fix" box appears
 notes:
 Every request has a limit on how much text the model can take in. That limit is the context window. Think of a desk: only what fits on the desk can be read. On step 1, name each block: everything counts toward it, not just your questions. The rules, the conversation so far, the answers, tool results and any file the agent opened. I won't quote numbers because they differ per model and change often. On step 2: when the desk is full, the oldest material is cut off or replaced by a short summary. Both lose detail. An instruction you gave an hour ago, like "always show prices in rupiah", may be gone without warning. On step 3, two habits: start a new session when a task is finished, and put standing rules in AGENTS.md.
@@ -202,7 +202,7 @@ status: n/a
 
 ## 11. Use fast models for small edits and smart models for planning and debugging
 type: visual
-block: Models and Git · 5
+block: Models and Git · 4
 visible:
 Fast · [FAST MODEL]
 rename a title · fix a typo · change a colour
@@ -218,6 +218,23 @@ build:
 notes:
 Before class, replace [FAST MODEL] and [SMART MODEL] with real names from the model list your participants share. Models come in different sizes. On step 1: a fast model replies in seconds and is fine for small, clear jobs where you see the result straight away. On step 2: a smart model spends longer working things out before it acts. Use it for planning, when a bad plan wastes the whole build, and for debugging, when the cause is not obvious. A wrong choice shows up in two ways: a fast model on a hard job gives a shallow answer; a smart model on a trivial job makes you wait. On step 3, show the picker: type /models in opencode. Names differ per provider, so say "pick one fast and one smart from your list". Today we use the smart model for the plan.
 words: 25 · budget: 40 · exception: none
+status: n/a
+
+## 11b. Effort sets how long the model thinks before it answers
+type: visual
+block: Models and Git · 2
+visible:
+Low effort: quick answers, small edits
+High effort: slower, deeper, plans and bugs
+Ctrl+T switches effort in opencode
+diagram: A horizontal dial with three marks, "low", "medium", "high". A red pointer slides along it. Under the dial, a "thinking" bar that grows as the pointer moves right, with a small clock icon whose hand turns faster at high. Two short lines under the dial, one at each end, from visible. A key badge "Ctrl+T" at the right.
+build:
+  0: the dial with the pointer at "low"; the low-effort line
+  1: the pointer slides to "high"; the thinking bar grows; the high-effort line appears
+  2: the "Ctrl+T" badge appears; the pointer keeps sliding low → high on a loop
+notes:
+Model choice is one lever; effort is the second. Many models can think for a short or a long time before they answer, and opencode calls these settings variants. On step 0: low effort replies fast, which is right for a typo or a colour change. On step 1: high effort spends more time reasoning first. Use it for the plan and for a bug you cannot explain. It costs time, so do not leave it on high for everything. On step 2: in opencode, Ctrl+T cycles through the efforts your model offers; the current one shows in the footer. Not every model has variants. If Ctrl+T changes nothing, your model has one setting, and that is fine. Rule of thumb: smart model and high effort for the plan, then lower effort while building.
+words: 21 · budget: 40 · exception: none
 status: n/a
 
 ## 12. Everyone works on a local copy and shares through GitHub
@@ -242,7 +259,7 @@ status: n/a
 
 ## 13. A commit is a save point; push sends it to GitHub, pull brings changes back
 type: visual
-block: Models and Git · 6
+block: Models and Git · 5
 visible:
 Commit 1: Created the budget file
 Commit 2: Added March figures
@@ -331,16 +348,17 @@ block: Skills · 5
 visible:
 Always loaded: name + description
 brainstorming · page design · report writing
+Your request
 Task matches → full instructions load
-diagram: Left: a box "Agent's context" with a short list of three rows, one per skill name: "brainstorming", "page design", "report writing". Under them, two thin grey lines per row stand for each one-line description (no text). Right: three tall document cards, greyed. An arrow from the "brainstorming" row to its card, labelled with the bottom line of visible. The loaded card turns coloured and slides into the context box.
+diagram: Left: a box "Agent's context". Inside it, three short rows, one per skill name: "brainstorming", "page design", "report writing"; under each name, one thin grey line stands for its one-line description (no text). Above the box, a speech bubble labelled "Your request". Right: a shelf of three tall grey document cards, one per skill, each showing its name at the top ("brainstorming", "page design", "report writing") and grey lines for its full instructions. Step by step: the request bubble sends a red dashed line to the "brainstorming" row, which turns red. A red arrow labelled "Task matches → full instructions load" runs from that row to the "brainstorming" card, which turns red, then the same red card slides left into the context box, under the rows. Only one red card is ever shown.
 build:
-  0: the context box with the three short rows
-  1: the three grey document cards appear on the right
-  2: a small empty speech-bubble icon (no text) appears above the context box; the "brainstorming" row lights up
-  3: the arrow draws; the first card turns coloured and slides into the context
+  0: the context box with the three name rows; the grey shelf of three cards on the right
+  1: the "Your request" bubble appears; a red dashed line runs from it to the "brainstorming" row, which turns red
+  2: the red arrow and its label draw from the row to the "brainstorming" card, which turns red
+  3: the red card slides left into the context box; the other two cards stay grey on the shelf
 notes:
-A skill is a written playbook for one kind of job, packed so the agent can pick it up when needed. Think of a recipe card in a kitchen: the cook picks the right card for the dish. On step 0, connect it to the context window: if the agent loaded every skill in full, the desk would fill up with text it does not need. So it sees only the name and a one-line description of each. On step 2 and 3: when your request matches a description, it loads that one skill in full and follows it. One lesson: a skill is only found if its description is clear. Skills differ by person. We do not provide a course skill kit. If you have none, today's prompts work without any.
-words: 16 · budget: 40 · exception: none
+A skill is a written playbook for one kind of job, packed so the agent can pick it up when needed. Think of a recipe card in a kitchen: the cook picks the right card for the dish. On step 0, connect it to the context window: if the agent loaded every skill in full, the desk would fill up with text it does not need. So the box holds only each skill's name and a one-line description; the full instructions stay on the shelf. On step 1: your request comes in, and it matches the brainstorming description. On step 2: that match tells the agent which skill to open. On step 3: only that one skill's full instructions move into the context, and the agent follows them. The other two stay on the shelf. One lesson: a skill is only found if its description is clear. Skills differ by person. We do not provide a course skill kit. If you have none, today's prompts work without any.
+words: 18 · budget: 40 · exception: none
 status: n/a
 
 ## 17. The same request gives a more structured result when a skill is loaded
@@ -386,7 +404,7 @@ block: Run 2 · 3
 visible:
 Brainstorm → Spec → Plan → Execute → Test → Iterate
 Approve / Edit / Reject
-diagram: Six rounded boxes in a row joined by right arrows. An arrow curves from "Iterate" back to "Plan". Under "Plan" a small tag "Approve / Edit / Reject". A small "Run 2" bracket under Brainstorm–Plan and "Run 3" bracket under Execute–Iterate.
+diagram: Six square boxes in a row joined by right arrows. A red return arrow runs from the top of "Iterate" up, left along a straight line above the row, and down into the top of "Plan" (square corners, clear arrowhead into "Plan"). A dot travels along it in the arrow's direction, Iterate → Plan. Under "Plan" a small tag "Approve / Edit / Reject". A small "Run 2" bracket under Brainstorm–Plan and "Run 3" bracket under Execute–Iterate.
 build:
   0: six grey boxes
   1: "Brainstorm", "Spec", "Plan" light up in turn; the "Run 2" bracket appears
@@ -402,18 +420,19 @@ type: visual
 block: Run 2 · 4
 visible:
 docs/spec.md: what and why
+Spec = PRD (product requirements document)
 Goals · Out of scope · How we'll know it works
 docs/plan.md: how, in numbered steps
 You: approve, edit or reject
-diagram: Two document cards side by side. Left card "docs/spec.md" with three section headings: "Goals", "Out of scope", "How we'll know it works". Right card "docs/plan.md" with a numbered list 1–5 of grey lines. An arrow from spec to plan. Under the plan card, three buttons: green "Approve", amber "Edit", red "Reject".
+diagram: Two document cards side by side. Left card "docs/spec.md" with a red tag "Spec = PRD" under its title, then three section headings: "Goals", "Out of scope", "How we'll know it works". Right card "docs/plan.md" with a numbered list 1–5 of grey lines. An arrow from spec to plan. Under the plan card, three buttons: green "Approve", amber "Edit", red "Reject".
 build:
   0: the spec card, empty
   1: the three spec headings appear one by one
   2: the arrow draws; the plan card appears with its numbered lines
   3: the three buttons appear under the plan
 notes:
-Two documents, two jobs. On step 0: the spec is the contract between you and the agent: what we are building and why, in your words. On step 1, it needs only three parts. Goals say what the app must do. Out of scope says what it must not do, which stops the agent adding extras. How we'll know it works describes what you will see when it is right; without it you cannot judge the result. On step 2: the plan is the agent's proposal for how to build it, in numbered steps. On step 3: you approve, edit or reject the plan. Both are files in the project, so they survive when a session ends. A new session can read the spec and carry on.
-words: 26 · budget: 40 · exception: none
+Two documents, two jobs. On step 0: the spec is the contract between you and the agent: what we are building and why, in your words. If you work with product teams, this is the same thing as a PRD, a product requirements document; a short one is enough. On step 1, it needs only three parts. Goals say what the app must do. Out of scope says what it must not do, which stops the agent adding extras. How we'll know it works describes what you will see when it is right; without it you cannot judge the result. On step 2: the plan is the agent's proposal for how to build it, in numbered steps. On step 3: you approve, edit or reject the plan. Both are files in the project, so they survive when a session ends. A new session can read the spec and carry on.
+words: 31 · budget: 40 · exception: none
 status: n/a
 
 ## 21a. Run 2: brainstorm the dashboard, write the spec, then plan it
@@ -624,13 +643,12 @@ type: Q&A
 block: Close + Q&A · 5
 visible:
 Questions?
-Timer: 5:00
-diagram: Large "Questions?" heading, with a countdown timer 5:00 in a corner.
+diagram: Large "Questions?" heading. Around it, five small shapes keep moving on slow loops: three square speech bubbles drifting along different paths, one red "?" orbiting the heading, and one dot bouncing between the bubbles. No text inside the shapes.
 build:
-  0: heading and timer; timer starts on click 1
+  0: heading and moving shapes (they loop for as long as the slide is open)
 notes:
 Open the floor. Start with a prompt if no one speaks: what surprised you today? Or: where would you use a dashboard like this at work? Collect parking-lot items on a flip chart. If a question needs a long answer, say you will cover it in Session 2 or the handout. Repeat questions before answering so the room hears them. Keep investment questions neutral: the app shows data; it does not advise. Check one more time that everyone has pushed, and that anyone behind has the s1-chatbot checkpoint.
-words: 3 · budget: 40 · exception: none
+words: 1 · budget: 40 · exception: none
 status: n/a
 
 ## 28. Next session: your app remembers prices and learns the rules
@@ -664,16 +682,17 @@ status: n/a
 | 9 | visual | 19 | 40 | no | 126 |
 | 10 | check | 30 | 60 | no | 106 |
 | 11 | visual | 25 | 40 | no | 144 |
+| 11b | visual | 21 | 40 | no | 134 |
 | 12 | visual | 17 | 40 | no | 127 |
 | 13 | visual | 27 | 40 | no | 133 |
 | 14a | run | 55 | 60 | no | 139 |
 | 14b | run | 31 | 60 | no | 129 |
 | 15 | visual | 16 | 40 | no | 115 |
-| 16 | visual | 16 | 40 | no | 132 |
+| 16 | visual | 18 | 40 | no | 168 ! |
 | 17 | visual | 36 | 40 | no | 140 |
 | 18 | visual | 22 | 40 | no | 125 |
 | 19 | visual | 13 | 40 | no | 121 |
-| 20 | visual | 26 | 40 | no | 127 |
+| 20 | visual | 31 | 40 | no | 150 |
 | 21a | run | 40 | 60 | no | 137 |
 | 21b | run | 50 | 60 | no | 134 |
 | 22 | check | 45 | 60 | no | 115 |
@@ -682,7 +701,7 @@ status: n/a
 | 24b | run | 60 | 60 | no | 137 |
 | 25 | visual | 23 | 40 | no | 129 |
 | 26 | recap | 28 | 40 | no | 116 |
-| 27 | Q&A | 3 | 40 | no | 88 |
+| 27 | Q&A | 1 | 40 | no | 88 |
 | 28 | talk | 20 | 40 | no | 89 |
 
-slides: 31 · minutes: 180
+slides: 32 · minutes: 180
