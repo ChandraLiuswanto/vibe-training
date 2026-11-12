@@ -1087,9 +1087,56 @@ svg .flow.red{stroke:var(--red)}
     </div>
   </div>
 </section>
-<section class="slide" data-n="21"><div class="inner">
+<section class="slide" data-n="21">
+<style>
+/* Task 7: styles are scoped to slides 23–33; replacement panels use runtime stN states. */
+.t7 h2{font-size:58px;margin-bottom:36px}
+.t7 .t7-content{position:relative;flex:1;min-height:0;display:block;font-size:32px;line-height:1.35}
+.t7 p{margin:18px 0}
+.t7 .t7-panel{position:absolute;inset:0;opacity:0;visibility:hidden;transform:none;transition:none}
+.t7:not(.st1) .t7-p0,.t7.st1:not(.st2) .t7-p1,.t7.st2:not(.st3) .t7-p2,.t7.st3 .t7-p3{opacity:1;visibility:visible}
+.t7 .t7-map{display:flex;gap:12px;margin:0 0 30px;align-items:center}
+.t7 .t7-warning{border-left:8px solid #ff3300;padding-left:22px;font-weight:800}
+.t7 .t7-stay{position:relative;margin:0 0 24px}
+.t7[data-n="25"] .t7-panel{top:90px}
+.t7 .t7-check{font:800 42px/1.5 Archivo;max-width:1400px;margin-top:38px}
+.t7 .prompt pre{font-size:28px;line-height:1.4;padding:24px 30px}
+.t7 .t7-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:28px}
+.t7 .t7-plans p{border-top:3px solid;padding-top:14px;margin:0}
+.t7[data-n="23"] .choice{padding:16px 28px}
+.t7[data-n="23"] .choices{gap:16px}
+.t7[data-n="23"] .reveal{position:absolute;top:0;margin:0;max-width:1450px}
+.t7[data-n="23"].revealed .t7-plans{visibility:hidden}
+.t7[data-n="23"].revealed .choice.correct{background:#18853a;border-color:#18853a}
+.t7 .t7-architecture{position:relative;height:560px;margin-top:24px}
+.t7 .t7-laptop{position:absolute;left:0;top:0;width:1000px;height:530px;border:4px solid #000;border-bottom:18px solid #000;background:#f5f5f5}
+.t7 .t7-screen,.t7 .t7-backend,.t7 .t7-env{position:absolute;box-sizing:border-box;border:3px solid #000;background:#fff;padding:24px;font:800 32px/1.25 Archivo}
+.t7 .t7-screen{left:36px;top:55px;width:350px;height:175px}
+.t7 .t7-backend{left:520px;top:55px;width:330px;height:175px}
+.t7 .t7-env{left:450px;top:300px;width:500px;font-size:30px}
+.t7 .t7-env p{font:400 30px/1.3 Nunito}
+.t7 .t7-external{position:absolute;left:1200px;top:55px;width:395px}
+.t7 .t7-source,.t7 .t7-service{border:3px solid #000;padding:32px 24px;font:800 32px/1.25 Archivo;background:#fff}
+.t7 .t7-service{margin-top:170px;background:#ff3300;border-color:#ff3300;color:#fff}
+.t7 .t7-arrows{position:absolute;inset:0;pointer-events:none}
+.t7 .t7-arrows>path{stroke:#000;stroke-width:4;fill:none;marker-start:url(#t7-arrow);marker-end:url(#t7-arrow)}
+.t7 .t7-debug{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:90px}
+.t7 .t7-debug>div{position:relative}
+.t7 .t7-debug>div:not(:first-child)::before{content:'→';position:absolute;left:-43px;top:75px;font-size:40px}
+.t7 .t7-box{border:3px solid;padding:28px 24px;min-height:180px;font:800 34px/1.3 Archivo;display:flex;align-items:center}
+.t7 .t7-sources{font-size:28px}
+.t7 .t7-once{position:absolute;left:1180px;top:129px;width:22px;height:22px;background:#ff3300;pointer-events:none;z-index:2}
+.t7.active .t7-once.in{animation:t7-return 1s ease-in-out forwards}
+@keyframes t7-return{to{transform:translateX(-315px)}}
+@media(prefers-reduced-motion:reduce){.t7 .t7-once{animation:none!important;transform:translateX(-315px)}.t7 .draw{transition:none!important;animation:none!important}.t7 .draw.in{stroke-dashoffset:0}}
+.t7[data-n="30"] .t7-panel>p{font-size:36px;max-width:1480px;margin:24px 0 38px}
+.t7[data-n="30"] .t7-p3>p{font-size:32px;margin:18px 0}
+.t7[data-n="31"] .lines{font-size:38px;margin-bottom:38px}
+.t7 .t7-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:70px}
+.t7 .t7-preview>div{border-top:4px solid;padding-top:40px;font:800 42px/1.3 Archivo}
+</style><div class="inner">
   <div class="eyebrow">Run 2</div>
-  <h2>An agent builds what it guesses you want, so make it ask first</h2>
+  <h2>An agent builds what it guesses you want, so interview first</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="480" viewBox="0 0 1600 480" style="position:absolute;left:0;top:0;pointer-events:none">
       <defs><marker id="ah18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
@@ -1129,7 +1176,7 @@ svg .flow.red{stroke:var(--red)}
     </div>
     <!-- second path -->
     <div data-step="3" class="fx-left" style="position:absolute;left:480px;top:330px;border:4px solid #ff3300;padding:12px 20px;font-size:30px;white-space:nowrap">Who will use this?</div>
-    <div data-step="3" class="fx-right" style="position:absolute;left:900px;top:330px;width:260px;border:4px solid #000;background:#f2f2f2;padding:16px 18px;box-sizing:border-box;transition-delay:.2s"><i style="display:block;height:12px;background:#9a9a9a;margin-bottom:10px"></i><i style="display:block;height:12px;background:#9a9a9a;width:60%"></i></div>
+    <div data-step="3" class="fx-right" style="position:absolute;left:900px;top:300px;width:260px;font-size:30px;line-height:1.25;border:4px solid #000;background:#f2f2f2;padding:16px 18px;box-sizing:border-box;transition-delay:.2s">Sales team before client meetings.</div>
     <div data-step="3" class="fx-pop" style="position:absolute;left:1240px;top:280px;width:360px;height:190px;transition-delay:.35s">
       <svg width="360" height="190" viewBox="0 0 360 190">
         <rect x="4" y="4" width="352" height="182" fill="#fff" stroke="#000" stroke-width="4"/>
@@ -1141,11 +1188,11 @@ svg .flow.red{stroke:var(--red)}
       </svg>
     </div>
   </div>
-  <div class="punch red" data-step="3">Better: let it ask you first.</div>
+  <div class="punch red" data-step="3">Interview first.</div>
 </div></section>
 <section class="slide" data-n="22"><div class="inner">
   <div class="eyebrow">Run 2</div>
-  <h2>A spec says what and why; a plan says how, and you approve, edit or reject it</h2>
+  <h2 style="font-size:58px;margin-bottom:36px">The interview produces a spec (what and why); the plan says how, and you approve, edit or reject it</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0">
       <defs><marker id="ah20" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
@@ -1173,190 +1220,171 @@ svg .flow.red{stroke:var(--red)}
       </div>
     </div></div>
     <div data-step="3" style="position:absolute;left:1000px;top:440px;width:600px;display:flex;align-items:center;gap:16px">
-      <span class="dcap" style="margin-right:6px">You:</span>
+
       <span class="fx-pop" style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#fff;background:#1a9e45">Approve</span>
       <span style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#000;background:#f2a900">Edit</span>
       <span style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#fff;background:#ff3300">Reject</span>
     </div>
   </div>
 </div></section>
-<section class="slide" data-n="23"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Check</span></div>
-  <h2 style="font-size:60px;margin-bottom:40px">Approve, edit or reject: what would you do with each of these three plans?</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-bottom:36px">
-    <div style="border-top:3px solid #000;padding-top:14px;font-size:32px;line-height:1.3"><b style="font:800 30px Archivo;display:block;margin-bottom:6px">Plan 1:</b>8 steps that follow the spec.</div>
-    <div style="border-top:3px solid #000;padding-top:14px;font-size:32px;line-height:1.3"><b style="font:800 30px Archivo;display:block;margin-bottom:6px">Plan 2:</b>Same, plus a login screen nobody asked for.</div>
-    <div style="border-top:3px solid #000;padding-top:14px;font-size:32px;line-height:1.3"><b style="font:800 30px Archivo;display:block;margin-bottom:6px">Plan 3:</b>Builds a phone app. Ignores the spec.</div>
-  </div>
-  <div class="choices" style="gap:16px">
-    <div class="choice correct" style="padding:18px 32px"><span class="L">A</span><span>Approve 1 · Edit 2 · Reject 3</span></div>
-    <div class="choice" style="padding:18px 32px"><span class="L">B</span><span>Approve all three</span></div>
-    <div class="choice" style="padding:18px 32px"><span class="L">C</span><span>Reject 1 · Approve 2 · Edit 3</span></div>
-  </div>
-  <div class="reveal" style="margin-top:28px">A — Approve what matches the spec, edit what adds extras, reject what ignores it.</div>
-</div></section>
-<section class="slide" data-n="24"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">Time · 10 min</span></div>
-  <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 2: brainstorm the dashboard, write the spec, then plan it</h2>
-  <div class="ho" style="grid-template-columns:380px 1fr;gap:56px">
-    <div class="left">
-      <div class="k">Goal</div><p>Agree what to build, then write it down.</p>
-      <div data-step="1"><div class="k">You should see</div><p>Five questions, a summary, then docs/spec.md. No app yet.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s1-spec</code>.</p></div>
-    </div>
-    <div class="right" style="gap:12px">
-            <div class="prompt sm"><div class="ph"><span>Prompt 1 (brainstorm)</span><button>Copy</button></div><pre>Let&#x27;s brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don&#x27;t write any code or files yet.</pre></div>
-      <div class="step">Answer each question in one short sentence.</div>
-      <div data-step="1" style="display:flex;flex-direction:column;gap:12px"><div class="prompt sm"><div class="ph"><span>Prompt 2 (spec)</span><button>Copy</button></div><pre>Write what we agreed to docs/spec.md. Use three sections: Goals, Out of scope, and How we&#x27;ll know it works. Don&#x27;t build anything yet. We&#x27;ll use React + Vite, FastAPI (Python) and yfinance, with endpoints GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y, server on port 8000, page on port 5173.</pre></div></div>
+<section class="slide t7" data-n="23">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Check: approve, edit or reject these three plans</h2>
+    <div class="t7-content">
+<div class="t7-plans"><p>Plan 1: follows the spec.</p><p>Plan 2: follows the spec, plus a login screen nobody asked for.</p><p>Plan 3: shows a chart, but for the wrong stock (BBRI).</p></div>
+<div class="choices"><div class="choice correct"><span class="L">A</span><span>Approve 1 · Edit 2 · Reject 3</span></div>
+<div class="choice"><span class="L">B</span><span>Approve 1 · Approve 2 · Edit 3</span></div>
+<div class="choice"><span class="L">C</span><span>Edit 1 · Reject 2 · Reject 3</span></div></div>
+<div class="reveal">A — Approve what matches the spec, edit what adds extras, reject what contradicts it.</div>
     </div>
   </div>
-</div></section>
-<section class="slide" data-n="25"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 2 · Decide what to build</span><span class="tag">Time · 10 min</span></div>
-  <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 2: brainstorm the dashboard, write the spec, then plan it</h2>
-  <div class="ho" style="grid-template-columns:380px 1fr;gap:56px">
-    <div class="left">
-      <div class="k">Goal</div><p>A checked plan, saved to docs/plan.md.</p>
-      <div data-step="2"><div class="k">You should see</div><p>A numbered plan, then docs/plan.md.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s1-spec</code>.</p></div>
+</section>
+<section class="slide t7 t7-run" data-n="24">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Run 2a: interview for the dashboard and save the spec</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Prompt 1 (interview)</span><button>Copy</button></div><pre>Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.</pre></div><p>Answer briefly.</p>
     </div>
-    <div class="right" style="gap:14px">
-      <div class="prompt sm"><div class="ph"><span>1. Plan mode: <span style="text-transform:none;font:600 26px Nunito;letter-spacing:0">Tab (footer: "plan"), then send:</span></span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan to build it. Don&#x27;t build anything yet.</pre></div>
-      <div class="step" data-step="1" style="margin:14px 0"><b>2. Check it against your spec.</b> Approve, edit or reject. Edit example: handout.</div>
-      <div data-step="2" style="display:flex;flex-direction:column;gap:14px">
-        <div class="prompt sm"><div class="ph"><span>3. Build mode: <span style="text-transform:none;font:600 26px Nunito;letter-spacing:0">Tab (footer: "build"), then send:</span></span><button>Copy</button></div><pre>Save that plan to docs/plan.md. Don&#x27;t build anything yet.</pre></div>
-      </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Prompt 2 (spec)</span><button>Copy</button></div><pre>Write what we agreed to docs/spec.md. Use three sections: Goals, Out of scope, and How we'll know it works. Don't build anything yet. We'll use React + Vite, FastAPI (Python) and yfinance, with endpoints GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y, server on port 8000, page on port 5173.</pre></div><p>The last sentence is technical setup from the course — copy it as is.</p>
     </div>
-  </div>
-</div></section>
-<section class="slide" data-n="26"><div class="inner">
-  <div class="eyebrow">Run 3</div>
-  <h2 style="font-size:60px;margin-bottom:40px">Your app has two parts: a React screen and a FastAPI back end that fetches data and talks to the AI</h2>
-  <div class="body" style="position:relative;margin-top:40px">
-    <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0">
-      <defs><marker id="ah23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
-      <path class="draw" data-step="1" pathLength="1" d="M420 150 H760" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah23)"/>
-      <path class="draw" data-step="2" pathLength="1" d="M1070 190 L1200 120" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah23)"/>
-      <g data-step="3" class="fx-fade"><path class="flow" d="M420 330 H760" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah23)"/></g>
-      <path class="draw" data-step="3" pathLength="1" d="M1070 290 L1200 360" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah23)"/>
-    </svg>
-    <!-- screen -->
-    <div style="position:absolute;left:0;top:40px;width:420px;height:340px;border:3px solid #000;background:#fff">
-      <div style="height:34px;background:#000;display:flex;align-items:center;gap:10px;padding-left:14px"><i style="width:12px;height:12px;background:#fff;display:block"></i><i style="width:12px;height:12px;background:#fff;display:block"></i><i style="width:12px;height:12px;background:#fff;display:block"></i></div>
-      <div style="padding:20px 24px;font:800 32px Archivo;line-height:1.25">Screen (React)<div class="mono" style="font:500 28px 'JetBrains Mono';color:#6b6b6b;margin-top:6px">port 5173</div></div>
-      <div data-step="2" class="fx-fade" style="position:absolute;left:24px;right:24px;bottom:20px;height:120px">
-        <svg width="370" height="120" viewBox="0 0 370 120"><path class="draw" data-step="2" pathLength="1" d="M0 100 L50 80 L95 92 L140 55 L190 66 L240 30 L290 44 L370 8" stroke="#ff3300" stroke-width="5" fill="none" style="transition-delay:1.2s"/></svg>
-      </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>You should see: Up to five questions, one at a time, a summary, then docs/spec.md. No code yet.</p><p>12 min · Stuck? s1-spec.</p>
     </div>
-    <div class="dsmall" data-step="1" style="position:absolute;left:440px;top:60px;width:320px;text-align:center;font:500 28px 'JetBrains Mono';color:#000;line-height:1.2">GET /api/quote · /api/history</div>
-    <div class="dsmall" data-step="3" style="position:absolute;left:440px;top:350px;width:320px;text-align:center;font-size:28px">chat messages (later)</div>
-    <!-- back end -->
-    <div data-step="1" class="fx-pop" style="position:absolute;left:780px;top:130px;width:290px;transition-delay:.5s"><div class="dbox inv" style="margin:0;height:220px;display:flex;flex-direction:column;justify-content:center;font:800 32px Archivo">Back end (FastAPI)<span style="font:500 28px 'JetBrains Mono';color:#bbb;margin-top:10px">port 8000</span></div></div>
-    <!-- right -->
-    <div data-step="2" class="fx-right" style="position:absolute;left:1220px;top:60px;width:380px"><div class="dbox" style="margin:0">yfinance: NISP data</div></div>
-    <div data-step="3" class="fx-right" style="position:absolute;left:1220px;top:310px;width:380px"><div class="dbox red" style="margin:0;line-height:1.3">The AI: the LLM in <span style="white-space:nowrap">backend/.env <svg width="26" height="30" viewBox="0 0 26 30" style="vertical-align:-4px"><rect x="2" y="12" width="22" height="16" fill="#fff"/><path d="M7 12 V8 a6 6 0 0 1 12 0 V12" stroke="#fff" stroke-width="3" fill="none"/></svg></span></div></div>
-    <div data-step="2" class="fx-fade" style="position:absolute;inset:0;pointer-events:none"><div class="packet" style="offset-path:path('M770 150 H430')"></div></div>
-  </div>
-</div></section>
-<section class="slide" data-n="27"><div class="inner">
-  <div class="eyebrow">Run 3</div>
-  <h2>When something breaks, paste the error and ask the agent to explain it</h2>
-  <div class="body" style="display:flex;flex-direction:column;justify-content:center">
-    <div style="display:flex;align-items:flex-start;gap:0">
-      <div style="width:330px;flex:none;display:flex;flex-direction:column;gap:18px">
-        <div class="pulse" style="background:#ff3300;color:#fff;height:230px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
-          <svg width="56" height="56" viewBox="0 0 56 56"><rect x="16" y="4" width="34" height="38" fill="none" stroke="#fff" stroke-width="5"/><rect x="5" y="15" width="34" height="38" fill="#ff3300" stroke="#fff" stroke-width="5"/></svg>
-          <span style="font:800 34px/1.15 Archivo">Copy the error</span>
-        </div>
-        <div data-step="1" style="display:flex;flex-wrap:wrap;gap:10px;transition-delay:.5s"><span class="chip out">opencode</span><span class="chip out">server window</span><span class="chip out">browser</span></div>
-      </div>
-      <div style="flex:1;height:230px;display:flex;align-items:center;padding:0 18px"><div class="link" data-step="1"></div></div>
-      <div data-step="1" class="fx-pop" style="width:330px;flex:none">
-        <div style="border:3px solid #000;height:230px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box">
-          <svg width="56" height="56" viewBox="0 0 56 56"><rect x="8" y="8" width="40" height="44" fill="none" stroke="#000" stroke-width="5"/><rect x="18" y="3" width="20" height="10" fill="#000"/></svg>
-          <span style="font:800 34px/1.15 Archivo">Paste it to the agent</span>
-        </div>
-      </div>
-      <div style="flex:1;height:230px;display:flex;align-items:center;padding:0 18px"><div class="link" data-step="2"></div></div>
-      <div data-step="2" class="fx-pop" style="width:330px;flex:none;position:relative">
-        <div style="background:#000;color:#fff;height:230px;padding:24px;display:flex;align-items:center;box-sizing:border-box;font-size:32px;line-height:1.3">"Explain this in plain words, then fix it."<span class="caret"></span></div>
-        <div style="position:absolute;left:40px;bottom:-26px;border-top:28px solid #000;border-right:28px solid transparent"></div>
-      </div>
-      <div style="flex:1;height:230px;display:flex;align-items:center;padding:0 18px"><div class="link" data-step="3"></div></div>
-      <div data-step="3" class="fx-pop" style="width:330px;flex:none">
-        <div style="border:3px solid #000;height:230px;box-sizing:border-box;display:flex;flex-direction:column">
-          <div style="height:30px;background:#000;display:flex;align-items:center;gap:8px;padding-left:12px"><i style="width:10px;height:10px;background:#fff;display:block"></i><i style="width:10px;height:10px;background:#fff;display:block"></i><i style="width:10px;height:10px;background:#fff;display:block"></i></div>
-          <div style="flex:1;padding:16px 24px;display:flex;flex-direction:column;justify-content:space-between">
-            <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="#1a9e45"/><path d="M15 29 L24 38 L42 19" stroke="#fff" stroke-width="6" fill="none"/></svg>
-            <span style="font:800 34px/1.15 Archivo">Check it worked</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-</div></section>
-<section class="slide" data-n="28"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">Time · 14 min</span></div>
-  <h2 style="font-size:56px;margin-bottom:28px;max-width:none">Run 3: build the dashboard, then add the chatbot through the same loop</h2>
-  <div class="ho" style="grid-template-columns:420px 1fr;gap:56px">
-    <div class="left">
-      <div class="k">Goal</div><p>Build the dashboard from your approved plan.</p>
-      <div class="k">You should see</div><p>localhost:5173 with NISP's price, change and chart.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s1-dashboard</code> (Run 3 midpoint; Run 3 ends at <code>s1-chatbot</code>).</p>
+</section>
+<section class="slide t7 t7-run" data-n="25">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Run 2b: get the plan, approve, edit or reject it, then save it</h2>
+    <div class="t7-content ho">
+<p class="t7-warning t7-stay">Stay in this conversation — no /new until the plan is saved.</p>    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>1. Tab: footer "plan". Send:</p><div class="prompt"><div class="ph"><span>Plan</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan to build it. Don't build anything yet.</pre></div>
     </div>
-    <div class="right" style="gap:22px">
-      <div class="prompt"><div class="ph"><span>Prompt <span style="text-transform:none;font:600 26px Nunito;letter-spacing:0">(Build mode)</span></span><button>Copy</button></div><pre>Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.</pre></div>
-      <div class="step">Agent asks to run a command? Allow it.</div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>2. Check it against your spec: only price, change and 1-year chart? Nothing extra? Then approve, edit or reject.</p>
     </div>
-  </div>
-</div></section>
-<section class="slide" data-n="29"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">Time · 18 min</span></div>
-  <h2 style="font-size:46px;margin-bottom:22px;white-space:nowrap;max-width:none">Run 3: build the dashboard, then add the chatbot through the same loop</h2>
-  <div class="ho" style="grid-template-columns:340px 1fr;gap:44px">
-    <div class="left">
-      <div class="k">Goal</div><p>Add a chatbot, test, push.</p>
-      <div data-step="2"><div class="k">You should see</div><p>NISP answers, no buy advice, no .env on GitHub.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s1-chatbot</code>.</p></div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>3. Tab: footer "build". Send:</p><div class="prompt"><div class="ph"><span>Save</span><button>Copy</button></div><pre>Save that plan to docs/plan.md. Don't build anything yet.</pre></div><p>You should see: docs/plan.md.</p><p>12 min · Stuck? s1-spec.</p>
     </div>
-    <div class="right" style="gap:10px">
-      <div class="step" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:28px"><b>Same loop as Run 2:</b><span class="chip out" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip out" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:4px 12px">build</span><span>(see handout)</span></div>
-      <div class="step" style="font-size:28px">First: put the LLM details in backend/.env.</div>
-      <div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Spec:</span><button>Copy</button></div><pre>Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP&#x27;s current data, then calls the LLM in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). No buy/sell advice, no tool calling. Don&#x27;t build yet.</pre></div>
-      <div class="step" data-step="1" style="font-size:28px"><b>Test in chat:</b> "What is NISP's latest price?" · "And a month ago?" · "Should I buy NISP?"</div>
-      <div data-step="2"><div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Push:</span><button>Copy</button></div><pre>Commit all changes with the message &quot;NISP dashboard and chatbot&quot;. Make sure backend/.env is not committed. Then push to GitHub.</pre></div></div>
     </div>
   </div>
-</div></section>
-<section class="slide" data-n="30"><div class="inner">
-  <div class="eyebrow"><span class="tag red">Run 3 · Build and chat</span><span class="tag">Time · 18 min</span></div>
-  <h2 style="font-size:46px;margin-bottom:22px;white-space:nowrap;max-width:none">Run 3: build the dashboard, then add the chatbot through the same loop</h2>
-  <div class="ho" style="grid-template-columns:340px 1fr;gap:44px">
-    <div class="left">
-      <div class="k">Goal</div><p>Add a chatbot, test, push.</p>
-      <div data-step="2"><div class="k">You should see</div><p>NISP answers, no buy advice, no .env on GitHub.</p>
-      <div class="k">Stuck?</div><p>Checkpoint <code>s1-chatbot</code>.</p></div>
-    </div>
-    <div class="right" style="gap:10px">
-      <div class="step" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:28px"><b>Same loop as Run 2:</b><span class="chip out" style="padding:4px 12px">brainstorm</span>→<span class="chip red" style="padding:4px 12px">spec</span>→<span class="chip out" style="padding:4px 12px">plan</span>→<span class="chip out" style="padding:4px 12px">build</span><span>(see handout)</span></div>
-      <div class="step" style="font-size:28px">First: put the LLM details in backend/.env.</div>
-      <div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Spec:</span><button>Copy</button></div><pre>Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP&#x27;s current data, then calls the LLM in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). No buy/sell advice, no tool calling. Don&#x27;t build yet.</pre></div>
-      <div class="step" data-step="1" style="font-size:28px"><b>Test in chat:</b> "What is NISP's latest price?" · "And a month ago?" · "Should I buy NISP?"</div>
-      <div data-step="2"><div class="prompt sm"><div class="ph" style="padding:6px 24px"><span>Push:</span><button>Copy</button></div><pre>Commit all changes with the message &quot;NISP dashboard and chatbot&quot;. Make sure backend/.env is not committed. Then push to GitHub.</pre></div></div>
+</section>
+<section class="slide t7" data-n="26">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Your financial app has a screen, a back end, a data source and an AI service</h2>
+    <div class="t7-content">
+<div class="t7-architecture"><i class="t7-once" data-step="2" aria-hidden="true"></i><div class="t7-laptop"><div class="t7-screen">Screen (in your browser)<p>React · 5173</p></div><div data-step="1" class="t7-backend">Back end<p>FastAPI · 8000</p></div><div data-step="3" class="t7-env">backend/.env<p>service address, model name, secret key. Not the AI.</p></div></div><div class="t7-external"><div data-step="2" class="t7-source">yfinance: NISP data</div><div data-step="3" class="t7-service">AI service (LLM)</div></div><svg class="t7-arrows" width="1600" height="560" viewBox="0 0 1600 560" aria-hidden="true"><defs><marker id="t7-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><path data-step="1" class="draw" pathLength="1" d="M390 140 H520"/><path data-step="2" class="draw" pathLength="1" d="M850 140 H1190"/><path data-step="3" class="draw" pathLength="1" d="M850 165 L1190 380"/></svg></div>
     </div>
   </div>
-</div></section>
-<section class="slide" data-n="31"><div class="inner">
-  <div class="eyebrow">Close + Q&amp;A</div>
-  <h2>You built an app by directing an AI, not by writing code</h2>
-  <ul class="lines" style="font-size:40px">
-    <li data-step="1" class="fx-left" style="display:flex;gap:28px"><span style="color:#ff3300;font-weight:800">✓</span><span>The model is stateless; the app resends the conversation</span></li>
-    <li data-step="1" class="fx-left" style="display:flex;gap:28px;transition-delay:.15s"><span style="color:#ff3300;font-weight:800">✓</span><span>AGENTS.md keeps standing rules</span></li>
-    <li data-step="1" class="fx-left" style="display:flex;gap:28px;transition-delay:.3s"><span style="color:#ff3300;font-weight:800">✓</span><span>Git and GitHub keep your work safe</span></li>
-    <li data-step="1" class="fx-left" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;transition-delay:.45s"><span style="color:#ff3300;font-weight:800">✓</span><span style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;font:800 30px Archivo"><span class="chip out " style="--d:0;font-size:28px">Brainstorm</span>→<span class="chip out " style="--d:1;font-size:28px">Spec</span>→<span class="chip out " style="--d:2;font-size:28px">Plan</span>→<span class="chip out " style="--d:3;font-size:28px">Execute</span>→<span class="chip out " style="--d:4;font-size:28px">Test</span>→<span class="chip out " style="--d:5;font-size:28px">Iterate</span></span></li>
-  </ul>
-  <div class="punch" data-step="1" style="transition-delay:.6s;padding-bottom:8px">Checkpoint: <code style="display:inline-block;line-height:1">s1-chatbot</code></div>
-</div></section>
+</section>
+<section class="slide t7" data-n="27">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>When something breaks, remove secrets, paste the error, and ask the agent to explain it</h2>
+    <div class="t7-content">
+<div class="t7-debug"><div><div class="t7-box">Copy the error</div><p class="t7-sources">opencode · server window · browser</p></div>
+<div data-step="1"><div class="t7-box">Remove keys and private data</div></div>
+<div data-step="2"><div class="t7-box">Ask: "Explain in plain words, then fix it."</div></div>
+<div data-step="3"><div class="t7-box">Repeat the check that failed</div></div></div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="28">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3a: build the dashboard and check its numbers</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>Build mode. Send:</p><div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.</pre></div><p>It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-check">NISP.JK<br>prices in IDR<br>date and source shown<br>1-year chart</div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <p>Date/source missing? Send:</p><div class="prompt"><div class="ph"><span>Iterate · UNTESTED</span><button>Copy</button></div><pre>Show the date and source of the price under the price card.</pre></div><p>Repeat the check.</p><p>15 min · Stuck? s1-dashboard.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="29">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3b: protect the key, then interview and plan the chatbot</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Protect the key · UNTESTED</span><button>Copy</button></div><pre>Add .env to .gitignore and create backend/.env.example with LLM_BASE_URL, LLM_API_KEY and LLM_MODEL and no values. Don't create or open backend/.env.</pre></div><p>Copy backend/.env.example to backend/.env and fill in the class details.</p><p class="t7-warning">Never paste the key into the chat.</p>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Spec · UNTESTED</span><button>Copy</button></div><pre>Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP's latest available price and the last year of daily closes, with dates, then calls the AI service using the settings in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). If the data doesn't answer the question, it says so. No buy, sell or hold advice. No tool calling. Don't build yet.</pre></div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf on">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>Plan → approve, edit or reject → save, as in Run 2.</p><p>12 min · Stuck? s1-dashboard.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="30">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3c: build and test the chatbot, then push without secrets</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the chatbot from docs/plan.md, then tell me how to open it.</pre></div>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>What is NISP's latest price? → matches the price card and its date.</p><p>Which stock are we talking about? → NISP (memory).</p>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>What was the close on &lt;a date last month&gt;? → matches the chart, or says it has no data.</p><p>Should I buy NISP? → no buy, sell or hold advice.</p>
+    </div>
+    <div class="t7-panel t7-p3" data-step="3">
+      <div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <p>Fix failures; repeat checks.</p><div class="prompt"><div class="ph"><span>Push · UNTESTED</span><button>Copy</button></div><pre>List the files you will commit. If backend/.env is in the list, stop and tell me. Otherwise commit with the message "NISP dashboard and chatbot" and push to GitHub.</pre></div><p class="t7-warning">Key leaked? Tell the facilitator — the key must be replaced.</p><p>14 min · Stuck? s1-chatbot.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7" data-n="31">
+  <div class="inner">
+    <div class="eyebrow">Close + Q&amp;A</div>
+    <h2>You built a financial app by directing an AI and checking its work</h2>
+    <div class="t7-content">
+    <div class="t7-panel t7-p0">
+
+
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+
+      <ul class="lines"><li>The model doesn't remember; opencode sends the context</li><li>AGENTS.md: the project's standing brief</li><li>Commit and push save your work to GitHub</li></ul><div class="t7-map"><span class="wf">Interview</span><span class="wf">Plan</span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+
+      <div class="t7-check">Dashboard opens · price check passes · chatbot check passes · latest commit on GitHub — or checkpoint s1-chatbot</div>
+    </div>
+    </div>
+  </div>
+</section>
 <section class="slide" data-n="32"><div class="inner">
   <div class="eyebrow">Close + Q&amp;A</div>
   <div style="position:absolute;left:-160px;top:-96px;width:1920px;height:1080px;pointer-events:none;overflow:hidden" data-deco>
@@ -1367,28 +1395,20 @@ svg .flow.red{stroke:var(--red)}
     <div class="q-mv" style="offset-path:path('M300 180 L1000 160 L700 260 Z');animation-duration:9s;animation-timing-function:ease-in-out"><i style="display:block;width:30px;height:30px;background:#000;translate:-50% -50%"></i></div>
   </div>
   <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
-    <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex;background:#fff;padding:0 30px"><h2 style="font:inherit;margin:0;letter-spacing:inherit;max-width:none">Questions</h2><span style="color:#ff3300">?</span></div>
+    <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex;background:#fff;padding:0 30px"><h2>Questions</h2><span style="color:#ff3300">?</span></div>
   </div>
 </div></section>
-<section class="slide" data-n="33"><div class="inner">
-  <div class="eyebrow">Close + Q&amp;A</div>
-  <h2>Next session: your app remembers prices and learns the rules</h2>
-  <div style="flex:1;display:flex;flex-direction:column;justify-content:center"><div class="label" style="border-top:0;font-size:32px;color:#ff3300;margin-bottom:20px">Session 2:</div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px">
-    <div style="border-top:3px solid #000;padding-top:40px">
-      <svg class="float" width="140" height="140" viewBox="0 0 90 90"><ellipse cx="45" cy="18" rx="34" ry="11" fill="none" stroke="#000" stroke-width="5"/><path d="M11 18 V72 a34 11 0 0 0 68 0 V18 M11 45 a34 11 0 0 0 68 0" fill="none" stroke="#000" stroke-width="5"/></svg>
-      <p style="font-size:42px;line-height:1.3;margin:30px 0 0">A database that remembers prices</p>
+<section class="slide t7" data-n="33">
+  <div class="inner">
+    <div class="eyebrow">Close + Q&amp;A</div>
+    <h2>Next session: your app stores price history and the chatbot reads reference pages</h2>
+    <div class="t7-content">
+<p>Session 2:</p><div class="t7-preview"><div>Store price history</div>
+<div>Watchlist: NISP, BBRI, TLKM</div>
+<div>Reference pages for the chatbot</div></div>
     </div>
-    <div style="border-top:3px solid #000;padding-top:40px">
-      <svg class="float" width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-1s"><rect x="6" y="10" width="78" height="18" fill="#ff3300"/><rect x="6" y="36" width="78" height="18" fill="none" stroke="#000" stroke-width="5"/><rect x="6" y="62" width="78" height="18" fill="none" stroke="#000" stroke-width="5"/></svg>
-      <p style="font-size:42px;line-height:1.3;margin:30px 0 0">A watchlist: NISP, BBRI, TLKM</p>
-    </div>
-    <div style="border-top:3px solid #000;padding-top:40px">
-      <svg class="float" width="140" height="140" viewBox="0 0 90 90" style="animation-delay:-2s"><path d="M45 18 C32 8 16 8 6 12 V80 C16 76 32 76 45 86 C58 76 74 76 84 80 V12 C74 8 58 8 45 18 Z M45 18 V86" fill="none" stroke="#000" stroke-width="5"/></svg>
-      <p style="font-size:42px;line-height:1.3;margin:30px 0 0">A Wiki so the chatbot knows the rules</p>
-    </div>
-  </div></div>
-</div></section>
+  </div>
+</section>
 <div class="pg"></div><div class="steps-ind"></div></div></div><div id="notesbar"></div>
 <script type="application/json" id="notes-data">{"1": "Welcome everyone. Today you build a real financial app, and nobody writes code by hand. You tell opencode, our coding agent, what you want, you check what it gives you, and you steer it. By the end of these three hours you will have a NISP dashboard and a chatbot, saved on GitHub. Before we start, check that opencode opens on every laptop, Windows and Mac, and that it answers a simple \"hello\". Anyone whose model does not reply, raise your hand now, so we fix it before the first exercise. About half of today is hands-on: I explain for a few minutes, then you do it, and we check together.", "2": "Say what the day produces, in business words. NISP is Bank OCBC NISP, listed as NISP.JK on the Indonesia Stock Exchange. On step 1, point at the cards: the latest available price in rupiah, and the daily change. Prices come from Yahoo Finance and can be delayed, so in Run 3 you check that your financial app shows the date and source. On step 2, the one-year chart. On step 3, the chatbot answers questions about that data. On step 4, the project is saved on GitHub. Optional quick look: open the finished financial app from checkpoint s1-chatbot at localhost:5173 and ask \"What is NISP's latest price?\" Have both servers running before class. Then ask: who has written code before? Few hands is fine. Your job is a manager's job: be clear about the goal, then judge the work. We show market data only, never advice to buy or sell.", "3": "This is your job for the rest of the day, so you see it before we look inside the agent. On step 1: Interview. The agent asks questions one at a time, you answer, and it writes what you agreed into docs/spec.md. We call it an interview: the agent asks, you answer. Some skills call this brainstorming. Then Plan: the agent proposes numbered steps. That is Run 2. On step 2, point at the chip: you approve, edit or reject the plan before anything is built. On step 3: Execute, the agent builds. Test / Debug: you check the result in the browser and, if something breaks, find the cause with the agent. Iterate: you ask for a change, which takes you back to Plan. That is Run 3. Nothing is built until Execute. The Run 2 and Run 3 slides show these five names, with a \"you are here\" marker.", "4": "Start with what an LLM is: a large language model. It writes its answer one small piece of text at a time. The pieces are called tokens; a piece is often a word, sometimes part of one. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores possible next pieces. Say clearly that the bars are an illustration, not measured numbers. On step 3, it picks one, here \"NISP\", adds it, and repeats. It learned language patterns from a huge amount of text, so it can sound like an expert. But fluent is not the same as correct: it can be confidently wrong, and its training is no source for current stock prices. So we give it real data and check. From now on we call it the model. Ask: who has used ChatGPT or Copilot? Those are chat products built on a model.", "5": "The model doesn't remember earlier requests; each call to it stands alone. On step 0, point at turn one and its arrow: the conversation part of turn one is just Question 1; on the next slide we add what opencode sends alongside it. Ask: then why does a chat seem to remember? On step 1, answer it: opencode keeps the conversation and sends it again with your new message; chat products do something similar. On step 2, the rows get longer. Apart from its training, the model works only with what it is sent: longer chats can cost more and run slower, and messages not sent, it can't see. On step 3, say the caption. One caution: this is called stateless, but that doesn't mean the service stores nothing; products may keep chat history or offer memory features. Our own chatbot later sends the whole message list every turn. This slide shows only the conversation part, simplified.", "6": "Now look at what opencode sends. This is a simplified view, not the exact request format. Red is the model; black is opencode and its rules. On step 1, the system prompt: opencode's own instructions. On step 2, AGENTS.md, your project rules; you make yours in Run 1. On step 3, the skill list: names and descriptions only. A full skill is loaded later, if the agent decides one fits. On step 4, the tall grey row: the conversation so far, including tool results. Apart from AGENTS.md, the model only reads a file if a tool brings its text into this row. On step 5, your new message, and the stack goes to the model. On step 6: opencode rebuilds the top three rows for every call to the model, even calls after a tool result; this was checked in the opencode source, version 1.19.5. Messages also carry roles: system, user, assistant, tool. The handout has the glossary.", "7": "Same stack, now inside a frame: the context window, the most text the model can handle in one call, its reply included. Limits differ by model, so no numbers, and these sizes are only illustrative. On step 0, point at the blank space: the reply needs room too. On step 1, a long chat grows toward the limit. On step 2, opencode shortens the older chat into a summary. Point at the top rows: they don't move, because they are sent every turn. How opencode shortens history depends on its settings. On step 3: a summary keeps the gist, not every detail, so an instruction from an hour ago can be lost. On step 4, the habit: save decisions in files. Rules in AGENTS.md, requirements in the spec, steps in the plan. /new starts a conversation without the earlier chat. It doesn't delete files, and it can't bring back what you never saved, so save first.", "8": "How does the agent read files or run commands? Tool calling. Three lanes: opencode on your laptop, the model, and a tool that reads a file. On step 1, opencode sends your message plus the list of tools it can run. On step 2, the model asks: please read docs/spec.md. That is plain-language shorthand, not the real tool syntax. On step 3, point at the gate: opencode checks its permission settings, then runs the tool. Depending on the settings, some actions run without asking, some ask you first, some are refused. On step 4, the file text comes back. On step 5, opencode calls the model again with the conversation plus that text. On step 6: an answer, or another tool request. The key point: the model never touches your laptop; opencode does, within its permission settings. When a permission box appears, read it. Your financial app's chatbot won't use tools; its back end adds the data.", "9": "Put the last slides together. When we say \"the agent\", we mean opencode and the model working in this loop. On step 0, you give a goal. On step 1, the model decides the next action, usually a tool; opencode runs it; the model reads the result and decides again. On step 2, let the dot go round. This is the one animation that keeps moving, because repetition is the point. One request can take minutes and touch many files, and every step builds on your goal, so a vague goal makes the loop wander. On step 3, the loop ends when the agent reports back. It can also stop for an error, a limit or a question for you. Reporting back is a claim, not proof, so the next box is you, testing. Read the punch line: the agent proposes and does; you decide and check.", "10": "Think of AGENTS.md as an onboarding note for a new colleague. On step 0: a new conversation doesn't include yesterday's chat. On step 1: opencode hands AGENTS.md over every turn, as in the stack. On step 2, read the two lists; feature details belong in the spec. On step 3, /init drafts the file once. Then follow the upkeep cycle left to right: spot a lasting rule or a repeated correction, ask the agent to update the file, read the change, commit. The return arrow goes back to spotting another rule, not to running /init again. On step 4, why we work this way today. AGENTS.md is a plain text file, so you can edit it yourself. Today we ask the agent instead: you say the rule in plain words, the agent keeps the file's structure and wording consistent, and we avoid accidental deletions. It can still make mistakes, so read the change. Git makes the change reviewable and reversible whoever typed it. Rules guide the agent; they don't guarantee it obeys, so still check its work.", "11": "Read the question aloud. Give them thirty seconds, then take a show of hands for A, B and C, one at a time. A works, but only while you remember to type it in every new chat. C is tempting, but a stronger model doesn't see yesterday's chat either. Click to reveal B. A new conversation doesn't include old chats, and AGENTS.md is sent on every turn, so a rule saved there reaches every new conversation in this project. The order matters: ask opencode to add the rule, read the change, then commit. If a saved rule still seems ignored, remember the last slide: rules guide the agent, they don't guarantee it obeys. Check the file is in the project folder, and check the work. Then ask one person what rule they would add for their own work. This closes the block on how a coding agent works.", "12": "Before class, replace [FAST MODEL] and [SMART MODEL] with real names from the model list your participants share. This is a rule of thumb, not a law. On step 1: a quick model usually replies faster and costs less. It suits small, clear jobs where you see the result straight away. On step 2: a stronger model usually does better on harder reasoning, and is often slower. Use it for planning, where a bad plan wastes the whole build, and for debugging, when the cause is not obvious. Either model can be wrong, so compare results on your real task and check them. On step 3, show the picker: type /models in opencode. Names differ by provider, so say \"pick one quick and one stronger model from your list\". Today we use the stronger model for the plan.", "13": "Model choice is one lever; effort is a second, on models that support it. On step 0: low effort replies quicker, which is right for a typo or a colour change. On step 1, the one click: the pointer moves to high and stays there. High effort lets the model reason more before it answers. That usually takes longer and can cost more, and it doesn't guarantee a better answer. Use it for the plan, for a bug you cannot explain, or for any step that is hard. On step 2: in opencode, Ctrl+T cycles the options your model offers. opencode calls them variants; their names and effects depend on the model, and effort is a common one. On a Mac it is also the Control key, not Command. If Ctrl+T changes nothing, your model may offer no options; ask me if unsure.", "14": "On step 0 ask: who has a folder of files like Budget_final_v2_REALLY? Hands up. With copies like these, nobody knows which file is the real one, who changed what, or what was lost. Git keeps one project and records each version you commit. On step 1: your local copy is the project folder on your laptop. On step 2: GitHub is a website that hosts a shared copy; it is the host we use today. On step 3, the key sentence: saving alone doesn't upload your work. Your work reaches GitHub only when you push, and a teammate's changes reach you when you pull. Many beginners think saving a file shares it. It doesn't. Why this matters with an agent: it changes many files quickly, so you want save points to go back to, and a copy that is not only on your laptop.", "15": "On step 0: saved on laptop means the file is on your disk, nothing more. On step 1: a commit is a save point with a short note. It records the files included in it. Point at .env: it will hold the secret key. In Run 3 we put .env on Git's ignore list before the key goes in, and before pushing we ask the agent to list the files, to confirm .env is not there. On step 2: \"Fixed the totals\" tells you what happened; \"stuff\" doesn't. Commits stay on your laptop until you push. On step 3: push copies your commits to GitHub. On step 4: pull brings a teammate's commits down; if two people changed the same lines, it may need help. On step 5, the routine: pull, edit, commit, push. Today you work alone, so you mostly push, and you ask opencode in plain English instead of typing Git commands.", "16": "Start GitHub sign-up first, because the confirmation email can take time. On step 0, point at the path in opencode: it must end in financial-app. Anyone with an account can sign in instead. Check spam if the email is late. Type /init while waiting. On step 1, read the permission wording aloud. A request outside the project can be a mistyped path, not something needed for the exercise. Do not approve it automatically; raise a hand and let me check. On step 2, open AGENTS.md and confirm it exists. If nothing changes for two minutes, check whether opencode is waiting for permission or input before pressing Esc and retrying /init. Help anyone still stuck reach checkpoint s1-start.", "17": "On step 0, send Prompt 1 exactly as written. Open AGENTS.md together and point at the added rule. The surrounding bullets may differ; the rule must be there before anyone continues. If it is missing, ask opencode to correct the file and read it again. Click to step 1 only after that check. Prompt 2 requests a private repository, a commit and a push. Follow the sign-in instructions on screen, but do not paste passwords or access keys into chat. Open github.com and check the account, the Private label, and AGENTS.md inside financial-app. Saving locally is not enough. The push prompt is untested, so rehearse real sign-in on both laptop platforms before class. Anyone blocked gets help with checkpoint s1-start.", "18": "On step 0, point at the equal cards: none is a higher rank. On step 1, connect the first two to what participants just did. The message was a prompt for one task; AGENTS.md keeps standing project rules. On step 2, a skill packages expertise for reuse, such as interviewing before proposing a design. On step 3, a workflow gives a repeatable sequence; we return to that in Session 3. Read the footer: these can work together. Ask which card fits a one-off title change, then a rule for every new conversation. If someone confuses a skill with AGENTS.md, use the distinction between expertise for a particular job and rules for this project.", "19": "On step 0, connect the context box to the earlier stack. Names and short descriptions help opencode choose; full instructions are not all loaded at once. These short descriptions and instructions illustrate the mechanism, not a supplied course skill kit. On step 1, point at the request to plan a dashboard. On step 2, opencode decides whether brainstorming fits. It can miss a useful skill; matching is not guaranteed. On step 3, the full card is inside the context box, where its instructions can guide the next response. You can also name a skill; look for the \"skill loaded\" line. If someone has no skills installed, reassure them that today's prompts ask for the same habits directly.", "20": "Point at Illustration on step 0: this is a teaching example, not the result of a controlled comparison. On step 1, read the straight answer. It may be useful, but the agent has guessed the audience and freshness requirements. On step 2, the questions make those decisions visible to the business user. On step 3, the summary records what the answers meant before any building begins. The same habit can be asked for in a prompt; a skill makes it repeatable. If someone asks whether a skill guarantees better work, say no: check the questions, summary and result. If the example feels abstract, ask which missing question would matter before a client meeting, without introducing customer information.", "21": "On step 0, read the vague request. On step 1, point at each gap: which stocks, which period and what layout? opencode can fill these gaps with guesses, but those guesses are not your requirements. On step 2, the result may look polished and still solve the wrong problem. On step 3, show the interview path: a question and a business answer make the intended use clear. We call it an interview; some skills call this brainstorming. If someone cannot answer a technical question, ask them to describe the business outcome instead. Before the next run, remind everyone to answer one question at a time and check the summary, rather than approving a build immediately.", "22": "On step 0, point at docs/spec.md. It records what your financial app should do and why; here a spec is a short PRD, or product requirements document. On step 1, explain the three sections. Goals name the result, Out of scope blocks extras, and How we'll know it works gives checks you can perform. On step 2, the plan is different: numbered steps for making that result. On step 3, you approve, edit or reject it against the spec. If someone cannot judge a technical step, ask whether its business outcome belongs in the spec and call me over for the technical detail. Saving these documents makes decisions available beyond the current conversation.", "23": "Read the three plans on step 0, then give people time to choose. Ask for hands for A, B and C before revealing anything. Plan 2 is tempting: a login screen may sound sensible, but it adds work nobody requested. Plan 3 has the right kind of picture but the wrong stock, so it misses a central requirement. On step 1, point at A. Approve 1, edit 2 to remove the extra login, and reject 3 for a corrected plan. If someone chose to edit 3, acknowledge that a clear correction can work too; here the quiz treats the wrong stock as a reason to request a replacement plan. Bring the discussion back to comparing your own plan against your spec.", "24": "On step 0, point at Interview on the mini-map. Send Prompt 1 as written and answer each question in one short sentence. Questions vary; the limit is five, not a promise of exactly five. Use business terms, such as sales team before client meetings, delayed prices with a date, and mostly laptops. If opencode starts building, stop it and repeat that no code or files are wanted yet. On step 1, send the spec prompt after the summary, not a general go-ahead. Point at the label: the technical sentence is course setup, so copy it unchanged. On step 2, open docs/spec.md and check the business requirements. Anyone stuck raises a hand for help reaching checkpoint s1-spec.", "25": "On step 0, point at the footer: it must say plan. Plan mode is for proposing, not changing your financial app; still check what opencode does. Send the plan prompt and stay in this conversation. On step 1, compare the plan with docs/spec.md, not with how impressive the proposal sounds. Ask for changes if it adds login, other stocks or features you did not agree. Reject a plan that misses the purpose and read its replacement. If someone is unsure about a technical step, call me over rather than approving blindly. On step 2, switch the footer to build and send the save prompt. Open docs/plan.md and check it matches the approved version. Help anyone behind reach checkpoint s1-spec.", "26": "On step 0, point at the screen: this is what you open in your browser. On step 1, the back end is a program on your laptop that handles requests from the screen. localhost means this laptop; 5173 and 8000 are the ports we chose. On step 2, the back end fetches NISP prices through yfinance and sends the data to the screen. On step 3, the AI service is outside the laptop. backend/.env holds its address, model name and secret key, not the model itself. The file does not protect itself; we keep it out of chat and Git. If someone opens the wrong address, check which server and port opencode told them to use.", "27": "On step 0, point at the source chips. The error may be in opencode, the server window or the browser; copy the actual text rather than reconstructing it from memory. On step 1, remove keys and private data before sending anything. Do not paste customer details or the contents of backend/.env. If unsure what is sensitive, raise a hand first. On step 2, ask opencode to explain in plain words before fixing it, so you can judge the proposed action. On step 3, repeat the exact check that failed. A quiet agent is not always stuck; check whether it is running a command or waiting for input before re-sending. If a secret has already been shared, tell me immediately so it can be replaced.", "28": "On step 0, confirm Build mode and the approved docs/plan.md before sending the prompt. Read any requested command: installing or starting within financial-app is expected, but unfamiliar actions need my help. On step 1, open the dashboard and point at each check: NISP.JK, rupiah, date and source, one-year chart. Compare daily change with the previous close, not just a plausible colour. This fulfils the date-and-source check promised at the start. On step 2, use the Iterate prompt if either is missing, then check again. If both are already present, review whether they are readable and correct; do not invent a change. Building is untested and needs Python and Node ready. Help anyone blocked reach checkpoint s1-dashboard.", "29": "On step 0, run the protection prompt before entering a key. Open .gitignore and confirm .env is excluded; check backend/.env.example has names but no values. Participants copy and fill backend/.env themselves with class details, never in chat. If anyone is unsure, raise a hand without displaying the key. On step 1, interview briefly about the chatbot's business purpose, then send the spec prompt and read the update. It supplies dated price history and requires an honest no-data answer, not investment advice. Keep the dashboard date and source visible for later comparison. On step 2, use the same tested plan and save prompts from slide 25 in this conversation, approving, editing or rejecting before saving. These new setup and spec prompts need rehearsal. Help blocked participants from checkpoint s1-dashboard.", "30": "On step 0, send the build prompt only after the chatbot plan is saved. On step 1, ask the first two questions in your financial app, in the same chat: price and date must match the card, then the stock must remain NISP. Point at the dashboard date and source. On step 2, replace the date template with a real date last month; compare with the chart or accept an honest no-data answer. The advice question must not produce buy, sell or hold advice. On step 3, fix failures and repeat checks before pushing. Read the listed files; backend/.env must be absent. If a key leaked, stop and tell me so it is replaced. Help anyone behind reach checkpoint s1-chatbot.", "31": "On step 1, point quickly at each statement and connect it to what people did. opencode sends context; AGENTS.md keeps the project's standing brief; commit and push copy included work to GitHub. Ignored secrets are not part of that copy. Trace the five workflow chips: Interview, Plan, Execute, Test / Debug, Iterate. The business user's work was deciding and checking, not typing code. On step 2, do the finish check rather than declaring everybody finished. Ask participants to open the dashboard, confirm a price check and a chatbot check, and find the latest commit on GitHub. If someone is behind, help them use checkpoint s1-chatbot for Session 2. The recovery link still needs preparation before class.", "32": "Open the floor on step 0. Point at the question and invite one thing that surprised people, or one place they might use a dashboard at work. If nobody speaks, ask which part needed the most judgement: the interview, plan review or tests. Repeat each question before answering so the whole room hears it. Keep investment questions neutral: your financial app shows data, not investment advice. Park anything needing a long demonstration for the next session instead of rushing through it. If someone is stuck rather than asking a general question, arrange individual help and confirm they have the s1-chatbot checkpoint before leaving. Check that nobody is displaying a secret while sharing their screen.", "33": "Point at the three preview lines on step 0. Today your financial app fetches prices when asked and stores none; next time we save price history and give the chatbot reference pages to read. The model itself is not retrained. The watchlist extends the same pattern to NISP, BBRI and TLKM, rather than changing how you direct opencode. Keep the distinction clear: stored data belongs to your financial app, while reference pages supply information for an answer. If someone has not finished today, remind them to keep their project and ask for help with checkpoint s1-chatbot before Session 2. Close by thanking the group; do not introduce a new exercise in this final minute."}</script>
 <script>(()=>{
