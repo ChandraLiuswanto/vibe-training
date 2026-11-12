@@ -9,7 +9,7 @@ Hands-on slides show the exact prompt; prompts are written only after testing.
 
 Opening
 1. Build your first AI Financial App [title]
-2. Today you build a BBCA dashboard and chatbot without writing code [talk]
+2. Today you build a NISP dashboard and chatbot without writing code [talk]
 3. This is the app you will have by the end of this session [demo]
 4. You will be at the keyboard for most of these three hours [talk, agenda]
 
@@ -58,7 +58,7 @@ Brainstorm → Spec → Plan → Execute
 38. An agent builds what it guesses you want, so make it ask first [talk]
 39. Every build follows six steps: brainstorm, spec, plan, execute, test, iterate [talk]
 40. In a brainstorm the agent asks one question at a time and you answer in business terms [talk]
-41. Ask opencode to brainstorm the BBCA dashboard with you, one question at a time [hands-on]
+41. Ask opencode to brainstorm the NISP dashboard with you, one question at a time [hands-on]
 42. A spec says what to build and why; a plan says how, step by step [talk]
 43. A good spec lists goals, what's out of scope, and how you'll know it works [talk]
 44. Ask the agent to write the spec to docs/spec.md, then read and correct it [hands-on]
@@ -83,7 +83,7 @@ Close
 Opening
 1. Upgrade your Financial App: watchlist and AI knowledge [title]
 2. Today your app remembers prices and your chatbot learns the rules [talk]
-3. Your app shows BBCA and answers basic questions [recap]
+3. Your app shows NISP and answers basic questions [recap]
 4. Start from your own app or switch to checkpoint s1-chatbot [hands-on]
 
 Part 1: Database & watchlist
@@ -93,7 +93,7 @@ Part 1: Database & watchlist
 8. In this price table, which is a row and which is a column? [check]
 9. A watchlist needs two tables: the stocks you follow and their daily prices [talk]
 10. Brainstorm the watchlist with the agent, then update the spec and approve the plan [hands-on]
-11. Ask opencode to save BBCA's price history from yfinance into a database [hands-on]
+11. Ask opencode to save NISP's price history from yfinance into a database [hands-on]
 12. Ask the agent to show you what is inside the database [hands-on]
 13. Build a watchlist page that reads from the database [hands-on]
 14. Add BBRI and TLKM, remove one, and watch the dashboard change [hands-on]
@@ -138,7 +138,7 @@ Agentic workflows
 Practice 1: Report
 9. A good analysis report has data, charts and an insight you can defend [talk]
 10. Write a short spec for the report: audience, sections, and what counts as a defensible insight [hands-on]
-11. Ask opencode to write a BBCA analysis report from your database [hands-on]
+11. Ask opencode to write a NISP analysis report from your database [hands-on]
 12. Check every number in the report against your dashboard [hands-on]
 13. AI can write confident insights the data doesn't support [talk]
 14. Which claim in this report does the data not prove? [check]

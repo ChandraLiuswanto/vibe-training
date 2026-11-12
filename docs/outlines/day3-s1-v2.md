@@ -11,7 +11,7 @@ Legend: [visual] = animated diagram · [run] = participant hands-on · [check] =
 
 ## Opening
 1. Build your first AI Financial App [title]
-2. Today you build a BBCA dashboard and chatbot without writing code [visual: app mock-up assembles]
+2. Today you build a NISP dashboard and chatbot without writing code [visual: app mock-up assembles]
 
 ## How an AI coding agent works
 3. An LLM predicts the next words from the text you send it [visual: words appear one by one]

@@ -19,29 +19,29 @@ diagram: none
 build:
   0: title, subtitle and session line together
 notes:
-Welcome everyone. Today you build a real app, and nobody writes code by hand. You tell an AI coding agent called opencode what you want, you check what it gives you, and you steer it. By the end of these three hours you will have a BBCA dashboard and a chatbot, saved on GitHub. Before we start, check that opencode opens on every laptop, Windows and Mac, and that it answers a simple "hello". Anyone whose model does not reply, raise your hand now, so we fix it before the first exercise. Today is mostly hands-on: I explain for a few minutes, then you do it, and we check together.
+Welcome everyone. Today you build a real app, and nobody writes code by hand. You tell an AI coding agent called opencode what you want, you check what it gives you, and you steer it. By the end of these three hours you will have a NISP dashboard and a chatbot, saved on GitHub. Before we start, check that opencode opens on every laptop, Windows and Mac, and that it answers a simple "hello". Anyone whose model does not reply, raise your hand now, so we fix it before the first exercise. Today is mostly hands-on: I explain for a few minutes, then you do it, and we check together.
 words: 10 · budget: 40 · exception: none
 status: n/a
 
-## 2. Today you build a BBCA dashboard and chatbot without writing code
+## 2. Today you build a NISP dashboard and chatbot without writing code
 type: visual
 block: Opening · 7
 visible:
-BBCA price
+NISP price
 Daily change
 1-year chart
 Chatbot
 Saved on GitHub
 You direct. The AI writes the code.
-diagram: A laptop browser frame, centre. Inside it the app mock-up: top-left a large price card "BBCA price"; beside it a small card "Daily change" with a green arrow; below them a wide line chart "1-year chart"; on the right a narrow chat panel "Chatbot" with two speech bubbles. Under the laptop a GitHub badge "Saved on GitHub" with an upward arrow from the laptop. Caption along the bottom: "You direct. The AI writes the code."
+diagram: A laptop browser frame, centre. Inside it the app mock-up: top-left a large price card "NISP price"; beside it a small card "Daily change" with a green arrow; below them a wide line chart "1-year chart"; on the right a narrow chat panel "Chatbot" with two speech bubbles. Under the laptop a GitHub badge "Saved on GitHub" with an upward arrow from the laptop. Caption along the bottom: "You direct. The AI writes the code."
 build:
   0: empty browser frame and title
-  1: "BBCA price" and "Daily change" cards drop in
+  1: "NISP price" and "Daily change" cards drop in
   2: "1-year chart" line draws left to right
   3: "Chatbot" panel slides in from the right
   4: arrow to "Saved on GitHub" badge; caption fades in
 notes:
-Say what the day produces, in business words. BBCA is Bank Central Asia, a stock many of you know. On step 1 point at the price card: the latest price in rupiah and how much it moved today. On step 2, the one-year chart. On step 3, the chatbot answers questions about that data. On step 4, the whole project is saved on GitHub. Optional quick look: open the finished app from checkpoint s1-chatbot at localhost:5173 and ask "What is BBCA's latest price?" Have both servers running before class. Then ask: how many of you have written code before? Few hands is fine. Your job is a manager's job: be clear about the goal, then judge the work. Mention that we show market data only. Nothing in the app tells anyone what to buy or sell.
+Say what the day produces, in business words. NISP is Bank OCBC NISP, listed as NISP.JK on the Indonesia Stock Exchange. On step 1 point at the price card: the latest price in rupiah and how much it moved today. On step 2, the one-year chart. On step 3, the chatbot answers questions about that data. On step 4, the whole project is saved on GitHub. Optional quick look: open the finished app from checkpoint s1-chatbot at localhost:5173 and ask "What is NISP's latest price?" Have both servers running before class. Then ask: how many of you have written code before? Few hands is fine. Your job is a manager's job: be clear about the goal, then judge the work. Mention that we show market data only. Nothing in the app tells anyone what to buy or sell.
 words: 17 · budget: 40 · exception: none
 status: n/a
 
@@ -59,7 +59,7 @@ build:
   2: arrow pulses through the LLM; the ranked list appears with bars growing
   3: "NISP" lifts out of the list into the output box
 notes:
-Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "NISP", and then repeats, one piece at a time. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real BBCA numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
+Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "NISP", and then repeats, one piece at a time. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real NISP numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
 words: 17 · budget: 40 · exception: none
 status: n/a
 
@@ -365,7 +365,7 @@ status: n/a
 type: visual
 block: Skills · 6
 visible:
-"I want a simple page for my sales team to see BBCA before a client meeting."
+"I want a simple page for my sales team to see NISP before a client meeting."
 Without a skill: a straight answer
 With a brainstorming skill: questions first, then a summary
 Same folder, model and settings.
@@ -442,7 +442,7 @@ visible:
 **Goal:** Agree what to build, then write it down.
 **Prompt 1 (brainstorm):**
 ```text
-Let's brainstorm a BBCA stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
+Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
 ```
 Answer each question in one short sentence.
 **Prompt 2 (spec):**
@@ -519,17 +519,17 @@ block: Run 3 · 4
 visible:
 Screen (React) · port 5173
 Back end (FastAPI) · port 8000
-yfinance: BBCA data
+yfinance: NISP data
 The AI: the LLM in backend/.env
 chat messages (later)
-diagram: Left box "Screen (React)" with a browser icon. Middle box "Back end (FastAPI)". Arrow screen → back end labelled "GET /api/quote · /api/history" and a second dashed arrow labelled "chat messages (later)". From the back end, two arrows right: to "yfinance: BBCA data" and to "The AI: the LLM in backend/.env". A small padlock beside backend/.env.
+diagram: Left box "Screen (React)" with a browser icon. Middle box "Back end (FastAPI)". Arrow screen → back end labelled "GET /api/quote · /api/history" and a second dashed arrow labelled "chat messages (later)". From the back end, two arrows right: to "yfinance: NISP data" and to "The AI: the LLM in backend/.env". A small padlock beside backend/.env.
 build:
   0: the "Screen (React)" box
   1: request arrow flows to "Back end (FastAPI)"
-  2: back end → "yfinance: BBCA data"; a data packet flows back to the screen and a mini chart appears
+  2: back end → "yfinance: NISP data"; a data packet flows back to the screen and a mini chart appears
   3: dashed "chat messages (later)" arrow; back end → "The AI"; padlock appears
 notes:
-Give them a mental picture of what the agent is about to build, without code. On step 0: the screen is what you see in the browser. On step 1: the back end is a small program running behind it. The two talk through endpoints, which are just named addresses, like two counters in a bank. On step 2: the back end fetches BBCA prices from Yahoo through yfinance and sends them to the screen. On step 3: later, for the chatbot, it also talks to the AI. The key to the AI lives only in the back end, in a file called .env, so nobody can see it in the browser. Ports are door numbers: 5173 for the screen, 8000 for the back end. Both come from the spec you wrote.
+Give them a mental picture of what the agent is about to build, without code. On step 0: the screen is what you see in the browser. On step 1: the back end is a small program running behind it. The two talk through endpoints, which are just named addresses, like two counters in a bank. On step 2: the back end fetches NISP prices from Yahoo through yfinance and sends them to the screen. On step 3: later, for the chatbot, it also talks to the AI. The key to the AI lives only in the back end, in a file called .env, so nobody can see it in the browser. Ports are door numbers: 5173 for the screen, 8000 for the back end. Both come from the spec you wrote.
 words: 24 · budget: 40 · exception: none
 status: n/a
 
@@ -543,7 +543,7 @@ visible:
 Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.
 ```
 Agent asks to run a command? Allow it.
-**You should see:** localhost:5173 with BBCA's price, change and chart.
+**You should see:** localhost:5173 with NISP's price, change and chart.
 **Time:** 14 min
 **Stuck?** Checkpoint `s1-dashboard` (Run 3 midpoint; Run 3 ends at `s1-chatbot`).
 diagram: none
@@ -563,14 +563,14 @@ visible:
 First: put the LLM details in backend/.env.
 **Spec:**
 ```text
-Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds BBCA's current data, then calls the LLM in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). No buy/sell advice, no tool calling. Don't build yet.
+Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP's current data, then calls the LLM in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). No buy/sell advice, no tool calling. Don't build yet.
 ```
-**Test in chat:** "What is BBCA's latest price?" · "And a month ago?" · "Should I buy BBCA?"
+**Test in chat:** "What is NISP's latest price?" · "And a month ago?" · "Should I buy NISP?"
 **Push:**
 ```text
-Commit all changes with the message "BBCA dashboard and chatbot". Make sure backend/.env is not committed. Then push to GitHub.
+Commit all changes with the message "NISP dashboard and chatbot". Make sure backend/.env is not committed. Then push to GitHub.
 ```
-**You should see:** BBCA answers, no buy advice, no .env on GitHub.
+**You should see:** NISP answers, no buy advice, no .env on GitHub.
 **Time:** 18 min
 **Stuck?** Checkpoint `s1-chatbot`.
 diagram: Across the top of the card, the loop as four small chips: "brainstorm", "spec", "plan", "build", with "spec" highlighted and the others outlined. No extra labels: the visible line already says "(see handout)".
@@ -581,7 +581,7 @@ build:
 handout:
 1. Brainstorm:
 ```text
-Let's brainstorm a chatbot for the BBCA dashboard. Ask me one question at a time, at most 2, in plain business language. Don't write any code or files yet.
+Let's brainstorm a chatbot for the NISP dashboard. Ask me one question at a time, at most 2, in plain business language. Don't write any code or files yet.
 ```
 2. Spec: the prompt on the slide. Read the update and correct one thing.
 3. Plan (Tab: Plan mode; approve, edit or reject):
@@ -597,7 +597,7 @@ Approved. Save that plan to docs/plan.md, then build the chatbot from it.
 The chatbot [describe what is wrong]. Explain the cause in plain words, then fix it.
 ```
 notes:
-Same loop as the dashboard, at speed; the handout has every prompt. Before the spec, participants put the class LLM details into backend/.env; never paste the key into the chat. The spec is shown because it carries the new content: the page sends the whole message list every turn, as on slide 4, and the back end adds BBCA's data, so no tools are needed. After the plan, they approve, edit or reject; the order is approve, save, build. On step 1, they type the three questions in the browser, not opencode. "A month ago" tests the resent conversation; "Should I buy" tests the no-advice rule. Fix one thing with the handout prompt. On step 2, the push: .env holds the key, and secrets never go to GitHub. All prompts here are untested; rehearse them in order.
+Same loop as the dashboard, at speed; the handout has every prompt. Before the spec, participants put the class LLM details into backend/.env; never paste the key into the chat. The spec is shown because it carries the new content: the page sends the whole message list every turn, as on slide 4, and the back end adds NISP's data, so no tools are needed. After the plan, they approve, edit or reject; the order is approve, save, build. On step 1, they type the three questions in the browser, not opencode. "A month ago" tests the resent conversation; "Should I buy" tests the no-advice rule. Fix one thing with the handout prompt. On step 2, the push: .env holds the key, and secrets never go to GitHub. All prompts here are untested; rehearse them in order.
 words: 60 · budget: 60 · exception: fenced prompts not counted (38 + 21 words); 4 more prompts in handout
 status: UNTESTED (spec, push and all 4 handout prompts; v1 slides 49, 51, 52)
 
@@ -657,7 +657,7 @@ block: Close + Q&A · 1
 visible:
 Session 2:
 - A database that remembers prices
-- A watchlist: BBCA, BBRI, TLKM
+- A watchlist: NISP, BBRI, TLKM
 - A Wiki so the chatbot knows the rules
 diagram: none
 build:
