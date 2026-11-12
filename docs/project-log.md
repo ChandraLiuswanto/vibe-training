@@ -110,3 +110,4 @@ Newest entries go at the top of **Log**.
 - **2026-11-12** — User: animations should loop. Added looping effects to the v2 theme (flow dashes, travelling packets, endless loop dot, pulse, float, caret, spin, seq highlight; active slide only; reduced-motion off). Applied to exemplars 4 and 8; the 3 part-builders were told.
 - **2026-11-12** — S1 v2 deck assembled (31 slides, 124 KB) from 3 parallel opus-low parts; `verify.mjs` PASS all 31 at every build step, both sizes. Builder terminals closed. Sol review dispatched.
 - **2026-11-12** — S1 v2 deck review (sol) FAILED on 7 points (timer on entry, ← after reveal, too many loops on 13/4/23, box-shadow pulse, missing 'Agent's context' on 16, yellow note on 9, 'Time' label). Coordinator fixed all; verify PASS all 31; re-review sent. Repo pushed public: github.com/ChandraLiuswanto/vibe-training (.pi/ excluded).
+- **2026-11-12** — S1 v2 deck re-review (sol) **PASS**. Taildropped to Oppo. All worker terminals closed.
