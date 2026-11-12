@@ -78,20 +78,20 @@ status: n/a
 type: visual
 block: How a coding agent works · 3
 visible:
-Text in: "NISP is the ticker of Bank OCBC ..."
+Text in: "OCBC NISP is a bank in ..."
 LLM
-Text out: "NISP"
-NISP · Indonesia · Bank
+Text out: "Indonesia"
+Indonesia · Singapore · Malaysia
 Illustration
 LLM = large language model
-diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central red rounded box "LLM". An arrow out to a box on the right where the next piece appears ("Text out"). Under the right box, three candidate pieces in a small ranked list with bars: "NISP" (longest bar), "Indonesia", "Bank", with the small label "Illustration" beside the bars (they are not measured numbers). Footer line: "LLM = large language model".
+diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central red rounded box "LLM". An arrow out to a box on the right where the next piece appears ("Text out"). Under the right box, three candidate pieces in a small ranked list with bars: "Indonesia" (longest bar), "Singapore", "Malaysia", with the small label "Illustration" beside the bars (they are not measured numbers). Footer line: "LLM = large language model". Example taken from the 2026-11-12 v2 update on main.
 build:
   0: "Text in" box and the "LLM" box
   1: the sentence types out word by word into the input box
   2: arrow pulses through the LLM a few times, then stops; the ranked list appears with bars growing and the "Illustration" label
-  3: "NISP" lifts out of the list into the output box
+  3: "Indonesia" lifts out of the list into the output box
 notes:
-Start with what an LLM is: a large language model. It writes its answer one small piece of text at a time. The pieces are called tokens; a piece is often a word, sometimes part of one. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores possible next pieces. Say clearly that the bars are an illustration, not measured numbers. On step 3, it picks one, here "NISP", adds it, and repeats. It learned language patterns from a huge amount of text, so it can sound like an expert. But fluent is not the same as correct: it can be confidently wrong, and its training is no source for current stock prices. So we give it real data and check. From now on we call it the model. Ask: who has used ChatGPT or Copilot? Those are chat products built on a model.
+Start with what an LLM is: a large language model. It writes its answer one small piece of text at a time. The pieces are called tokens; a piece is often a word, sometimes part of one. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores possible next pieces. Say clearly that the bars are an illustration, not measured numbers. On step 3, it picks one, here "Indonesia", adds it, and repeats. Point at Singapore: a sensible guess, since the parent OCBC is Singaporean, but wrong. It learned language patterns from a huge amount of text, so it can sound like an expert. But fluent is not the same as correct: it can be confidently wrong, and its training is no source for current stock prices. So we give it real data and check. From now on we call it the model. Ask: who has used ChatGPT or Copilot? Those are chat products built on a model.
 words: 25 · budget: 40 · exception: none
 status: n/a
 
@@ -99,20 +99,19 @@ status: n/a
 type: visual
 block: How a coding agent works · 3
 visible:
-Turn 1 sends: Question 1
-Turn 2 sends: Question 1 + Answer 1 + Question 2
-Turn 3 sends: the chat so far + Question 3
-Model
+Turn 1: Capital of Japan? → Tokyo
+Turn 2: Capital of Japan? + Tokyo + How many people live there? → About 14 million
+No history: How many people live there? → Live where?
 opencode resends it. The model doesn't remember.
-diagram: Three horizontal rows, one per turn, each a row of small rounded boxes. Row "Turn 1 sends": one box "Question 1". Row "Turn 2 sends": three boxes "Question 1", "Answer 1", "Question 2". Row "Turn 3 sends": a longer box "the chat so far" followed by "Question 3". Each row has an arrow on the right into one red box "Model". The Turn 1 arrow is visible from step 0 (fix A1). Caption under the rows is the last line of visible.
+diagram: Three rows, each: label, the boxes opencode sends (history in grey, the new question in black), an arrow, then the model's reply (red border). Row "Turn 1": one question, reply "Tokyo"; its arrow is visible from step 0 (fix A1). Row "Turn 2": the earlier question and answer in grey plus the new question, reply "About 14 million". Row "No history" (red label): only the new question, reply in a red box "Live where?". Caption under the rows in accent colour. Tokyo example taken from the 2026-11-12 v2 update on main; caption kept from the v3 spec (M4).
 build:
-  0: title, the "Model" box, the "Turn 1" row and its arrow into "Model"
-  1: "Turn 2" row slides in, with its arrow; its earlier boxes are copies of row 1
-  2: "Turn 3" row slides in, the longest, with its arrow
+  0: title and the "Turn 1" row
+  1: "Turn 2" row slides in; its grey boxes are copies of row 1; "About 14 million" pops in
+  2: "No history" row slides in; the red "Live where?" pops in
   3: caption appears in accent colour
 notes:
-The model doesn't remember earlier requests; each call to it stands alone. On step 0, point at turn one and its arrow: the conversation part of turn one is just Question 1; on the next slide we add what opencode sends alongside it. Ask: then why does a chat seem to remember? On step 1, answer it: opencode keeps the conversation and sends it again with your new message; chat products do something similar. On step 2, the rows get longer. Apart from its training, the model works only with what it is sent: longer chats can cost more and run slower, and messages not sent, it can't see. On step 3, say the caption. One caution: this is called stateless, but that doesn't mean the service stores nothing; products may keep chat history or offer memory features. Our own chatbot later sends the whole message list every turn. This slide shows only the conversation part, simplified.
-words: 34 · budget: 40 · exception: none
+The model doesn't remember earlier requests; each call to it stands alone. On step 0, turn one sends one question and gets an answer. On step 1, the follow-up "How many people live there?" only makes sense because opencode quietly sent the first question and answer again, in grey, so the model knows "there" means Tokyo. Ask: what happens if only the new question is sent? On step 2, the model has no idea what "there" refers to. Same model, same question, no history. Chat products do something similar to opencode. Apart from its training, the model works only with what it is sent: longer chats can cost more and run slower, and messages not sent, it can't see. On step 3, say the caption. One caution: this is called stateless, but that doesn't mean the service stores nothing; products may keep chat history or offer memory features. Our own chatbot later sends the whole message list every turn. This slide shows only the conversation part, simplified; the next slide adds what opencode sends alongside it.
+words: 42 · budget: 40 · exception: the Tokyo dialogue from the main-branch update is the example itself; every word is part of the three short exchanges
 status: n/a
 
 ## 6. On every turn, opencode sends the model a stack: rules, skills, the chat so far, your message
@@ -530,7 +529,7 @@ Interview · Plan · Execute · Test / Debug · Iterate
 Current: Interview
 Prompt 1 (interview):
 ```text
-Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
+Let's brainstorm a NISP (Bank OCBC NISP, NISP.JK) stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
 ```
 Answer briefly.
 Prompt 2 (spec):

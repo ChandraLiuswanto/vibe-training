@@ -18,7 +18,7 @@ BANNED = [
     r"Nothing carries over",
     r"cannot edit files",
     r"Task done",
-    r"\blive\b",
+    r"\blive\b(?! there| where)",  # 'live prices' is banned; the verb in 'live there' / 'Live where?' is fine
     r"learns the rules",
     r"\bthe app\b",
 ]

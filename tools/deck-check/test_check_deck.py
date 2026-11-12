@@ -161,3 +161,9 @@ def test_cli_positional_deck_and_slides_filter(tmp_path, capsys):
     assert cd.main([str(p)]) == 1
     out = capsys.readouterr().out
     assert "slide 2" in out
+
+def test_live_as_verb_is_allowed():
+    s = cd.Slide(n="5", title="T", visible="How many people live there? Live where?", notes="")
+    assert cd.check_banned([s]) == []
+    s2 = cd.Slide(n="5", title="T", visible="live prices", notes="")
+    assert len(cd.check_banned([s2])) == 1

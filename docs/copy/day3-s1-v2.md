@@ -49,17 +49,17 @@ status: n/a
 type: visual
 block: How an AI coding agent works · 3
 visible:
-Text in: "NISP is the ticker of Bank OCBC ..."
-Text out: "NISP"
+Text in: "OCBC NISP is a bank in ..."
+Text out: "Indonesia"
 LLM = large language model
-diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central rounded box "LLM". An arrow out to a box on the right where the predicted word appears. Under the right box, three faint alternative words in a small ranked list with bars: "NISP" (longest bar), "Indonesia", "Bank". Footer line: "LLM = large language model".
+diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central rounded box "LLM". An arrow out to a box on the right where the predicted word appears. Under the right box, three faint alternative words in a small ranked list with bars: "Indonesia" (longest bar), "Singapore", "Malaysia". Footer line: "LLM = large language model".
 build:
   0: "Text in" box and the "LLM" box
   1: the sentence types out word by word into the input box
   2: arrow pulses through the LLM; the ranked list appears with bars growing
-  3: "NISP" lifts out of the list into the output box
+  3: "Indonesia" lifts out of the list into the output box
 notes:
-Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "NISP", and then repeats, one piece at a time. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real NISP numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
+Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "Indonesia", and then repeats, one piece at a time. Point at Singapore: a sensible guess, since the parent OCBC is Singaporean, but wrong. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real NISP numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
 words: 17 · budget: 40 · exception: none
 status: n/a
 
@@ -67,19 +67,19 @@ status: n/a
 type: visual
 block: How an AI coding agent works · 4
 visible:
-Turn 1 sends: Question 1
-Turn 2 sends: Question 1 + Answer 1 + Question 2
-Turn 3 sends: everything so far + Question 3
-The app resends it. The model doesn't remember.
-diagram: Three horizontal rows, one per turn, each a row of small rounded boxes. Row "Turn 1 sends": one box "Question 1". Row "Turn 2 sends": three boxes "Question 1", "Answer 1", "Question 2". Row "Turn 3 sends": a longer box "everything so far" followed by "Question 3". Each row has an arrow on the right into one box "Model". Caption under the rows is the last line of visible.
+Turn 1: Capital of Japan? → Tokyo
+Turn 2: Capital of Japan? + Tokyo + How many people live there? → About 14 million
+No history: How many people live there? → Live where?
+The app resends history. The model remembers nothing.
+diagram: Three rows, each: label, the boxes the app sends (history in grey, the new question in black), an arrow, then the model's reply. Row "Turn 1": one question, reply "Tokyo". Row "Turn 2": the earlier question and answer in grey plus the new question, reply "About 14 million". Row "No history" (red label): only the new question, reply in a red box "Live where?". Caption under the rows in accent colour.
 build:
-  0: title, the "Model" box and the "Turn 1" row
-  1: "Turn 2" row slides in; its earlier boxes are copies of row 1
-  2: "Turn 3" row slides in, the longest
+  0: title and the "Turn 1" row
+  1: "Turn 2" row slides in; its grey boxes are copies of row 1; "About 14 million" pops in
+  2: "No history" row slides in; the red "Live where?" pops in
   3: caption appears in accent colour
 notes:
-"Stateless" means each request starts from zero. The model does not keep a file about you. On step 0: turn one sends only the first question. Ask: if the model remembers nothing, why does ChatGPT seem to remember our chat? On step 1, answer it: the chat app keeps the whole conversation and sends all of it again, plus your new message. On step 2, point at the rows getting longer. The model reads everything from the top each time, so it looks like it remembers. On step 3, say the caption. Two consequences: long chats cost more and run slower, and anything that is not in what gets sent does not exist for the model. We build exactly this into our chatbot later: the page sends the whole message list every turn.
-words: 31 · budget: 40 · exception: none
+"Stateless" means each request starts from zero. The model does not keep a file about you. On step 0: turn one sends one question and gets an answer. On step 1: the follow-up "How many people live there?" only makes sense because the app quietly sent the first question and answer again, in grey. So the model knows "there" means Tokyo. Ask: what happens if the app sends only the new question? On step 2: the model has no idea what "there" refers to. Same model, same question, no history. On step 3, say the caption. Two consequences: long chats cost more and run slower, and anything that is not in what gets sent does not exist for the model. We build exactly this into our chatbot later: the page sends the whole message list every turn, and you'll test it with "And a month ago?".
+words: 32 · budget: 40 · exception: none
 status: n/a
 
 ## 5. The context window is the most the model can read at once; when it fills, old details drop off
@@ -442,7 +442,7 @@ visible:
 **Goal:** Agree what to build, then write it down.
 **Prompt 1 (brainstorm):**
 ```text
-Let's brainstorm a NISP stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
+Let's brainstorm a NISP (Bank OCBC NISP, NISP.JK) stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.
 ```
 Answer each question in one short sentence.
 **Prompt 2 (spec):**
@@ -458,7 +458,7 @@ build:
   1: Prompt 2, "You should see", time and stuck line
 notes:
 Everyone sends prompt one exactly as written. In our tests the agent asked five short questions, about five seconds each, then summarised in three bullets. The first question was about the audience. Others vary, so answer what is actually asked. Sample answers: sales team before client meetings; delayed is fine if it shows the update time; mostly laptops. Watch for anyone whose agent starts writing files. Never reply "Yes, go ahead" after the summary; that invites a build. Click to prompt two. Teach "Don't build anything yet": without it, our first test built the whole app in eight minutes. With it, three of three runs wrote only the spec in about half a minute. The stack is named in one plain sentence, so you need not understand it. Everybody opens docs/spec.md, reads it and corrects one thing.
-words: 40 · budget: 60 · exception: fenced prompts not counted (42 + 47 words)
+words: 40 · budget: 60 · exception: fenced prompts not counted (46 + 47 words)
 status: tested
 
 ## 21b. Run 2: brainstorm the dashboard, write the spec, then plan it
