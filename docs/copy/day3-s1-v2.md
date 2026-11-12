@@ -49,17 +49,17 @@ status: n/a
 type: visual
 block: How an AI coding agent works · 3
 visible:
-Text in: "NISP is the ticker of Bank OCBC ..."
-Text out: "NISP"
+Text in: "OCBC NISP is a bank in ..."
+Text out: "Indonesia"
 LLM = large language model
-diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central rounded box "LLM". An arrow out to a box on the right where the predicted word appears. Under the right box, three faint alternative words in a small ranked list with bars: "NISP" (longest bar), "Indonesia", "Bank". Footer line: "LLM = large language model".
+diagram: A wide input box on the left with the "Text in" sentence. An arrow into a central rounded box "LLM". An arrow out to a box on the right where the predicted word appears. Under the right box, three faint alternative words in a small ranked list with bars: "Indonesia" (longest bar), "Singapore", "Malaysia". Footer line: "LLM = large language model".
 build:
   0: "Text in" box and the "LLM" box
   1: the sentence types out word by word into the input box
   2: arrow pulses through the LLM; the ranked list appears with bars growing
-  3: "NISP" lifts out of the list into the output box
+  3: "Indonesia" lifts out of the list into the output box
 notes:
-Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "NISP", and then repeats, one piece at a time. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real NISP numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
+Start with what an LLM is: a very large text predictor. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores likely next words. On step 3, it picks one, "Indonesia", and then repeats, one piece at a time. Point at Singapore: a sensible guess, since the parent OCBC is Singaporean, but wrong. That is all it does. It can sound like an expert because it learned patterns from a huge amount of text. It can also be confidently wrong, because it predicts what sounds right, not what it has checked. This matters later: when the app needs real NISP numbers, we have to hand them to the model. Ask the room: have you used ChatGPT or Copilot? Those are apps built on language models; the app is the screen you type into, and the model sits behind it.
 words: 17 · budget: 40 · exception: none
 status: n/a
 
