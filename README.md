@@ -7,7 +7,8 @@ with single-file HTML decks for business users building a Financial App.
 
 | Path | Status |
 | --- | --- |
-| [decks/day3-s1-v2.html](decks/day3-s1-v2.html) | Current Session 1 deck, 32 slides |
+| [decks/day3-s1-v3.html](decks/day3-s1-v3.html) | Current Session 1 deck, 33 slides |
+| [decks/day3-s1-v2.html](decks/day3-s1-v2.html) | Previous Session 1 deck, 32 slides |
 | [decks/day3-s1-v1.html](decks/day3-s1-v1.html) | Previous Session 1 deck |
 | [decks/day3-s1.html](decks/day3-s1.html) | Byte-identical copy of v1, kept for existing links |
 | [decks/day3-s2.html](decks/day3-s2.html) | Session 2 deck, 24 slides |
@@ -26,8 +27,9 @@ Open the HTML file in a browser. No build step is needed.
 - **N**: notes bar.
 - **#N** in the URL: jump to slide N (for example, `#5`).
 
-The goal is fully offline presentation once fonts are embedded. Font embedding
-is being completed in the same PR; it is not a prerequisite already verified here.
+Fonts (Archivo, Nunito, JetBrains Mono; SIL Open Font License 1.1) are embedded
+in every current deck (S1 v3, S1 v2, S2, S3), so they present offline with no
+network requests. The legacy v1 deck still loads Google Fonts.
 
 ## Build or revise decks
 
