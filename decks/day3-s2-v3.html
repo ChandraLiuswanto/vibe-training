@@ -942,7 +942,7 @@ function maxStep(s){let m=0;s.querySelectorAll('[data-step]').forEach(e=>m=Math.
 function paint(s){for(let k=1;k<=9;k++)s.classList.toggle('st'+k,step>=k);s.querySelectorAll('[data-done-at]').forEach(e=>e.classList.toggle('done',step>=+e.dataset.doneAt));s.querySelectorAll('[data-step]').forEach(e=>{const k=+e.dataset.step;e.classList.toggle('in',k<=step);e.classList.toggle('was',k<step);e.toggleAttribute('inert',k>step)});
  const ind=document.querySelector('.steps-ind');if(ind){const m=maxStep(s);ind.style.display=m?'flex':'none';ind.innerHTML=Array.from({length:m+1},(_,k)=>`<i class="${k<=step?'on':''}"></i>`).join('')}}
 function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);countdown();return}
- if(s.querySelector('.choices')&&!maxStep(s)&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
+ if(s.querySelector('.choices')&&!s.querySelector('.reveal[data-step]')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
 function prev(){const s=slides[i];if(s.classList.contains('revealed')){s.classList.remove('revealed');return}if(step>0){step--;paint(s);countdown();return}go(i-1,true)}
 function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
  pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
