@@ -40,8 +40,8 @@ Legend: [visual] = animated diagram · [run] = participant hands-on · [demo] = 
 Demo block:
 - Folder: `/data/training/deck` (run sheet in its README.md). opencode 1.19.5, model `9router/opus`, 5 project skills in `.opencode/skills/`.
 - On slide 15 the trainer types `/stock-report TLKM.JK`. The command runs refresh → report → check → deck: `reports/TLKM.JK-report.html` and an HTML slide deck, `reports/TLKM.JK-deck.html`, built with the frontend-slides skill, both opened in the browser.
-- The run takes about 7 minutes (407 s measured; provisional, to be re-measured with the HTML deck step). The trainer teaches slide 16 while it runs, then goes back and opens both files.
-- Fallback: if it errors or passes 9 minutes, open the copies in `backup/`.
+- The run takes about 4 minutes (227 s measured 12 Nov 2026, HTML deck step). The trainer teaches slide 16 while it runs, then goes back and opens both files.
+- Fallback: if it errors or passes 7 minutes, open the copies in `backup/`.
 - Trainees type nothing in this block. Run 2 stays PowerPoint (`NISP-deck.pptx`); the end-of-session checkpoint is `s3-pptx`.
 
 ## Close
@@ -62,6 +62,6 @@ Total: 20 headlines, 22 slides counting the run parts (7a/7b, 12a/12b).
 | Demo — saved workflow | 15 | 14–17 |
 | Close + Q&A | 25 | 18–20 (+5, builder's call) |
 
-Demo block split: slide 14 = 3; slides 15 + 16 = 9, one shared slot, because slide 16 is taught while the agent runs (about 7 min run + 2 min to open the results); quiz 17 = 3. 3 + 9 + 3 = 15. Slide 15's tag reads "Time · 9 min" to match.
+Demo block split: slide 14 = 3; slides 15 + 16 = 9, one shared slot, because slide 16 is taught while the agent runs (about 4 min run, 7 min cutoff, + 2 min to open the results); quiz 17 = 3. 3 + 9 + 3 = 15. Slide 15's tag reads "Time · 9 min" to match.
 
 Arithmetic: the old plan was 10 + 20 + 45 + 50 + 35 + 20 = 180. Cutting the slide-6 quiz takes Workflows 20 → 15 (−5); the demo replaces Run 3, 35 → 15 (−20). That frees 25 min. Builder's call, open to change: break +10, Run 2 +10, Q&A +5. New total 10 + 15 + 45 + 10 + 60 + 15 + 25 = 180.
