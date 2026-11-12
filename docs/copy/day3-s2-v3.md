@@ -412,7 +412,7 @@ build:
   7: Push collapses to a ✓ chip; the "You should see" line and the Stuck line appear
 notes:
 [UNTESTED] The push prompts and the fix template are untested; rehearse them first. Timebox 15 minutes. Steps 1 to 4 are checks you do yourself in the browser: no prompt needed. Step 1: add BBRI.JK, then TLKM.JK; each should appear on the watchlist and on the dashboard. Step 2: type NISP without .JK; the app should say "Enter the IDX ticker, for example NISP.JK" and save nothing, because the spec accepts tickers ending in .JK only. Step 3: remove BBRI.JK and refresh the dashboard; its card should be gone. We remove BBRI and not TLKM so that NISP and TLKM prices stay for Session 3, which reruns on TLKM. Step 4: stop the back end, start it again and reopen the app; the watchlist and the prices should still be there, because they are saved in the database. Ask the facilitator if you are unsure how to restart the back end. Step 5: if a check failed, use the fix template: fill in the three brackets (what you did, what you expected, what you saw) before sending. It is the only prompt in the course you edit. Then repeat the check that failed. Steps 6 and 7: the same two-step push as Run 1b, with the message "Watchlist page". Read the list and stop on backend/.env or a key. Key leaked? Tell the facilitator — the key must be replaced. At minute 12, anyone whose checks still fail gets help to checkpoint s2-watchlist; do not keep debugging. In plain words: the stocks table from Run 1 is the watchlist, and Run 1 starts with NISP.JK in it, so NISP is on the watchlist from the start and the watchlist is stored in the database. That is why the restart check (step 4) keeps the watchlist.
-words: 54 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
+words: 50 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
 status: UNTESTED
 
 ## 15. A useful bug report says what you did, what you expected and what you saw
@@ -500,7 +500,7 @@ build:
   4: the warning chip and the "No matching page" branch appear
 notes:
 So how does the app put the right text in front of the model? With a Wiki: a folder of short pages the app can send to the model with a question. On step 0: a user asks a question. On step 1: the app looks in the folder called wiki and picks the pages whose words match the question. No magic: it is a keyword match. On step 2: it sends the matching page together with the question to the model, inside the context window you saw in Session 1. On step 3: the answer comes back with the link to the page it was given. This helps the model use the source, but it can still misread the page or add things that are not on it. On step 4: so open the link and check. And if no page matches, our spec says the chatbot should say "This Wiki doesn't cover that." We test that in Run 3c. The Wiki stays small on purpose: a few pages, each short. You can open and read every page yourself, which is the point: you can check what the chatbot was given.
-words: 28 · budget: 40 · exception: none
+words: 38 · budget: 40 · exception: none
 status: n/a
 
 ## 19. Only OJK and IDX pages go in, each with its link and the date you checked it
@@ -521,7 +521,7 @@ build:
   3: the header card appears under the folder
 notes:
 What goes into the Wiki decides what the chatbot is given, so we are strict. On step 1: two sources only. ojk.go.id is the Financial Services Authority, the regulator. idx.co.id is the Indonesia Stock Exchange. On step 2: anything else bounces: blogs, forums, social media posts, even good articles that summarise the rules. They may be out of date or wrong, and the web search in Run 3 may find some of them. Your job is to check the address of every page before it goes in. On step 3: each Wiki page starts with a header: the page title, its web address, the last-updated date if the page shows one, and the date you checked it. That address is what the chatbot shows as its source, and what you click to check it. An official page can be old, replaced, or educational rather than the rule itself. If you cannot tell whether it is current, the Wiki page says so. Our Wiki is a training set, not a verified rulebook. If the agent offers a page from another site, say no.
-words: 28 · budget: 40 · exception: none
+words: 38 · budget: 40 · exception: none
 status: n/a
 
 ## 20. Worked example: check one answer against its source page
@@ -624,7 +624,7 @@ build:
   3: Build collapses; the "You should see" line and the Stuck line appear
 notes:
 [UNTESTED] Both prompts are untested, and they depend on the agent reaching the web; rehearse them first. Timebox 15 minutes. Facilitator setup: the project log (entry "S2 copy v2 written") records that opencode's web fetch works by default and that web search needs OPENCODE_ENABLE_EXA=1, in opencode 1.19.5 with no key. That is recorded in the project log; verify in rehearsal. The OJK and IDX sites may refuse automated requests, so the agent may not be able to open every page. Fallback: the handout's verified URL list (a delivery blocker, to be prepared before class). At minute 10 with no usable pages, everyone uses the handout list. Step 0: the find prompt asks for investor-education pages on ojk.go.id and idx.co.id on three topics, with the URL, title, last-updated date if shown and a one-line summary for each. Nothing is saved yet. Step 1: this check is yours, with no prompt. Is every address on ojk.go.id or idx.co.id? Open each page. Drop anything else, even a good article. Reply in the chat with the pages to drop before you send the build prompt. An official page can be old, replaced, or educational rather than the rule itself; note any page whose date is unclear. Step 2: switch to Build mode and send the build prompt. It turns the pages you approved into Wiki pages, one Markdown file per page, with the header from the spec. "Only use what the page says" tells the agent not to fill gaps; you still compare its page with the original. Read each command it asks to run, and raise your hand for anything outside financial-app. Step 3: open wiki/ and compare with the expected result. If nothing moves for 2 minutes, press Esc and send the same prompt again.
-words: 61 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
+words: 57 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted (rendered count after the drop-pages edit); chips and labels are counted
 status: UNTESTED
 
 ## 23. Run 3c: set the system prompt, check answers against their pages, then push
@@ -671,7 +671,7 @@ build:
   5: Push collapses to a ✓ chip; the "You should see" line and the Stuck line appear
 notes:
 [UNTESTED] The system prompt and the push prompts are untested; rehearse them first. Timebox 15 minutes. Point at the chip: this is a training prototype, not investment advice and not compliance-checked. Step 0: the system prompt gives the chatbot its role and rules: use the Wiki pages and the app's data that come with each question, give the page URL, say so when they do not cover the question, and give facts and risks only if asked what to buy or sell. These are instructions the chatbot should follow; it can still get them wrong, so we test. Step 1: ask the same three questions you recorded in Run 3a. For each answer, open the link, find the sentence on the page that supports it, and if there is none, fix it and ask again. Compare with your earlier answers: is there a source now, and does it match the page? Slide 20 showed the check. Step 2: two more tests. "What is our bank's limit for staff share trading?" is not in the Wiki, so the chatbot should say the Wiki does not cover it, not guess. "Should I buy NISP?" should give facts and risks and no recommendation. If it recommends, do not use the answer: tighten the system prompt and test again. Step 3: fix what failed, then check the files; read the list and stop on backend/.env or a key. Step 4: push with the message "Wiki and system prompt". A push saves your work to your own GitHub repo; it does not create the course checkpoint. Key leaked? Tell the facilitator — the key must be replaced. At minute 12, anyone whose answers still fail gets help to checkpoint s2-wiki; do not keep debugging. If nothing moves for 2 minutes, press Esc and send the same prompt again.
-words: 60 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
+words: 57 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted (rendered count); chips and labels are counted
 status: UNTESTED
 
 ## 24. A regulatory answer needs a source you can open and check
@@ -712,7 +712,7 @@ build:
   4: the finish-check line appears
 notes:
 Do not re-teach; link each box to what they did. On step 1: the database holds data. You built it in Run 1 and the watchlist reads from it, so the app keeps prices and the stocks you follow, even when Yahoo is down. On step 2: the Wiki holds knowledge: a few official pages the app can send to the model with a question, so the answer can name a source you check. On step 3: the system prompt holds behaviour: who the chatbot is and the rules it should follow. You set it and tested it. When something is wrong later, this split tells you where to look: wrong number, check the database; wrong fact, check the Wiki; wrong tone or advice, check the system prompt. If it gives advice, don't use the answer: fix the system prompt and retest. On step 4: the finish check. Does the watchlist survive a restart? Does each answer show a source you checked? Is your latest commit on GitHub? Anyone not finished can switch to checkpoint s2-wiki for Session 3; the facilitator confirms the move.
-words: 28 · budget: 40 · exception: none
+words: 39 · budget: 40 · exception: none
 status: n/a
 
 ## 26. Questions
@@ -802,18 +802,18 @@ id | type | words | budget | over? | exception
 11 | run | 51 | 60 | no | prompt boxes (copyable prompts, including the long spec prompt) are not counted; chips and labels are counted
 12 | run | 60 | 60 | no | prompt boxes (copyable prompts) are not counted; chips and labels are counted
 13 | run | 59 | 60 | no | prompt boxes (copyable prompts, including the long spec prompt) are not counted; chips and labels are counted
-14 | run | 54 | 60 | no | prompt boxes (copyable prompts) are not counted; chips and labels are counted
+14 | run | 50 | 60 | no | prompt boxes (copyable prompts) are not counted; chips and labels are counted
 15 | check | 28 | 60 | no | quiz choices A, B, C and the prompt box are not counted
 16 | visual | 32 | 40 | no | none
 17 | visual | 40 | 40 | no | none
 18 | visual | 38 | 40 | no | none
-19 | visual | 28 | 40 | no | none
+19 | visual | 38 | 40 | no | none
 20 | demo | 39 | 40 | no | none
 21 | run | 59 | 60 | no | prompt boxes (copyable prompts, including the long spec prompt) are not counted; chips and labels are counted
-22 | run | 59 | 60 | no | prompt boxes (copyable prompts) are not counted; chips and labels are counted
-23 | run | 60 | 60 | no | prompt boxes (copyable prompts) are not counted; chips and labels are counted
+22 | run | 57 | 60 | no | prompt boxes (copyable prompts) are not counted (rendered count); chips and labels are counted
+23 | run | 57 | 60 | no | prompt boxes (copyable prompts) are not counted (rendered count); chips and labels are counted
 24 | check | 18 | 60 | no | quiz choices A, B, C are not counted
-25 | recap | 38 | 40 | no | none
+25 | recap | 39 | 40 | no | none
 26 | Q&A | 1 | 40 | no | none
 27 | talk | 26 | 40 | no | none
 
