@@ -1,0 +1,1465 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 3 · Session 1 — Build your first AI Financial App v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* ===== Swiss Modern theme — Day 3 decks ===== */
+:root{--slide-bg:#fff;--stage-bg:#d9d9d9;--ink:#000;--red:#ff3300;--grey:#6b6b6b;--rule:3px solid #000}
+.deck-stage{font-family:Nunito,system-ui,sans-serif;color:var(--ink)}
+.slide::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 159px,#f0f0f0 159px 160px);pointer-events:none}
+.inner{position:absolute;inset:96px 160px 120px;display:flex;flex-direction:column}
+/* type */
+.eyebrow{font:800 28px Archivo,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:36px;display:flex;align-items:center;gap:16px}
+.eyebrow::before{content:"";width:18px;height:18px;background:var(--red)}
+.eyebrow .tag{background:#000;color:#fff;padding:10px 22px}
+.eyebrow .tag.red{background:var(--red)}
+.eyebrow:has(.tag)::before{display:none}
+h1{font:800 150px/.95 Archivo,sans-serif;letter-spacing:-.04em;margin:0;max-width:1350px}
+h2{font:800 70px/1.05 Archivo,sans-serif;letter-spacing:-.025em;margin:0 0 64px;max-width:1560px}
+.body{flex:1;min-height:0}
+.lead{font:400 44px/1.3 Nunito,sans-serif;margin:0 0 28px;max-width:1450px}
+.lead b,.lines b{font-weight:800}
+.lines{list-style:none;margin:0;padding:0;font-size:42px;line-height:1.3}
+.lines li{padding:20px 0;border-top:var(--rule);max-width:1400px}
+.lines li:last-child{border-bottom:var(--rule)}
+.num{counter-reset:n}.num li{counter-increment:n;display:flex;gap:36px}.num li::before{content:counter(n,decimal-leading-zero);font:800 42px Archivo;color:var(--red);min-width:70px}
+.punch{font:800 48px/1.15 Archivo,sans-serif;margin-top:auto;padding-top:32px}
+.punch.red{color:var(--red)}
+code,.mono{font-family:"JetBrains Mono",monospace;font-size:.9em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.label{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:var(--rule);padding-top:12px;margin-bottom:12px}
+/* title / section */
+.s-title .inner{justify-content:flex-end}
+.s-title::after{content:"";position:absolute;right:160px;top:96px;width:320px;height:320px;border-radius:50%;background:var(--red)}
+.sub{font-size:40px;margin-top:44px}
+.s-section .inner{justify-content:center}
+.s-section h2{font-size:110px;max-width:1500px}
+/* diagram primitives */
+.dg{display:flex;gap:0;align-items:center}
+.dbox{padding:24px 34px;border:3px solid #000;font-size:32px;background:#fff;margin-right:-3px;line-height:1.2}
+.dbox.inv{background:#000;color:#fff}.dbox.red{background:var(--red);border-color:var(--red);color:#fff;font:800 32px Archivo}
+.dbox.ghost{border-style:dashed;color:var(--grey)}
+.darrow{font-size:44px;margin:0 24px;line-height:1}
+.dcap{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.06em}
+.dsmall{font-size:28px;color:var(--grey)}
+.chip{display:inline-block;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px;background:#000;color:#fff}
+.chip.red{background:var(--red)}.chip.out{background:#fff;color:#000;border:3px solid #000}
+/* hands-on */
+.ho{display:grid;grid-template-columns:480px 1fr;gap:80px;flex:1;min-height:0}
+.ho .k{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.08em;border-top:var(--rule);padding-top:12px}
+.ho .left p{font-size:32px;line-height:1.35;margin:10px 0 30px}
+.ho .right{display:flex;flex-direction:column;gap:22px;min-height:0}
+.step{font-size:30px;line-height:1.3}.step b{font:800 28px Archivo;text-transform:uppercase;letter-spacing:.04em;margin-right:10px}
+.prompt{border:3px solid #000;background:#fff}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:#000;color:#fff;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.08em}
+.prompt .ph button{font:800 26px Archivo;padding:8px 22px;border:0;background:var(--red);color:#fff;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+.prompt pre{margin:0;padding:26px 32px;font:500 30px/1.45 "JetBrains Mono",monospace;white-space:pre-wrap}
+.prompt.sm pre{font-size:26px;padding:18px 28px}
+/* check */
+.choices{display:flex;flex-direction:column;gap:22px}
+.choice{display:flex;gap:32px;align-items:center;border:3px solid #000;padding:24px 32px;font-size:36px;line-height:1.25;transition:background .25s,color .25s,opacity .25s}
+.choice .L{font:800 44px Archivo;min-width:48px}
+.slide.revealed .choice{opacity:.35}
+.slide.revealed .choice.correct{opacity:1;background:var(--red);border-color:var(--red);color:#fff}
+.reveal{margin-top:36px;font:800 38px/1.25 Archivo;opacity:0;transform:translateY(16px);transition:all .35s}
+.slide.revealed .reveal{opacity:1;transform:none}
+.question{font-size:38px;line-height:1.3;margin:0 0 32px}
+/* break */
+.s-break .inner{justify-content:center;align-items:flex-start}
+.timer{font:800 300px/1 Archivo;letter-spacing:-.04em}
+/* chrome */
+.pg{position:absolute;right:64px;bottom:44px;z-index:5;font:800 24px Archivo;opacity:.6}
+.foot{position:absolute;left:160px;bottom:44px;z-index:5;font:800 18px Archivo;letter-spacing:.1em;text-transform:uppercase;opacity:.45}
+.slide.active .r{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+.slide.active .r2{animation:rise .55s .15s cubic-bezier(.2,.7,.2,1) both}
+.slide.active .r3{animation:rise .55s .3s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+#notesbar{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#111;color:#eee;font:18px/1.5 Nunito,sans-serif;padding:16px 24px;z-index:50;display:none;white-space:pre-wrap}
+body.shownotes #notesbar{display:block}
+
+[data-countdown].done{color:var(--red)}
+
+/* ===== v2: click-to-build animation ===== */
+/* Any element with data-step="k" is hidden until build step k (k>=1). Step 0 = visible on arrival. */
+[data-step]{opacity:0;transform:translateY(22px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+[data-step].in{opacity:1;transform:none}
+[data-step].fx-left{transform:translateX(-60px)}[data-step].fx-right{transform:translateX(60px)}
+[data-step].fx-pop{transform:scale(.85)}[data-step].fx-fade{transform:none}
+[data-step].in.fx-left,[data-step].in.fx-right,[data-step].in.fx-pop{transform:none}
+/* dim earlier content when a later step focuses */
+.dim-prev .was{opacity:.3!important;transition:opacity .4s}
+/* SVG arrows that draw themselves: give <path class="draw"> pathLength="1" */
+svg .draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .8s ease}
+.in svg .draw, svg.in .draw, svg .draw.in{stroke-dashoffset:0}
+svg{overflow:visible}
+/* highlight that turns red when its step arrives */
+.hl{transition:background .4s,color .4s,border-color .4s}
+.hl.in{background:var(--red)!important;border-color:var(--red)!important;color:#fff!important}
+/* travelling dot along a CSS offset-path (set style="offset-path:path('...')") */
+.dot{position:absolute;left:0;top:0;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:var(--red);offset-distance:0%;opacity:0}
+.dot.in{opacity:1;animation:travel 3.2s linear 2}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+/* growing bar */
+.fill{transform-origin:left center;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.3,.7,.2,1)}
+.fill.in{transform:scaleX(1)}
+/* step dots indicator */
+.steps-ind{position:absolute;right:64px;bottom:84px;z-index:5;display:flex;gap:8px}
+.steps-ind i{width:14px;height:14px;border:3px solid #000;display:block}
+.steps-ind i.on{background:var(--red);border-color:var(--red)}
+.slide.active svg .draw:not([data-step]){animation:drawin .9s ease .2s forwards}
+@keyframes drawin{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media print{[data-step]{opacity:1!important;transform:none!important}svg .draw{stroke-dashoffset:0!important}}
+/* connector line with arrowhead that grows from the left (use with data-step) */
+.link{flex:1;height:4px;background:#000;position:relative;align-self:center;transform-origin:left center;transform:scaleX(0);transition:transform .7s cubic-bezier(.3,.7,.2,1)}
+.link::after{content:"";position:absolute;right:-2px;top:-9px;border-left:18px solid #000;border-top:11px solid transparent;border-bottom:11px solid transparent}
+.link.red{background:var(--red)}.link.red::after{border-left-color:var(--red)}
+.in .link,.link.in{transform:scaleX(1)}
+/* absolute-position helper: centre on (left,top) without fighting step transforms */
+.at{position:absolute;transform:translate(-50%,-50%)}
+
+/* ===== v3: bounded ambient motion (runs only on the active slide, after its step is reached) ===== */
+/* 1. Flowing dashed connector: <path class="flow" ...> (do NOT combine with .draw). Use .flow.rev to run backwards, .flow.red for accent. */
+svg .flow{stroke-dasharray:14 12;animation:none}
+.slide.active svg .flow{animation:flow 1s linear;animation-iteration-count:3}
+svg .flow.rev{animation-direction:reverse!important}
+svg .flow.red{stroke:var(--red)}
+@keyframes flow{to{stroke-dashoffset:-26}}
+/* 2. Packet that travels a path three times: <div class="packet" style="offset-path:path('M..')"></div> (absolute; inside a position:relative box). Add style="animation-delay:-1s" to stagger several. */
+.packet{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;background:var(--red);offset-distance:0%;offset-rotate:0deg}
+.slide.active .packet{animation:travel 2.4s cubic-bezier(.45,0,.55,1) forwards;animation-iteration-count:3}
+.packet.ink{background:#000}
+/* 3. Loop dots settle after three trips; only the agent-loop slide repeats endlessly. */
+.slide.active .dot.loop.in,.slide.active .dot.loop:not([data-step]){opacity:1;animation:travel 3.2s linear forwards;animation-iteration-count:3}
+.slide.active[data-n="9"] .dot.loop.in,.slide.active[data-n="9"] .dot.loop:not([data-step]){animation-iteration-count:infinite}
+/* 4. Pulse ring on the "active" thing: .pulse */
+.slide.active .pulse{animation:pulse 1.8s ease-out;animation-iteration-count:3}
+@keyframes pulse{0%,100%{outline:3px solid rgba(255,51,0,0);outline-offset:0}50%{outline:3px solid rgba(255,51,0,.9);outline-offset:10px}}
+/* 5. Gentle bob for icons/cards: .float (put on an inner element, not one using transform for position) */
+.slide.active .float{animation:bob 3s ease-in-out;animation-iteration-count:3}
+@keyframes bob{50%{translate:0 -10px}}
+/* 6. Typing caret after text: <span class="caret"></span> */
+.caret{display:inline-block;width:.55em;height:1em;background:currentColor;vertical-align:-.12em;margin-left:4px}
+.slide.active .caret{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* 7. Slow spin for a loop symbol: .spin */
+.slide.active .spin{animation:spin 6s linear infinite}
+@keyframes spin{to{rotate:360deg}}
+/* 8. Sequential glow through a row: give siblings .seq and style="--d:0" / "--d:1" ... (one lights at a time) */
+.slide.active .seq{animation:seq 4s;animation-iteration-count:3;animation-delay:calc(var(--d,0) * 1s)}
+@keyframes seq{0%,22%{background:var(--red);border-color:var(--red);color:#fff}25%,100%{}}
+.wf{display:inline-block;padding:8px 16px;border:2px solid #000;background:#fff;color:#000;font-weight:800}
+.wf.on{background:var(--red);border-color:var(--red);color:#fff}
+@media (prefers-reduced-motion:reduce){.flow,.packet,.dot.loop,.pulse,.float,.caret,.spin,.seq,.eff-hand,.eff-ptr,.eff-bar{animation:none!important}}
+@media print{.packet,.dot{display:none}}
+
+/* ===== Task 5: concept block (all layout rules are local to slides 2–11) ===== */
+.c5-overlay{position:absolute;left:0;top:0;pointer-events:none}
+.c5-workflow{position:relative}
+.c5-wf-row{position:absolute;left:0;right:30px;top:160px;display:grid;grid-template-columns:repeat(5,250px);justify-content:space-between}
+.c5-wf-row .wf{height:140px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;font:800 34px Archivo;background:#f2f2f2;border-color:#999;color:#666;opacity:1;transform:none}
+.c5-spec{position:absolute;left:0;top:325px;font:500 28px 'JetBrains Mono',monospace}
+.c5-approve{position:absolute;left:285px;top:325px;white-space:nowrap}
+.c5-approve .chip{font-size:28px;text-transform:none;letter-spacing:0}
+.c5-run{position:absolute;top:460px;text-align:center;font:800 34px Archivo}
+.c5-run2{left:0;width:580px}.c5-run3{left:650px;width:920px}
+.slide[data-n="5"] .dg:first-child .link{transform:scaleX(1)}
+.c5-stack-layout{position:relative}
+.c5-stack-title{position:absolute;top:-8px;left:0;font:800 32px Archivo}
+.c5-stack{position:absolute;left:0;top:40px;width:970px;height:475px;border:3px solid #000;padding:14px;box-sizing:border-box;display:grid;grid-template-rows:65px 65px 65px 140px 65px;gap:10px}
+.c5-stack-row{box-sizing:border-box;display:flex;align-items:center;border:2px solid #000;padding:12px 22px;font-size:30px;line-height:1.25;background:#fff}
+.c5-stack-row.inv{background:#000;color:#fff}.c5-stack-row.history{background:#ddd}
+.c5-stack-send{position:absolute;left:990px;top:240px;width:190px;height:70px}
+.c5-once-packet{position:absolute;left:0;top:24px;width:22px;height:22px;background:#ff3300;transform:none}
+.slide.active[data-n="6"] .c5-once-packet.in{animation:c5-send .9s ease-in-out both}
+@keyframes c5-send{0%{translate:0 0;opacity:0}20%{opacity:1}85%{opacity:1}100%{translate:168px 0;opacity:0}}
+.c5-stack-model{position:absolute;left:1210px;top:170px;width:300px;height:210px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:48px!important}
+.c5-stack-bracket,.c5-grow-bracket{position:absolute;left:990px;border-left:3px solid #000;padding-left:16px;font:800 28px/1.2 Archivo;width:180px;box-sizing:border-box}
+.c5-stack-bracket{top:54px;height:215px;display:flex;align-items:flex-start;padding-top:8px}
+.c5-grow-bracket{top:279px;height:140px;display:flex;align-items:flex-end;padding-bottom:10px}
+.c5-simplified{position:absolute;left:0;top:535px;font-size:28px;color:#6b6b6b}
+.slide[data-n="6"] h2{margin-bottom:40px}
+.c5-context-layout{position:relative}
+.c5-window{position:absolute;left:100px;top:0;width:850px;height:425px;border:4px solid #000;background:#fff;box-sizing:border-box}
+.c5-window-label{position:absolute;left:22px;top:-22px;padding:0 12px;background:#fff;font:800 30px Archivo}
+.c5-fixed-rules{position:absolute;top:35px;left:25px;right:25px;display:grid;gap:8px}
+.c5-fixed-rules i{display:block;background:#000;height:28px}
+.c5-chat-block{position:absolute;top:148px;left:25px;right:25px;height:65px;background:#ccc;border:2px solid #999;box-sizing:border-box;transition:height .8s ease,background .6s ease}
+.slide[data-n="7"].st1 .c5-chat-block{height:195px}
+.slide[data-n="7"].st2 .c5-chat-block{height:60px;background:#ddd;border-left:14px solid #6b6b6b}
+.c5-reply{position:absolute;left:25px;bottom:20px;font-size:30px;color:#6b6b6b}
+.c5-context-callout{position:absolute;left:1030px;top:210px;width:520px;font-size:36px;line-height:1.25;border-left:4px solid #000;padding-left:28px;box-sizing:border-box}
+.slide[data-n="7"].st2 .c5-near{opacity:0;visibility:hidden}
+.c5-rules-stay{position:absolute;left:1030px;top:40px;font:800 34px Archivo}
+.c5-detail-warning{position:absolute;left:1030px;top:350px;color:#ff3300;font:800 32px Archivo}
+.c5-takeaway{font:800 32px/1.3 Archivo;border-top:4px solid #ff3300;padding:20px 0 0;margin-top:35px}
+.c5-tool-layout{position:relative}
+.c5-lane{position:absolute;top:0;width:300px;height:570px;border-left:2px dashed #ccc;box-sizing:border-box}
+.c5-lane-heading{box-sizing:border-box;padding:16px 14px;text-align:center;border:3px solid #000;background:#fff;font:800 32px/1.2 Archivo}
+.c5-lane-code{left:20px}.c5-lane-model{left:670px}.c5-lane-tool{left:1280px}
+.c5-lane-code .c5-lane-heading{background:#000;color:#fff}.c5-lane-model .c5-lane-heading{background:#ff3300;color:#fff;border-color:#ff3300}
+.c5-laptop-label{font-size:28px;text-align:center;margin-top:10px}
+.c5-tool-row{position:absolute;left:170px;height:66px;font-size:30px;line-height:1.1}
+.c5-tool-row>svg:not(.c5-permission-gate){position:absolute;left:0;top:44px;overflow:visible}
+/* Nested arrows must wait for their row's reveal; the global arrival draw would run them early. */
+.slide.active[data-n="8"] .c5-tool-row svg .draw{animation:none}
+.c5-tool-number{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-right:14px;border:2px solid #000;background:#fff;font:800 28px Archivo;box-sizing:border-box}
+.c5-tool-label{background:#fff;padding-right:12px}
+.c5-permission-gate{position:absolute;left:760px;top:39px}
+.slide[data-n="8"] h2{margin-bottom:42px}
+.c5-loop-layout{position:relative}
+.c5-brief-layout{position:relative}
+.slide[data-n="10"] .frame{position:absolute;inset:0 0 auto;height:450px;box-sizing:border-box;transform:none}
+.slide[data-n="10"] .frame.was{opacity:0;visibility:hidden;pointer-events:none}
+/* Frame 3 persists when its footer arrives at step 4. */
+.slide[data-n="10"].st4 .frame[data-step="3"]{opacity:1;visibility:visible}
+.c5-onboarding{display:flex;gap:100px;align-items:center;padding:10px 100px}
+.c5-new-card{position:relative;border:3px solid #000;background:#fff;padding:32px;width:670px;height:360px;box-sizing:border-box;font-size:34px}
+.c5-new-card svg{display:block;margin:24px 0}
+.c5-card-heading{font:800 40px/1.15 Archivo}
+.c5-analogy{font:800 44px/1.2 Archivo;max-width:550px}
+.c5-handover{display:flex;align-items:center;gap:100px;padding:10px 100px;background:#fff}
+.c5-handover .c5-new-card{flex:none;overflow:hidden}
+.c5-handover>div:last-child{max-width:550px}
+.c5-handover p{font-size:36px}
+.c5-handover .c5-document{position:absolute;left:40px;top:105px;width:300px;height:210px;padding:28px;gap:22px;color:#fff;font:800 30px Archivo}
+.slide.active[data-n="10"] .c5-handover.in .c5-document{animation:c5-hand-over .7s ease-out both}
+@keyframes c5-hand-over{from{translate:-350px 0}to{translate:0 0}}
+.c5-document{background:#000;width:300px;height:330px;flex:none;display:flex;flex-direction:column;justify-content:center;gap:30px;padding:45px;box-sizing:border-box}
+.c5-document i{height:10px;background:#fff}.c5-document i:last-child{width:60%}
+.c5-in-out{padding:15px 70px;background:#fff}
+.c5-lists{display:grid;grid-template-columns:1fr 1fr;gap:90px;margin-top:28px;font-size:34px}
+.c5-lists>div{border-top:4px solid #000;padding-top:20px}.c5-lists>div:last-child{border-color:#ff3300}
+.c5-lists b{font:800 34px Archivo}.c5-lists p{margin:22px 0}
+.c5-lifecycle{padding:70px 30px 0;background:#fff}
+.c5-cycle{display:flex;align-items:center;gap:18px;font-size:30px;line-height:1.25}
+.c5-cycle>div{padding:24px 20px;border:3px solid #000;background:#fff;flex:1}
+.c5-cycle>div:nth-child(3){flex:2}.c5-cycle>div:nth-child(5){flex:1.5}
+.c5-cycle>span{font-size:38px;color:#ff3300}
+.c5-lifecycle>svg{margin-top:22px}
+.c5-brief-footer{position:absolute;left:30px;right:30px;top:465px;border-top:4px solid #ff3300;padding-top:24px;font:800 36px/1.25 Archivo}
+.slide[data-n="11"] h2{margin-bottom:35px}
+.slide[data-n="11"] .question{font-size:32px;margin-bottom:24px}
+.slide[data-n="11"] .choice{font-size:32px;padding:19px 28px}
+.slide[data-n="11"].revealed .choice.correct{background:#1a713d;border-color:#1a713d}
+@media (prefers-reduced-motion:reduce){.c5-once-packet,.c5-document{animation:none!important}}
+
+/* Task 6: deterministic model / Git / skill teaching diagrams */
+.slide[data-n="12"] .packet{animation:none;offset-distance:0%}
+.slide.active[data-n="12"].st1 [data-step="1"] .packet,.slide.active[data-n="12"].st2 [data-step="2"] .packet{animation-name:travel;animation-iteration-count:1;animation-fill-mode:forwards}
+.slide[data-n="13"] .eff-ptr{transition:left 1.1s cubic-bezier(.3,.7,.2,1)}
+.slide[data-n="13"] .eff-bar{transition:width 1.1s cubic-bezier(.3,.7,.2,1)}
+.slide[data-n="13"] .eff-hand{transition:transform 1.1s;transform:rotate(0deg)}
+.slide[data-n="13"].st1 .eff-ptr{left:1197px!important}
+.slide[data-n="13"].st1 .eff-bar{width:100%!important}
+.slide[data-n="13"].st1 .eff-hand{transform:rotate(270deg)}
+.slide[data-n="15"] h2,.slide[data-n="18"] h2,.slide[data-n="19"] h2{font-size:62px;margin-bottom:40px}
+.slide[data-n="15"] .c6-git{position:relative}
+.slide[data-n="15"] .c6-states{display:grid;grid-template-columns:360px 650px 590px;font:800 34px/1.2 Archivo}
+.slide[data-n="15"] .c6-states>div{padding:22px 18px;border-top:4px solid #000;border-bottom:4px solid #000}
+.slide[data-n="15"] .c6-git-zones{display:grid;grid-template-columns:320px 680px 420px;gap:50px;margin-top:36px}
+.slide[data-n="15"] .c6-files{padding:10px 20px}
+.slide[data-n="15"] .c6-env{border:3px dashed #999;color:#6b6b6b;font:500 30px 'JetBrains Mono';padding:15px;margin-top:16px;white-space:nowrap}
+.slide[data-n="15"] .c6-commits{display:flex;gap:18px;padding-top:20px}
+.slide[data-n="15"] .c6-commits>div{width:200px;font-size:30px;line-height:1.25}
+.slide[data-n="15"] .c6-commits i,.slide[data-n="15"] .c6-copydots i{display:block;border-radius:50%;width:42px;height:42px;background:#000;margin-bottom:28px}
+.slide[data-n="15"] .c6-remote{border:4px solid #000;padding:25px;font:800 30px Archivo;min-height:220px}
+.slide[data-n="15"] .c6-square{border-radius:0!important}
+.slide[data-n="15"] .c6-diamond{border-radius:0!important;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.slide[data-n="15"] .c6-transfers{position:absolute;inset:0;pointer-events:none}
+.slide[data-n="15"] .c6-transfer{position:absolute;top:156px;width:42px;height:42px;background:#000;border-radius:50%}
+.slide[data-n="15"] .c6-transfer:nth-child(1){left:1129px;--from-x:-759px}
+.slide[data-n="15"] .c6-transfer:nth-child(2){left:1206px;--from-x:-618px}
+.slide[data-n="15"] .c6-transfer:nth-child(3){left:1283px;--from-x:-477px}
+.slide.active[data-n="15"].st3 .c6-transfer{animation:c6-push-commit 1.8s ease-in-out 1 both}
+@keyframes c6-push-commit{from{transform:translateX(var(--from-x))}to{transform:translateX(0)}}
+.slide[data-n="15"] .c6-tom-local{position:absolute;left:630px;top:300px;display:flex;align-items:center;gap:18px;font:800 30px Archivo;color:#ff3300}
+.slide[data-n="15"] .c6-tom-local i{width:42px;height:42px;border-radius:50%;background:#ff3300;flex:none}
+.slide.active[data-n="15"].st4 .c6-tom-local{animation:c6-pull-commit 1.8s ease-in-out 1 both}
+@keyframes c6-pull-commit{0%,15%{transform:translate(500px,-50px)}100%{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.slide[data-n="15"] .c6-transfer,.slide[data-n="15"] .c6-tom-local{animation:none!important;transform:none!important}}
+.slide[data-n="15"] .c6-push,.slide[data-n="15"] .c6-pull{position:absolute;left:930px;top:370px;font:800 30px Archivo}
+.slide[data-n="15"] .c6-pull{top:430px;color:#ff3300}
+.slide[data-n="16"] .c6-frame{position:absolute;inset:0;background:#fff;border:4px solid #000;padding:48px;font-size:40px;line-height:1.35;box-sizing:border-box}
+.slide[data-n="16"] .c6-rule{font:800 44px/1.2 Archivo;border-bottom:4px solid #000;padding-bottom:28px}
+.slide[data-n="16"] .c6-start p{max-width:1300px}
+.slide[data-n="16"].st1 .c6-start,.slide[data-n="16"].st2 .c6-permission{opacity:0;visibility:hidden}
+.slide[data-n="17"] h2{font-size:62px;margin-bottom:40px}
+.slide[data-n="18"] .c6-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:30px}
+.slide[data-n="18"] .c6-cards>div{border:4px solid #000;min-height:330px;padding:30px 24px;box-sizing:border-box}
+.slide[data-n="18"] .c6-cards h3{font:800 36px Archivo;margin:0 0 28px}
+.slide[data-n="18"] .c6-cards p{font-size:34px;line-height:1.25;margin:0 0 32px}
+.slide[data-n="19"] .c6-skills{position:relative}
+.slide[data-n="19"] .c6-context{position:absolute;left:0;top:85px;width:1000px;height:490px;border:5px solid #000;padding:22px;box-sizing:border-box}
+.slide[data-n="19"] .c6-skill-row{font-size:30px;line-height:1.2;border:3px solid #000;padding:12px 16px;margin-top:12px;width:900px;box-sizing:border-box;transition:background .3s,color .3s}
+.slide[data-n="19"].st2 .c6-match{background:#ff3300;color:#fff;border-color:#ff3300}
+.slide[data-n="19"] .c6-request{position:absolute;top:0;left:0;border:3px solid #ff3300;background:#fff;padding:12px 24px;font:800 32px Archivo}
+.slide[data-n="19"].st3 .c6-request{opacity:0;visibility:hidden}
+.slide[data-n="19"] .c6-shelf{position:absolute;left:1150px;top:85px;width:450px;height:490px;border-bottom:6px solid #000}
+.slide[data-n="19"] .c6-books{position:absolute;bottom:0;display:flex;gap:28px;left:0}
+.slide[data-n="19"] .c6-books i{width:110px;height:240px;border:3px solid #999;background:#eee}
+.slide[data-n="19"] .c6-loaded{position:absolute;left:1165px;top:190px;width:400px;height:230px;padding:22px;box-sizing:border-box;background:#eee;border:3px solid #999;opacity:0;visibility:hidden;transition:left .8s,top .8s,opacity .3s;background-color:#ff3300;color:#fff;font-size:30px;line-height:1.2}
+.slide[data-n="19"] .c6-loaded p{margin:15px 0 0}
+.slide[data-n="19"].st2 .c6-loaded{opacity:1;visibility:visible}
+.slide[data-n="19"].st3 .c6-loaded{left:30px;top:385px;width:940px;height:180px}
+.slide[data-n="19"] .c6-skill-arrow{position:absolute;inset:0;pointer-events:none}
+.slide[data-n="19"].st3 .c6-skill-arrow{opacity:0}
+.slide[data-n="20"] .c6-example{display:flex;flex-direction:column;gap:28px}
+.slide[data-n="20"] .c6-example-request{display:flex;align-items:center;gap:35px;font-size:36px}
+.slide[data-n="20"] .c6-panels{display:grid;grid-template-columns:1fr 1fr;gap:50px;flex:1}
+.slide[data-n="20"] .c6-panels>div{border:3px solid #000}
+.slide[data-n="20"] .c6-panel-title{background:#000;color:#fff;padding:16px 24px;font:800 36px Archivo}
+.slide[data-n="20"] .c6-panel-copy{padding:24px 30px;font-size:36px;line-height:1.45}
+.slide[data-n="20"] .c6-summary{margin:0 30px 24px;padding:16px 24px;background:#f2f2f2;border-left:6px solid #ff3300;font-size:32px;line-height:1.3}
+@media(prefers-reduced-motion:reduce){.slide[data-n="12"] .packet{animation:none!important;offset-distance:100%}.slide[data-n="19"] .c6-loaded{transition:none}}
+
+
+/* slide 27: shapes drifting on endless paths */
+.q-mv{position:absolute;left:0;top:0;offset-rotate:0deg;offset-distance:0%}
+.slide.active .q-mv{animation-name:travel;animation-iteration-count:infinite;animation-timing-function:linear}
+@media (prefers-reduced-motion:reduce){.q-mv{animation:none!important;offset-distance:30%}}
+</style></head><body><div class="deck-viewport"><div class="deck-stage">
+<section class="slide s-title" data-n="1"><div class="inner">
+  <div class="eyebrow">Day 3 · Session 1</div>
+  <h1>Build your first AI Financial App</h1>
+  <div class="sub">AI Vibe Coding for Business Users</div>
+</div></section>
+<section class="slide" data-n="2"><div class="inner">
+  <div class="eyebrow">Opening</div>
+  <h2>Today you direct opencode to build a NISP dashboard and chatbot, without writing code</h2>
+  <div class="body" style="display:flex;gap:0;align-items:stretch;min-height:0">
+    <div style="flex:1;border:3px solid #000;display:flex;flex-direction:column;background:#fff">
+      <div style="height:44px;background:#000;display:flex;align-items:center;gap:10px;padding:0 18px;flex:none">
+        <i style="width:14px;height:14px;background:#ff3300"></i><i style="width:14px;height:14px;background:#fff"></i><i style="width:14px;height:14px;background:#fff"></i>
+        <i style="flex:1;max-width:520px;height:20px;background:#555;margin-left:24px"></i>
+      </div>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 330px;gap:24px;padding:24px">
+        <div style="display:flex;flex-direction:column;gap:24px;min-height:0">
+          <div style="display:flex;gap:24px;height:140px;flex:none">
+            <div data-step="1" style="flex:2;border:3px solid #000;padding:16px 22px;display:flex;flex-direction:column;justify-content:space-between">
+              <div class="dcap">NISP price</div><i style="display:block;width:280px;height:42px;background:#d9d9d9"></i></div>
+            <div data-step="1" style="flex:1.3;border:3px solid #000;padding:16px 22px;display:flex;flex-direction:column;justify-content:space-between;transition-delay:.15s">
+              <div class="dcap">Daily change</div>
+              <div style="display:flex;align-items:center;gap:14px"><svg width="34" height="30" viewBox="0 0 34 30"><path d="M17 0L34 30H0z" fill="#1a9e4b"/></svg><i style="width:120px;height:30px;background:#d9d9d9"></i></div></div>
+          </div>
+          <div data-step="2" style="flex:1;min-height:0;border:3px solid #000;position:relative;padding:16px 22px">
+            <div class="dcap">1-year chart</div>
+            <svg viewBox="0 0 700 200" preserveAspectRatio="none" style="position:absolute;left:24px;right:24px;top:64px;bottom:20px;width:calc(100% - 48px);height:calc(100% - 84px)">
+              <path class="draw" data-step="2" pathLength="1" d="M0 160 L40 150 L80 165 L120 130 L160 138 L200 110 L240 120 L280 90 L320 105 L360 70 L400 85 L440 60 L480 75 L520 45 L560 58 L600 30 L640 40 L700 12" stroke="#ff3300" stroke-width="4" fill="none" vector-effect="non-scaling-stroke" style="transition-duration:1.4s"/>
+            </svg>
+          </div>
+        </div>
+        <div class="fx-right" data-step="3" style="border:3px solid #000;padding:16px 20px;display:flex;flex-direction:column;gap:20px;min-height:0">
+          <div class="dcap">Chatbot</div>
+          <div style="align-self:flex-end;width:78%;background:#000;padding:16px"><i style="display:block;height:14px;background:#777;margin-bottom:10px"></i><i style="display:block;height:14px;width:60%;background:#777"></i></div>
+          <div style="align-self:flex-start;width:84%;background:#f0f0f0;border:3px solid #000;padding:14px 16px;font-size:28px;line-height:1"><i style="display:block;height:14px;background:#cfcfcf;margin-bottom:10px"></i><span class="caret"></span></div>
+        </div>
+      </div>
+    </div>
+    <div style="width:360px;flex:none;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:0">
+      <div data-step="4" class="fx-fade" style="display:flex;align-items:center">
+        <svg width="110" height="40" viewBox="0 0 110 40" style="flex:none"><defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
+          <path class="flow red" d="M6 20 H98" stroke-width="5" fill="none" marker-end="url(#ah2)"/></svg>
+        <div class="dbox inv" style="margin:0;flex:1;text-align:center;font:800 32px/1.2 Archivo,sans-serif">Saved on GitHub</div>
+      </div>
+    </div>
+  </div>
+  <div class="punch fx-fade" data-step="4">You direct. opencode writes the code.</div>
+</div></section>
+<section class="slide" data-n="3"><div class="inner">
+  <div class="eyebrow">Opening</div>
+  <h2>Your job today: interview, approve the plan, then test what the agent builds</h2>
+  <div class="body c5-workflow">
+    <svg width="1600" height="530" viewBox="0 0 1600 530" class="c5-overlay">
+      <defs><marker id="v3-wf-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker><marker id="v3-wf-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
+      <g stroke="#000" stroke-width="4" fill="none" marker-end="url(#v3-wf-head)"><path d="M258 230H326"/><path d="M588 230H656"/><path d="M918 230H986"/><path d="M1248 230H1316"/></g>
+      <path class="draw" data-step="3" pathLength="1" d="M1440 160V50H460V155" stroke="#ff3300" stroke-width="5" fill="none" marker-end="url(#v3-wf-red)"/>
+      <path class="draw" data-step="1" pathLength="1" d="M0 410V435H580V410" stroke="#000" stroke-width="3" fill="none"/>
+      <path class="draw" data-step="3" pathLength="1" d="M650 410V435H1570V410" stroke="#000" stroke-width="3" fill="none"/>
+    </svg>
+    <div class="c5-wf-row">
+      <div class="wf hl" data-step="1">Interview</div><div class="wf hl" data-step="1" style="transition-delay:.25s">Plan</div>
+      <div class="wf hl" data-step="3">Execute</div><div class="wf hl" data-step="3" style="transition-delay:.2s">Test / Debug</div><div class="wf hl" data-step="3" style="transition-delay:.4s">Iterate</div>
+    </div>
+    <div data-step="1" class="c5-spec">→ docs/spec.md</div>
+    <div data-step="2" class="c5-approve"><span class="chip red">Approve / Edit / Reject</span></div>
+    <div data-step="1" class="c5-run c5-run2">Run 2</div><div data-step="3" class="c5-run c5-run3">Run 3</div>
+  </div>
+</div></section>
+<section class="slide" data-n="4"><div class="inner">
+  <div class="eyebrow">How an AI coding agent works</div>
+  <h2>An LLM writes its answer one small piece of text at a time</h2>
+  <div class="body" style="position:relative">
+    <svg width="1600" height="300" viewBox="0 0 1600 300" style="position:absolute;left:0;top:0">
+      <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
+      <path class="draw" pathLength="1" d="M620 150 H690" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah3)"/>
+      <path class="draw" pathLength="1" d="M910 150 H1000" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah3)"/>
+      <g data-step="2" class="fx-fade"><path class="flow red" d="M620 150 H686" stroke-width="8" fill="none"/><path class="flow red" d="M910 150 H996" stroke-width="8" fill="none"/></g>
+    </svg>
+    <div style="position:absolute;left:0;top:40px;width:600px;height:220px;border:3px solid #000;padding:20px 28px;box-sizing:border-box">
+      <div class="dcap" style="margin-bottom:14px">Text in:</div>
+      <div style="font:500 32px/1.4 'JetBrains Mono',monospace"><span class="fx-fade" data-step="1">"OCBC</span> <span class="fx-fade" data-step="1" style="transition-delay:0.2s">NISP</span> <span class="fx-fade" data-step="1" style="transition-delay:0.4s">is</span> <span class="fx-fade" data-step="1" style="transition-delay:0.6s">a</span> <span class="fx-fade" data-step="1" style="transition-delay:0.8s">bank</span> <span class="fx-fade" data-step="1" style="transition-delay:1.0s">in</span> <span class="fx-fade" data-step="1" style="transition-delay:1.2s">..."</span></div>
+    </div>
+    <div class="dbox red" style="position:absolute;left:700px;top:50px;width:200px;height:200px;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;font-size:56px">LLM</div>
+    <div style="position:absolute;left:1010px;top:40px;width:590px;height:220px;border:3px solid #000;padding:20px 28px;box-sizing:border-box">
+      <div class="dcap" style="margin-bottom:14px">Text out:</div>
+      <div class="fx-pop" data-step="3" style="font:800 64px/1.1 Archivo,sans-serif;color:#ff3300">"Indonesia"</div>
+    </div>
+    <div data-step="2" class="fx-fade" style="position:absolute;left:1010px;top:300px;width:590px;display:flex;flex-direction:column;gap:14px">
+      <div class="dsmall">Illustration</div>
+      <div style="display:flex;align-items:center;gap:20px;font-size:30px"><span style="width:170px;font-weight:800">Indonesia</span><i class="fill" data-step="2" style="height:28px;width:400px;background:#ff3300;transition-delay:.2s"></i></div>
+      <div style="display:flex;align-items:center;gap:20px;font-size:30px;color:#6b6b6b"><span style="width:170px">Singapore</span><i class="fill" data-step="2" style="height:28px;width:120px;background:#bdbdbd;transition-delay:.35s"></i></div>
+      <div style="display:flex;align-items:center;gap:20px;font-size:30px;color:#6b6b6b"><span style="width:170px">Malaysia</span><i class="fill" data-step="2" style="height:28px;width:70px;background:#bdbdbd;transition-delay:.5s"></i></div>
+    </div>
+  </div>
+  <div class="punch" style="font:400 32px Nunito,sans-serif">LLM = large language model</div>
+</div></section>
+<section class="slide" data-n="5" data-words-max="42"><div class="inner">
+  <div class="eyebrow">How an AI coding agent works</div>
+  <h2>The model doesn't remember earlier requests; opencode sends the context it needs</h2>
+  <div class="body" style="display:grid;grid-template-columns:250px 1fr 330px;grid-auto-rows:auto;align-content:center;row-gap:44px;column-gap:0;font-size:28px">
+    <span class="dcap" style="align-self:center">Turn 1</span>
+    <div style="display:flex"><span class="dbox inv" style="font-size:28px;padding:20px 26px">Capital of Japan?</span><span style="flex:1;align-self:center;height:3px;background:#000;margin-left:24px;position:relative"><i style="position:absolute;right:-2px;top:-9px;border:10px solid transparent;border-left:16px solid #000;border-right:0"></i></span></div>
+    <span class="dbox" style="font-size:28px;padding:20px 26px;margin:0;border-color:var(--red)">Tokyo</span>
+
+    <span class="dcap fx-left" data-step="1" style="align-self:center">Turn 2</span>
+    <div class="fx-left" data-step="1" style="display:flex"><span class="dbox" style="font-size:28px;padding:20px 26px;background:#f2f2f2">Capital of Japan?</span><span class="dbox" style="font-size:28px;padding:20px 26px;background:#f2f2f2">Tokyo</span><span class="dbox inv" style="font-size:28px;padding:20px 26px">How many people live there?</span><span style="flex:1;align-self:center;height:3px;background:#000;margin-left:24px;position:relative"><i style="position:absolute;right:-2px;top:-9px;border:10px solid transparent;border-left:16px solid #000;border-right:0"></i></span></div>
+    <span class="dbox fx-pop" data-step="1" style="font-size:28px;padding:20px 26px;margin:0;border-color:var(--red)">About 14 million</span>
+
+    <span class="dcap fx-left" data-step="2" style="align-self:center;color:var(--red)">No history</span>
+    <div class="fx-left" data-step="2" style="display:flex"><span class="dbox inv" style="font-size:28px;padding:20px 26px">How many people live there?</span><span style="flex:1;align-self:center;height:3px;background:var(--red);margin-left:24px;position:relative"><i style="position:absolute;right:-2px;top:-9px;border:10px solid transparent;border-left:16px solid var(--red);border-right:0"></i></span></div>
+    <span class="dbox red fx-pop" data-step="2" style="font:600 28px Nunito,sans-serif;padding:20px 26px;margin:0">Live where?</span>
+  </div>
+  <div class="punch red" data-step="3">opencode resends it. The model doesn't remember.</div>
+</div></section>
+<section class="slide" data-n="6"><div class="inner">
+  <div class="eyebrow" aria-hidden="true"></div>
+  <h2>On every turn, opencode sends the model a stack: rules, skills, the chat so far, your message</h2>
+  <div class="body c5-stack-layout">
+    <div class="c5-stack-title">opencode</div>
+    <div class="c5-stack">
+      <div class="c5-stack-row inv" data-step="1">System prompt — opencode's own rules</div>
+      <div class="c5-stack-row inv" data-step="2">AGENTS.md — your project rules</div>
+      <div class="c5-stack-row inv" data-step="3">Skill list — names and descriptions only</div>
+      <div class="c5-stack-row history" data-step="4">Conversation so far — your messages, its replies, tool results</div>
+      <div class="c5-stack-row" data-step="5">Your new message</div>
+    </div>
+    <div class="c5-stack-send"><svg width="190" height="70" viewBox="0 0 190 70"><defs><marker id="v3-stack-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs><path d="M0 35H180" stroke="#000" stroke-width="4" fill="none" marker-end="url(#v3-stack-head)"/></svg><i class="c5-once-packet" data-step="5"></i></div>
+    <div class="dbox red c5-stack-model">Model</div>
+    <div data-step="6" class="c5-stack-bracket">Sent every turn</div><div data-step="6" class="c5-grow-bracket">Grows</div>
+    <div class="c5-simplified">Simplified view</div>
+  </div>
+</div></section>
+<section class="slide" data-n="7"><div class="inner">
+  <div class="eyebrow">Context</div>
+  <h2>The context window has a limit, so old chat gets summarised; save decisions in files</h2>
+  <div class="body c5-context-layout">
+    <div class="c5-window"><div class="c5-window-label">Context window</div>
+      <div class="c5-fixed-rules"><i></i><i></i><i></i></div>
+      <div class="c5-chat-block"></div>
+      <div class="c5-reply">Room for the reply</div>
+    </div>
+    <div class="c5-context-callout c5-near" data-step="1">Long chat → near the limit</div>
+    <div class="c5-context-callout c5-summary" data-step="2">Older chat → a short summary</div>
+    <div class="c5-rules-stay" data-step="2">Rules stay</div>
+    <div class="c5-detail-warning" data-step="3">Details can be lost</div>
+  </div>
+  <div class="c5-takeaway" data-step="4">Rules → AGENTS.md · requirements → spec · steps → plan.<br>/new starts clean, so save first.</div>
+</div></section>
+<section class="slide" data-n="8"><div class="inner">
+  <div class="eyebrow" aria-hidden="true"></div>
+  <h2>The model asks for a tool; opencode checks permission and runs it</h2>
+  <div class="body c5-tool-layout">
+    <svg width="0" height="0"><defs><marker id="v3-tool-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker><marker id="v3-tool-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs></svg>
+    <div class="c5-lane c5-lane-code"><div class="c5-lane-heading">opencode</div><div class="c5-laptop-label">on your laptop</div></div>
+    <div class="c5-lane c5-lane-model"><div class="c5-lane-heading">Model</div></div>
+    <div class="c5-lane c5-lane-tool"><div class="c5-lane-heading">Tool: read a file</div></div>
+    <div class="c5-tool-row" data-step="1" style="top:118px;width:650px"><span class="c5-tool-number">1</span><span class="c5-tool-label">Your message + list of tools</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M0 12H640" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="2" style="top:196px;width:650px"><span class="c5-tool-number">2</span><span class="c5-tool-label">Please read docs/spec.md</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M647 12H4" stroke="#ff3300" stroke-width="3" fill="none" marker-end="url(#v3-tool-red)"/></svg></div><div class="c5-tool-row" data-step="3" style="top:274px;width:1260px"><span class="c5-tool-number">3</span><span class="c5-tool-label">Check permission, then run</span><svg width="1260" height="24" viewBox="0 0 1260 24"><path class="draw" pathLength="1" d="M0 12H1250" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg><svg class="c5-permission-gate" width="32" height="30" viewBox="0 0 32 30" aria-label="Permission gate"><path d="M3 27V3H29V27 M3 12H29 M16 12V27" stroke="#000" stroke-width="3" fill="#fff"/></svg></div><div class="c5-tool-row" data-step="4" style="top:352px;width:1260px"><span class="c5-tool-number">4</span><span class="c5-tool-label">File text</span><svg width="1260" height="24" viewBox="0 0 1260 24"><path class="draw" pathLength="1" d="M1257 12H4" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="5" style="top:430px;width:650px"><span class="c5-tool-number">5</span><span class="c5-tool-label">Conversation + file text</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M0 12H640" stroke="#000" stroke-width="3" fill="none" marker-end="url(#v3-tool-head)"/></svg></div><div class="c5-tool-row" data-step="6" style="top:508px;width:650px"><span class="c5-tool-number">6</span><span class="c5-tool-label">Answer, or another tool request</span><svg width="650" height="24" viewBox="0 0 650 24"><path class="draw" pathLength="1" d="M647 12H4" stroke="#ff3300" stroke-width="3" fill="none" marker-end="url(#v3-tool-red)"/></svg></div>
+  </div>
+</div></section>
+<section class="slide" data-n="9"><div class="inner">
+  <div class="eyebrow">The agent loop</div>
+  <h2>A coding agent repeats model decisions and tool actions, then you check the result</h2>
+  <div class="body c5-loop-layout">
+    <svg width="1600" height="480" viewBox="0 0 1600 480" class="c5-overlay"><defs><marker id="v3-loop-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
+      <path class="draw" pathLength="1" d="M110 230H335" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
+      <circle cx="600" cy="230" r="195" stroke="#000" stroke-width="4" fill="none"/>
+      <g data-step="1"><path d="M790 160L798 192L777 174 M695 405L663 416L680 389 M427 135L451 112L447 145" stroke="#000" stroke-width="4" fill="none"/></g>
+      <path class="draw" data-step="3" pathLength="1" d="M802 230H1000" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
+      <path class="draw" data-step="3" pathLength="1" d="M1270 230H1360" stroke="#000" stroke-width="4" marker-end="url(#v3-loop-head)"/>
+    </svg>
+    <div class="dcap at" style="left:45px;top:230px">Goal</div>
+    <div class="at" style="left:600px;top:35px"><div class="dbox red" data-step="1" style="margin:0;white-space:nowrap">Model decides</div></div>
+    <div class="at" style="left:780px;top:345px"><div class="dbox inv" data-step="1" style="margin:0;width:260px;text-align:center">opencode runs a tool</div></div>
+    <div class="at" style="left:415px;top:345px"><div class="dbox red" data-step="1" style="margin:0;width:240px;text-align:center">Model reads the result</div></div>
+    <div class="dot loop" data-step="2" style="offset-path:path('M600 35 A195 195 0 1 1 599.9 35')"></div>
+    <div class="at" style="left:1135px;top:230px"><div class="dbox inv" data-step="3" style="margin:0;width:220px;text-align:center">Agent reports back</div></div>
+    <div class="at" style="left:1470px;top:230px"><div class="dbox" data-step="3" style="margin:0;white-space:nowrap">You test</div></div>
+  </div>
+  <div class="punch" data-step="3">Agent: proposes and does. You: decide and check.</div>
+</div></section>
+<section class="slide" data-n="10"><div class="inner">
+  <div class="eyebrow">Standing brief</div>
+  <h2>AGENTS.md is the project's standing brief, so keep it current</h2>
+  <div class="body c5-brief-layout">
+    <div class="frame c5-onboarding" data-step="0">
+      <div class="c5-new-card"><div class="c5-card-heading">New conversation</div><svg width="150" height="110" viewBox="0 0 150 110"><path d="M4 4H146V80H70L35 106V80H4Z" stroke="#000" stroke-width="4" fill="#fff"/></svg><div>Yesterday's chat isn't included</div></div>
+      <div class="c5-analogy">Like a new colleague on day one</div>
+    </div>
+    <div class="frame c5-handover" data-step="1">
+      <div class="c5-new-card"><div class="c5-card-heading">New conversation</div><div class="c5-document"><span>AGENTS.md</span><i></i><i></i></div></div>
+      <div><div class="c5-card-heading">AGENTS.md is handed over every turn</div><p>The project's standing brief</p></div>
+    </div>
+    <div class="frame c5-in-out" data-step="2">
+      <div class="c5-card-heading">AGENTS.md</div>
+      <div class="c5-lists"><div><b>In</b><p>What the project is</p><p>How to run and check it</p><p>Working rules</p></div><div><b>Out</b><p>Passwords and keys</p><p>Chat logs</p><p>Feature details (→ spec)</p></div></div>
+    </div>
+    <div class="frame c5-lifecycle" data-step="3">
+      <div class="c5-cycle"><div>/init drafts it</div><span>→</span><div>you spot a lasting rule or a repeated correction</div><span>→</span><div>ask the agent to update it</div><span>→</span><div>read the change</div><span>→</span><div>commit</div></div>
+      <svg width="1500" height="100" viewBox="0 0 1500 100" aria-hidden="true"><path d="M1430 5V75H455V5" stroke="#ff3300" stroke-width="4" fill="none"/><path d="M445 20L455 5L465 20" stroke="#ff3300" stroke-width="4" fill="none"/></svg>
+    </div>
+    <div class="c5-brief-footer" data-step="4">Today: ask the agent to edit AGENTS.md, then review it.</div>
+  </div>
+</div></section>
+<section class="slide" data-n="11"><div class="inner">
+  <div class="eyebrow"><span class="tag red">Check</span></div>
+  <h2>Check: a new conversation ignored your preference. What do you do?</h2>
+  <p class="question">A new conversation ignored your "explain first" preference. What do you do?</p>
+  <div class="choices">
+    <div class="choice"><span class="L">A</span><span>Repeat it at the start of every chat</span></div>
+    <div class="choice correct"><span class="L">B</span><span>Ask opencode to add it to AGENTS.md, review it, commit</span></div>
+    <div class="choice"><span class="L">C</span><span>Switch to a stronger model</span></div>
+  </div>
+  <div class="reveal">B — A new conversation doesn't include old chats. AGENTS.md is sent every turn.</div>
+</div></section>
+<section class="slide" data-n="12">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>Use a quick model for small edits and a stronger one for planning and debugging</h2>
+    <div class="body" style="position:relative">
+      <!-- lanes -->
+      <div style="position:absolute;left:0;top:0;width:1600px;height:210px;background:#f2f2f2;border-top:3px solid #000;border-bottom:3px dashed #9a9a9a">
+      </div>
+      <div style="position:absolute;left:0;top:220px;width:1600px;height:210px;background:#f2f2f2;border-bottom:3px solid #000">
+      </div>
+      <div style="position:absolute;left:30px;top:20px;display:flex;align-items:center;gap:20px">
+        <span style="font:800 44px Archivo,sans-serif">Quick</span>
+        <span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[FAST MODEL]</span>
+      </div>
+      <div style="position:absolute;left:30px;top:240px;display:flex;align-items:center;gap:20px">
+        <span style="font:800 44px Archivo,sans-serif">Stronger</span>
+        <span class="chip out" style="font:500 26px 'JetBrains Mono',monospace;text-transform:none;letter-spacing:0">[SMART MODEL]</span>
+      </div>
+      <!-- fast chips + car -->
+      <div style="position:absolute;left:30px;top:130px;display:flex;gap:24px">
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">rename a title</span>
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">fix a typo</span>
+        <span data-step="1" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.3s">change a colour</span>
+      </div>
+      <div data-step="1" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:210px">
+        <div class="packet" style="width:90px;height:44px;margin:-22px 0 0 -45px;background:transparent;animation-duration:1.6s;offset-path:path('M920 152 H1540')">
+          <svg width="90" height="44" viewBox="0 0 90 44">
+            <path d="M4 30 L14 12 H58 L76 24 H86 V34 H4z" fill="#ff3300"/>
+            <circle cx="22" cy="36" r="7"/>
+            <circle cx="68" cy="36" r="7"/>
+            <path d="M-18 18 H0 M-26 28 H-4" stroke="#ff3300" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+      <!-- smart chips + truck + thought -->
+      <div style="position:absolute;left:30px;top:340px;display:flex;gap:24px">
+        <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap">write the plan</span>
+        <span data-step="2" style="display:inline-block;font:800 28px Archivo,sans-serif;padding:12px 22px;background:#fff;border:3px solid #000;white-space:nowrap;transition-delay:.15s">find why something breaks</span>
+      </div>
+      <div data-step="2" class="fx-fade" style="position:absolute;left:0;top:220px;width:1600px;height:210px">
+        <div class="packet" style="width:110px;height:60px;margin:-30px 0 0 -55px;background:transparent;animation-duration:9s;animation-timing-function:linear;offset-path:path('M720 140 H1120')">
+          <svg width="110" height="60" viewBox="0 0 110 60">
+            <rect x="2" y="10" width="68" height="36" fill="#000"/>
+            <path d="M70 22 H92 L106 36 V46 H70z" fill="#000"/>
+            <circle cx="22" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+            <circle cx="88" cy="50" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="at" style="left:1300px;top:300px">
+        <div data-step="2" class="fx-pop" style="transition-delay:.4s">
+          <div class="float">
+            <svg width="140" height="110" viewBox="0 0 140 110">
+              <ellipse cx="80" cy="42" rx="56" ry="36" fill="#fff" stroke="#000" stroke-width="4"/>
+              <circle cx="30" cy="88" r="9" fill="#fff" stroke="#000" stroke-width="4"/>
+              <circle cx="14" cy="104" r="5" fill="#000"/>
+              <circle cx="60" cy="42" r="6" fill="#ff3300"/>
+              <circle cx="80" cy="42" r="6" fill="#ff3300"/>
+              <circle cx="100" cy="42" r="6" fill="#ff3300"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- badge -->
+      <div data-step="3" class="fx-pop" style="position:absolute;right:0;top:455px;background:#000;color:#fff;padding:22px 34px;font:800 40px Archivo,sans-serif">Switch with <span class="mono" style="color:#ff3300">/models</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="13">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>On supported models, higher effort lets the model reason more before answering</h2>
+    <div class="body" style="position:relative">
+      <!-- dial -->
+      <div style="position:absolute;left:100px;top:60px;width:1100px;height:6px;background:#000">
+      </div>
+      <div style="position:absolute;left:100px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div style="position:absolute;left:647px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div style="position:absolute;left:1194px;top:40px;width:6px;height:46px;background:#000">
+      </div>
+      <div class="dcap" style="position:absolute;left:103px;top:100px;transform:translateX(-50%)">low</div>
+      <div class="dcap" style="position:absolute;left:650px;top:100px;transform:translateX(-50%)">medium</div>
+      <div class="dcap" style="position:absolute;left:1197px;top:100px;transform:translateX(-50%)">high</div>
+      <div class="eff-ptr" style="position:absolute;top:12px;left:103px;width:0;height:0">
+        <div style="position:absolute;left:-22px;top:0;width:44px;height:44px;background:#ff3300;border:4px solid #000;box-sizing:border-box">
+        </div>
+      </div>
+      <!-- thinking bar -->
+      <div class="dcap" style="position:absolute;left:100px;top:190px;color:#6b6b6b">thinking</div>
+      <div style="position:absolute;left:100px;top:236px;width:1100px;height:40px;border:3px solid #000;box-sizing:border-box">
+        <div class="eff-bar" style="height:100%;width:6%;background:#ff3300">
+        </div>
+      </div>
+      <!-- clock -->
+      <svg width="90" height="90" viewBox="0 0 90 90" style="position:absolute;left:1240px;top:210px">
+        <circle cx="45" cy="45" r="38" fill="#fff" stroke="#000" stroke-width="5"/>
+        <line class="eff-hand" x1="45" y1="45" x2="45" y2="16" stroke="#ff3300" stroke-width="6" style="transform-origin:45px 45px"/>
+      </svg>
+      <!-- lines -->
+      <div style="position:absolute;left:100px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #000;padding-top:16px">
+        <b>Low effort:</b> quicker replies, small edits</div>
+      <div data-step="1" class="fx-right" style="position:absolute;left:680px;top:330px;width:520px;font-size:36px;line-height:1.3;border-top:3px solid #ff3300;padding-top:16px">
+        <b style="color:#ff3300">High effort:</b> reasons more, usually slower; plans and hard bugs</div>
+      <div data-step="2" class="fx-pop" style="position:absolute;left:100px;top:470px;display:flex;align-items:center;gap:24px;font-size:36px">
+        <span style="font:600 40px 'JetBrains Mono',monospace;border:3px solid #000;border-bottom-width:8px;padding:8px 20px">Ctrl+T</span>
+        <span>cycles the options your model offers</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="14">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>Everyone works on a local copy and shares through GitHub</h2>
+    <div class="body" style="position:relative">
+      <!-- step 0: messy pile in the centre -->
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-6deg)">
+      </div>
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(4deg)">
+      </div>
+      <div style="position:absolute;left:530px;top:70px;width:540px;height:250px;border:3px solid #000;background:#fff;transform:rotate(-1deg);padding:24px 20px;box-sizing:border-box">
+        <div class="mono" style="font-size:28px;font-weight:500">Budget_final_v2_REALLY.xlsx</div>
+        <div style="margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#d6d6d6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+          <i style="height:16px;background:#e6e6e6">
+        </i>
+        </div>
+      </div>
+      <div class="at" style="left:1060px;top:80px;font:800 120px/1 Archivo,sans-serif;color:#ff3300">?</div>
+      <!-- step 1: pile goes; laptop appears -->
+      <div data-step="1" class="fx-fade" style="position:absolute;left:480px;top:0;width:640px;height:440px;background:repeating-linear-gradient(90deg,#fff 0 159px,#f0f0f0 159px 160px)">
+      </div>
+      <div data-step="1" class="fx-left" style="position:absolute;left:0;top:0;width:520px;height:440px">
+        <svg width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
+          <rect x="100" y="40" width="320" height="200" fill="#fff" stroke="#000" stroke-width="4"/>
+          <path d="M60 240 H460 L480 270 H40 Z" fill="#000"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(-6 260 140)"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3" transform="rotate(5 260 140)"/>
+          <rect x="190" y="95" width="140" height="90" fill="#fff" stroke="#000" stroke-width="3"/>
+          <path d="M205 120 H315 M205 140 H315 M205 160 H285" stroke="#bbb" stroke-width="8"/>
+        </svg>
+        <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">Your computer</div>
+        <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">local copy</div>
+      </div>
+      <!-- step 2: GitHub -->
+      <div data-step="2" class="fx-right" style="position:absolute;left:1080px;top:0;width:520px;height:440px">
+        <svg class="float" width="520" height="290" viewBox="0 0 520 290" style="position:absolute;left:0;top:0">
+          <path d="M150 150 C90 150 90 80 150 82 C160 30 240 20 268 62 C300 30 380 45 375 95 C430 95 435 150 380 150 Z" fill="#fff" stroke="#000" stroke-width="4"/>
+          <rect x="170" y="120" width="180" height="150" fill="#fff" stroke="#000" stroke-width="4"/>
+          <path d="M170 170 H350 M170 220 H350" stroke="#000" stroke-width="4"/>
+          <path d="M240 145 H280 M240 195 H280 M240 245 H280" stroke="#ff3300" stroke-width="6"/>
+        </svg>
+        <div style="position:absolute;left:0;width:520px;top:300px;text-align:center;font:800 40px Archivo,sans-serif">GitHub</div>
+        <div style="position:absolute;left:0;width:520px;top:356px;text-align:center;font-size:32px;color:#6b6b6b">shared copy</div>
+      </div>
+      <!-- step 3: push / pull arrow -->
+      <svg width="1600" height="440" viewBox="0 0 1600 440" style="position:absolute;left:0;top:0;pointer-events:none">
+        <defs>
+          <marker id="ah12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="#ff3300"/>
+        </marker>
+        </defs>
+        <path class="draw" data-step="3" pathLength="1" d="M490 160 H1110" stroke="#ff3300" stroke-width="6" fill="none" marker-start="url(#ah12)" marker-end="url(#ah12)"/>
+      </svg>
+      <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:440px;pointer-events:none">
+        <i class="packet" style="offset-path:path('M520 160 H1080')">
+      </i>
+        <i class="packet ink" style="offset-path:path('M1080 160 H520');animation-delay:-1.2s">
+      </i>
+      </div>
+      <div class="at" style="left:800px;top:110px">
+        <div data-step="3" class="fx-fade" style="font:800 44px Archivo,sans-serif;white-space:nowrap;color:#ff3300">push / pull</div>
+      </div>
+    </div>
+    <div class="punch" data-step="3">Saving alone doesn't upload your work.</div>
+  </div>
+</section>
+<section class="slide" data-n="15">
+  <div class="inner">
+    <div class="eyebrow">Models and Git</div>
+    <h2>A commit is a save point on your laptop; push copies it to GitHub, pull brings changes back</h2>
+    <div class="body c6-git">
+      <div class="c6-states">
+        <div>Saved on laptop</div>
+        <div data-step="1">→ Committed (save point)</div>
+        <div data-step="3">→ Pushed (on GitHub)</div>
+      </div>
+      <div class="c6-git-zones">
+        <div class="c6-files">
+          <svg width="150" height="130" viewBox="0 0 150 130">
+            <path d="M20 5H110L135 30V125H20Z" fill="#fff" stroke="#000" stroke-width="4"/>
+            <path d="M40 50H110M40 70H110M40 90H90" stroke="#bbb" stroke-width="8"/>
+          </svg>
+          <div class="c6-env">.env<span data-step="1">: left out</span>
+          </div>
+        </div>
+        <div class="c6-commits">
+          <div data-step="1" class="fx-pop">
+            <i class="c6-circle">
+          </i>Created the budget file</div>
+          <div data-step="2" class="fx-pop">
+            <i class="c6-square">
+          </i>Added March figures</div>
+          <div data-step="2" class="fx-pop">
+            <i class="c6-diamond">
+          </i>Fixed the totals</div>
+        </div>
+        <div class="c6-remote">
+        </div>
+      </div>
+      <div data-step="3" class="c6-transfers" aria-label="The same three commits copied to GitHub">
+        <i class="c6-transfer c6-circle">
+      </i>
+        <i class="c6-transfer c6-square">
+      </i>
+        <i class="c6-transfer c6-diamond">
+      </i>
+      </div>
+      <div data-step="4" class="c6-tom-local">
+        <i>
+      </i>Tom's change</div>
+      <div data-step="3" class="c6-push">push →</div>
+      <div data-step="4" class="c6-pull">← pull</div>
+      <div data-step="5" class="dg" style="position:absolute;bottom:0;width:100%">
+        <span class="dbox">pull</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">edit</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">commit</span>
+        <svg width="50" height="30" viewBox="0 0 50 30">
+          <path d="M0 15H45L30 2M45 15L30 28" fill="none" stroke="#000" stroke-width="3"/>
+        </svg>
+        <span class="dbox">push</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="16">
+  <div class="inner">
+    <div class="eyebrow">Run 1</div>
+    <h2>Run 1a: sign up to GitHub and draft AGENTS.md with /init</h2>
+    <div class="body ho c6-run" style="display:block;position:relative">
+      <div class="c6-frame c6-start">
+        <div class="c6-rule">github.com → Sign up. Confirm email.</div>
+        <p>opencode must be open in the financial-app folder (the path shown ends in financial-app).</p>
+        <div class="dbox black">Type /init.</div>
+      </div>
+      <div data-step="1" class="c6-frame c6-permission">
+        <div class="c6-rule">Permission box?</div>
+        <p>Read the path. Inside financial-app? <strong>Allow once.</strong>
+      </p>
+        <p>Anything else or unsure? Raise your hand.</p>
+        <p style="color:#ff3300">Never &quot;Allow always&quot;.</p>
+      </div>
+      <div data-step="2" class="c6-frame">
+        <div class="c6-rule">AGENTS.md exists.</div>
+        <p>12 min · Stuck? Raise your hand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="17">
+  <div class="inner">
+    <div class="eyebrow">Run 1</div>
+    <h2>Run 1b: add your rule, check it, then push to a private repository</h2>
+    <div class="body ho" style="grid-template-columns:420px 1fr;gap:64px">
+      <div class="left">
+        <div data-step="1">
+          <div class="k">You should see</div>
+          <p>A private financial-app repo on github.com with AGENTS.md.</p>
+          <p>14 min · Stuck? Raise your hand. Checkpoint <code>s1-start</code>.</p>
+        </div>
+      </div>
+      <div class="right">
+        <div class="prompt sm">
+          <div class="ph">
+            <span>Prompt 1</span>
+            <button>Copy</button>
+          </div>
+          <pre>Add one rule to AGENTS.md: Explain what you will do in plain business language before doing it.</pre>
+        </div>
+        <div style="font-size:32px;line-height:1.35;border-left:6px solid #ff3300;padding-left:24px">Open AGENTS.md. Is your rule there? Then send Prompt 2.</div>
+        <div data-step="1">
+          <div class="prompt sm">
+            <div class="ph">
+              <span>Prompt 2 · UNTESTED</span>
+              <button>Copy</button>
+            </div>
+            <pre>Commit all files in this project with the message &quot;Start project&quot;. Create a new private GitHub repository called financial-app and push to it. Tell me if I need to sign in.</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="18">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>Choose how to instruct the agent by the job: this task, project rules, expertise or a sequence</h2>
+    <div class="body">
+      <div class="c6-cards">
+        <div>
+          <div data-step="1" class="fx-pop">
+            <h3>Prompt</h3>
+            <p>this task</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="1" class="fx-pop">
+            <h3>AGENTS.md</h3>
+            <p>standing project rules</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="2" class="fx-pop">
+            <h3>Skill</h3>
+            <p>reusable expertise</p>
+          </div>
+        </div>
+        <div>
+          <div data-step="3" class="fx-pop">
+            <h3>Workflow</h3>
+            <p>a repeatable sequence</p>
+            <span class="chip out">Session 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-step="3" class="punch">They work together.</div>
+  </div>
+</section>
+<section class="slide" data-n="19">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>The agent sees each skill's name and description, and loads the full skill when it decides one fits</h2>
+    <div class="body c6-skills">
+      <div class="c6-request" data-step="1">Help me plan a dashboard</div>
+      <div class="c6-context">
+        <div class="dcap">Context</div>
+        <div class="c6-skill-row c6-match">brainstorming — ask before proposing</div>
+        <div class="c6-skill-row">page design — arrange a readable page</div>
+        <div class="c6-skill-row">report writing — structure findings</div>
+      </div>
+      <div class="c6-shelf">
+        <div class="dcap">Not loaded</div>
+        <div class="c6-books">
+          <i>
+        </i>
+          <i>
+        </i>
+          <i>
+        </i>
+        </div>
+      </div>
+      <div class="c6-loaded">
+        <div class="dcap">Full skill</div>
+        <p>Ask one question at a time.</p>
+        <p>Summarise the agreed requirements.</p>
+      </div>
+      <svg width="1600" height="520" viewBox="0 0 1600 520" class="c6-skill-arrow">
+        <path data-step="2" class="draw" pathLength="1" d="M990 200H1120L1100 180M1120 200L1100 220" fill="none" stroke="#ff3300" stroke-width="5"/>
+      </svg>
+      <i data-step="3" style="position:absolute;width:0;height:0">
+    </i>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="20">
+  <div class="inner">
+    <div class="eyebrow">Skills</div>
+    <h2>A brainstorming skill makes &quot;ask questions first&quot; a repeatable habit</h2>
+    <div class="body c6-example">
+      <div class="c6-example-request">
+        <span class="chip out">Illustration</span>
+        <span>Request: NISP page for client meetings</span>
+      </div>
+      <div class="c6-panels">
+        <div>
+          <div class="c6-panel-title">Straight answer</div>
+          <div data-step="1" class="fx-fade c6-panel-copy">Show price.<br>Add change.<br>Draw chart.</div>
+        </div>
+        <div>
+          <div class="c6-panel-title" style="background:#ff3300">Questions first</div>
+          <div data-step="2" class="fx-fade c6-panel-copy">Who uses it?<br>How fresh?<br>Which device?</div>
+          <div data-step="3" class="fx-pop c6-summary">
+            <strong>Summary</strong>
+            <br>Sales team.<br>Dated prices.<br>Laptop page.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="21">
+<style>
+/* Task 7: styles are scoped to slides 23–33; replacement panels use runtime stN states. */
+.t7 h2{font-size:58px;margin-bottom:36px}
+.t7 .t7-content{position:relative;flex:1;min-height:0;display:block;font-size:32px;line-height:1.35}
+.t7 p{margin:18px 0}
+.t7 .t7-panel{position:absolute;inset:0;opacity:0;visibility:hidden;transform:none;transition:none}
+.t7:not(.st1) .t7-p0,.t7.st1:not(.st2) .t7-p1,.t7.st2:not(.st3) .t7-p2,.t7.st3:not(.st4) .t7-p3,.t7.st4 .t7-p4{opacity:1;visibility:visible}
+.t7 .t7-map{display:flex;gap:12px;margin:0 0 78px;align-items:center}
+.t7 .t7-plan{position:relative;display:inline-flex}
+.t7 .t7-decision{position:absolute;top:calc(100% + 8px);left:0;white-space:nowrap;font-size:26px;letter-spacing:0;text-transform:none;padding:5px 10px;border-width:2px}
+.t7 .t7-warning{border-left:8px solid #ff3300;padding-left:22px;font-weight:800}
+.t7 .t7-stay{position:relative;margin:0 0 24px}
+.t7[data-n="25"] .t7-panel{top:90px}
+.t7 .t7-check{font:800 42px/1.5 Archivo;max-width:1400px;margin-top:38px}
+.t7 .prompt pre{font-size:28px;line-height:1.4;padding:24px 30px}
+.t7 .t7-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:28px}
+.t7 .t7-plans p{border-top:3px solid;padding-top:14px;margin:0}
+.t7[data-n="23"] .choice{padding:16px 28px}
+.t7[data-n="23"] .choices{gap:16px}
+.t7[data-n="23"] .reveal{position:absolute;top:0;margin:0;max-width:1450px}
+.t7[data-n="23"].revealed .t7-plans{visibility:hidden}
+.t7[data-n="23"].revealed .choice.correct{background:#18853a;border-color:#18853a}
+.t7 .t7-architecture{position:relative;height:560px;margin-top:24px}
+.t7 .t7-laptop{position:absolute;left:0;top:0;width:1000px;height:530px;border:4px solid #000;border-bottom:18px solid #000;background:#f5f5f5}
+.t7 .t7-screen,.t7 .t7-backend,.t7 .t7-env{position:absolute;box-sizing:border-box;border:3px solid #000;background:#fff;padding:24px;font:800 32px/1.25 Archivo}
+.t7 .t7-screen{left:36px;top:55px;width:350px;height:175px}
+.t7 .t7-backend{left:520px;top:55px;width:330px;height:175px}
+.t7 .t7-env{left:450px;top:300px;width:500px;font-size:30px}
+.t7 .t7-env p{font:400 30px/1.3 Nunito}
+.t7 .t7-external{position:absolute;left:1200px;top:55px;width:395px}
+.t7 .t7-source,.t7 .t7-service{border:3px solid #000;padding:32px 24px;font:800 32px/1.25 Archivo;background:#fff}
+.t7 .t7-service{margin-top:170px;background:#ff3300;border-color:#ff3300;color:#fff}
+.t7 .t7-arrows{position:absolute;inset:0;pointer-events:none}
+.t7 .t7-arrows>path{stroke:#000;stroke-width:4;fill:none;marker-start:url(#t7-arrow);marker-end:url(#t7-arrow)}
+.t7 .t7-debug{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;margin-top:90px}
+.t7 .t7-debug>div{position:relative}
+.t7 .t7-debug>div:not(:first-child)::before{content:'→';position:absolute;left:-43px;top:75px;font-size:40px}
+.t7 .t7-box{border:3px solid;padding:28px 24px;min-height:180px;font:800 34px/1.3 Archivo;display:flex;align-items:center}
+.t7 .t7-sources{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.t7 .t7-sources .chip{font-size:28px;letter-spacing:0;text-transform:none}
+.t7 .t7-once{position:absolute;left:1180px;top:129px;width:22px;height:22px;background:#ff3300;pointer-events:none;z-index:2}
+.t7.active .t7-once.in{animation:t7-return 1s ease-in-out forwards}
+@keyframes t7-return{to{transform:translateX(-315px)}}
+@media(prefers-reduced-motion:reduce){.t7 .t7-once{animation:none!important;transform:translateX(-315px)}.t7 .draw{transition:none!important;animation:none!important}.t7 .draw.in{stroke-dashoffset:0}}
+.t7[data-n="30"] .t7-panel>p{font-size:36px;max-width:1480px;margin:24px 0 38px}
+.t7[data-n="30"] .t7-p3>p,.t7[data-n="30"] .t7-p4>p{font-size:32px;margin:18px 0}
+.t7[data-n="31"] .lines{font-size:38px;margin-bottom:38px}
+.t7 .t7-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:70px}
+.t7 .t7-preview>div{border-top:4px solid;padding-top:40px;font:800 42px/1.3 Archivo}
+</style><div class="inner">
+  <div class="eyebrow">Run 2</div>
+  <h2>An agent builds what it guesses you want, so interview first</h2>
+  <div class="body" style="position:relative">
+    <svg width="1600" height="480" viewBox="0 0 1600 480" style="position:absolute;left:0;top:0;pointer-events:none">
+      <defs><marker id="ah18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
+      <marker id="ah18r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
+      <path class="draw" data-step="1" pathLength="1" d="M390 100 H530" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah18)"/>
+      <path class="draw" data-step="2" pathLength="1" d="M1100 100 H1220" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah18)"/>
+      <path class="draw" data-step="3" pathLength="1" d="M620 180 V300" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah18r)"/>
+      <path class="draw" data-step="3" pathLength="1" d="M830 370 H880" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah18r)"/>
+      <path class="draw" data-step="3" pathLength="1" d="M1170 370 H1220" stroke="#ff3300" stroke-width="4" fill="none" marker-end="url(#ah18r)"/>
+    </svg>
+    <!-- request -->
+    <div style="position:absolute;left:0;top:30px;width:380px">
+      <div style="border:4px solid #000;padding:16px 22px;font-size:32px;line-height:1.25">&quot;Build me a stock dashboard&quot;<span class="caret"></span></div>
+      <svg width="40" height="26" viewBox="0 0 40 26" style="display:block;margin-left:40px;margin-top:-4px"><path d="M0 0 L10 24 L30 0" fill="#fff" stroke="#000" stroke-width="4"/></svg>
+    </div>
+    <!-- robot -->
+    <div data-step="1" class="fx-pop" style="position:absolute;left:550px;top:20px;width:140px;height:160px">
+      <svg class="float" width="140" height="160" viewBox="0 0 140 160"><path d="M70 6 V28" stroke="#000" stroke-width="5"/><circle cx="70" cy="8" r="7" fill="#ff3300"/><rect x="20" y="28" width="100" height="74" fill="#fff" stroke="#000" stroke-width="5"/><rect x="42" y="54" width="14" height="14" fill="#000"/><rect x="84" y="54" width="14" height="14" fill="#000"/><rect x="34" y="108" width="72" height="48" fill="#000"/></svg>
+    </div>
+    <!-- guesses -->
+    <div data-step="1" class="fx-fade" style="position:absolute;left:730px;top:0;width:360px">
+      <div class="dcap" style="margin-bottom:8px">Guesses:</div>
+      <div style="display:flex;gap:14px;align-items:center;font-size:30px;margin-bottom:6px"><b style="font:800 40px Archivo;color:#ff3300;width:26px">?</b>which stocks?</div>
+      <div style="display:flex;gap:14px;align-items:center;font-size:30px;margin-bottom:6px"><b style="font:800 40px Archivo;color:#ff3300;width:26px">?</b>which period?</div>
+      <div style="display:flex;gap:14px;align-items:center;font-size:30px"><b style="font:800 40px Archivo;color:#ff3300;width:26px">?</b>what layout?</div>
+    </div>
+    <!-- lopsided dashboard -->
+    <div data-step="2" class="fx-pop" style="position:absolute;left:1240px;top:10px;width:360px;height:190px">
+      <svg width="360" height="190" viewBox="0 0 360 190">
+        <rect x="4" y="4" width="352" height="182" fill="#fff" stroke="#000" stroke-width="4"/>
+        <rect x="20" y="22" width="210" height="40" fill="#d6d6d6" transform="rotate(-5 125 42)"/>
+        <rect x="250" y="30" width="60" height="140" fill="#bbb" transform="rotate(7 280 100)"/>
+        <rect x="30" y="90" width="120" height="70" fill="#e6e6e6" transform="rotate(4 90 125)"/>
+        <rect x="160" y="110" width="60" height="30" fill="#d6d6d6" transform="rotate(-9 190 125)"/>
+        <path d="M110 40 L250 160 M250 40 L110 160" stroke="#ff3300" stroke-width="14"/>
+      </svg>
+    </div>
+    <!-- second path -->
+    <div data-step="3" class="fx-left" style="position:absolute;left:480px;top:330px;border:4px solid #ff3300;padding:12px 20px;font-size:30px;white-space:nowrap">Who will use this?</div>
+    <div data-step="3" class="fx-right" style="position:absolute;left:900px;top:300px;width:260px;font-size:30px;line-height:1.25;border:4px solid #000;background:#f2f2f2;padding:16px 18px;box-sizing:border-box;transition-delay:.2s">Sales team before client meetings.</div>
+    <div data-step="3" class="fx-pop" style="position:absolute;left:1240px;top:280px;width:360px;height:190px;transition-delay:.35s">
+      <svg width="360" height="190" viewBox="0 0 360 190">
+        <rect x="4" y="4" width="352" height="182" fill="#fff" stroke="#000" stroke-width="4"/>
+        <rect x="22" y="22" width="316" height="34" fill="#d6d6d6"/>
+        <rect x="22" y="70" width="150" height="96" fill="#e6e6e6"/>
+        <rect x="188" y="70" width="150" height="96" fill="#e6e6e6"/>
+        <circle cx="300" cy="140" r="38" fill="#1a9e3f"/>
+        <path d="M282 140 L296 154 L320 126" stroke="#fff" stroke-width="9" fill="none"/>
+      </svg>
+    </div>
+  </div>
+  <div class="punch red" data-step="3">Interview first.</div>
+</div></section>
+<section class="slide" data-n="22"><div class="inner">
+  <div class="eyebrow">Run 2</div>
+  <h2 style="font-size:58px;margin-bottom:36px">The interview produces a spec (what and why); the plan says how, and you approve, edit or reject it</h2>
+  <div class="body" style="position:relative">
+    <svg width="1600" height="560" viewBox="0 0 1600 560" style="position:absolute;left:0;top:0">
+      <defs><marker id="ah20" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
+      <g data-step="2" class="fx-fade"><path class="flow" d="M640 210 H950" stroke="#000" stroke-width="4" fill="none" marker-end="url(#ah20)"/></g>
+    </svg>
+    <div style="position:absolute;left:0;top:30px;width:600px;border:3px solid #000;background:#fff">
+      <div style="background:#000;color:#fff;padding:14px 28px;font:600 32px 'JetBrains Mono',monospace">docs/spec.md</div>
+      <div style="padding:14px 28px 6px;font-size:30px;color:#6b6b6b">what and why</div>
+      <div style="padding:4px 28px 6px"><span class="chip red" style="font-size:28px;letter-spacing:.02em;text-transform:none">Spec = PRD</span><div style="font-size:28px;color:#6b6b6b;margin-top:6px">(product requirements document)</div></div>
+      <div style="padding:6px 28px 20px">
+        <div data-step="1" class="fx-left" style="font:800 32px Archivo;border-top:3px solid #000;padding:16px 0">Goals</div>
+        <div data-step="1" class="fx-left" style="font:800 32px Archivo;border-top:3px solid #000;padding:16px 0;transition-delay:.35s">Out of scope</div>
+        <div data-step="1" class="fx-left" style="font:800 32px Archivo;border-top:3px solid #000;padding:16px 0;transition-delay:.7s">How we'll know it works</div>
+      </div>
+    </div>
+    <div data-step="2" class="fx-right" style="position:absolute;left:1000px;top:30px;width:600px"><div class="float" style="border:3px solid #000;background:#fff">
+      <div style="background:#000;color:#fff;padding:14px 28px;font:600 32px 'JetBrains Mono',monospace">docs/plan.md</div>
+      <div style="padding:14px 28px 6px;font-size:30px;color:#6b6b6b">how, in numbered steps</div>
+      <div style="padding:6px 28px 20px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:22px"><span style="font:800 30px Archivo;color:#ff3300;width:24px">1</span><span style="height:14px;width:82%;background:#cfcfcf"></span></div>
+        <div style="display:flex;align-items:center;gap:22px"><span style="font:800 30px Archivo;color:#ff3300;width:24px">2</span><span style="height:14px;width:64%;background:#cfcfcf"></span></div>
+        <div style="display:flex;align-items:center;gap:22px"><span style="font:800 30px Archivo;color:#ff3300;width:24px">3</span><span style="height:14px;width:76%;background:#cfcfcf"></span></div>
+        <div style="display:flex;align-items:center;gap:22px"><span style="font:800 30px Archivo;color:#ff3300;width:24px">4</span><span style="height:14px;width:55%;background:#cfcfcf"></span></div>
+        <div style="display:flex;align-items:center;gap:22px"><span style="font:800 30px Archivo;color:#ff3300;width:24px">5</span><span style="height:14px;width:70%;background:#cfcfcf"></span></div>
+      </div>
+    </div></div>
+    <div data-step="3" style="position:absolute;left:1000px;top:440px;width:600px;display:flex;align-items:center;gap:16px">
+
+      <span class="fx-pop" style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#fff;background:#1a9e45">Approve</span>
+      <span style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#000;background:#f2a900">Edit</span>
+      <span style="flex:1;text-align:center;padding:16px 0;font:800 30px Archivo;color:#fff;background:#ff3300">Reject</span>
+    </div>
+  </div>
+</div></section>
+<section class="slide t7" data-n="23">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Check: approve, edit or reject these three plans</h2>
+    <div class="t7-content">
+<div class="t7-plans"><p>Plan 1: follows the spec.</p><p>Plan 2: follows the spec, plus a login screen nobody asked for.</p><p>Plan 3: shows a chart, but for the wrong stock (BBRI).</p></div>
+<div class="choices"><div class="choice correct"><span class="L">A</span><span>Approve 1 · Edit 2 · Reject 3</span></div>
+<div class="choice"><span class="L">B</span><span>Approve 1 · Approve 2 · Edit 3</span></div>
+<div class="choice"><span class="L">C</span><span>Edit 1 · Reject 2 · Reject 3</span></div></div>
+<div class="reveal">A — Approve what matches the spec, edit what adds extras, reject what contradicts it.</div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="24">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Run 2a: interview for the dashboard and save the spec</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Prompt 1 (interview)</span><button>Copy</button></div><pre>Let's brainstorm a NISP (Bank OCBC NISP, NISP.JK) stock dashboard together. It should show the latest price, the daily change and a 1-year price chart. Ask me one question at a time, at most 5, in plain business language. Don't write any code or files yet.</pre></div><p>Answer briefly.</p>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Prompt 2 (spec)</span><button>Copy</button></div><pre>Write what we agreed to docs/spec.md. Use three sections: Goals, Out of scope, and How we'll know it works. Don't build anything yet. We'll use React + Vite, FastAPI (Python) and yfinance, with endpoints GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y, server on port 8000, page on port 5173.</pre></div><p>The last sentence is technical setup from the course — copy it as is.</p>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>You should see: Up to five questions, one at a time, a summary, then docs/spec.md. No code yet.</p><p>12 min · Stuck? s1-spec.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="25">
+  <div class="inner">
+    <div class="eyebrow">Run 2</div>
+    <h2>Run 2b: get the plan, approve, edit or reject it, then save it</h2>
+    <div class="t7-content ho">
+<p class="t7-warning t7-stay">Stay in this conversation — no /new until the plan is saved.</p>    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>1. Tab: footer "plan". Send:</p><div class="prompt"><div class="ph"><span>Plan</span><button>Copy</button></div><pre>Read docs/spec.md and give me a numbered step-by-step plan to build it. Don't build anything yet.</pre></div>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>2. Check it against your spec: only price, change and 1-year chart? Nothing extra? Then approve, edit or reject.</p>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>3. Tab: footer "build". Send:</p><div class="prompt"><div class="ph"><span>Save</span><button>Copy</button></div><pre>Save that plan to docs/plan.md. Don't build anything yet.</pre></div><p>You should see: docs/plan.md.</p><p>12 min · Stuck? s1-spec.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7" data-n="26">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Your financial app has a screen, a back end, a data source and an AI service</h2>
+    <div class="t7-content">
+<div class="t7-architecture"><i class="t7-once" data-step="2" aria-hidden="true"></i><div class="t7-laptop"><div class="t7-screen">Screen (in your browser)<p>React · 5173</p></div><div data-step="1" class="t7-backend">Back end<p>FastAPI · yfinance · 8000</p></div><div data-step="3" class="t7-env">backend/.env<p>service address, model name, secret key. Not the AI.</p></div></div><div class="t7-external"><div data-step="2" class="t7-source">Yahoo Finance: NISP data</div><div data-step="3" class="t7-service">AI service (LLM)</div></div><svg class="t7-arrows" width="1600" height="560" viewBox="0 0 1600 560" aria-hidden="true"><defs><marker id="t7-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker></defs><path data-step="1" class="draw" pathLength="1" d="M390 140 H520"/><path data-step="2" class="draw" pathLength="1" d="M850 140 H1190"/><path data-step="3" class="draw" pathLength="1" d="M850 165 L1190 380"/></svg></div>
+    </div>
+  </div>
+</section>
+<section class="slide t7" data-n="27">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>When something breaks, remove secrets, paste the error, and ask the agent to explain it</h2>
+    <div class="t7-content">
+<div class="t7-debug"><div><div class="t7-box">Copy the error</div><div class="t7-sources">
+  <span class="chip out">opencode</span>
+  <span class="chip out">server window</span>
+  <span class="chip out">browser</span>
+</div></div>
+<div data-step="1"><div class="t7-box">Remove keys and private data</div></div>
+<div data-step="2"><div class="t7-box">Ask: "Explain in plain words, then fix it."</div></div>
+<div data-step="3"><div class="t7-box">Repeat the check that failed</div></div></div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="28">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3a: build the dashboard and check its numbers</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>Build mode. Send:</p><div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the app from docs/plan.md: backend on port 8000, page on port 5173, with GET /api/quote/{ticker} and GET /api/history/{ticker}?period=1y. Then tell me how to open it.</pre></div><p>It asks to run a command? Read it. Installing or starting the app inside financial-app is expected. Anything else? Raise your hand.</p>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="t7-check">NISP.JK<br>prices in IDR<br>date and source shown<br>1-year chart</div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <p>Date/source missing? Send:</p><div class="prompt"><div class="ph"><span>Iterate · UNTESTED</span><button>Copy</button></div><pre>Show the date and source of the price under the price card.</pre></div><p>Repeat the check.</p><p>15 min · Stuck? s1-dashboard.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="29">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3b: protect the key, then interview and plan the chatbot</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Protect the key · UNTESTED</span><button>Copy</button></div><pre>Add .env to .gitignore and create backend/.env.example with LLM_BASE_URL, LLM_API_KEY and LLM_MODEL and no values. Don't create or open backend/.env.</pre></div><p>Copy backend/.env.example to backend/.env and fill in the class details.</p><p class="t7-warning">Never paste the key into the chat.</p>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf on">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Spec · UNTESTED</span><button>Copy</button></div><pre>Add a chatbot to docs/spec.md. The page sends the whole message list each turn. The backend adds NISP's latest available price and the last year of daily closes, with dates, then calls the AI service using the settings in backend/.env (LLM_BASE_URL, LLM_API_KEY, LLM_MODEL). If the data doesn't answer the question, it says so. No buy, sell or hold advice. No tool calling. Don't build yet.</pre></div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf on">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>Plan → approve, edit or reject → save, as in Run 2.</p><p>12 min · Stuck? s1-dashboard.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7 t7-run" data-n="30">
+  <div class="inner">
+    <div class="eyebrow">Run 3</div>
+    <h2>Run 3c: build and test the chatbot, then push without secrets</h2>
+    <div class="t7-content ho">
+    <div class="t7-panel t7-p0">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf on">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+      <div class="prompt"><div class="ph"><span>Build · UNTESTED</span><button>Copy</button></div><pre>Approved. Build the chatbot from docs/plan.md, then tell me how to open it.</pre></div>
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>What is NISP's latest price? → matches the price card and its date.</p><p>Say "My name is Rina", then ask "What is my name?" → Rina (memory).</p>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf on">Test / Debug</span><span class="wf">Iterate</span></div>
+      <p>What was the close on &lt;a date last month&gt;? → matches the chart, or says it has no data.</p><p>Should I buy NISP? → no buy, sell or hold advice.</p>
+    </div>
+    <div class="t7-panel t7-p3" data-step="3">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <p>Fix failures; repeat checks.</p><div class="prompt"><div class="ph"><span>Check files · UNTESTED</span><button>Copy</button></div><pre>List the files you would commit, and point out anything that looks like a key or password. Don't commit or push yet.</pre></div><p class="t7-warning">Read the list. backend/.env or a key in it? Stop and raise your hand.</p>
+    </div>
+    <div class="t7-panel t7-p4" data-step="4">
+      <div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf on">Iterate</span></div>
+      <p>List clean? Send:</p><div class="prompt"><div class="ph"><span>Push · UNTESTED</span><button>Copy</button></div><pre>Commit those files with the message "NISP dashboard and chatbot" and push to GitHub.</pre></div><p class="t7-warning">Key leaked? Tell the facilitator — the key must be replaced.</p><p>14 min · Stuck? s1-chatbot.</p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide t7" data-n="31">
+  <div class="inner">
+    <div class="eyebrow">Close + Q&amp;A</div>
+    <h2>You built a financial app by directing an AI and checking its work</h2>
+    <div class="t7-content">
+    <div class="t7-panel t7-p0">
+
+
+    </div>
+    <div class="t7-panel t7-p1" data-step="1">
+
+      <ul class="lines"><li>The model doesn't remember; opencode sends the context</li><li>AGENTS.md: the project's standing brief</li><li>Commit and push save your work to GitHub</li></ul><div class="t7-map"><span class="wf">Interview</span><span class="t7-plan"><span class="wf">Plan</span><span class="chip out t7-decision">Approve / Edit / Reject</span></span><span class="wf">Execute</span><span class="wf">Test / Debug</span><span class="wf">Iterate</span></div>
+    </div>
+    <div class="t7-panel t7-p2" data-step="2">
+
+      <div class="t7-check">Dashboard opens · price check passes · chatbot check passes · latest commit on GitHub — or checkpoint s1-chatbot</div>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="slide" data-n="32"><div class="inner">
+  <div class="eyebrow">Close + Q&amp;A</div>
+  <div style="position:absolute;left:-160px;top:-96px;width:1920px;height:1080px;pointer-events:none;overflow:hidden" data-deco>
+    <div class="q-mv" style="offset-path:path('M140 780 C 300 700, 560 760, 480 880 S 180 940, 140 780');animation-duration:14s;animation-delay:0s"><svg width="150" height="110" viewBox="0 0 150 110" style="display:block;translate:-50% -50%"><path d="M3 3 H147 V79 H60 L33 107 V79 H3 Z" fill="#fff" stroke="#000" stroke-width="5" stroke-linejoin="miter"/></svg></div>
+    <div class="q-mv" style="offset-path:path('M1420 140 C 1620 180, 1640 300, 1480 300 S 1260 120, 1420 140');animation-duration:11s;animation-delay:-3s"><svg width="120" height="90" viewBox="0 0 120 90" style="display:block;translate:-50% -50%"><path d="M3 3 H117 V65 H48 L26 87 V65 H3 Z" fill="#000" stroke="#000" stroke-width="5" stroke-linejoin="miter"/></svg></div>
+    <div class="q-mv" style="offset-path:path('M1300 800 C 1460 720, 1640 820, 1500 920 S 1180 900, 1300 800');animation-duration:16s;animation-delay:-6s"><svg width="170" height="120" viewBox="0 0 170 120" style="display:block;translate:-50% -50%"><path d="M3 3 H167 V86 H68 L37 117 V86 H3 Z" fill="#ff3300" stroke="#000" stroke-width="5" stroke-linejoin="miter"/></svg></div>
+    <div class="q-mv" style="offset-path:path('M960 540 m -820 0 a 820 400 0 1 0 1640 0 a 820 400 0 1 0 -1640 0');animation-duration:18s"><span style="display:block;translate:-50% -50%;font:800 110px/1 Archivo;color:#ff3300">?</span></div>
+    <div class="q-mv" style="offset-path:path('M300 180 L1000 160 L700 260 Z');animation-duration:9s;animation-timing-function:ease-in-out"><i style="display:block;width:30px;height:30px;background:#000;translate:-50% -50%"></i></div>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
+    <div style="font:800 280px/1 Archivo;letter-spacing:-.04em;display:flex;background:#fff;padding:0 30px"><h2 style="font:inherit;margin:0;letter-spacing:inherit;max-width:none">Questions</h2><span style="color:#ff3300">?</span></div>
+  </div>
+</div></section>
+<section class="slide t7" data-n="33">
+  <div class="inner">
+    <div class="eyebrow">Close + Q&amp;A</div>
+    <h2>Next session: your app stores price history and the chatbot reads reference pages</h2>
+    <div class="t7-content">
+<p>Session 2:</p><div class="t7-preview"><div>Store price history</div>
+<div>Watchlist: NISP, BBRI, TLKM</div>
+<div>Reference pages for the chatbot</div></div>
+    </div>
+  </div>
+</section>
+<div class="pg"></div><div class="steps-ind"></div></div></div><div id="notesbar"></div>
+<script type="application/json" id="notes-data">{"1": "Welcome everyone. Today you build a real financial app, and nobody writes code by hand. You tell opencode, our coding agent, what you want, you check what it gives you, and you steer it. By the end of these three hours you will have a NISP dashboard and a chatbot, saved on GitHub. Before we start, check that opencode opens on every laptop, Windows and Mac, and that it answers a simple \"hello\". Anyone whose model does not reply, raise your hand now, so we fix it before the first exercise. About half of today is hands-on: I explain for a few minutes, then you do it, and we check together.", "2": "Say what the day produces, in business words. NISP is Bank OCBC NISP, listed as NISP.JK on the Indonesia Stock Exchange. On step 1, point at the cards: the latest available price in rupiah, and the daily change. Prices come from Yahoo Finance and can be delayed, so in Run 3 you check that your financial app shows the date and source. On step 2, the one-year chart. On step 3, the chatbot answers questions about that data. On step 4, the project is saved on GitHub. Optional quick look: open the finished financial app from checkpoint s1-chatbot at localhost:5173 and ask \"What is NISP's latest price?\" Have both servers running before class. Then ask: who has written code before? Few hands is fine. Your job is a manager's job: be clear about the goal, then judge the work. We show market data only, never advice to buy or sell.", "3": "This is your job for the rest of the day, so you see it before we look inside the agent. On step 1: Interview. The agent asks questions one at a time, you answer, and it writes what you agreed into docs/spec.md. We call it an interview: the agent asks, you answer. Some skills call this brainstorming. Then Plan: the agent proposes numbered steps. That is Run 2. On step 2, point at the chip: you approve, edit or reject the plan before anything is built. On step 3: Execute, the agent builds. Test / Debug: you check the result in the browser and, if something breaks, find the cause with the agent. Iterate: you ask for a change, which takes you back to Plan. That is Run 3. Nothing is built until Execute. The Run 2 and Run 3 slides show these five names, with a \"you are here\" marker.", "4": "Start with what an LLM is: a large language model. It writes its answer one small piece of text at a time. The pieces are called tokens; a piece is often a word, sometimes part of one. On step 1, read the sentence as it types. On step 2, point at the bars: the model scores possible next pieces. Say clearly that the bars are an illustration, not measured numbers. On step 3, it picks one, here \"Indonesia\", adds it, and repeats. Point at Singapore: a sensible guess, since the parent OCBC is Singaporean, but wrong. It learned language patterns from a huge amount of text, so it can sound like an expert. But fluent is not the same as correct: it can be confidently wrong, and its training is no source for current stock prices. So we give it real data and check. From now on we call it the model. Ask: who has used ChatGPT or Copilot? Those are chat products built on a model.", "5": "The model doesn't remember earlier requests; each call to it stands alone. On step 0, turn one sends one question and gets an answer. On step 1, the follow-up \"How many people live there?\" only makes sense because opencode quietly sent the first question and answer again, in grey, so the model knows \"there\" means Tokyo. Ask: what happens if only the new question is sent? On step 2, the model has no idea what \"there\" refers to. Same model, same question, no history. Chat products do something similar to opencode. Apart from its training, the model works only with what it is sent: longer chats can cost more and run slower, and messages not sent, it can't see. On step 3, say the caption. One caution: this is called stateless, but that doesn't mean the service stores nothing; products may keep chat history or offer memory features. Our own chatbot later sends the whole message list every turn. This slide shows only the conversation part, simplified; the next slide adds what opencode sends alongside it.", "6": "Now look at what opencode sends. This is a simplified view, not the exact request format. Red is the model; black is opencode and its rules. On step 1, the system prompt: opencode's own instructions. On step 2, AGENTS.md, your project rules; you make yours in Run 1. On step 3, the skill list: names and descriptions only. A full skill is loaded later, if the agent decides one fits. On step 4, the tall grey row: the conversation so far, including tool results. Apart from AGENTS.md, the model only reads a file if a tool brings its text into this row. On step 5, your new message, and the stack goes to the model. On step 6: opencode rebuilds the top three rows for every call to the model, even calls after a tool result; this was checked in the opencode source, version 1.19.5. Messages also carry roles: system, user, assistant, tool. The handout has the glossary.", "7": "Same stack, now inside a frame: the context window, the most text the model can handle in one call, its reply included. Limits differ by model, so no numbers, and these sizes are only illustrative. On step 0, point at the blank space: the reply needs room too. On step 1, a long chat grows toward the limit. On step 2, opencode shortens the older chat into a summary. Point at the top rows: they don't move, because they are sent every turn. How opencode shortens history depends on its settings. On step 3: a summary keeps the gist, not every detail, so an instruction from an hour ago can be lost. On step 4, the habit: save decisions in files. Rules in AGENTS.md, requirements in the spec, steps in the plan. /new starts a conversation without the earlier chat. It doesn't delete files, and it can't bring back what you never saved, so save first.", "8": "How does the agent read files or run commands? Tool calling. Three lanes: opencode on your laptop, the model, and a tool that reads a file. On step 1, opencode sends your message plus the list of tools it can run. On step 2, the model asks: please read docs/spec.md. That is plain-language shorthand, not the real tool syntax. On step 3, point at the gate: opencode checks its permission settings, then runs the tool. Depending on the settings, some actions run without asking, some ask you first, some are refused. On step 4, the file text comes back. On step 5, opencode calls the model again with the conversation plus that text. On step 6: an answer, or another tool request. The key point: the model never touches your laptop; opencode does, within its permission settings. When a permission box appears, read it. Your financial app's chatbot won't use tools; its back end adds the data.", "9": "Put the last slides together. When we say \"the agent\", we mean opencode and the model working in this loop. On step 0, you give a goal. On step 1, the model decides the next action, usually a tool; opencode runs it; the model reads the result and decides again. On step 2, let the dot go round. This is the one animation that keeps moving, because repetition is the point. One request can take minutes and touch many files, and every step builds on your goal, so a vague goal makes the loop wander. On step 3, the loop ends when the agent reports back. It can also stop for an error, a limit or a question for you. Reporting back is a claim, not proof, so the next box is you, testing. Read the punch line: the agent proposes and does; you decide and check.", "10": "Think of AGENTS.md as an onboarding note for a new colleague. On step 0: a new conversation doesn't include yesterday's chat. On step 1: opencode hands AGENTS.md over every turn, as in the stack. On step 2, read the two lists; feature details belong in the spec. On step 3, /init drafts the file once. Then follow the upkeep cycle left to right: spot a lasting rule or a repeated correction, ask the agent to update the file, read the change, commit. The return arrow goes back to spotting another rule, not to running /init again. On step 4, why we work this way today. AGENTS.md is a plain text file, so you can edit it yourself. Today we ask the agent instead: you say the rule in plain words, the agent keeps the file's structure and wording consistent, and we avoid accidental deletions. It can still make mistakes, so read the change. Git makes the change reviewable and reversible whoever typed it. Rules guide the agent; they don't guarantee it obeys, so still check its work.", "11": "Read the question aloud. Give them thirty seconds, then take a show of hands for A, B and C, one at a time. A works, but only while you remember to type it in every new chat. C is tempting, but a stronger model doesn't see yesterday's chat either. Click to reveal B. A new conversation doesn't include old chats, and AGENTS.md is sent on every turn, so a rule saved there reaches every new conversation in this project. The order matters: ask opencode to add the rule, read the change, then commit. If a saved rule still seems ignored, remember the last slide: rules guide the agent, they don't guarantee it obeys. Check the file is in the project folder, and check the work. Then ask one person what rule they would add for their own work. This closes the block on how a coding agent works.", "12": "Before class, replace [FAST MODEL] and [SMART MODEL] with real names from the model list your participants share. This is a rule of thumb, not a law. On step 1: a quick model usually replies faster and costs less. It suits small, clear jobs where you see the result straight away. On step 2: a stronger model usually does better on harder reasoning, and is often slower. Use it for planning, where a bad plan wastes the whole build, and for debugging, when the cause is not obvious. Either model can be wrong, so compare results on your real task and check them. On step 3, show the picker: type /models in opencode. Names differ by provider, so say \"pick one quick and one stronger model from your list\". Today we use the stronger model for the plan.", "13": "Model choice is one lever; effort is a second, on models that support it. On step 0: low effort replies quicker, which is right for a typo or a colour change. On step 1, the one click: the pointer moves to high and stays there. High effort lets the model reason more before it answers. That usually takes longer and can cost more, and it doesn't guarantee a better answer. Use it for the plan, for a bug you cannot explain, or for any step that is hard. On step 2: in opencode, Ctrl+T cycles the options your model offers. opencode calls them variants; their names and effects depend on the model, and effort is a common one. On a Mac it is also the Control key, not Command. If Ctrl+T changes nothing, your model may offer no options; ask me if unsure.", "14": "On step 0 ask: who has a folder of files like Budget_final_v2_REALLY? Hands up. With copies like these, nobody knows which file is the real one, who changed what, or what was lost. Git keeps one project and records each version you commit. On step 1: your local copy is the project folder on your laptop. On step 2: GitHub is a website that hosts a shared copy; it is the host we use today. On step 3, the key sentence: saving alone doesn't upload your work. Your work reaches GitHub only when you push, and a teammate's changes reach you when you pull. Many beginners think saving a file shares it. It doesn't. Why this matters with an agent: it changes many files quickly, so you want save points to go back to, and a copy that is not only on your laptop.", "15": "On step 0: saved on laptop means the file is on your disk, nothing more. On step 1: a commit is a save point with a short note. It records the files included in it. Point at .env: it will hold the secret key. In Run 3 we put .env on Git's ignore list before the key goes in, and before pushing we ask the agent to list the files, to confirm .env is not there. On step 2: \"Fixed the totals\" tells you what happened; \"stuff\" doesn't. Commits stay on your laptop until you push. On step 3: push copies your commits to GitHub. On step 4: pull brings a teammate's commits down; if two people changed the same lines, it may need help. On step 5, the routine: pull, edit, commit, push. Today you work alone, so you mostly push, and you ask opencode in plain English instead of typing Git commands.", "16": "Start GitHub sign-up first, because the confirmation email can take time. On step 0, point at the path in opencode: it must end in financial-app. Anyone with an account can sign in instead. Check spam if the email is late. Type /init while waiting. On step 1, read the permission wording aloud. A request outside the project can be a mistyped path, not something needed for the exercise. Do not approve it automatically; raise a hand and let me check. On step 2, open AGENTS.md and confirm it exists. If nothing changes for two minutes, check whether opencode is waiting for permission or input before pressing Esc and retrying /init. Help anyone still stuck reach checkpoint s1-start.", "17": "On step 0, send Prompt 1 exactly as written. Open AGENTS.md together and point at the added rule. The surrounding bullets may differ; the rule must be there before anyone continues. If it is missing, ask opencode to correct the file and read it again. Click to step 1 only after that check. Prompt 2 requests a private repository, a commit and a push. Follow the sign-in instructions on screen, but do not paste passwords or access keys into chat. Open github.com and check the account, the Private label, and AGENTS.md inside financial-app. Saving locally is not enough. The push prompt is untested, so rehearse real sign-in on both laptop platforms before class. Anyone blocked gets help with checkpoint s1-start.", "18": "On step 0, point at the equal cards: none is a higher rank. On step 1, connect the first two to what participants just did. The message was a prompt for one task; AGENTS.md keeps standing project rules. On step 2, a skill packages expertise for reuse, such as interviewing before proposing a design. On step 3, a workflow gives a repeatable sequence; we return to that in Session 3. Read the footer: these can work together. Ask which card fits a one-off title change, then a rule for every new conversation. If someone confuses a skill with AGENTS.md, use the distinction between expertise for a particular job and rules for this project.", "19": "On step 0, connect the context box to the earlier stack. Names and short descriptions help opencode choose; full instructions are not all loaded at once. These short descriptions and instructions illustrate the mechanism, not a supplied course skill kit. On step 1, point at the request to plan a dashboard. On step 2, opencode decides whether brainstorming fits. It can miss a useful skill; matching is not guaranteed. On step 3, the full card is inside the context box, where its instructions can guide the next response. You can also name a skill; look for the \"skill loaded\" line. If someone has no skills installed, reassure them that today's prompts ask for the same habits directly.", "20": "Point at Illustration on step 0: this is a teaching example, not the result of a controlled comparison. On step 1, read the straight answer. It may be useful, but the agent has guessed the audience and freshness requirements. On step 2, the questions make those decisions visible to the business user. On step 3, the summary records what the answers meant before any building begins. The same habit can be asked for in a prompt; a skill makes it repeatable. If someone asks whether a skill guarantees better work, say no: check the questions, summary and result. If the example feels abstract, ask which missing question would matter before a client meeting, without introducing customer information.", "21": "On step 0, read the vague request. On step 1, point at each gap: which stocks, which period and what layout? opencode can fill these gaps with guesses, but those guesses are not your requirements. On step 2, the result may look polished and still solve the wrong problem. On step 3, show the interview path: a question and a business answer make the intended use clear. We call it an interview; some skills call this brainstorming. If someone cannot answer a technical question, ask them to describe the business outcome instead. Before the next run, remind everyone to answer one question at a time and check the summary, rather than approving a build immediately.", "22": "On step 0, point at docs/spec.md. It records what your financial app should do and why; here a spec is a short PRD, or product requirements document. On step 1, explain the three sections. Goals name the result, Out of scope blocks extras, and How we'll know it works gives checks you can perform. On step 2, the plan is different: numbered steps for making that result. On step 3, you approve, edit or reject it against the spec. If someone cannot judge a technical step, ask whether its business outcome belongs in the spec and call me over for the technical detail. Saving these documents makes decisions available beyond the current conversation.", "23": "Read the three plans on step 0, then give people time to choose. Ask for hands for A, B and C before revealing anything. Plan 2 is tempting: a login screen may sound sensible, but it adds work nobody requested. Plan 3 has the right kind of picture but the wrong stock, so it misses a central requirement. On step 1, point at A. Approve 1, edit 2 to remove the extra login, and reject 3 for a corrected plan. If someone chose to edit 3, acknowledge that a clear correction can work too; here the quiz treats the wrong stock as a reason to request a replacement plan. Bring the discussion back to comparing your own plan against your spec.", "24": "On step 0, point at Interview on the mini-map. Send Prompt 1 as written and answer each question in one short sentence. Questions vary; the limit is five, not a promise of exactly five. Use business terms, such as sales team before client meetings, delayed prices with a date, and mostly laptops. If opencode starts building, stop it and repeat that no code or files are wanted yet. On step 1, send the spec prompt after the summary, not a general go-ahead. Point at the label: the technical sentence is course setup, so copy it unchanged. On step 2, open docs/spec.md and check the business requirements. Anyone stuck raises a hand for help reaching checkpoint s1-spec.", "25": "On step 0, point at the footer: it must say plan. Plan mode is for proposing, not changing your financial app; still check what opencode does. Send the plan prompt and stay in this conversation. On step 1, compare the plan with docs/spec.md, not with how impressive the proposal sounds. Ask for changes if it adds login, other stocks or features you did not agree. Reject a plan that misses the purpose and read its replacement. If someone is unsure about a technical step, call me over rather than approving blindly. On step 2, switch the footer to build and send the save prompt. Open docs/plan.md and check it matches the approved version. Help anyone behind reach checkpoint s1-spec.", "26": "On step 0, point at the screen: this is what you open in your browser. On step 1, the back end is a program on your laptop that handles requests from the screen. localhost means this laptop; 5173 and 8000 are the ports we chose. On step 2, the back end fetches NISP prices from Yahoo Finance, using a Python library called yfinance, and sends the data to the screen. On step 3, the AI service is outside the laptop. backend/.env holds its address, model name and secret key, not the model itself. The file does not protect itself; we keep it out of chat and Git. If someone opens the wrong address, check which server and port opencode told them to use.", "27": "On step 0, point at the source chips. The error may be in opencode, the server window or the browser; copy the actual text rather than reconstructing it from memory. On step 1, remove keys and private data before sending anything. Do not paste customer details or the contents of backend/.env. If unsure what is sensitive, raise a hand first. On step 2, ask opencode to explain in plain words before fixing it, so you can judge the proposed action. On step 3, repeat the exact check that failed. A quiet agent is not always stuck; check whether it is running a command or waiting for input before re-sending. If a secret has already been shared, tell me immediately so it can be replaced.", "28": "On step 0, confirm Build mode and the approved docs/plan.md before sending the prompt. Read any requested command: installing or starting within financial-app is expected, but unfamiliar actions need my help. On step 1, open the dashboard and point at each check: NISP.JK, rupiah, date and source, one-year chart. Compare daily change with the previous close, not just a plausible colour. This fulfils the date-and-source check promised at the start. On step 2, use the Iterate prompt if either is missing, then check again. If both are already present, review whether they are readable and correct; do not invent a change. Building is untested and needs Python and Node ready. Help anyone blocked reach checkpoint s1-dashboard.", "29": "On step 0, run the protection prompt before entering a key. Open .gitignore and confirm .env is excluded; check backend/.env.example has names but no values. Participants copy and fill backend/.env themselves with class details, never in chat. If anyone is unsure, raise a hand without displaying the key. On step 1, interview briefly about the chatbot's business purpose, then send the spec prompt and read the update. It supplies dated price history and requires an honest no-data answer, not investment advice. Keep the dashboard date and source visible for later comparison. On step 2, use the same tested plan and save prompts from slide 25 in this conversation, approving, editing or rejecting before saving. These new setup and spec prompts need rehearsal. Help blocked participants from checkpoint s1-dashboard.", "30": "On step 0, send the build prompt only after the chatbot plan is saved. On step 1, ask the first two questions in your financial app, in the same chat: price and date must match the card, then tell it a name and ask for it back: that only works if your financial app resends the conversation, because the stock is always NISP anyway. Point at the dashboard date and source. On step 2, replace the date template with a real date last month; compare with the chart or accept an honest no-data answer. The advice question must not produce buy, sell or hold advice. On step 3, fix failures and repeat checks, then ask for the file list without committing. Read it yourself: backend/.env or anything that looks like a key must be absent. On step 4, only then commit and push. If a key leaked, stop and tell me so it is replaced. Help anyone behind reach checkpoint s1-chatbot.", "31": "On step 1, point quickly at each statement and connect it to what people did. opencode sends context; AGENTS.md keeps the project's standing brief; commit and push copy included work to GitHub. Ignored secrets are not part of that copy. Trace the five workflow chips: Interview, Plan, Execute, Test / Debug, Iterate. The business user's work was deciding and checking, not typing code. On step 2, do the finish check rather than declaring everybody finished. Ask participants to open the dashboard, confirm a price check and a chatbot check, and find the latest commit on GitHub. If someone is behind, help them use checkpoint s1-chatbot for Session 2. The recovery link still needs preparation before class.", "32": "Open the floor on step 0. Point at the question and invite one thing that surprised people, or one place they might use a dashboard at work. If nobody speaks, ask which part needed the most judgement: the interview, plan review or tests. Repeat each question before answering so the whole room hears it. Keep investment questions neutral: your financial app shows data, not investment advice. Park anything needing a long demonstration for the next session instead of rushing through it. If someone is stuck rather than asking a general question, arrange individual help and confirm they have the s1-chatbot checkpoint before leaving. Check that nobody is displaying a secret while sharing their screen.", "33": "Point at the three preview lines on step 0. Today your financial app fetches prices when asked and stores none; next time we save price history and give the chatbot reference pages to read. The model itself is not retrained. The watchlist extends the same pattern to NISP, BBRI and TLKM, rather than changing how you direct opencode. Keep the distinction clear: stored data belongs to your financial app, while reference pages supply information for an answer. If someone has not finished today, remind them to keep their project and ask for help with checkpoint s1-chatbot before Session 2. Close by thanking the group; do not introduce a new exercise in this final minute."}</script>
+<script>(()=>{
+const stage=document.querySelector('.deck-stage'),slides=[...document.querySelectorAll('.slide')];
+const NOTES=JSON.parse(document.getElementById('notes-data').textContent);
+let i=0,t0=Date.now(),pw=null;const bar=document.getElementById('notesbar');
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`}
+function sync(){const n=slides[i].dataset.n;bar.textContent=`[${i+1}/${slides.length}] `+(NOTES[n]||'');
+ if(pw&&!pw.closed){const nx=slides[i+1];pw.document.getElementById('cur').textContent=`${i+1} / ${slides.length} — `+slides[i].querySelector('h1,h2').textContent;
+  pw.document.getElementById('nt').textContent=NOTES[n]||'';pw.document.getElementById('nx').textContent=nx?'Next: '+nx.querySelector('h1,h2').textContent:'End';}}
+let cd=null;
+function countdown(){clearInterval(cd);const el=slides[i].querySelector('[data-countdown]');if(!el)return;let left=+el.dataset.countdown;const need=+(el.dataset.startStep||0);if(step<need){el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.remove('done');return}
+ const show=()=>{el.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');el.classList.toggle('done',left<=0)};show();
+ cd=setInterval(()=>{if(left>0){left--;show()}},1000)}
+function go(n,toEnd){i=Math.max(0,Math.min(slides.length-1,n));step=toEnd?maxStep(slides[i]):0;slides.forEach(s=>{s.querySelectorAll('[data-step]').forEach(e=>e.classList.remove('in','was'))});paint(slides[i]);slides.forEach((s,k)=>{s.classList.toggle('active',k===i);if(k!==i)s.classList.remove('revealed')});
+ document.querySelectorAll('.pg').forEach(p=>p.textContent=(i+1)+' / '+slides.length);history.replaceState(null,'','#'+(i+1));countdown();sync()}
+let step=0;
+function maxStep(s){let m=0;s.querySelectorAll('[data-step]').forEach(e=>m=Math.max(m,+e.dataset.step));return m}
+function paint(s){for(let k=1;k<=9;k++)s.classList.toggle('st'+k,step>=k);s.querySelectorAll('[data-step]').forEach(e=>{const k=+e.dataset.step;e.classList.toggle('in',k<=step);e.classList.toggle('was',k<step)});
+ const ind=document.querySelector('.steps-ind');if(ind){const m=maxStep(s);ind.style.display=m?'flex':'none';ind.innerHTML=Array.from({length:m+1},(_,k)=>`<i class="${k<=step?'on':''}"></i>`).join('')}}
+function next(){const s=slides[i];if(step<maxStep(s)){step++;paint(s);countdown();return}
+ if(s.querySelector('.choices')&&!s.classList.contains('revealed')){s.classList.add('revealed');return}go(i+1)}
+function prev(){const s=slides[i];if(s.classList.contains('revealed')){s.classList.remove('revealed');return}if(step>0){step--;paint(s);countdown();return}go(i-1,true)}
+function presenter(){pw=window.open('','s1notes','width=900,height=700');if(!pw){document.body.classList.toggle('shownotes');return}
+ pw.document.write('<title>Speaker notes</title><body style="font:20px/1.5 Nunito,sans-serif;padding:24px"><div id="tm" style="font:800 28px Archivo;color:#ff3300"></div><h2 id="cur"></h2><div id="nt" style="white-space:pre-wrap"></div><p id="nx" style="color:#666;border-top:2px solid #000;padding-top:12px"></p></body>');
+ setInterval(()=>{if(pw.closed)return;const s=Math.floor((Date.now()-t0)/1000);pw.document.getElementById('tm').textContent='Elapsed '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000);
+ pw.addEventListener('keydown',key);sync()}
+function key(e){if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();next()}else if(['ArrowLeft','PageUp'].includes(e.key))prev();
+ else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key==='s'||e.key==='S')presenter();else if(e.key==='n'||e.key==='N')document.body.classList.toggle('shownotes')}
+document.querySelectorAll('.prompt button').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();
+ const t=b.closest('.prompt').querySelector('pre').textContent;try{await navigator.clipboard.writeText(t)}catch(_){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
+ b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)}));
+addEventListener('resize',fit);addEventListener('hashchange',()=>{const h=parseInt(location.hash.slice(1));if(h>0&&h-1!==i)go(h-1)});addEventListener('keydown',key);
+stage.addEventListener('click',e=>{if(e.target.closest('button,a,pre'))return;next()});
+window.__deck={next,prev,go:n=>go(n),get i(){return i},get step(){return step},maxStep:()=>maxStep(slides[i])};
+fit();const h=parseInt(location.hash.slice(1));go(h>0?h-1:0);
+})();
+</script></body></html>
