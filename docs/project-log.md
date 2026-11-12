@@ -123,3 +123,4 @@ Newest entries go at the top of **Log**.
 - **2026-11-12** — S2 deck assembled (`decks/day3-s2.html`, 24 slides, verify PASS all 24); sol review dispatched. S3 deck review FAILED (5 duplicate figure, 15 cards don't fold into chip, too much motion on 4/9/18, 11 line overflow); fixes dispatched (opus low).
 - **2026-11-12** — S2 deck review (sol) FAILED: motion budget on 2/4/9/14/15/19, text glow on 5/7, builds not staged on 2/14/15, green ticks + packet overflow on 15. Q&A drifting shapes kept (user request). Fixes dispatched (opus low).
 - **2026-11-12** — S3 deck re-review **PASS** (slide 15 real fold via .fold + .st1 hook; motion budget enforced deck-wide).
+- **2026-11-12** — S2 deck re-review: all findings resolved except pulsing run tags (text); coordinator removed the pulse from run tags in all three decks (S2 8a/8b/10a/10b/16a/16b, S3 8a/8b/13a, S1 14a/14b). verify PASS: S1 32, S2 24, S3 22. **All three Day 3 decks done**; user asked to stop here.
