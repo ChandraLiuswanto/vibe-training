@@ -305,6 +305,7 @@ svg .flow.red{stroke:var(--red)}
 .slide.active .packet,.slide.active .pulse,.slide.active .float,.slide.active svg .flow{animation-iteration-count:3}
 @media (prefers-reduced-motion:reduce){.dot,.dot.in,.slide.active .dot.loop.in{animation:none!important;offset-distance:100%!important;animation-delay:0s!important}[style*="animation-delay"]{animation-delay:0s!important}}
 
+.slide.st3 .gone3{opacity:0!important;transition:opacity .4s}
 /* Per-slide state hooks: the runtime adds .st1 .st2 ... to the active slide as steps are reached.
    Slide-specific motion goes in the fragment via inline style + these classes in a <style> scoped with [data-n="id"] — NOT allowed;
    instead use [data-step] / .hl / .draw / loops. */
@@ -315,8 +316,8 @@ svg .flow.red{stroke:var(--red)}
   <div class="sub">AI Vibe Coding for Business Users</div>
 </div></section>
 <section class="slide" data-n="2"><div class="inner">
-  <div class="eyebrow">Opening + recovery</div>
-  <h2 style="margin-bottom:40px">Today your app remembers prices and your chatbot learns the rules</h2>
+  <div class="eyebrow">Opening</div>
+  <h2 style="margin-bottom:40px">Today your app saves prices and your chatbot answers from official pages</h2>
   <div class="body" style="position:relative">
     <!-- browser frame -->
     <div style="position:absolute;left:80px;top:0;width:1060px;height:400px;border:3px solid #000;box-sizing:border-box;background:#fff">
@@ -332,7 +333,7 @@ svg .flow.red{stroke:var(--red)}
       </div>
       <!-- watchlist -->
       <div data-step="1" class="fx-right" style="position:absolute;left:444px;top:80px;width:220px;height:290px;border:3px solid #000;box-sizing:border-box">
-        <div style="font:800 28px Archivo;padding:12px 16px;border-bottom:3px solid #000">Watchlist:</div>
+        <div style="font:800 28px Archivo;padding:12px 16px;border-bottom:3px solid #000">Watchlist: NISP · BBRI · TLKM</div>
         <div data-step="1" class="fx-left" style="font:500 30px 'JetBrains Mono',monospace;padding:14px 16px;border-bottom:2px solid #ccc;transition-delay:.5s">NISP</div>
         <div data-step="1" class="fx-left" style="font:500 30px 'JetBrains Mono',monospace;padding:14px 16px;border-bottom:2px solid #ccc;transition-delay:1s">BBRI</div>
         <div data-step="1" class="fx-left" style="font:500 30px 'JetBrains Mono',monospace;padding:14px 16px;transition-delay:1.5s">TLKM</div>
@@ -344,7 +345,7 @@ svg .flow.red{stroke:var(--red)}
         <div data-step="3" class="fx-pop" style="position:relative;margin-top:6px">
           <div style="border:3px solid #ff3300;padding:12px;display:flex;flex-direction:column;gap:10px">
             <div style="width:260px;height:14px;background:#ccc"></div><div style="width:200px;height:14px;background:#ccc"></div>
-            <span style="align-self:flex-start;background:#ff3300;color:#fff;font:800 26px Nunito;padding:4px 10px;white-space:nowrap">Answers with a source</span>
+            <span style="align-self:flex-start;background:#ff3300;color:#fff;font:800 28px Nunito;padding:4px 10px;white-space:nowrap">Shows its source link</span>
           </div>
         </div>
       </div>
@@ -369,45 +370,39 @@ svg .flow.red{stroke:var(--red)}
 </div></section>
 <section class="slide" data-n="3"><div class="inner">
   <div class="eyebrow">Opening</div>
-  <h2>Same five steps as this morning, once for each new feature</h2>
+  <h2 style="margin-bottom:40px">Same five steps as this morning, once for each new feature</h2>
   <div class="body c5-workflow">
     <svg width="1600" height="530" viewBox="0 0 1600 530" class="c5-overlay">
       <defs><marker id="v3-wf-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z"/></marker><marker id="v3-wf-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff3300"/></marker></defs>
       <g stroke="#000" stroke-width="4" fill="none" marker-end="url(#v3-wf-head)"><path d="M258 230H326"/><path d="M588 230H656"/><path d="M918 230H986"/><path d="M1248 230H1316"/></g>
-      <path class="draw" data-step="3" pathLength="1" d="M1440 160V50H460V155" stroke="#ff3300" stroke-width="5" fill="none" marker-end="url(#v3-wf-red)"/>
-      <path class="draw" data-step="1" pathLength="1" d="M0 410V435H580V410" stroke="#000" stroke-width="3" fill="none"/>
-      <path class="draw" data-step="3" pathLength="1" d="M650 410V435H1570V410" stroke="#000" stroke-width="3" fill="none"/>
+      <path class="draw" data-step="2" pathLength="1" d="M1440 160V50H460V155" stroke="#ff3300" stroke-width="5" fill="none" marker-end="url(#v3-wf-red)"/>
     </svg>
     <div class="c5-wf-row">
       <div class="wf hl" data-step="1">Interview</div><div class="wf hl" data-step="1" style="transition-delay:.25s">Plan</div>
-      <div class="wf hl" data-step="3">Execute</div><div class="wf hl" data-step="3" style="transition-delay:.2s">Test / Debug</div><div class="wf hl" data-step="3" style="transition-delay:.4s">Iterate</div>
+      <div class="wf hl" data-step="2">Execute</div><div class="wf hl" data-step="2" style="transition-delay:.2s">Test / Debug</div><div class="wf hl" data-step="2" style="transition-delay:.4s">Iterate</div>
     </div>
-    <div data-step="1" class="c5-spec">→ docs/spec.md</div>
-    <div data-step="2" class="c5-approve"><span class="chip red">Approve / Edit / Reject</span></div>
-    <div data-step="1" class="c5-run c5-run2">Run 2</div><div data-step="3" class="c5-run c5-run3">Run 3</div>
+    <div data-step="1" class="c5-spec" style="top:318px">→ docs/spec.md</div>
+    <div data-step="1" class="c5-approve" style="top:318px"><span class="chip red">Approve / Edit / Reject</span></div>
+    <div data-step="3" style="position:absolute;left:0;top:380px;width:1570px;height:46px;box-sizing:border-box;border:3px solid #000;border-top:0;text-align:center;font:800 30px/40px Archivo">Run 1 database</div>
+    <div data-step="3" style="position:absolute;left:0;top:436px;transition-delay:.5s;width:1570px;height:46px;box-sizing:border-box;border:3px solid #000;border-top:0;text-align:center;font:800 30px/40px Archivo">Run 2 watchlist</div>
+    <div data-step="3" style="position:absolute;left:0;top:492px;transition-delay:1s;width:1570px;height:46px;box-sizing:border-box;border:3px solid #000;border-top:0;text-align:center;font:800 30px/40px Archivo">Run 3 Wiki</div>
   </div>
 </div></section>
 <section class="slide" data-n="4"><div class="inner">
   <div class="eyebrow">Opening + recovery</div>
-  <h2>Start from your own app or switch to checkpoint s1-chatbot</h2>
-  <div class="body" style="display:flex;flex-direction:column;gap:28px">
-    <div style="display:flex;align-items:center;gap:32px;border-top:3px solid #000;padding-top:24px">
-      <svg width="64" height="64" viewBox="0 0 64 64" style="flex:none"><rect x="2" y="2" width="60" height="60" fill="#000"/><path d="M15 33 L27 45 L50 19" stroke="#fff" stroke-width="7" fill="none"/></svg>
-      <span style="font:800 48px Archivo">Your app works? Keep it.</span>
-    </div>
-    <div data-step="1" style="display:flex;flex-direction:column;gap:20px;border-top:3px solid #000;padding-top:24px">
-      <div style="display:flex;align-items:center;gap:32px">
-        <svg width="64" height="64" viewBox="0 0 64 64" style="flex:none"><rect x="2" y="2" width="60" height="60" fill="#ff3300"/><path d="M42 14 L22 32 L42 50" stroke="#fff" stroke-width="7" fill="none"/></svg>
-        <span style="font:800 48px Archivo">Behind? Send this to opencode:</span>
-      </div>
-      <div class="prompt" style="margin-left:96px"><div class="ph" style="padding:6px 24px"><span></span><button>Copy</button></div><pre>Replace my project with checkpoint s1-chatbot from [CHECKPOINT URL], keep my .env.</pre></div>
-      <div style="margin-left:96px;font-size:34px"><b style="font:800 30px Archivo;text-transform:uppercase;letter-spacing:.06em;margin-right:12px">Check:</b>both servers start, NISP loads, the chatbot replies.</div>
+  <h2>Keep your Session 1 app if it works; otherwise we move you to checkpoint s1-chatbot</h2>
+  <div class="body" style="display:flex;flex-direction:column;gap:12px">
+    <div style="border-top:3px solid #000;padding-top:20px;font:800 54px Archivo">Your app works? Keep it.</div>
+    <div style="display:flex;align-items:center;gap:32px;padding:14px 0 14px 96px"><svg width="56" height="56" viewBox="0 0 56 56" style="flex:none"><rect x="3" y="3" width="50" height="50" fill="#fff" stroke="#000" stroke-width="5"/></svg><span style="font:800 44px Archivo">Both servers start</span></div><div style="display:flex;align-items:center;gap:32px;padding:14px 0 14px 96px"><svg width="56" height="56" viewBox="0 0 56 56" style="flex:none"><rect x="3" y="3" width="50" height="50" fill="#fff" stroke="#000" stroke-width="5"/></svg><span style="font:800 44px Archivo">NISP loads</span></div><div style="display:flex;align-items:center;gap:32px;padding:14px 0 14px 96px"><svg width="56" height="56" viewBox="0 0 56 56" style="flex:none"><rect x="3" y="3" width="50" height="50" fill="#fff" stroke="#000" stroke-width="5"/></svg><span style="font:800 44px Archivo">Chatbot replies</span></div>
+    <div data-step="1" style="display:flex;align-items:center;gap:32px;border-top:3px solid #000;padding-top:24px;margin-top:16px">
+      <svg width="64" height="64" viewBox="0 0 64 64" style="flex:none"><rect x="2" y="2" width="60" height="60" fill="#ff3300"/><path d="M42 14 L22 32 L42 50" stroke="#fff" stroke-width="7" fill="none"/></svg>
+      <span style="font:800 44px/1.15 Archivo">Stuck? Raise your hand — we move you to checkpoint s1-chatbot.</span>
     </div>
   </div>
 </div></section>
 <section class="slide" data-n="5"><div class="inner">
   <div class="eyebrow">Why an app needs memory</div>
-  <h2 style="margin-bottom:48px">Your app forgets everything when it restarts</h2>
+  <h2 style="margin-bottom:40px">Your app keeps prices only while the back end is running</h2>
   <div class="body" style="position:relative">
     <svg width="1600" height="600" viewBox="0 0 1600 600" style="position:absolute;left:0;top:0">
       <defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z"/></marker>
@@ -441,135 +436,126 @@ svg .flow.red{stroke:var(--red)}
       <svg width="270" height="150" viewBox="0 0 240 130"><path d="M50 120 H200 A36 36 0 0 0 196 48 A50 50 0 0 0 104 30 A40 40 0 0 0 44 56 A32 32 0 0 0 50 120 Z" fill="#fff" stroke="#000" stroke-width="5"/></svg>
       <span style="font:800 34px/1.2 Archivo;text-align:center;margin-top:14px">Fetch it all again from Yahoo</span>
     </div>
-    <div data-step="3" class="punch red" style="position:absolute;left:0;right:0;top:470px;text-align:center;padding-top:0;font-size:56px">No history. No list of stocks you follow.</div>
+    <div data-step="3" class="punch red" style="position:absolute;left:0;right:0;top:470px;text-align:center;padding-top:0;font-size:56px">Today: no saved history. No list of stocks you follow.</div>
   </div>
 </div></section>
 <section class="slide" data-n="6"><div class="inner">
   <div class="eyebrow">Why an app needs memory</div>
-  <h2 style="margin-bottom:40px">A database keeps what the app must remember, in tables of rows and columns</h2>
+  <h2 style="margin-bottom:28px">A database keeps what the app must remember, in tables of rows and columns</h2>
   <div class="body" style="position:relative">
-    <!-- file icon -->
-    <div style="position:absolute;left:0;top:10px;width:300px;display:flex;flex-direction:column;align-items:flex-start;gap:16px">
+    <div style="font:800 40px Archivo;margin-bottom:20px">Database: where the app writes down what it must remember</div>
+    <div style="position:absolute;left:0;top:110px;width:300px;display:flex;flex-direction:column;align-items:flex-start;gap:16px">
       <svg width="110" height="136" viewBox="0 0 110 136"><path d="M3 3 H76 L107 34 V133 H3 Z" fill="#fff" stroke="#000" stroke-width="5" stroke-linejoin="miter"/><path d="M76 3 V34 H107" fill="none" stroke="#000" stroke-width="5"/><rect x="20" y="60" width="70" height="12" fill="#000"/><rect x="20" y="84" width="70" height="12" fill="#ff3300"/><rect x="20" y="108" width="50" height="12" fill="#000"/></svg>
       <span style="font:500 28px 'JetBrains Mono',monospace">backend/data/app.db</span>
     </div>
-    <svg data-step="1" class="fx-fade" width="1600" height="400" viewBox="0 0 1600 400" style="position:absolute;left:0;top:0"><path class="draw" pathLength="1" d="M130 80 H340" stroke="#000" stroke-width="4" fill="none"/></svg>
-    <!-- grid -->
-    <div data-step="1" class="fx-pop" style="position:absolute;left:380px;top:0;width:1060px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <svg data-step="1" class="fx-fade" width="1600" height="400" viewBox="0 0 1600 400" style="position:absolute;left:0;top:0;pointer-events:none"><path class="draw" pathLength="1" d="M130 190 H340" stroke="#000" stroke-width="4" fill="none"/></svg>
+    <div data-step="1" class="fx-pop" style="position:absolute;left:380px;top:80px;width:1000px">
+      <div style="display:flex;align-items:center;gap:24px;margin-bottom:14px">
         <span style="font:800 34px Archivo">Table: prices</span>
-        <span data-step="2" class="fx-fade" style="background:#d9d9d9;color:#444;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.06em;padding:4px 14px;transition-delay:1.3s">sample</span>
+        <span data-step="2" class="fx-fade" style="transition-delay:1.3s"><span style="background:#d9d9d9;color:#444;font:800 28px Archivo;text-transform:uppercase;letter-spacing:.04em;padding:4px 12px">Sample</span></span>
       </div>
       <div style="position:relative;border:3px solid #000">
-        <!-- highlight layer behind text -->
         <div data-step="3" class="fx-fade" style="position:absolute;inset:0;z-index:2;pointer-events:none">
           <div class="pulse" style="position:absolute;left:66.66%;width:33.34%;top:-3px;bottom:-3px;border:6px solid #ff3300;box-sizing:border-box"></div>
           <div style="position:absolute;left:-3px;right:-3px;top:162px;height:80px;border:6px solid #000;box-sizing:border-box"></div>
+          <div style="position:absolute;left:66.66%;width:33.34%;top:-62px;text-align:center;font:800 36px Archivo;color:#ff3300">Column</div>
+          <div style="position:absolute;left:100%;margin-left:24px;top:162px;height:80px;display:flex;align-items:center;font:800 36px Archivo">Row</div>
         </div>
-        <div style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace">
-          <div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px">ticker</div><div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px;border-left:3px solid #fff">date</div><div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px;border-left:3px solid #fff">close</div>
-        </div>
-        <div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px">Mon</span><span style="padding:0 28px">1,000</span></div>
-        <div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000;transition-delay:.45s"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px">Tue</span><span style="padding:0 28px">1,010</span></div>
-        <div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000;transition-delay:.9s"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px">Wed</span><span style="padding:0 28px">1,020</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr"><div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px">ticker</div><div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px;border-left:3px solid #fff">date</div><div style="background:#000;color:#fff;font:800 32px Archivo;padding:20px 28px;border-left:3px solid #fff">close</div></div>
+        <div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000;transition-delay:0s"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">Mon</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">1,150</span></div><div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000;transition-delay:0.45s"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">Tue</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">1,155</span></div><div data-step="2" class="fx-left" style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;font:500 32px 'JetBrains Mono',monospace;height:80px;align-items:center;border-top:3px solid #000;transition-delay:0.9s"><span style="padding:0 28px">NISP.JK</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">Wed</span><span style="padding:0 28px;border-left:3px solid #ddd;height:100%;box-sizing:border-box;display:flex;align-items:center">1,160</span></div>
       </div>
-    </div>
-    <div data-step="3" style="position:absolute;left:0;right:0;top:470px;text-align:center;font:800 44px Archivo">
-      <span style="padding:4px 14px;border:5px solid #ff3300;color:#ff3300">Column</span> = one kind of value · <span style="padding:4px 14px;border:5px solid #000">Row</span> = one record
     </div>
   </div>
 </div></section>
 <section class="slide" data-n="7"><div class="inner">
   <div class="eyebrow"><span class="tag red">Check</span></div>
-  <h2 style="margin-bottom:44px">In this price table, which is a row and which is a column?</h2>
+  <h2 style="margin-bottom:28px">A row holds one record; a column holds one kind of value</h2>
+  <p class="question" style="font:800 40px/1.2 Archivo">In this price table, which is a row and which is a column?</p>
   <div style="display:grid;grid-template-columns:600px 1fr;gap:56px;align-items:start">
     <div>
-      <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><span style="background:#d9d9d9;color:#444;font:800 26px Archivo;text-transform:uppercase;letter-spacing:.06em;padding:4px 14px">sample</span></div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:12px"><span style="background:#d9d9d9;color:#444;font:800 28px Archivo;text-transform:uppercase;letter-spacing:.04em;padding:4px 12px">Sample</span></div>
       <div style="position:relative;border:3px solid #000">
         <div class="reveal" style="position:absolute;inset:0;margin:0;transform:none">
-          <div style="position:absolute;left:66.66%;width:33.34%;top:0;bottom:0;background:#ff3300;opacity:.25"></div>
+          <div style="position:absolute;left:68.75%;right:0;top:0;bottom:0;background:#ff3300;opacity:.25"></div>
           <div style="position:absolute;left:0;right:0;bottom:0;height:74px;background:#ff3300;opacity:.25"></div>
         </div>
         <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr;background:#000;color:#fff;font:800 30px Archivo"><span style="padding:18px 22px">ticker</span><span style="padding:18px 22px;border-left:3px solid #fff">date</span><span style="padding:18px 22px;border-left:3px solid #fff">close</span></div>
-        <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr;font:500 30px 'JetBrains Mono',monospace;height:74px;align-items:center;border-top:3px solid #000"><span style="padding:0 22px">NISP.JK</span><span style="padding:0 22px">Mon</span><span style="padding:0 22px">1,000</span></div>
-        <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr;font:500 30px 'JetBrains Mono',monospace;height:74px;align-items:center;border-top:3px solid #000"><span style="padding:0 22px">NISP.JK</span><span style="padding:0 22px">Tue</span><span style="padding:0 22px">1,010</span></div>
+        <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr;font:500 30px 'JetBrains Mono',monospace;height:74px;align-items:center;border-top:3px solid #000"><span style="padding:0 22px">NISP.JK</span><span style="padding:0 22px">Mon</span><span style="padding:0 22px">1,150</span></div><div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr;font:500 30px 'JetBrains Mono',monospace;height:74px;align-items:center;border-top:3px solid #000"><span style="padding:0 22px">NISP.JK</span><span style="padding:0 22px">Tue</span><span style="padding:0 22px">1,155</span></div>
       </div>
     </div>
-    <div class="choices" style="gap:18px">
-      <div class="choice correct" style="font-size:32px;padding:20px 28px"><span class="L">A</span><span>A row is one day for one stock; "close" is a column.</span></div>
-      <div class="choice" style="font-size:32px;padding:20px 28px"><span class="L">B</span><span>"close" is a row; each day is a column.</span></div>
-      <div class="choice" style="font-size:32px;padding:20px 28px"><span class="L">C</span><span>Rows and columns are the same thing.</span></div>
+    <div class="choices" data-step="1" style="gap:18px">
+      <div class="choice correct" style="font-size:32px;padding:20px 28px"><span class="L">A</span><span>A row is one day for one stock; "close" is a column.</span></div><div class="choice" style="font-size:32px;padding:20px 28px"><span class="L">B</span><span>"close" is a row; each day is a column.</span></div><div class="choice" style="font-size:32px;padding:20px 28px"><span class="L">C</span><span>Rows and columns are the same thing.</span></div>
     </div>
   </div>
   <div class="reveal">A — A row is one record; a column is one kind of value, like the closing price.</div>
 </div></section>
 <section class="slide" data-n="8"><div class="inner">
-  <div class="eyebrow">Why an app needs memory</div>
-  <h2 style="margin-bottom:40px">A watchlist needs two tables: the stocks you follow and their daily prices</h2>
+  <div class="eyebrow"></div>
+  <h2 style="margin-bottom:40px">Our app uses two tables, linked by the ticker</h2>
   <div class="body" style="position:relative">
-    <div style="position:absolute;left:0;top:0;width:480px;border:3px solid #000;box-sizing:border-box">
-      <div style="background:#000;color:#fff;font:800 36px Archivo;padding:14px 24px">stocks</div>
-      <div style="font:500 28px 'JetBrains Mono',monospace;padding:16px 24px">ticker · name · added_at</div>
-      <div style="display:flex;align-items:center;height:100px;border-top:3px solid #000;padding:0 24px;gap:18px"><span style="position:relative;padding:4px 12px"><div style="position:absolute;inset:-4px"><div data-step="2" class="fx-fade" style="position:absolute;inset:0;border:4px solid #ff3300"></div></div><span style="position:relative;font:500 32px 'JetBrains Mono',monospace">NISP.JK</span></span><span style="flex:1;height:16px;background:#d9d9d9"></span></div><div style="display:flex;align-items:center;height:100px;border-top:3px solid #000;padding:0 24px;gap:18px"><span style="position:relative;padding:4px 12px"><span style="position:relative;font:500 32px 'JetBrains Mono',monospace">BBRI.JK</span></span><span style="flex:1;height:16px;background:#d9d9d9"></span></div><div style="display:flex;align-items:center;height:100px;border-top:3px solid #000;padding:0 24px;gap:18px"><span style="position:relative;padding:4px 12px"><span style="position:relative;font:500 32px 'JetBrains Mono',monospace">TLKM.JK</span></span><span style="flex:1;height:16px;background:#d9d9d9"></span></div>
+    <div style="position:absolute;left:0;top:0;width:640px;border:3px solid #000;box-sizing:border-box">
+      <div style="background:#000;color:#fff;font:800 36px Archivo;padding:12px 24px;height:64px;box-sizing:border-box">stocks</div>
+      <div style="display:grid;grid-template-columns:190px 280px 1fr;height:64px;align-items:center;font:500 28px 'JetBrains Mono',monospace;font-weight:500;background:#f2f2f2"><span style="padding:0 16px;">ticker</span><span style="padding:0 16px;border-left:3px solid #ddd;">name</span><span style="padding:0 16px;border-left:3px solid #ddd;">added</span></div>
+      <div style="display:grid;grid-template-columns:190px 280px 1fr;height:80px;align-items:center;border-top:3px solid #000;font:500 28px 'JetBrains Mono',monospace"><span style="position:relative;padding:0 16px;display:flex;align-items:center;height:100%"><span data-step="2" class="fx-fade" style="position:absolute;inset:10px 4px;border:4px solid #ff3300"></span><span style="position:relative">NISP.JK</span></span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">Bank OCBC NISP</span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;"></span></div>
+      <div style="display:grid;grid-template-columns:190px 280px 1fr;height:80px;align-items:center;border-top:3px solid #000;font:500 28px 'JetBrains Mono',monospace;color:#999;background:#fafafa"><span style="padding:0 16px">BBRI.JK</span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;"><span class="chip out" style="font-size:22px;color:#6b6b6b;border-color:#999;padding:4px 12px">Run 2</span></span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;"></span></div>
     </div>
-    <div style="position:absolute;left:0;top:478px;width:480px;font-size:30px;color:#6b6b6b">one row per stock you follow</div>
-    <div data-step="1" class="fx-right" style="position:absolute;left:720px;top:0;width:880px;border:3px solid #000;box-sizing:border-box">
-      <div style="background:#000;color:#fff;font:800 36px Archivo;padding:14px 18px">prices</div>
-      <div style="font:500 26px 'JetBrains Mono',monospace;padding:16px 18px;border-bottom:3px solid #000;margin-bottom:18px;white-space:nowrap">ticker · date · open · high · low · close · volume</div>
-      <div style="position:relative;padding-bottom:6px">
-        <div style="position:absolute;left:10px;right:10px;top:-6px;height:90px"><div data-step="2" class="fx-fade" style="position:absolute;inset:0;border:4px solid #ff3300"></div></div>
-        <div style="position:relative"><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.00s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.06s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.12s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.18s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.24s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.30s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.36s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.42s" data-step="1" class="fx-left"></div><div style="height:18px;background:#d9d9d9;margin:0 18px 12px;transition-delay:0.48s" data-step="1" class="fx-left"></div></div>
-      </div>
+    <div data-step="1" class="fx-right" style="position:absolute;left:880px;top:0;width:720px;border:3px solid #000;box-sizing:border-box">
+      <div style="background:#000;color:#fff;font:800 36px Archivo;padding:0 24px;height:64px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between"><span>prices</span><span style="background:#d9d9d9;color:#444;font:800 28px Archivo;text-transform:uppercase;letter-spacing:.02em;padding:4px 10px">Sample</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr 1fr;height:64px;align-items:center;font:500 28px 'JetBrains Mono',monospace;font-weight:500;background:#f2f2f2"><span style="padding:0 16px;">ticker</span><span style="padding:0 16px;border-left:3px solid #ddd;">date</span><span style="padding:0 16px;border-left:3px solid #ddd;">close</span></div>
+      <div data-step="1" class="fx-left" style="display:grid;grid-template-columns:190px 1fr 1fr;height:80px;align-items:center;border-top:3px solid #000;font:500 28px 'JetBrains Mono',monospace"><span style="position:relative;padding:0 16px;display:flex;align-items:center;height:100%"><span data-step="2" class="fx-fade" style="position:absolute;inset:10px 4px;border:4px solid #ff3300"></span><span style="position:relative">NISP.JK</span></span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">Mon</span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">1,150</span></div><div data-step="1" class="fx-left" style="display:grid;grid-template-columns:190px 1fr 1fr;height:80px;align-items:center;border-top:3px solid #000;font:500 28px 'JetBrains Mono',monospace"><span style="position:relative;padding:0 16px;display:flex;align-items:center;height:100%"><span data-step="2" class="fx-fade" style="position:absolute;inset:10px 4px;border:4px solid #ff3300"></span><span style="position:relative">NISP.JK</span></span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">Tue</span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">1,155</span></div><div data-step="1" class="fx-left" style="display:grid;grid-template-columns:190px 1fr 1fr;height:80px;align-items:center;border-top:3px solid #000;font:500 28px 'JetBrains Mono',monospace"><span style="position:relative;padding:0 16px;display:flex;align-items:center;height:100%"><span data-step="2" class="fx-fade" style="position:absolute;inset:10px 4px;border:4px solid #ff3300"></span><span style="position:relative">NISP.JK</span></span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">Wed</span><span style="padding:0 16px;display:flex;align-items:center;height:100%;box-sizing:border-box;border-left:3px solid #ddd;">1,160</span></div>
     </div>
-    <div data-step="1" class="fx-right" style="position:absolute;left:720px;top:478px;width:880px;font-size:30px;color:#6b6b6b">one row per stock per day</div>
-    <svg width="1600" height="460" viewBox="0 0 1600 460" style="position:absolute;left:0;top:0;pointer-events:none" data-step="2" class="fx-fade">
-      <path class="draw" pathLength="1" d="M480 186 H600 V200 H720" stroke="#ff3300" stroke-width="5" fill="none"/>
+    <svg data-step="2" class="fx-fade" width="1600" height="420" viewBox="0 0 1600 420" style="position:absolute;left:0;top:0;pointer-events:none">
+      <path class="draw" pathLength="1" d="M640 168 H760 M760 168 V168 M760 168 V168 M760 168 H880 M760 168 V248 H880 M760 168 V328 H880" stroke="#ff3300" stroke-width="5" fill="none"/>
     </svg>
-    <div data-step="2" class="fx-fade" style="position:absolute;left:600px;top:110px;translate:-50% 0;font:800 30px/1.1 Archivo;color:#ff3300;text-align:center">linked<br>by ticker</div>
-    <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:0;width:1600px;height:460px;pointer-events:none"><div class="packet" style="width:10px;height:60px;margin:-30px 0 0 -5px;offset-path:path('M10 196 V402');animation-duration:9s"></div></div>
+    <div data-step="2" class="fx-fade" style="position:absolute;left:640px;top:350px;width:240px;text-align:center;font:800 28px/1.15 Archivo;color:#ff3300">Same ticker — one stock, many daily rows</div>
+    <div data-step="3" style="position:absolute;left:0;top:470px;font:800 36px Archivo;color:#444">.JK = listed in Jakarta (Yahoo code)</div>
   </div>
 </div></section>
 <section class="slide" data-n="9"><div class="inner">
-  <div class="eyebrow">Run 2 — watchlist</div>
-  <h2>yfinance is free but unofficial, so the app keeps a cached copy</h2>
+  <div class="eyebrow"></div>
+  <h2 style="margin-bottom:28px">Free Yahoo data can fail, so the app shows saved prices and their date</h2>
   <div class="body" style="position:relative">
-    <svg width="1600" height="540" viewBox="0 0 1600 540" style="position:absolute;left:0;top:0">
-      <path d="M90 360 C30 360 30 270 100 262 C100 190 200 175 235 215 C265 165 360 180 352 255 C410 260 410 360 350 360 Z" fill="#fff" stroke="#000" stroke-width="4"/>
-      <path d="M352 310 H1200" stroke="#000" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
+    <svg width="1600" height="520" viewBox="0 0 1600 520" style="position:absolute;left:0;top:0">
+      <path d="M60 190 C10 190 10 120 70 112 C70 50 160 38 190 75 C215 30 300 42 295 105 C345 110 345 190 295 190 Z" fill="#fff" stroke="#000" stroke-width="4"/>
+      <path d="M310 140 H930" stroke="#000" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
     </svg>
-    <div class="dcap at" style="left:222px;top:300px;font-size:30px;text-align:center;line-height:1.1">Yahoo<br>Finance</div>
-    <div class="at" style="left:600px;top:310px"><div class="dbox" style="margin:0;white-space:nowrap;font-size:28px;padding:14px 22px">yfinance: free, unofficial</div></div>
-    <div data-step="1" class="fx-fade" style="position:absolute;left:960px;top:280px;width:250px;height:60px;background:#fff">
-      <svg width="30" height="60" viewBox="0 0 30 60" style="position:absolute;left:-6px;top:0"><path d="M6 6 L22 18 L8 30 L22 42 L6 54" stroke="#ff3300" stroke-width="5" fill="none"/></svg>
+    <div class="dcap at" style="left:178px;top:140px;font-size:30px;text-align:center;line-height:1.1">Yahoo<br>Finance</div>
+    <div class="at" style="left:560px;top:140px"><div class="dbox" style="margin:0;white-space:nowrap;font:800 30px Archivo;padding:12px 24px">yfinance</div></div>
+    <div class="at" style="left:620px;top:60px;white-space:nowrap;font:800 30px Archivo">Free, unofficial, can be slow or limited</div>
+    <div class="packet" style="offset-path:path('M310 140 H500');animation-duration:2.4s"></div>
+    <div class="packet" style="offset-path:path('M640 140 H930');animation-duration:2.4s;animation-delay:-1s"></div>
+    <div data-step="1" class="fx-fade" style="position:absolute;left:720px;top:112px;width:90px;height:56px;background:#fff">
+      <svg width="40" height="56" viewBox="0 0 40 56" style="position:absolute;left:25px;top:0"><path d="M8 4 L28 18 L10 30 L30 42 L12 54" stroke="#ff3300" stroke-width="5" fill="none"/></svg>
     </div>
-    <div data-step="1" class="fx-pop" style="position:absolute;left:0;top:0;width:0;height:0">
-      <div class="at" style="left:830px;top:90px"><div class="dbox" style="margin:0;white-space:nowrap;font:800 28px Archivo;border-color:#ff3300;color:#ff3300;padding:12px 20px">Slow?</div></div>
-      <div class="at" style="left:760px;top:170px"><div class="dbox" style="margin:0;white-space:nowrap;font:800 28px Archivo;border-color:#ff3300;color:#ff3300;padding:12px 20px">Blocked?</div></div>
-      <div class="at" style="left:850px;top:240px"><div class="dbox" style="margin:0;white-space:nowrap;font:800 28px Archivo;border-color:#ff3300;color:#ff3300;padding:12px 20px">Changed?</div></div>
-    </div>
-    <div data-step="2" style="position:absolute;left:990px;top:150px;width:150px;height:200px">
-      <svg width="150" height="200" viewBox="0 0 150 200"><path d="M75 4 L146 30 V95 C146 145 115 178 75 196 C35 178 4 145 4 95 V30 Z" fill="#000"/>
-      <ellipse cx="75" cy="72" rx="36" ry="12" fill="none" stroke="#fff" stroke-width="5"/><path d="M39 72 V128 C39 144 111 144 111 128 V72 M39 100 C39 116 111 116 111 100" fill="none" stroke="#fff" stroke-width="5"/></svg>
-    </div>
-    <div data-step="2" class="dcap" style="position:absolute;left:965px;top:370px;width:200px;text-align:center;line-height:1.15">Database + cache</div>
-    <div data-step="3" style="position:absolute;left:0;top:0;width:0;height:0">
-      <div class="packet" style="offset-path:path('M1140 310 H1210');animation-duration:3.6s"></div>
-    </div>
-    <div style="position:absolute;left:1210px;top:120px;width:390px;height:400px;border:3px solid #000;background:#fff;box-sizing:border-box">
-      <div style="height:40px;background:#000;display:flex;gap:10px;align-items:center;padding:0 14px"><i style="width:14px;height:14px;background:#ff3300"></i><i style="width:14px;height:14px;background:#fff"></i><i style="width:14px;height:14px;background:#fff"></i></div>
-      <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
-        <i style="height:22px;width:60%;background:#000"></i>
-        <svg width="330" height="120" viewBox="0 0 330 120"><path d="M0 100 L50 80 L95 92 L140 50 L190 64 L240 30 L290 42 L330 12" fill="none" stroke="#ff3300" stroke-width="5"/><path d="M0 118 H330" stroke="#b5b5b5" stroke-width="3"/></svg>
-        <i style="height:16px;width:90%;background:#cfcfcf"></i>
-        <i style="height:16px;width:70%;background:#cfcfcf"></i>
+    <div data-step="1" class="at fx-fade" style="left:600px;top:190px;white-space:nowrap;font:800 32px Archivo;color:#ff3300;transform:none">Feed breaks</div>
+    <div style="position:absolute;left:940px;top:0;width:660px;height:500px;border:3px solid #000;background:#fff;box-sizing:border-box">
+      <div style="height:48px;background:#000;color:#fff;display:flex;align-items:center;gap:10px;padding:0 18px"><i style="width:14px;height:14px;background:#ff3300;display:block"></i><i style="width:14px;height:14px;background:#fff;display:block"></i><i style="width:14px;height:14px;background:#fff;display:block"></i><span style="font:800 28px Archivo;margin-left:18px">Your app</span></div>
+      <div style="padding:20px 24px"><svg width="600" height="150" viewBox="0 0 600 150"><path d="M0 120 L80 96 L160 108 L240 62 L320 76 L400 34 L480 48 L600 12" fill="none" stroke="#000" stroke-width="5"/><path d="M0 146 H600" stroke="#b5b5b5" stroke-width="3"/></svg></div>
+      <div data-step="3" style="position:absolute;left:24px;right:24px;bottom:20px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:14px"><div style="border:3px solid #000;background:#f2f2f2;padding:8px 14px;font:800 28px/1.2 Archivo;">Saved prices · as of 12 Nov</div><span style="background:#d9d9d9;color:#444;font:800 28px Archivo;text-transform:uppercase;letter-spacing:.02em;padding:4px 10px">Sample</span></div>
+        <div style="border:3px solid #000;background:#f2f2f2;padding:8px 14px;font:800 28px/1.2 Archivo;background:#fff;border-style:dashed;color:#444">No saved prices yet → "No data yet — try again later"</div>
       </div>
-      <div data-step="3" style="position:absolute;right:12px;bottom:12px;font-size:28px;color:#6b6b6b;background:#f2f2f2;padding:4px 10px;white-space:nowrap">Page: cached as of [date]</div>
+    </div>
+    <div data-step="2" class="fx-pop" style="position:absolute;left:0;top:330px;width:900px;height:130px;display:flex;align-items:center;gap:30px">
+      <svg width="130" height="120" viewBox="0 0 184 120" style="flex:none"><path d="M3 20 V100 A89 17 0 0 0 181 100 V20" fill="#fff" stroke="#000" stroke-width="5"/><ellipse cx="92" cy="20" rx="89" ry="17" fill="#000"/><path d="M3 60 A89 17 0 0 0 181 60" fill="none" stroke="#000" stroke-width="4"/></svg>
+      <span style="font:800 36px Archivo;white-space:nowrap">The database answers instead</span>
+      <svg width="200" height="20" viewBox="0 0 200 20" style="flex:none"><path d="M0 10 H190" stroke="#ff3300" stroke-width="5"/><path d="M178 2 L194 10 L178 18z" fill="#ff3300"/></svg>
     </div>
   </div>
 </div></section>
 <section class="slide" data-n="10"><div class="inner">
-  <div class="eyebrow">Placeholder</div>
-  <h2>Worked example: read one saved price row and check its date</h2>
+  <div class="eyebrow">Worked example</div>
+  <h2 style="margin-bottom:36px">Worked example: read one saved price row and check its date</h2>
+  <div class="body" style="position:relative">
+    <div style="position:absolute;left:0;top:0;width:920px;border:3px solid #000;box-sizing:border-box">
+      <div style="background:#000;padding:12px 24px"><span style="background:#d9d9d9;color:#444;font:800 28px Archivo;text-transform:uppercase;letter-spacing:.04em;padding:4px 12px">Sample — yours will differ</span></div>
+      <div style="font:500 32px 'JetBrains Mono',monospace;padding:26px 24px;height:100px;box-sizing:border-box">Tables: stocks (1 row), prices (~240 rows)</div>
+      <div style="font:500 32px 'JetBrains Mono',monospace;padding:26px 24px;height:100px;box-sizing:border-box;border-top:3px solid #ddd">Latest NISP.JK row: 11 Nov, close 1,160</div>
+    </div>
+    <div data-step="1" class="gone3 fx-right" style="position:absolute;left:960px;top:222px;width:640px;display:flex;align-items:center;gap:14px"><svg width="70" height="30" viewBox="0 0 70 30" style="flex:none"><path d="M70 15 H8" stroke="#ff3300" stroke-width="5"/><path d="M18 5 L4 15 L18 25z" fill="#ff3300"/></svg><span style="font:800 32px/1.2 Archivo;color:#ff3300;border:4px solid #ff3300;padding:8px 16px">Is the date the last trading day?</span></div>
+    <div data-step="2" class="gone3 fx-right" style="position:absolute;left:960px;top:122px;width:640px;display:flex;align-items:center;gap:14px"><svg width="70" height="30" viewBox="0 0 70 30" style="flex:none"><path d="M70 15 H8" stroke="#ff3300" stroke-width="5"/><path d="M18 5 L4 15 L18 25z" fill="#ff3300"/></svg><span style="font:800 32px/1.2 Archivo;color:#ff3300;border:4px solid #ff3300;padding:8px 16px">About one row per trading day in a year?</span></div>
+    <div data-step="3" class="fx-fade" style="position:absolute;left:0;top:360px;width:1500px;font:800 46px/1.2 Archivo">Check the date and the count, not whether the price looks "right".</div>
+  </div>
 </div></section>
 <section class="slide" data-n="11"><div class="inner">
   <div class="eyebrow" style="margin-bottom:22px"><span class="tag red">Run 1 · Database</span><span class="tag">Time · 15 min</span></div>
