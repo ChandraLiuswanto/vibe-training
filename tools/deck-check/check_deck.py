@@ -31,6 +31,26 @@ TESTED_PREFIXES = [
     "Read docs/spec.md and give me",
     "Save that plan to docs/plan.md",
 ]
+PROFILES = {
+    "s1": {"banned": BANNED, "tested_prefixes": TESTED_PREFIXES, "app_slides": (4, 11)},
+    "s2": {
+        "banned": [
+            r"\[CHECKPOINT URL\]",
+            r"Replace my project",
+            r"answers from the page, not from memory",
+            r"stops the agent from filling gaps",
+            r"learns the rules",
+            r"\ballow them\b",
+            r"must always",
+            r"never tells anyone",
+            r"cached copy",
+            r"\bBaseline\b",
+            r"\blive\b(?! there| where)",
+        ],
+        "tested_prefixes": [],
+        "app_slides": None,
+    },
+}
 VOID = {"br", "img", "input", "hr", "meta", "link", "area", "base", "col", "embed", "source", "track", "wbr"}
 
 
@@ -219,7 +239,7 @@ def check_notes(slides):
     return [f"slide {s.n}: notes empty" for s in slides if not s.notes.strip()]
 
 
-def check_prompts(slides, prompts):
+def check_prompts(slides, prompts, profile="s1"):
     errs = []
     known = {p.strip() for p in prompts}
     used = set()
@@ -228,7 +248,7 @@ def check_prompts(slides, prompts):
             used.add(pre)
             if pre not in known:
                 errs.append(f"slide {s.n}: prompt not in prompts file: {pre[:50]!r}")
-    for prefix in TESTED_PREFIXES:
+    for prefix in PROFILES[profile]["tested_prefixes"]:
         text = next((p for p in prompts if p.startswith(prefix)), None)
         if text is None:
             errs.append(f"prompts file has no tested prompt starting {prefix!r}")
@@ -237,21 +257,35 @@ def check_prompts(slides, prompts):
     return errs
 
 
-def check_banned(slides):
+def check_banned(slides, profile="s1"):
     errs = []
+    prof = PROFILES[profile]
     for s in slides:
         try:
             num = int(s.n)
         except ValueError:
             num = None
-        for pat in BANNED:
-            if pat == APP_PATTERN and not (num is not None and 4 <= num <= 11):
-                continue
+        for pat in prof["banned"]:
+            if pat == APP_PATTERN:
+                lo, hi = prof["app_slides"] or (None, None)
+                if lo is None or not (num is not None and lo <= num <= hi):
+                    continue
             for where, text in (("visible", s.visible), ("notes", s.notes)):
                 if re.search(pat, text, re.I):
                     errs.append(f"slide {s.n}: banned /{pat}/ in {where}")
     return errs
 
+def check_placeholders(slides):
+    errs = []
+    for s in slides:
+        for pre in s.pres:
+            # Two exemptions: spec 8.0 P-FIX (fix-template fill-ins) and 8 Run 2a (saved-prices line).
+            chk = pre.replace('"Saved prices as of <date>"', "")
+            for tok in ("[What I did]", "[what should happen]", "[what happened]"):
+                chk = chk.replace(tok, "")
+            if re.search(r"\[[A-Za-z][^\]{}]*\]|<[^>]+>", chk):
+                errs.append(f"slide {s.n}: placeholder in prompt: {pre[:50]}")
+    return errs
 
 def check_workflow(slides):
     return [f"slide {s.n}: workflow name {w!r} not in {sorted(WF)}" for s in slides for w in s.wf if w not in WF]
@@ -287,6 +321,7 @@ def main(argv=None):
     ap.add_argument("--outline")
     ap.add_argument("--copy")
     ap.add_argument("--prompts")
+    ap.add_argument("--profile", choices=sorted(PROFILES), default="s1")
     a = ap.parse_args(argv)
 
     def rd(p):
@@ -313,12 +348,14 @@ def main(argv=None):
     if all_slides:
         errs += check_sequence(all_slides)
     if slides:
-        errs += check_notes(slides) + check_banned(slides) + check_workflow(slides)
+        errs += check_notes(slides) + check_banned(slides, a.profile) + check_workflow(slides)
+        if a.profile == "s2":
+            errs += check_placeholders(slides)
         if a.outline:
             outline = {k: v for k, v in parse_outline(rd(a.outline)).items() if in_rng(k)}
             errs += check_titles(slides, outline)
         if a.prompts:
-            perrs = check_prompts(slides, parse_prompts(rd(a.prompts)))
+            perrs = check_prompts(slides, parse_prompts(rd(a.prompts)), a.profile)
             if rng is not None:  # deck-wide "tested five present" only applies to a full run
                 perrs = [e for e in perrs if e.startswith("slide ")]
             errs += perrs
