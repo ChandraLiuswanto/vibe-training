@@ -9,6 +9,13 @@ Default deck output is a single self-contained HTML file. Two project skills spl
 
 Use `building-presentation-decks` only when the user asks for a `.pptx`. Use `clarity` to polish wording after the outline is approved, not to rebuild the outline.
 
+### Skill provisioning
+
+- **`frontend-slides`**: https://github.com/zarazhangrui/frontend-slides (MIT). Clone the source and check out tested commit `9906a34` before provisioning the skill. Use its Swiss Modern preset and the fixed 16:9 stage from its `viewport-base.css`.
+- **`presentation-creator`**: source: TODO (owner to record).
+- **`clarity`**: source: TODO (owner to record).
+- **`skills/building-presentation-decks`**: the `.pptx` route only, for explicit `.pptx` requests.
+
 ### Rules for every deck
 
 - **Story gate:** show the user the headline-only slide sequence and get approval before building. Every slide serves a spine beat or a learning objective; otherwise cut it.
