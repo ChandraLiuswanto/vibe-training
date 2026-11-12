@@ -46,7 +46,7 @@ build:
   3: the chat bubble with the source chip appears; the book and bubble pulse three times, then settle
 notes:
 Say what the session produces. On step 0: this is the app you have now. It shows the latest available price for NISP from Yahoo Finance, and the chatbot answers from that data. On step 1: today it gets a database, a file that keeps every day's price, so the app remembers. On that database we build a watchlist: NISP, plus BBRI and TLKM, which you add yourself, and you can remove one. On step 2: the chatbot gets a Wiki, a few pages saved from the official OJK and IDX websites. On step 3: the app sends the matching page along with the question, and the chatbot is asked to show the page link. The model can still misread a page, so you open the link and check it. Three runs today, each building on the last. As before, the app shows data and facts only. The chatbot is told not to recommend what to buy or sell; we test that, we don't assume it. This is a training prototype, not investment advice.
-words: 23 · budget: 40 · exception: none
+words: 24 · budget: 40 · exception: none
 status: n/a
 
 ## 3. Same five steps as this morning, once for each new feature
