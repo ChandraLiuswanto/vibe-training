@@ -36,7 +36,7 @@ Finding IDs (P0-1, P1-3, P2-7 …) refer to `docs/reviews/2026-11-12-day3-s2-rev
 | **Run 3 — Teach the chatbot** | | | | **45** |
 | 21 | Run 3a: record three answers, then interview and plan the Wiki | 16a (ref) | §8 Run 3a | 15 |
 | 22 | Run 3b: find official pages, check each one, build the Wiki | 16a/16b (ref) | §8 Run 3b (P1-7) | 15 |
-| 23 | Run 3c: write your system prompt, check answers against their pages, then push | 16b | §8 Run 3c (P1-1) | 15 |
+| 23 | Run 3c: set the system prompt, check answers against their pages, then push | 16b | §8 Run 3c (P1-1) | 15 |
 | **Close** | | | | **15** |
 | 24 | A regulatory answer needs a source you can open and check | 17 | quiz §7.7 (P1-6) | 4 |
 | 25 | Data lives in the database, knowledge in the Wiki, behaviour in the system prompt | 19 | recap kept; add finish check §7.8 | 4 |

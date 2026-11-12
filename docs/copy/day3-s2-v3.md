@@ -25,7 +25,7 @@ diagram: none
 build:
   0: title, subtitle and session line together
 notes:
-Welcome back. In Session 1 you built a NISP dashboard and a chatbot by directing opencode, and you may have saved it on GitHub. This session upgrades that same app in two ways. First, it gets a memory: a database that keeps prices, and a watchlist of the stocks you follow. Second, the chatbot gets reference text: a small Wiki built from official Indonesian pages, and a system prompt that you write yourself. The method is the same as this morning: Interview, Plan, Execute, Test / Debug, Iterate. Before we start, check that opencode opens on every laptop and that your app from Session 1 still starts. Anyone whose app does not start, raise your hand now; the next slides show what happens then.
+Welcome back. In Session 1 you built a NISP dashboard and a chatbot by directing opencode, and you may have saved it on GitHub. This session upgrades that same app in two ways. First, it gets a memory: a database that keeps prices, and a watchlist of the stocks you follow. Second, the chatbot gets reference text: a small Wiki built from official Indonesian pages, and a system prompt that you set and test. The method is the same as this morning: Interview, Plan, Execute, Test / Debug, Iterate. Before we start, check that opencode opens on every laptop and that your app from Session 1 still starts. Anyone whose app does not start, raise your hand now; the next slides show what happens then.
 words: 11 · budget: 40 · exception: none
 status: n/a
 
@@ -379,7 +379,7 @@ Goal: test it like a user, then push.
 Interview · Plan · Execute · Test / Debug · Iterate
 Current: Test / Debug
 15 min
-1. Add BBRI.JK, then TLKM.JK. Each appears on the watchlist and the dashboard, with history.
+1. Add BBRI.JK, then TLKM.JK. Each appears on the watchlist and the dashboard.
 2. Type NISP (no .JK). You see: Enter the IDX ticker, for example NISP.JK. Nothing is saved.
 3. Remove BBRI.JK. Refresh the dashboard. Its card is gone.
 4. Stop the back end, start it again, reopen the app. The watchlist and prices are still there.
@@ -411,7 +411,7 @@ build:
   6: Check files collapses; the Push box opens with the key-leak line
   7: Push collapses to a ✓ chip; the "You should see" line and the Stuck line appear
 notes:
-[UNTESTED] The push prompts and the fix template are untested; rehearse them first. Timebox 15 minutes. Steps 1 to 4 are checks you do yourself in the browser: no prompt needed. Step 1: add BBRI.JK, then TLKM.JK; each should appear on the watchlist and on the dashboard, with its price history. Step 2: type NISP without .JK; the app should say "Enter the IDX ticker, for example NISP.JK" and save nothing, because the spec accepts tickers ending in .JK only. Step 3: remove BBRI.JK and refresh the dashboard; its card should be gone. We remove BBRI and not TLKM so that NISP and TLKM prices stay for Session 3, which reruns on TLKM. Step 4: stop the back end, start it again and reopen the app; the watchlist and the prices should still be there, because they are saved in the database. Ask the facilitator if you are unsure how to restart the back end. Step 5: if a check failed, use the fix template: fill in the three brackets (what you did, what you expected, what you saw) before sending. It is the only prompt in the course you edit. Then repeat the check that failed. Steps 6 and 7: the same two-step push as Run 1b, with the message "Watchlist page". Read the list and stop on backend/.env or a key. Key leaked? Tell the facilitator — the key must be replaced. At minute 12, anyone whose checks still fail gets help to checkpoint s2-watchlist; do not keep debugging. In plain words: the stocks table from Run 1 is the watchlist, and Run 1 starts with NISP.JK in it, so NISP is on the watchlist from the start and the watchlist is stored in the database. That is why the restart check (step 4) keeps the watchlist.
+[UNTESTED] The push prompts and the fix template are untested; rehearse them first. Timebox 15 minutes. Steps 1 to 4 are checks you do yourself in the browser: no prompt needed. Step 1: add BBRI.JK, then TLKM.JK; each should appear on the watchlist and on the dashboard. Step 2: type NISP without .JK; the app should say "Enter the IDX ticker, for example NISP.JK" and save nothing, because the spec accepts tickers ending in .JK only. Step 3: remove BBRI.JK and refresh the dashboard; its card should be gone. We remove BBRI and not TLKM so that NISP and TLKM prices stay for Session 3, which reruns on TLKM. Step 4: stop the back end, start it again and reopen the app; the watchlist and the prices should still be there, because they are saved in the database. Ask the facilitator if you are unsure how to restart the back end. Step 5: if a check failed, use the fix template: fill in the three brackets (what you did, what you expected, what you saw) before sending. It is the only prompt in the course you edit. Then repeat the check that failed. Steps 6 and 7: the same two-step push as Run 1b, with the message "Watchlist page". Read the list and stop on backend/.env or a key. Key leaked? Tell the facilitator — the key must be replaced. At minute 12, anyone whose checks still fail gets help to checkpoint s2-watchlist; do not keep debugging. In plain words: the stocks table from Run 1 is the watchlist, and Run 1 starts with NISP.JK in it, so NISP is on the watchlist from the start and the watchlist is stored in the database. That is why the restart check (step 4) keeps the watchlist.
 words: 54 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
 status: UNTESTED
 
@@ -461,14 +461,14 @@ status: n/a
 type: visual
 block: Why the chatbot needs knowledge · 4
 visible:
-system: role and rules (you write it)
+system: role and rules (you set it)
 user
 assistant
 Role: answer stock questions for business users
 Rules: name the source, say if unsure, no buy/sell advice
 It can still be wrong, so we test.
 Training prototype — not investment advice.
-diagram: The message stack from Session 1 slide 6: role chips "system", "user", "assistant" stacked vertically. The system box grows and lifts forward, labelled "system: role and rules (you write it)". Two sticky notes attach to it: "Role: answer stock questions for business users" and "Rules: name the source, say if unsure, no buy/sell advice". The user and assistant boxes stay small and faded below. The chip "Training prototype — not investment advice." sits at the bottom from step 1. At the last click the line "It should follow them. It can still get them wrong, so we test." appears under the notes.
+diagram: The message stack from Session 1 slide 6: role chips "system", "user", "assistant" stacked vertically. The system box grows and lifts forward, labelled "system: role and rules (you set it)". Two sticky notes attach to it: "Role: answer stock questions for business users" and "Rules: name the source, say if unsure, no buy/sell advice". The user and assistant boxes stay small and faded below. The chip "Training prototype — not investment advice." sits at the bottom from step 1. At the last click the line "It should follow them. It can still get them wrong, so we test." appears under the notes.
 build:
   0: the three-box stack from Session 1, small
   1: the system box grows and lifts forward with its label; the prototype chip appears
@@ -476,7 +476,7 @@ build:
   3: the Rules sticky note attaches
   4: the line "It should follow them. It can still get them wrong, so we test." appears
 notes:
-Remember this list from Session 1? Every request is a list of messages with roles. On step 0: system, user, assistant. In Session 1 the system message holds the role and rules, written by whoever builds the app. On step 1: today that is you. The system message goes at the top of every request, before the user's question. Point at the chip: this is a training prototype. It is not investment advice and it is not compliance-checked. On step 2: the role says who the chatbot is: here, an assistant that answers stock questions for business users. On step 3: the rules say what it should do: name the Wiki page or data it used, say when it does not know, and not recommend buying or selling. On step 4: these are instructions the chatbot should follow. It can still get them wrong, which is why Run 3c tests them with real questions, including one it cannot answer and one that asks for advice. Ask: which rule matters most for a bank? Usually the last one. You write the text yourself in Run 3c.
+Remember this list from Session 1? Every request is a list of messages with roles. On step 0: system, user, assistant. In Session 1 the system message holds the role and rules, written by whoever builds the app. On step 1: today that is you. The system message goes at the top of every request, before the user's question. Point at the chip: this is a training prototype. It is not investment advice and it is not compliance-checked. On step 2: the role says who the chatbot is: here, an assistant that answers stock questions for business users. On step 3: the rules say what it should do: name the Wiki page or data it used, say when it does not know, and not recommend buying or selling. On step 4: these are instructions the chatbot should follow. It can still get them wrong, which is why Run 3c tests them with real questions, including one it cannot answer and one that asks for advice. Ask: which rule matters most for a bank? Usually the last one. You set it in Run 3c, and you can tighten it if a test fails.
 words: 40 · budget: 40 · exception: none
 status: n/a
 
@@ -500,7 +500,7 @@ build:
   4: the warning chip and the "No matching page" branch appear
 notes:
 So how does the app put the right text in front of the model? With a Wiki: a folder of short pages the app can send to the model with a question. On step 0: a user asks a question. On step 1: the app looks in the folder called wiki and picks the pages whose words match the question. No magic: it is a keyword match. On step 2: it sends the matching page together with the question to the model, inside the context window you saw in Session 1. On step 3: the answer comes back with the link to the page it was given. This helps the model use the source, but it can still misread the page or add things that are not on it. On step 4: so open the link and check. And if no page matches, our spec says the chatbot should say "This Wiki doesn't cover that." We test that in Run 3c. The Wiki stays small on purpose: a few pages, each short. You can open and read every page yourself, which is the point: you can check what the chatbot was given.
-words: 38 · budget: 40 · exception: none
+words: 28 · budget: 40 · exception: none
 status: n/a
 
 ## 19. Only OJK and IDX pages go in, each with its link and the date you checked it
@@ -589,7 +589,7 @@ build:
   4: Plan collapses; the Save box opens (Build mode)
   5: the Save box collapses; the "You should see" line and the Stuck line appear
 notes:
-[UNTESTED] The interview, spec, plan and save prompts are untested; rehearse them first. Timebox 15 minutes. Same five steps as this morning, now for the Wiki. Step 0: before changing anything, ask your chatbot the three questions in the browser and write down each answer. This records where you start. The answers may be right, vague or wrong; we do not know yet, and neither does a reader without a source. You compare them in Run 3c. Step 1: the interview prompt asks for short pages from official ojk.go.id and idx.co.id investor-education pages only, each with its link: at most 3 questions, nothing written yet. Step 2: the spec prompt is technical on purpose; copy it as is. Plain-language parts: pages in wiki/; each page starts with its title, its URL, the last-updated date if the page shows one, and the date we checked it; for each question the back end picks matching pages by keyword and sends them with the question; if no page matches, the chatbot says the Wiki does not cover it. You write the system prompt yourself in Run 3c. Step 3: Plan mode (Tab), then read the plan and approve, edit or reject. Step 4: switch to Build mode and send the save prompt; it only saves the plan to docs/plan.md and builds nothing. At minute 12, anyone without a saved plan gets help from the facilitator, because Run 3b needs it. If nothing moves for 2 minutes, press Esc and send the same prompt again.
+[UNTESTED] The interview, spec, plan and save prompts are untested; rehearse them first. Timebox 15 minutes. Same five steps as this morning, now for the Wiki. Step 0: before changing anything, ask your chatbot the three questions in the browser and write down each answer. This records where you start. The answers may be right, vague or wrong; we do not know yet, and neither does a reader without a source. You compare them in Run 3c. Step 1: the interview prompt asks for short pages from official ojk.go.id and idx.co.id investor-education pages only, each with its link: at most 3 questions, nothing written yet. Step 2: the spec prompt is technical on purpose; copy it as is. Plain-language parts: pages in wiki/; each page starts with its title, its URL, the last-updated date if the page shows one, and the date we checked it; for each question the back end picks matching pages by keyword and sends them with the question; if no page matches, the chatbot says the Wiki does not cover it. You set the system prompt in Run 3c. Step 3: Plan mode (Tab), then read the plan and approve, edit or reject. Step 4: switch to Build mode and send the save prompt; it only saves the plan to docs/plan.md and builds nothing. At minute 12, anyone without a saved plan gets help from the facilitator, because Run 3b needs it. If nothing moves for 2 minutes, press Esc and send the same prompt again.
 words: 59 · budget: 60 · exception: prompt boxes (copyable prompts, including the long spec prompt) are not counted; chips and labels are counted
 status: UNTESTED
 
@@ -606,7 +606,7 @@ Current: Execute
 Find official investor-education pages on ojk.go.id and idx.co.id that explain what OJK supervises, what an auto-rejection limit is, and what to check before investing. For each, give the URL, the page title, the last-updated date if shown, and a one-line summary. Don't save anything yet.
 ```
 ✓ Find pages
-2. Check: every address on ojk.go.id or idx.co.id? Open each one. Drop anything else.
+2. Check: every address on ojk.go.id or idx.co.id? Open each one. Tell opencode which to drop.
 ✓ Check addresses
 3. Build mode (press Tab) — send:
 ```text
@@ -623,11 +623,11 @@ build:
   2: the check collapses; the Build box opens with the permission line
   3: Build collapses; the "You should see" line and the Stuck line appear
 notes:
-[UNTESTED] Both prompts are untested, and they depend on the agent reaching the web; rehearse them first. Timebox 15 minutes. Facilitator setup: the project log (entry "S2 copy v2 written") records that opencode's web fetch works by default and that web search needs OPENCODE_ENABLE_EXA=1, in opencode 1.19.5 with no key. That is recorded in the project log; verify in rehearsal. The OJK and IDX sites may refuse automated requests, so the agent may not be able to open every page. Fallback: the handout's verified URL list (a delivery blocker, to be prepared before class). At minute 10 with no usable pages, everyone uses the handout list. Step 0: the find prompt asks for investor-education pages on ojk.go.id and idx.co.id on three topics, with the URL, title, last-updated date if shown and a one-line summary for each. Nothing is saved yet. Step 1: this check is yours, with no prompt. Is every address on ojk.go.id or idx.co.id? Open each page. Drop anything else, even a good article. An official page can be old, replaced, or educational rather than the rule itself; note any page whose date is unclear. Step 2: switch to Build mode and send the build prompt. It turns the pages you approved into Wiki pages, one Markdown file per page, with the header from the spec. "Only use what the page says" tells the agent not to fill gaps; you still compare its page with the original. Read each command it asks to run, and raise your hand for anything outside financial-app. Step 3: open wiki/ and compare with the expected result. If nothing moves for 2 minutes, press Esc and send the same prompt again.
-words: 59 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
+[UNTESTED] Both prompts are untested, and they depend on the agent reaching the web; rehearse them first. Timebox 15 minutes. Facilitator setup: the project log (entry "S2 copy v2 written") records that opencode's web fetch works by default and that web search needs OPENCODE_ENABLE_EXA=1, in opencode 1.19.5 with no key. That is recorded in the project log; verify in rehearsal. The OJK and IDX sites may refuse automated requests, so the agent may not be able to open every page. Fallback: the handout's verified URL list (a delivery blocker, to be prepared before class). At minute 10 with no usable pages, everyone uses the handout list. Step 0: the find prompt asks for investor-education pages on ojk.go.id and idx.co.id on three topics, with the URL, title, last-updated date if shown and a one-line summary for each. Nothing is saved yet. Step 1: this check is yours, with no prompt. Is every address on ojk.go.id or idx.co.id? Open each page. Drop anything else, even a good article. Reply in the chat with the pages to drop before you send the build prompt. An official page can be old, replaced, or educational rather than the rule itself; note any page whose date is unclear. Step 2: switch to Build mode and send the build prompt. It turns the pages you approved into Wiki pages, one Markdown file per page, with the header from the spec. "Only use what the page says" tells the agent not to fill gaps; you still compare its page with the original. Read each command it asks to run, and raise your hand for anything outside financial-app. Step 3: open wiki/ and compare with the expected result. If nothing moves for 2 minutes, press Esc and send the same prompt again.
+words: 61 · budget: 60 · exception: prompt boxes (copyable prompts) are not counted; chips and labels are counted
 status: UNTESTED
 
-## 23. Run 3c: write your system prompt, check answers against their pages, then push
+## 23. Run 3c: set the system prompt, check answers against their pages, then push
 type: run
 block: Run 3 — Teach the chatbot · 15
 visible:
@@ -711,8 +711,8 @@ build:
   3: the system prompt box appears; arrows join into the chatbot
   4: the finish-check line appears
 notes:
-Do not re-teach; link each box to what they did. On step 1: the database holds data. You built it in Run 1 and the watchlist reads from it, so the app keeps prices and the stocks you follow, even when Yahoo is down. On step 2: the Wiki holds knowledge: a few official pages the app can send to the model with a question, so the answer can name a source you check. On step 3: the system prompt holds behaviour: who the chatbot is and the rules it should follow. You wrote it yourself. When something is wrong later, this split tells you where to look: wrong number, check the database; wrong fact, check the Wiki; wrong tone or advice, check the system prompt. If it gives advice, don't use the answer: fix the system prompt and retest. On step 4: the finish check. Does the watchlist survive a restart? Does each answer show a source you checked? Is your latest commit on GitHub? Anyone not finished can switch to checkpoint s2-wiki for Session 3; the facilitator confirms the move.
-words: 38 · budget: 40 · exception: none
+Do not re-teach; link each box to what they did. On step 1: the database holds data. You built it in Run 1 and the watchlist reads from it, so the app keeps prices and the stocks you follow, even when Yahoo is down. On step 2: the Wiki holds knowledge: a few official pages the app can send to the model with a question, so the answer can name a source you check. On step 3: the system prompt holds behaviour: who the chatbot is and the rules it should follow. You set it and tested it. When something is wrong later, this split tells you where to look: wrong number, check the database; wrong fact, check the Wiki; wrong tone or advice, check the system prompt. If it gives advice, don't use the answer: fix the system prompt and retest. On step 4: the finish check. Does the watchlist survive a restart? Does each answer show a source you checked? Is your latest commit on GitHub? Anyone not finished can switch to checkpoint s2-wiki for Session 3; the facilitator confirms the move.
+words: 28 · budget: 40 · exception: none
 status: n/a
 
 ## 26. Questions
@@ -765,7 +765,7 @@ Spec §11.3: every `You should see` item and every test step in spec §8 maps to
 | Run 2a | Watchlist page with NISP and its price date | Slide 11 step 2: spec prompt (stocks table, seeded with NISP.JK; the stocks table is the watchlist, spec §7.1) plus slide 13 step 2: watchlist spec prompt ("Show the date of each price"; GET /api/watchlist returns price_date); built by slide 13 step 4 (build prompt) |
 | Run 2a | Dashboard shows a NISP card (dashboard follows the watchlist) | Slide 11 step 2: spec prompt (NISP.JK is in the stocks table, which is the watchlist) plus slide 13 step 2: "The dashboard shows one price card for each stock on the watchlist, so adding or removing a stock changes the dashboard after a refresh" |
 | Run 2a (saved-prices label) | Saved prices as of <date> / No data yet when Yahoo fails (slide 9 promise) | Slide 13 step 2: "If Yahoo fails, keep showing saved prices labelled ... with no saved prices, say "No data yet"" |
-| Run 2b test 1 | BBRI.JK then TLKM.JK appear on the watchlist and dashboard, with history | Slide 13 step 2: "POST /api/watchlist {ticker}, which also saves that stock's price history" and "dashboard shows one price card for each stock" |
+| Run 2b test 1 | BBRI.JK then TLKM.JK appear on the watchlist and dashboard | Slide 13 step 2: "POST /api/watchlist {ticker}, which also saves that stock's price history" and "dashboard shows one price card for each stock" |
 | Run 2b test 2 | NISP without .JK → "Enter the IDX ticker, for example NISP.JK", nothing saved | Slide 13 step 2: "Accept IDX tickers ending in .JK only; otherwise say ... and save nothing" |
 | Run 2b test 3 | Remove BBRI.JK; its card is gone after a refresh | Slide 13 step 2: "DELETE /api/watchlist/{ticker}" and "removing a stock changes the dashboard after a refresh" |
 | Run 2b test 4 | After a restart the watchlist and prices are still there | Slide 11 step 2: spec prompt (SQLite database backend/data/app.db; the stocks table is the watchlist) plus slide 13 step 2: watchlist spec prompt ("Prices come from the database"); slide 11 step 1 ("so the app still has them after a restart") |
