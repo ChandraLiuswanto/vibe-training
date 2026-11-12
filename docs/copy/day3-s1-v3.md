@@ -277,7 +277,7 @@ build:
   3: "/models" badge appears
 notes:
 Before class, replace [FAST MODEL] and [SMART MODEL] with real names from the model list your participants share. This is a rule of thumb, not a law. On step 1: a quick model usually replies faster and costs less. It suits small, clear jobs where you see the result straight away. On step 2: a stronger model usually does better on harder reasoning, and is often slower. Use it for planning, where a bad plan wastes the whole build, and for debugging, when the cause is not obvious. Either model can be wrong, so compare results on your real task and check them. On step 3, show the picker: type /models in opencode. Names differ by provider, so say "pick one quick and one stronger model from your list". Today we use the stronger model for the plan.
-words: 30 · budget: 40 · exception: none
+words: 28 · budget: 40 · exception: none
 status: n/a
 
 ## 13. On supported models, higher effort lets the model reason more before answering
@@ -295,7 +295,7 @@ build:
   2: the caption "Ctrl+T cycles the options your model offers" appears
 notes:
 Model choice is one lever; effort is a second, on models that support it. On step 0: low effort replies quicker, which is right for a typo or a colour change. On step 1, the one click: the pointer moves to high and stays there. High effort lets the model reason more before it answers. That usually takes longer and can cost more, and it doesn't guarantee a better answer. Use it for the plan, for a bug you cannot explain, or for any step that is hard. On step 2: in opencode, Ctrl+T cycles the options your model offers. opencode calls them variants; their names and effects depend on the model, and effort is a common one. On a Mac it is also the Control key, not Command. If Ctrl+T changes nothing, your model may offer no options; ask me if unsure.
-words: 28 · budget: 40 · exception: none
+words: 30 · budget: 40 · exception: none
 status: n/a
 
 ## 14. Everyone works on a local copy and shares through GitHub
@@ -315,7 +315,7 @@ build:
   3: the "push / pull" arrow draws; the punch line appears
 notes:
 On step 0 ask: who has a folder of files like Budget_final_v2_REALLY? Hands up. With copies like these, nobody knows which file is the real one, who changed what, or what was lost. Git keeps one project and records each version you commit. On step 1: your local copy is the project folder on your laptop. On step 2: GitHub is a website that hosts a shared copy; it is the host we use today. On step 3, the key sentence: saving alone doesn't upload your work. Your work reaches GitHub only when you push, and a teammate's changes reach you when you pull. Many beginners think saving a file shares it. It doesn't. Why this matters with an agent: it changes many files quickly, so you want save points to go back to, and a copy that is not only on your laptop.
-words: 17 · budget: 40 · exception: none
+words: 21 · budget: 40 · exception: none
 status: n/a
 
 ## 15. A commit is a save point on your laptop; push copies it to GitHub, pull brings changes back
@@ -341,7 +341,7 @@ build:
   5: the routine row appears
 notes:
 On step 0: saved on laptop means the file is on your disk, nothing more. On step 1: a commit is a save point with a short note. It records the files included in it. Point at .env: it will hold the secret key. In Run 3 we put .env on Git's ignore list before the key goes in, and before pushing we ask the agent to list the files, to confirm .env is not there. On step 2: "Fixed the totals" tells you what happened; "stuff" doesn't. Commits stay on your laptop until you push. On step 3: push copies your commits to GitHub. On step 4: pull brings a teammate's commits down; if two people changed the same lines, it may need help. On step 5, the routine: pull, edit, commit, push. Today you work alone, so you mostly push, and you ask opencode in plain English instead of typing Git commands.
-words: 35 · budget: 40 · exception: none
+words: 39 · budget: 40 · exception: none
 status: n/a
 
 ## 16. Run 1a: sign up to GitHub and draft AGENTS.md with /init
@@ -361,7 +361,7 @@ build:
   2: result and time replace permission panel
 notes:
 Start GitHub sign-up first, because the confirmation email can take time. On step 0, point at the path in opencode: it must end in financial-app. Anyone with an account can sign in instead. Check spam if the email is late. Type /init while waiting. On step 1, read the permission wording aloud. A request outside the project can be a mistyped path, not something needed for the exercise. Do not approve it automatically; raise a hand and let me check. On step 2, open AGENTS.md and confirm it exists. If nothing changes for two minutes, check whether opencode is waiting for permission or input before pressing Esc and retrying /init. Help anyone still stuck reach checkpoint s1-start.
-words: 22 · budget: 60 · exception: none
+words: 24 · budget: 60 · exception: none
 status: tested (/init)
 
 ## 17. Run 1b: add your rule, check it, then push to a private repository
@@ -385,7 +385,7 @@ build:
   1: Prompt 2, result, time and stuck line
 notes:
 On step 0, send Prompt 1 exactly as written. Open AGENTS.md together and point at the added rule. The surrounding bullets may differ; the rule must be there before anyone continues. If it is missing, ask opencode to correct the file and read it again. Click to step 1 only after that check. Prompt 2 requests a private repository, a commit and a push. Follow the sign-in instructions on screen, but do not paste passwords or access keys into chat. Open github.com and check the account, the Private label, and AGENTS.md inside financial-app. Saving locally is not enough. The push prompt is untested, so rehearse real sign-in on both laptop platforms before class. Anyone blocked gets help with checkpoint s1-start.
-words: 34 · budget: 60 · exception: none
+words: 33 · budget: 60 · exception: none
 status: tested (Prompt 1) · UNTESTED (Prompt 2)
 
 ## 18. Choose how to instruct the agent by the job: this task, project rules, expertise or a sequence
@@ -406,7 +406,7 @@ build:
   3: Workflow text, Session 3 chip and footer
 notes:
 On step 0, point at the equal cards: none is a higher rank. On step 1, connect the first two to what participants just did. The message was a prompt for one task; AGENTS.md keeps standing project rules. On step 2, a skill packages expertise for reuse, such as interviewing before proposing a design. On step 3, a workflow gives a repeatable sequence; we return to that in Session 3. Read the footer: these can work together. Ask which card fits a one-off title change, then a rule for every new conversation. If someone confuses a skill with AGENTS.md, use the distinction between expertise for a particular job and rules for this project.
-words: 23 · budget: 40 · exception: none
+words: 20 · budget: 40 · exception: none
 status: n/a
 
 ## 19. The agent sees each skill's name and description, and loads the full skill when it decides one fits
@@ -430,7 +430,7 @@ build:
   3: request bubble disappears; Full skill card slides fully inside Context
 notes:
 On step 0, connect the context box to the earlier stack. Names and short descriptions help opencode choose; full instructions are not all loaded at once. These short descriptions and instructions illustrate the mechanism, not a supplied course skill kit. On step 1, point at the request to plan a dashboard. On step 2, opencode decides whether brainstorming fits. It can miss a useful skill; matching is not guaranteed. On step 3, the full card is inside the context box, where its instructions can guide the next response. You can also name a skill; look for the "skill loaded" line. If someone has no skills installed, reassure them that today's prompts ask for the same habits directly.
-words: 32 · budget: 40 · exception: none
+words: 38 · budget: 40 · exception: none
 status: n/a
 
 ## 20. A brainstorming skill makes "ask questions first" a repeatable habit
@@ -459,7 +459,7 @@ build:
   3: summary below questions
 notes:
 Point at Illustration on step 0: this is a teaching example, not the result of a controlled comparison. On step 1, read the straight answer. It may be useful, but the agent has guessed the audience and freshness requirements. On step 2, the questions make those decisions visible to the business user. On step 3, the summary records what the answers meant before any building begins. The same habit can be asked for in a prompt; a skill makes it repeatable. If someone asks whether a skill guarantees better work, say no: check the questions, summary and result. If the example feels abstract, ask which missing question would matter before a client meeting, without introducing customer information.
-words: 31 · budget: 40 · exception: none
+words: 32 · budget: 40 · exception: none
 status: n/a
 
 ## 21. An agent builds what it guesses you want, so interview first
