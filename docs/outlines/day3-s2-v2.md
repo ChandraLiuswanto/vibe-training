@@ -31,7 +31,7 @@ Legend: [visual] = animated diagram · [run] = participant hands-on · [check] =
 
 ## Why the chatbot needs knowledge
 12. A chatbot knows what it was trained on, not your rules [visual: a model with a gap where OJK rules should be]
-13. The system message sets the chatbot's role and rules; you write it [visual: links back to S1 message roles]
+13. The system message sets the chatbot's role and rules; you write it [visual: links back to S1 slide 6 (system prompt row)]
 14. A Wiki is a set of pages the chatbot reads before it answers [visual: question → finds a page → answers with source]
 15. Only official sources go in: ojk.go.id and idx.co.id, each page with its link [visual: two sources pass the gate, others bounce]
 
