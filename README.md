@@ -11,7 +11,7 @@ with single-file HTML decks for business users building a Financial App.
 | [decks/day3-s1-v2.html](decks/day3-s1-v2.html) | Previous Session 1 deck, 32 slides |
 | [decks/day3-s1-v1.html](decks/day3-s1-v1.html) | Previous Session 1 deck |
 | [decks/day3-s1.html](decks/day3-s1.html) | Byte-identical copy of v1, kept for existing links |
-| [decks/day3-s2.html](decks/day3-s2.html) | Session 2 deck, 24 slides |
+| [decks/day3-s2.html](decks/day3-s2.html) | Session 2 deck, 27 slides (v3: review fixes, worked examples) |
 | [decks/day3-s3.html](decks/day3-s3.html) | Session 3 deck, 22 slides |
 | [demos/git-basics.html](demos/git-basics.html) | Reusable Git demo |
 | [.frontend-slides/slide-previews/](.frontend-slides/slide-previews/) | Three style options used to choose Swiss Modern |
