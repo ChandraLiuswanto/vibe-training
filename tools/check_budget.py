@@ -35,6 +35,9 @@ def main() -> None:
     note = str(ws.cell(gt + 2, 1).value or "")
     assert "Docker Desktop" in note and "optional" in note.lower(), f"note row: {note!r}"
 
+    assumption = str(ws.cell(gt + 3, 1).value or "")
+    assert "1 billing month" in assumption and "first year" in assumption, f"assumption row: {assumption!r}"
+
     total = round(sum(1.11 * price * qty for *_, qty, price, _n in ROWS), 2)
     assert total == EXPECTED_TOTAL, f"total {total} != {EXPECTED_TOTAL}"
     print(f"OK grand total {total}")

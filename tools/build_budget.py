@@ -33,6 +33,8 @@ ROWS = [
 
 NOTE = ("Optional, not in total: Docker Desktop Business ~$24/user/mo, "
         "only if OCBC IT requires Docker Desktop instead of Podman.")
+ASSUMPTION = ("Assumes trainer prep + Day 3-5 delivery fit within 1 billing month; "
+              "domain = first year. If prep spans 2 months, set Quantity = 2 on the Monthly rows.")
 
 
 def build() -> None:
@@ -55,6 +57,7 @@ def build() -> None:
     g.font = Font(bold=True)
     g.number_format = "$#,##0.00"
     ws.cell(gt + 2, 1, NOTE)
+    ws.cell(gt + 3, 1, ASSUMPTION)
 
     for col, width in zip("ABCDEFGH", [44, 62, 10, 10, 10, 9, 14, 90]):
         ws.column_dimensions[col].width = width
