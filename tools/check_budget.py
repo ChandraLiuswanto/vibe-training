@@ -5,14 +5,15 @@ from pathlib import Path
 import openpyxl
 
 sys.path.insert(0, str(Path(__file__).parent))
-from build_budget import ROWS, XLSX  # noqa: E402
+from build_budget import PROVIDER_HEADER, PROVIDERS, ROWS, XLSX  # noqa: E402
 
 HEADER = ["Item Name", "Plan", "Period", "Quantity", "Price", "Tax (%)", "Total Amount"]
-EXPECTED_TOTAL = 300.21  # 1.11 * (200 + 12 + 48 + 10.46)
+EXPECTED_TOTAL = 602.13  # 1.11 * (200 + 12 + 320 + 10.46)
 
 
 def main() -> None:
-    ws = openpyxl.load_workbook(XLSX).active
+    wb = openpyxl.load_workbook(XLSX)
+    ws = wb.worksheets[0]
     assert [ws.cell(1, c).value for c in range(1, 8)] == HEADER, "header changed"
 
     last = 1 + len(ROWS)
@@ -40,7 +41,14 @@ def main() -> None:
 
     total = round(sum(1.11 * price * qty for *_, qty, price, _n in ROWS), 2)
     assert total == EXPECTED_TOTAL, f"total {total} != {EXPECTED_TOTAL}"
-    print(f"OK grand total {total}")
+    pv = wb["VPS Providers"]
+    assert [pv.cell(1, c).value for c in range(1, 13)] == PROVIDER_HEADER, "provider header"
+    for r, row in enumerate(PROVIDERS, start=2):
+        assert pv.cell(r, 1).value == row[0], f"provider row {r}"
+        assert pv.cell(r, 12).hyperlink and pv.cell(r, 12).hyperlink.target.startswith("https://"), f"link row {r}"
+    fits = [p for p in PROVIDERS if p[9] == "Yes"]
+    assert all(p[2] == 16 and p[3] == 64 for p in fits), "a 'Yes' row is not 16/64"
+    print(f"OK grand total {total}; {len(PROVIDERS)} providers")
 
 
 if __name__ == "__main__":

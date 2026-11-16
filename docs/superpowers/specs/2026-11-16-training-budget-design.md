@@ -26,7 +26,7 @@ One sheet that budgets the whole Day 3–5 "AI Vibe Coding for Business Users" t
 |---|---|---|---|---|---|
 | Codex | Pro 200 | Monthly | 1 | 200 | Existing row; models for opencode + chatbot via 9router *(user)* |
 | VPS — 9router | DigitalOcean Basic, 1 vCPU / 2 GB / 50 GB, Singapore | Monthly | 1 | 12 | Kept separate from the deploy box so a broken deploy can't stop the agents *(call)* |
-| VPS — Day 5 deploy | DigitalOcean Basic, 4 vCPU / 8 GB / 160 GB, Singapore | Monthly | 1 | 48 | One shared box, subdomain per team *(user)* |
+| VPS — Day 5 deploy | Vultr Cloud Compute, 16 vCPU / 64 GB, Singapore | Monthly | 1 | 320 | One shared box, subdomain per team; size 16/64 *(user, 2026-11-16 change)*; provider comparison in sheet `VPS Providers` |
 | Domain | .com, for `teamN.<domain>` | Yearly | 1 | ~11 *(verify)* | Free fallback: sslip.io *(call)* |
 | GitHub | Free | — | 1 | 0 | Participant + checkpoint repos |
 | opencode | Open source | — | 1 | 0 | Coding agent |
@@ -43,3 +43,6 @@ One sheet that budgets the whole Day 3–5 "AI Vibe Coding for Business Users" t
 ## Left to the builder
 - Confirm the domain price at the registrar.
 - Cell formatting (currency, % for tax). Keep the existing column layout.
+
+## Change 2026-11-16
+- The user raised the deploy VPS to 16 vCPU / 64 GB and asked for a sheet listing every candidate provider, with prices and product links. Sheet `VPS Providers` was added. Vultr ($320) is the pick in the main sheet *(call)*, and the user can swap it from the comparison.
