@@ -14,7 +14,7 @@ EVIDENCE = Path(__file__).resolve().parent.parent / "docs/reviews/2026-11-17-vps
 REQUIRED_PROVIDERS = {"Vultr", "Hetzner", "Akamai Linode", "AWS Lightsail", "UpCloud", "DigitalOcean", "Contabo",
                       "OVHcloud", "Biznet Gio",
                       "IDCloudHost", "CloudKilat", "Dewaweb", "DomaiNesia", "Hostinger", "Niagahoster", "Rumahweb",
-                      "Qwords", "Jagoan Hosting",
+                      "Qwords", "Jagoan Hosting", "DewaBiz",
                       "AWS EC2", "Google Cloud", "Alibaba Cloud", "Tencent Cloud", "Huawei Cloud"}
 
 

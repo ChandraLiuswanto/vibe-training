@@ -209,6 +209,19 @@ OFFERS = [
           "Not confirmed (site redirects to Hostinger)", "2026-11-17",
           "niagahoster.co.id now forwards to hostinger.com/id. See the Hostinger row.",
           "https://www.niagahoster.co.id/"),
+    Offer("DewaBiz", "VPS Super Compute XL (largest)", 10, 60, "100 GB NVMe", "Indonesia", True,
+          "Rp1.600.000 per bulan", "IDR", 1600000, "Monthly; yearly costs the same per month", "No (max 10 cores / 60 GB)",
+          "Confirmed", "2026-11-17",
+          "Closest plan: 60 GB RAM but only 10 cores and 100 GB disk. Dedicated CPU (Intel Xeon Gold), unmetered bandwidth "
+          "under a fair-use policy. Price excludes tax. The page shows one price list for 'Data Center Indonesia & SG' "
+          "and does not name the city.",
+          "https://dewabiz.com/vps-super-compute"),
+    Offer("DewaBiz", "VPS Super Compute XL (largest)", 10, 60, "100 GB NVMe", "Singapore", False,
+          "Rp1.600.000 per bulan", "IDR", 1600000, "Monthly; yearly costs the same per month", "No (max 10 cores / 60 GB)",
+          "Confirmed", "2026-11-17",
+          "Same plan as the Indonesia row. The page shows one price list for 'Data Center Indonesia & SG' and does not "
+          "say the price differs by location. Dedicated CPU. Price excludes tax.",
+          "https://dewabiz.com/vps-super-compute"),
     # Global clouds with a Jakarta region. Instance price only: disk and bandwidth are billed separately.
     Offer("Alibaba Cloud", "ECS ecs.u2a-c1m4.4xlarge (general-purpose, AMD)", 16, 64, "Not included", "Jakarta", True,
           "$323.50 for 1 month ($0.6628/hr pay-as-you-go)", "USD", 323.50, SUBSCRIPTION, "Yes", "Confirmed", "2026-11-17",
