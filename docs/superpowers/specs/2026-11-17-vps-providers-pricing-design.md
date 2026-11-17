@@ -85,3 +85,10 @@ Providers to cover:
 - How each price is read (pricing page, public API, calculator).
 - Column widths and number formats.
 - Updating the "Change" section of `2026-11-16-training-budget-design.md` with a pointer to this doc.
+
+## Review Decisions (2026-11-17, after the final review)
+- **Fits 16/64?** may also read "Not confirmed (reason)", for a provider whose plan list could not be read. "No" is kept for plans known to be too small or too big.
+- **Location** reads "Not stated", and **In Indonesia?** reads "Not confirmed", when the provider's page does not name where the server is.
+- Each confirmed row says whether the vCPUs are shared or dedicated, or "CPU type not stated" when the page is silent. It goes in Notes; the column list is unchanged.
+- The note under the table says prices exclude tax where the provider states it, because several Indonesian pages do not say.
+- The evidence file has an `Amount used` column, and the check compares it with the row.

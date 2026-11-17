@@ -18,11 +18,24 @@ REQUIRED_PROVIDERS = {"Vultr", "Hetzner", "Akamai Linode", "AWS Lightsail", "UpC
                       "AWS EC2", "Google Cloud", "Alibaba Cloud", "Tencent Cloud", "Huawei Cloud"}
 
 
+def evidence_lines() -> dict[str, str]:
+    """Offer key -> its table row, from the confirmed part of the evidence file only."""
+    confirmed = EVIDENCE.read_text(encoding="utf-8").split("\n## Not confirmed\n")[0]
+    rows = [ln.replace(r"\|", "\x00") for ln in confirmed.split("\n") if ln.startswith("| ") and "---" not in ln[:6]]
+    return {ln.split("|")[1].strip().replace("\x00", "|"): ln.replace("\x00", "|") for ln in rows}
+
+
+def spellings(amount: float) -> set[str]:
+    """The ways a site may write this number: 341.49, 384, 6.850.000, 4,360,000."""
+    whole = f"{amount:,.0f}"
+    return {f"{amount:.2f}", f"{amount:.2f}".rstrip("0").rstrip("."), whole, whole.replace(",", "."), whole.replace(",", "")}
+
+
 def check_offers(wb) -> None:
     pv = wb["VPS Providers"]
     assert [pv.cell(1, c).value for c in range(1, 16)] == PROVIDER_HEADER, "provider header"
     assert pv.freeze_panes == "A2" and pv.auto_filter.ref, "header not frozen/filtered"
-    evidence = EVIDENCE.read_text(encoding="utf-8").replace(r"\|", "|")  # table cells escape the pipe
+    evidence = evidence_lines()
     ordered = sorted_offers()
     assert len(ordered) == len(OFFERS) == len({evidence_key(o) for o in OFFERS}), "duplicate offer"
     assert REQUIRED_PROVIDERS <= {o.provider for o in OFFERS}, REQUIRED_PROVIDERS - {o.provider for o in OFFERS}
@@ -39,9 +52,17 @@ def check_offers(wb) -> None:
         if o.status == "Confirmed":
             assert o.amount and o.amount > 0, f"confirmed without price {tag}"
             assert evidence_key(o) in evidence, f"no evidence line {tag}"
+            line = evidence[evidence_key(o)]
+            used = line.rsplit("|", 2)[1].split()
+            assert used == [o.currency, used[1]] and float(used[1]) == o.amount, f"amount differs from evidence {tag}: {used}"
+            assert any(re.search(r"(?<![\d.,])" + re.escape(w) + r"(?!\d)", line.rsplit("|", 2)[0]) for w in spellings(o.amount)), \
+                f"amount not in the evidence quote {tag}"
+            assert re.search(r"shared|dedicated|CPU type not stated", f"{o.plan} {o.notes}", re.I), f"CPU type missing {tag}"
         else:
             assert re.fullmatch(r"Not confirmed \(.+\)", o.status) and o.amount is None, f"status {tag}"
-        assert o.fits == "Yes" or re.fullmatch(r"No \(.+\)", o.fits), f"fits {tag}"
+        assert o.fits == "Yes" or re.fullmatch(r"(No|Not confirmed) \(.+\)", o.fits), f"fits {tag}"
+        assert (o.vcpu is None or o.ram_gb is None) == o.fits.startswith("Not confirmed"), f"unknown size must read Not confirmed {tag}"
+        assert (o.in_indonesia is None) == (o.location == "Not stated"), f"location and In Indonesia disagree {tag}"
         if o.fits == "Yes":
             assert (o.vcpu, o.ram_gb) == (16, 64), f"'Yes' is not 16/64 {tag}"
         if "term" in o.billing.lower():
@@ -49,6 +70,8 @@ def check_offers(wb) -> None:
         if "incl. tax" in o.price_text.lower():
             assert "before tax" in o.notes.lower(), f"tax-inclusive price without note {tag}"
     assert pv.cell(len(ordered) + 2, 1).value is None, "rows beyond the offers"
+    footer = str(pv.cell(len(ordered) + 3, 1).value)
+    assert "where the provider states it" in footer and all(str(v) in footer.replace(",", "") for v in (PER_USD["EUR"], PER_USD["IDR"], PER_USD["SGD"])), "footer"
     assert any(o.provider == "Biznet Gio" and "NEO Virtual Compute" in o.plan for o in OFFERS), "Biznet NEO Virtual Compute row missing"
     for p in ("AWS EC2", "Google Cloud", "Alibaba Cloud", "Tencent Cloud", "Huawei Cloud"):
         assert any(o.provider == p and o.in_indonesia for o in OFFERS), f"{p}: no Jakarta row"
