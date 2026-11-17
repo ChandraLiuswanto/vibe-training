@@ -46,3 +46,6 @@ One sheet that budgets the whole Day 3–5 "AI Vibe Coding for Business Users" t
 
 ## Change 2026-11-16
 - The user raised the deploy VPS to 16 vCPU / 64 GB and asked for a sheet listing every candidate provider, with prices and product links. Sheet `VPS Providers` was added. Vultr ($320) is the pick in the main sheet *(call)*, and the user can swap it from the comparison.
+
+## Change 2026-11-17
+- Sheet `VPS Providers` was rebuilt per `2026-11-17-vps-providers-pricing-design.md`: one row per provider, plan and location, every price re-read from the provider's own site, Indonesian providers and Jakarta-region clouds added. Vultr's price did not change ($320), so the main sheet and its total ($602.13) are unchanged.
