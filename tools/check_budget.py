@@ -14,7 +14,8 @@ EVIDENCE = Path(__file__).resolve().parent.parent / "docs/reviews/2026-11-17-vps
 REQUIRED_PROVIDERS = {"Vultr", "Hetzner", "Akamai Linode", "AWS Lightsail", "UpCloud", "DigitalOcean", "Contabo",
                       "OVHcloud", "Biznet Gio",
                       "IDCloudHost", "CloudKilat", "Dewaweb", "DomaiNesia", "Hostinger", "Niagahoster", "Rumahweb",
-                      "Qwords", "Jagoan Hosting"}
+                      "Qwords", "Jagoan Hosting",
+                      "AWS EC2", "Google Cloud", "Alibaba Cloud", "Tencent Cloud", "Huawei Cloud"}
 
 
 def check_offers(wb) -> None:
@@ -49,6 +50,8 @@ def check_offers(wb) -> None:
             assert "before tax" in o.notes.lower(), f"tax-inclusive price without note {tag}"
     assert pv.cell(len(ordered) + 2, 1).value is None, "rows beyond the offers"
     assert any(o.provider == "Biznet Gio" and "NEO Virtual Compute" in o.plan for o in OFFERS), "Biznet NEO Virtual Compute row missing"
+    for p in ("AWS EC2", "Google Cloud", "Alibaba Cloud", "Tencent Cloud", "Huawei Cloud"):
+        assert any(o.provider == p and o.in_indonesia for o in OFFERS), f"{p}: no Jakarta row"
 
 
 

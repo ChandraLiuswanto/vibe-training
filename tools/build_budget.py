@@ -71,6 +71,10 @@ class Offer:
 
 
 HOURLY_CAP = "Hourly, capped at the monthly price"
+HOURS = 730  # hours in a month, for clouds that publish an hourly price only
+ON_DEMAND = "Hourly, on-demand, no monthly cap"
+SUBSCRIPTION = "Monthly subscription; or pay-as-you-go by the hour"
+CONSOLE_ONLY = "Not confirmed (prices load only inside the provider's console; the public page shows none)"
 # Day 5 deploy VPS candidates, target 16 vCPU / 64 GB. Evidence per row: docs/reviews/2026-11-17-vps-price-evidence.md
 OFFERS = [
     Offer("Vultr", "Cloud Compute Regular vc2-16c-64gb", 16, 64, "1280 GB SSD", "Singapore", False,
@@ -206,6 +210,55 @@ OFFERS = [
           "Not confirmed (site redirects to Hostinger)", "2026-11-17",
           "niagahoster.co.id now forwards to hostinger.com/id. See the Hostinger row.",
           "https://www.niagahoster.co.id/"),
+    # Global clouds with a Jakarta region. Instance price only: disk and bandwidth are billed separately.
+    Offer("Alibaba Cloud", "ECS ecs.u2a-c1m4.4xlarge (general-purpose, AMD)", 16, 64, "Not included", "Jakarta", True,
+          "$323.50 for 1 month ($0.6628/hr pay-as-you-go)", "USD", 323.50, SUBSCRIPTION, "Yes", "Confirmed", "2026-11-17",
+          "Cheapest general-purpose 16 vCPU / 64 GB type in Jakarta by monthly price. Pay-as-you-go for a full month would be "
+          "$483.84. Disk and bandwidth are extra. Next: ecs.g8a.4xlarge at $359.44.",
+          "https://www.alibabacloud.com/product/ecs-pricing-list/en"),
+    Offer("Alibaba Cloud", "ECS ecs.u2a-c1m4.4xlarge (general-purpose, AMD)", 16, 64, "Not included", "Singapore", False,
+          "$365.00 for 1 month ($0.6628/hr pay-as-you-go)", "USD", 365.00, SUBSCRIPTION, "Yes", "Confirmed", "2026-11-17",
+          "Same type as the Jakarta row; the monthly price is higher in Singapore. Disk and bandwidth are extra.",
+          "https://www.alibabacloud.com/product/ecs-pricing-list/en"),
+    Offer("Huawei Cloud", "ECS x2.16u.64g (General Computing, X2)", 16, 64, "Not included", "Jakarta", True,
+          "$359.93 for 1 month ($0.6848/hr pay-per-use)", "USD", 359.93, SUBSCRIPTION, "Yes", "Confirmed", "2026-11-17",
+          "Cheapest 16 vCPU / 64 GB x86 type in AP-Jakarta (tied with x1 and x2e). Pay-per-use for a full month would be "
+          "$499.90. Disk and bandwidth are priced separately in the calculator.",
+          "https://www.huaweicloud.com/intl/en-us/pricing/calculator.html#/ecs"),
+    Offer("Huawei Cloud", "ECS x2.16u.64g (General Computing, X2)", 16, 64, "Not included", "Singapore", False,
+          "$359.93 for 1 month ($0.6848/hr pay-per-use)", "USD", 359.93, SUBSCRIPTION, "Yes", "Confirmed", "2026-11-17",
+          "Same type and price as the Jakarta row. AP-Singapore also has s3.4xlarge.4 at $336.38. "
+          "Disk and bandwidth are priced separately in the calculator.",
+          "https://www.huaweicloud.com/intl/en-us/pricing/calculator.html#/ecs"),
+    Offer("Google Cloud", "Compute Engine e2-standard-16", 16, 64, "Not included", "Jakarta", True,
+          f"$0.720848768/hr x {HOURS} h", "USD", round(0.720848768 * HOURS, 2), ON_DEMAND, "Yes", "Confirmed", "2026-11-17",
+          f"Hourly price only: the monthly figure is {HOURS} hours of Linux on-demand use, with no commitment. "
+          "Cheapest general-purpose 16 vCPU / 64 GB type in Jakarta (shared-core E2). Disk is extra. n4-standard-16 is $0.9757/hr.",
+          "https://cloud.google.com/products/compute/pricing/general-purpose"),
+    Offer("Google Cloud", "Compute Engine e2-standard-16", 16, 64, "Not included", "Singapore", False,
+          f"$0.66132912/hr x {HOURS} h", "USD", round(0.66132912 * HOURS, 2), ON_DEMAND, "Yes", "Confirmed", "2026-11-17",
+          f"Hourly price only: the monthly figure is {HOURS} hours of Linux on-demand use, with no commitment. "
+          "Same type as the Jakarta row; Singapore is 8% cheaper. Disk is extra.",
+          "https://cloud.google.com/products/compute/pricing/general-purpose"),
+    Offer("AWS EC2", "m7i-flex.4xlarge (general purpose, Intel)", 16, 64, "Not included (EBS)", "Jakarta", True,
+          f"$0.9576/hr x {HOURS} h", "USD", round(0.9576 * HOURS, 2), ON_DEMAND, "Yes", "Confirmed", "2026-11-17",
+          f"Hourly price only: the monthly figure is {HOURS} hours of Linux on-demand use, with no commitment. "
+          "Cheapest x86 16 vCPU / 64 GiB type in Jakarta. Disk (EBS) is extra. The ARM type m6g.4xlarge is $0.768/hr "
+          "($560.64), if the apps run on ARM. Lightsail (above) is AWS's fixed-price option.",
+          "https://aws.amazon.com/ec2/pricing/on-demand/"),
+    Offer("AWS EC2", "m7i-flex.4xlarge (general purpose, Intel)", 16, 64, "Not included (EBS)", "Singapore", False,
+          f"$0.9576/hr x {HOURS} h", "USD", round(0.9576 * HOURS, 2), ON_DEMAND, "Yes", "Confirmed", "2026-11-17",
+          f"Hourly price only: the monthly figure is {HOURS} hours of Linux on-demand use, with no commitment. "
+          "Same type and price as the Jakarta row. Disk (EBS) is extra. Singapore also has m6a.4xlarge (AMD) at $0.864/hr.",
+          "https://aws.amazon.com/ec2/pricing/on-demand/"),
+    Offer("Tencent Cloud", "Cloud Virtual Machine", None, None, "-", "Jakarta", True,
+          "Not read", "USD", None, "-", "No (plan list could not be read)", CONSOLE_ONLY, "2026-11-17",
+          "Tencent Cloud has a Jakarta region. Sizes and prices need a manual look in its price calculator.",
+          "https://www.tencentcloud.com/pricing/cvm/overview"),
+    Offer("Tencent Cloud", "Cloud Virtual Machine", None, None, "-", "Singapore", False,
+          "Not read", "USD", None, "-", "No (plan list could not be read)", CONSOLE_ONLY, "2026-11-17",
+          "Sizes and prices need a manual look in its price calculator.",
+          "https://www.tencentcloud.com/pricing/cvm/overview"),
 ]
 
 
