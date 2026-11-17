@@ -61,19 +61,19 @@ Import `chromium` from `./deck-check/node_modules/playwright-core/index.mjs` (pa
 
 Checks 1 to 9 are spec §8 items 1 to 9, with these exact rules:
 - Check 1 expected `data-title` list, in order: the 18 values of spec §5's table, column 2. Hard-code them.
-- Word count (checks 1, 2, 5): split text on whitespace, count tokens that contain at least one letter or digit. Visible words of a slide = `innerText` of the slide after removing, in a clone, `.speaker-note`, `footer`, and the `h1`/`h2`.
+- Word count (checks 1, 2, 5): split text on whitespace, count tokens that contain at least one letter or digit. Visible words of a slide = the text of the active (laid-out) slide, excluding `.speaker-note`, `footer` and the `h1`/`h2`; collect it per text node joined with spaces so neighbouring blocks never merge into one word (a detached clone's `innerText` would merge them).
 - Check 3 at viewports 1920×1080 and 1280×720: for each element in the active slide outside `.speaker-note`, with non-zero size, fail when its rectangle exceeds the slide's rectangle by more than 1 px on the right, bottom or left; fail when the slide's `scrollHeight` exceeds `clientHeight` by more than 2.
 - Check 5 prompt ids in order: `access-plan`, `login-build`, `roles-build`, `admin-build`, `audit-build`, `access-test`, `finish`; each `text` 120 to 330 words; `#print-prompts` holds 7 `article` elements and its text includes `Session 2 · Practice handout`.
 - Check 6: on slide 14 click `.slide.active [data-prompt]` and expect `#modal` open with `#modal-title` equal to `prompts[0].title` and `#modal-body` text including `Untested`; close with Escape; click `[data-action="prompts"]` in `#controls` and expect 7 `[data-prompt]` buttons inside `#modal-body`; on slide 9 click the second `.quiz` and expect `.answer` text to start with `B.`.
 - Check 7 compares lines 7 and 10 of the deck with lines 7 and 10 of the reference file (split on `\n`, strip a trailing `\r`). If the reference file is missing, print `WARN 7: reference deck not found, skipped`.
 - Check 8: case-insensitive search for the four words in (a) each slide's visible text including its title and (b) the text of the page's last `<script>` element.
 - Check 9: screenshots at 1920×1080 to `.review/session-2-shots/sNN.png` (create the folder).
-- Check 10: loading `#slide-18` shows `18 / 18` in `#counter`; loading `#slide-99` shows `18 / 18`; neither raises a page error.
+- Check 10 (each a fresh `page.goto`): loading `#slide-18` shows `18 / 18` in `#counter`; loading `#slide-99` shows `18 / 18`; neither raises a page error.
 
 - [ ] **Step 2: Run it against the S1 reference and confirm it fails for the right reasons**
 
 Run: `node tools/session-2-visual-check.mjs "C:/Users/HP/pr-reviews/vibe-training-pr4/decks/session-1-external-data-visual.html"`
-Expected: exit code 1; `FAIL 1` lines for `data-title` mismatches; `FAIL 5` for prompt ids; `FAIL 8` for banned words; no `FAIL 3`, no `FAIL 4`, no `FAIL 7`; 18 `slide …` lines; the script does not crash.
+Expected: exit code 1; `FAIL 1` lines for `data-title` mismatches; `FAIL 5` for prompt ids; `FAIL 8` for banned words; no `FAIL 3`, no `FAIL 4`, no `FAIL 7` (other FAIL lines, such as 2 and 6, are fine); 18 `slide …` lines; the script does not crash.
 
 - [ ] **Step 3: Run it with no deck present**
 
