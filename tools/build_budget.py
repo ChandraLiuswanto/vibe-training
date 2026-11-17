@@ -1,8 +1,11 @@
-"""Rebuild Sheet1 of budgetting.xlsx from ROWS.
+"""Rebuild budgetting.xlsx: Sheet1 from ROWS, sheet "VPS Providers" from OFFERS.
 
-Spec: docs/superpowers/specs/2026-11-16-training-budget-design.md
-Prices checked 2026-11-16: digitalocean.com/pricing/droplets, api.vultr.com/v2/plans, cfdomainpricing.com (Cloudflare Registrar at cost).
+Specs: docs/superpowers/specs/2026-11-16-training-budget-design.md (Sheet1),
+       docs/superpowers/specs/2026-11-17-vps-providers-pricing-design.md (sheet "VPS Providers").
+Sheet1 prices checked 2026-11-16: digitalocean.com/pricing/droplets, api.vultr.com/v2/plans, cfdomainpricing.com (Cloudflare Registrar at cost).
+VPS Providers: each row carries its own check date; sources in docs/reviews/2026-11-17-vps-price-evidence.md.
 """
+from dataclasses import dataclass
 from pathlib import Path
 
 import openpyxl
@@ -37,45 +40,121 @@ ASSUMPTION = ("Assumes trainer prep + Day 3-5 delivery fit within 1 billing mont
               "domain = first year. If prep spans 2 months, set Quantity = 2 on the Monthly rows.")
 
 
-EUR_USD = 1.1052  # frankfurter.app (ECB), 2026-11-13
-PROVIDER_HEADER = ["Provider", "Product / plan", "vCPU", "RAM (GB)", "Disk", "Location (closest to ID)",
-                   "Price (original)", "Price USD / month", "Billing", "Fits 16/64?", "Safety / notes", "Link"]
-# Day 5 deploy VPS candidates, 16 vCPU / 64 GB. Checked 2026-11-16 on each provider's site/API.
-PROVIDERS = [
-    ("Vultr", "Cloud Compute Regular vc2-16c-64gb", 16, 64, "1280 GB SSD", "Singapore",
-     "$320/mo", 320, "Hourly, monthly cap", "Yes",
-     "RECOMMENDED. Established, firewall + snapshots + DDoS protection included", "https://www.vultr.com/pricing/"),
-    ("Vultr", "Optimized Cloud General Purpose (dedicated vCPU)", 16, 64, "320 GB NVMe", "Singapore",
-     "$480/mo", 480, "Hourly, monthly cap", "Yes", "Dedicated vCPU: steadier under 30 parallel builds",
-     "https://www.vultr.com/pricing/"),
-    ("Hetzner", "CCX43 (dedicated vCPU)", 16, 64, "360 GB NVMe", "Singapore",
-     "EUR 234.99/mo (EU price)", round(234.99 * EUR_USD, 2), "Hourly, monthly cap", "Yes",
-     "Cheapest reputable; Singapore price is higher than EU (confirm at checkout); new accounts may need ID check",
-     "https://www.hetzner.com/cloud/general-purpose"),
-    ("Akamai Linode", "Shared CPU Linode 64GB (g6-standard-16)", 16, 64, "1280 GB SSD", "Jakarta (id-cgk)",
-     "$460.80/mo (Jakarta)", 460.80, "Hourly, monthly cap", "Yes",
-     "Only one with a Jakarta DC (lowest latency); $384 in other regions", "https://www.linode.com/pricing/"),
-    ("AWS Lightsail", "Linux bundle 64 GB / 16 vCPU", 16, 64, "1280 GB SSD", "Singapore / Jakarta",
-     "$384/mo", 384, "Hourly, monthly cap", "Yes", "AWS-grade security; simple fixed bundle",
-     "https://aws.amazon.com/lightsail/pricing/"),
-    ("UpCloud", "Cloud Server 64 GB / 16 cores", 16, 64, "300 GB MaxIOPS", "Singapore",
-     "EUR 384/mo", round(384 * EUR_USD, 2), "Hourly, monthly cap", "Yes", "99.999% SLA; verify exact plan tier at checkout",
-     "https://upcloud.com/pricing/"),
-    ("DigitalOcean", "General Purpose Droplet (dedicated vCPU)", 16, 64, "200 GB SSD", "Singapore",
-     "$504/mo", 504, "Hourly, monthly cap", "Yes", "Same provider as 9router VPS; Basic plans stop at 8/16",
-     "https://www.digitalocean.com/pricing/droplets"),
-    ("Contabo", "Cloud VPS 16", 16, 64, "500 GB SSD / 250 GB NVMe", "Singapore (surcharge)",
-     "EUR 37/mo (EUR 29.60 on 24-mo term)", round(37 * EUR_USD, 2), "Monthly contract, setup fee, region surcharge",
-     "Yes", "Very cheap but oversold/noisy-neighbour reputation; risky for live class", "https://contabo.com/en/vps/"),
-    ("Hetzner", "CPX62 (shared vCPU)", 16, 32, "640 GB NVMe", "Singapore",
-     "EUR 110.99/mo (EU price)", round(110.99 * EUR_USD, 2), "Hourly, monthly cap", "No (32 GB RAM)",
-     "Listed for reference only", "https://www.hetzner.com/cloud/regular-performance"),
-    ("OVHcloud", "VPS-4 (largest VPS)", 8, 24, "200 GB NVMe", "Singapore",
-     "S$30/mo", None, "Monthly", "No (max 8/24)", "Listed for reference only", "https://www.ovhcloud.com/en-sg/vps/"),
-    ("Biznet Gio", "NEO Lite LL 16.16 (largest)", 16, 16, "60 GB SSD", "Jakarta",
-     "Rp499,000/mo", round(499000 / 18245, 2), "Monthly", "No (16 GB RAM)",
-     "Indonesian provider, listed for reference only", "https://www.biznetgio.com/product/neo-lite"),
+# 1 USD in each currency. ECB via https://api.frankfurter.app/latest?from=USD&to=EUR,IDR,SGD
+PER_USD = {"USD": 1.0, "EUR": 0.90794, "IDR": 18259, "SGD": 1.2888}
+RATES_DATE = "2026-11-16"
+
+PROVIDER_HEADER = ["Provider", "Product / plan", "vCPU", "RAM (GB)", "Disk", "Location", "In Indonesia?",
+                   "Price (website)", "Price USD / month", "Billing", "Fits 16/64?", "Price status", "Checked",
+                   "Notes", "Link"]
+
+
+@dataclass(frozen=True)
+class Offer:
+    """One plan in one location, with the price the provider's own site shows for exactly that."""
+    provider: str
+    plan: str             # as the website names it
+    vcpu: int
+    ram_gb: int
+    disk: str
+    location: str         # one place
+    in_indonesia: bool
+    price_text: str       # as shown on the site
+    currency: str         # key of PER_USD
+    amount: float | None  # monthly, before tax, in `currency`; None when not confirmed
+    billing: str
+    fits: str             # "Yes" or "No (reason)"
+    status: str           # "Confirmed" or "Not confirmed (reason)"
+    checked: str          # YYYY-MM-DD the price was read
+    notes: str
+    link: str             # page the price came from
+
+
+HOURLY_CAP = "Hourly, capped at the monthly price"
+# Day 5 deploy VPS candidates, target 16 vCPU / 64 GB. Evidence per row: docs/reviews/2026-11-17-vps-price-evidence.md
+OFFERS = [
+    Offer("Vultr", "Cloud Compute Regular vc2-16c-64gb", 16, 64, "1280 GB SSD", "Singapore", False,
+          "$320/mo ($0.438/hr)", "USD", 320, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Current pick in the main sheet. Shared vCPU. Same price in every Vultr region; Vultr has no Indonesian region.",
+          "https://www.vultr.com/pricing/"),
+    Offer("Vultr", "Optimized Cloud General Purpose voc-g-16c-64gb-320s-amd", 16, 64, "320 GB", "Singapore", False,
+          "$480/mo ($0.658/hr)", "USD", 480, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Dedicated vCPU: steadier under 30 parallel builds. Same price in every Vultr region.",
+          "https://www.vultr.com/pricing/"),
+    Offer("Hetzner", "CCX43 (dedicated vCPU)", 16, 64, "360 GB NVMe", "Singapore", False,
+          "EUR 341.49/mo excl. VAT", "EUR", 341.49, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Singapore costs 45% more than Helsinki. Price includes IPv4. "
+          "New accounts may need an ID check.",
+          "https://www.hetzner.com/cloud/general-purpose"),
+    Offer("Hetzner", "CCX43 (dedicated vCPU)", 16, 64, "360 GB NVMe", "Helsinki", False,
+          "EUR 234.99/mo excl. VAT", "EUR", 234.99, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Reference only: Hetzner's cheapest region, far from Indonesia (high latency). "
+          "This is the price the old sheet showed under 'Singapore'.",
+          "https://www.hetzner.com/cloud/general-purpose"),
+    Offer("Hetzner", "CPX62 (shared vCPU)", 16, 32, "640 GB NVMe", "Singapore", False,
+          "EUR 172.49/mo excl. VAT", "EUR", 172.49, HOURLY_CAP, "No (32 GB RAM)", "Confirmed", "2026-11-17",
+          "Listed for reference only. Helsinki price is EUR 110.99.",
+          "https://www.hetzner.com/cloud/regular-performance"),
+    Offer("Akamai Linode", "Shared CPU Linode 64GB (g6-standard-16)", 16, 64, "1280 GB SSD", "Jakarta", True,
+          "$460.80/mo ($0.691/hr)", "USD", 460.80, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Jakarta region (id-cgk) costs 20% more than Linode's standard regions.",
+          "https://www.linode.com/pricing/"),
+    Offer("Akamai Linode", "Shared CPU Linode 64GB (g6-standard-16)", 16, 64, "1280 GB SSD", "Singapore", False,
+          "$384/mo ($0.576/hr)", "USD", 384, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Standard price; Singapore has no regional surcharge.",
+          "https://www.linode.com/pricing/"),
+    Offer("AWS Lightsail", "Linux bundle 64 GB / 16 vCPU, public IPv4", 16, 64, "1280 GB SSD", "Jakarta", True,
+          "$384 USD/mo", "USD", 384, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Same bundle price in every Region, but Jakarta includes half the data transfer (4 TB instead of 8 TB).",
+          "https://aws.amazon.com/lightsail/pricing/"),
+    Offer("AWS Lightsail", "Linux bundle 64 GB / 16 vCPU, public IPv4", 16, 64, "1280 GB SSD", "Singapore", False,
+          "$384 USD/mo", "USD", 384, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "Same bundle price in every Region; 8 TB data transfer included.",
+          "https://aws.amazon.com/lightsail/pricing/"),
+    Offer("UpCloud", "Premium 64 GB / 16 cores", 16, 64, "300 GB MaxIOPS", "Singapore", False,
+          "EUR 384/mo (Global price)", "EUR", 384, "Hourly, capped at 28 days per month", "Yes", "Confirmed", "2026-11-17",
+          "'Global price' applies to every UpCloud data centre, Singapore (SG-SIN1) included. 99.999% SLA. "
+          "A Cloud Native 64 GB / 16 cores plan is EUR 270/mo with storage billed separately.",
+          "https://upcloud.com/pricing/"),
+    Offer("DigitalOcean", "General Purpose Droplet g-16vcpu-64gb (dedicated vCPU)", 16, 64, "200 GB SSD", "Singapore", False,
+          "$504.00/mo ($0.75/hr)", "USD", 504, HOURLY_CAP, "Yes", "Confirmed", "2026-11-17",
+          "The pricing page shows one price, with no per-region difference. Same provider as the 9router VPS.",
+          "https://www.digitalocean.com/pricing/droplets"),
+    Offer("Contabo", "Cloud VPS 16", 16, 64, "500 GB SSD or 250 GB NVMe", "Singapore", False,
+          "EUR 37.00/mo + EUR 20.75/mo Asia (Singapore) location fee", "EUR", 57.75,
+          "Monthly, prepaid; 1-month contract", "Yes", "Confirmed", "2026-11-17",
+          "Price includes the Singapore location fee, which the old sheet left out. No setup fee. The order page does not state VAT. "
+          "Singapore was marked out of stock on the order page when checked. 12-month price EUR 31.45, 24-month EUR 29.60, "
+          "plus the same location fee. Very cheap, shared hosts: the old sheet flagged it as risky for a live class.",
+          "https://contabo.com/en/vps/cloud-vps-core-16"),
+    Offer("Contabo", "Cloud VPS 16", 16, 64, "500 GB SSD or 250 GB NVMe", "European Union", False,
+          "EUR 37.00/mo", "EUR", 37.00, "Monthly, prepaid; 1-month contract", "Yes", "Confirmed", "2026-11-17",
+          "Reference only: Contabo's cheapest region (no location fee), far from Indonesia. No setup fee. The order page does not state VAT.",
+          "https://contabo.com/en/vps/cloud-vps-core-16"),
+    Offer("OVHcloud", "VPS-4 (largest VPS)", 8, 24, "200 GB NVMe", "Singapore", False,
+          "From S$30 ex. GST/month", "SGD", None, "Monthly", "No (max 8 vCPU / 24 GB)",
+          "Not confirmed (the Singapore site shows a 'from' price without naming the data centre or the commitment)",
+          "2026-11-17", "Listed for reference only.",
+          "https://www.ovhcloud.com/en-sg/vps/"),
+    Offer("Biznet Gio", "NEO Lite LL 16.16 (largest NEO Lite)", 16, 16, "60 GB SSD", "Indonesia", True,
+          "Rp998.000/bulan (promo Rp499.000)", "IDR", 998000, "Monthly", "No (16 GB RAM)", "Confirmed", "2026-11-17",
+          "Regular price used; Rp499.000 is a new-customer promo. The page says 'Data Center di Indonesia' without naming "
+          "the city, and does not say whether PPN is included. Listed for reference only.",
+          "https://www.biznetgio.com/product/neo-lite"),
 ]
+
+
+def usd(o: Offer) -> float | None:
+    return None if o.amount is None else round(o.amount / PER_USD[o.currency], 2)
+
+
+def sorted_offers() -> list[Offer]:
+    """Plans that fit first, cheapest first; unconfirmed prices last in their group."""
+    return sorted(OFFERS, key=lambda o: (o.fits != "Yes", o.amount is None, usd(o) or 0, o.provider, o.location))
+
+
+def evidence_key(o: Offer) -> str:
+    return f"{o.provider} | {o.plan} | {o.location}"
 
 
 def build_providers(wb) -> None:
@@ -84,17 +163,23 @@ def build_providers(wb) -> None:
     ws = wb.create_sheet("VPS Providers")
     for c, h in enumerate(PROVIDER_HEADER, start=1):
         ws.cell(1, c, h).font = Font(bold=True)
-    for r, row in enumerate(PROVIDERS, start=2):
+    offers = sorted_offers()
+    for r, o in enumerate(offers, start=2):
+        row = [o.provider, o.plan, o.vcpu, o.ram_gb, o.disk, o.location, "Yes" if o.in_indonesia else "No",
+               o.price_text, usd(o), o.billing, o.fits, o.status, o.checked, o.notes, o.link]
         for c, v in enumerate(row, start=1):
             ws.cell(r, c, v)
-        ws.cell(r, 8).number_format = "$#,##0.00"
-        link = ws.cell(r, 12)
-        link.hyperlink = row[-1]
+        ws.cell(r, 9).number_format = "$#,##0.00"
+        link = ws.cell(r, 15)
+        link.hyperlink = o.link
         link.style = "Hyperlink"
-    note = len(PROVIDERS) + 3
-    ws.cell(note, 1, "Prices excl. tax, checked 2026-11-16. EUR->USD 1.1052, USD->IDR 18,245 (ECB via frankfurter.app, 2026-11-13). "
-                     "Hourly-billed servers cost far less than the monthly cap if deleted after Day 5.")
-    for col, width in zip("ABCDEFGHIJKL", [15, 44, 6, 9, 24, 22, 34, 16, 34, 15, 80, 48]):
+    last = len(offers) + 1
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:O{last}"
+    ws.cell(last + 2, 1, f"Prices excl. tax, each checked on the date in its row. Rates per 1 USD on {RATES_DATE} "
+                         f"(ECB via frankfurter.app): EUR {PER_USD['EUR']}, IDR {PER_USD['IDR']:,}, SGD {PER_USD['SGD']}. "
+                         "Hourly-billed servers cost far less than the monthly cap if deleted after Day 5.")
+    for col, width in zip("ABCDEFGHIJKLMNO", [15, 46, 6, 9, 24, 16, 13, 40, 16, 32, 22, 30, 11, 90, 46]):
         ws.column_dimensions[col].width = width
 
 
@@ -127,4 +212,7 @@ def build() -> None:
 
 
 if __name__ == "__main__":
-    build()
+    try:
+        build()
+    except PermissionError:  # Excel holds the file: opening or saving it fails
+        raise SystemExit("Close budgetting.xlsx in Excel, then rerun") from None

@@ -1,14 +1,51 @@
 """Verify budgetting.xlsx matches the budget design (see docs/superpowers/specs/2026-11-16-training-budget-design.md)."""
+import re
 import sys
 from pathlib import Path
 
 import openpyxl
 
 sys.path.insert(0, str(Path(__file__).parent))
-from build_budget import PROVIDER_HEADER, PROVIDERS, ROWS, XLSX  # noqa: E402
+from build_budget import OFFERS, PER_USD, PROVIDER_HEADER, ROWS, XLSX, evidence_key, sorted_offers, usd  # noqa: E402
 
 HEADER = ["Item Name", "Plan", "Period", "Quantity", "Price", "Tax (%)", "Total Amount"]
 EXPECTED_TOTAL = 602.13  # 1.11 * (200 + 12 + 320 + 10.46)
+EVIDENCE = Path(__file__).resolve().parent.parent / "docs/reviews/2026-11-17-vps-price-evidence.md"
+REQUIRED_PROVIDERS = {"Vultr", "Hetzner", "Akamai Linode", "AWS Lightsail", "UpCloud", "DigitalOcean", "Contabo",
+                      "OVHcloud", "Biznet Gio"}
+
+
+def check_offers(wb) -> None:
+    pv = wb["VPS Providers"]
+    assert [pv.cell(1, c).value for c in range(1, 16)] == PROVIDER_HEADER, "provider header"
+    assert pv.freeze_panes == "A2" and pv.auto_filter.ref, "header not frozen/filtered"
+    evidence = EVIDENCE.read_text(encoding="utf-8").replace(r"\|", "|")  # table cells escape the pipe
+    ordered = sorted_offers()
+    assert len(ordered) == len(OFFERS) == len({evidence_key(o) for o in OFFERS}), "duplicate offer"
+    assert REQUIRED_PROVIDERS <= {o.provider for o in OFFERS}, REQUIRED_PROVIDERS - {o.provider for o in OFFERS}
+    for r, o in enumerate(ordered, start=2):
+        tag = f"row {r} {evidence_key(o)}"
+        assert [pv.cell(r, 1).value, pv.cell(r, 2).value, pv.cell(r, 6).value] == [o.provider, o.plan, o.location], f"order {tag}"
+        assert pv.cell(r, 7).value == ("Yes" if o.in_indonesia else "No"), tag
+        assert pv.cell(r, 9).value == usd(o), f"usd {tag}"
+        assert pv.cell(r, 15).hyperlink.target == o.link and o.link.startswith("https://"), f"link {tag}"
+        assert "/" not in o.location and "surcharge" not in o.location.lower(), f"location {tag}"
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", o.checked), f"checked {tag}"
+        assert o.currency in PER_USD, f"currency {tag}"
+        if o.status == "Confirmed":
+            assert o.amount and o.amount > 0, f"confirmed without price {tag}"
+            assert evidence_key(o) in evidence, f"no evidence line {tag}"
+        else:
+            assert re.fullmatch(r"Not confirmed \(.+\)", o.status) and o.amount is None, f"status {tag}"
+        assert o.fits == "Yes" or re.fullmatch(r"No \(.+\)", o.fits), f"fits {tag}"
+        if o.fits == "Yes":
+            assert (o.vcpu, o.ram_gb) == (16, 64), f"'Yes' is not 16/64 {tag}"
+        if "term" in o.billing.lower():
+            assert "renew" in o.notes.lower(), f"term price without renewal note {tag}"
+        if "incl. tax" in o.price_text.lower():
+            assert "before tax" in o.notes.lower(), f"tax-inclusive price without note {tag}"
+    assert pv.cell(len(ordered) + 2, 1).value is None, "rows beyond the offers"
+
 
 
 def main() -> None:
@@ -41,15 +78,8 @@ def main() -> None:
 
     total = round(sum(1.11 * price * qty for *_, qty, price, _n in ROWS), 2)
     assert total == EXPECTED_TOTAL, f"total {total} != {EXPECTED_TOTAL}"
-    pv = wb["VPS Providers"]
-    assert [pv.cell(1, c).value for c in range(1, 13)] == PROVIDER_HEADER, "provider header"
-    for r, row in enumerate(PROVIDERS, start=2):
-        assert pv.cell(r, 1).value == row[0], f"provider row {r}"
-        assert pv.cell(r, 12).hyperlink and pv.cell(r, 12).hyperlink.target.startswith("https://"), f"link row {r}"
-    fits = [p for p in PROVIDERS if p[9] == "Yes"]
-    assert all(p[2] == 16 and p[3] == 64 for p in fits), "a 'Yes' row is not 16/64"
-    print(f"OK grand total {total}; {len(PROVIDERS)} providers")
-
+    check_offers(wb)
+    print(f"OK grand total {total}; {len(OFFERS)} offers")
 
 if __name__ == "__main__":
     main()
