@@ -4,3 +4,5 @@
 - Checkout: branch autopilot/day4-decks-review created from main.
 - Decision: may reviewers write a file, given the spec calls them read-only? — yes, each writes only its own raw review file under .review/; read-only means no edits to decks, outlines, prompts or tools — main
 - Decision: spec file date — renamed from 2026-11-18 to 2026-11-17 to match today's date — main
+- Plan review (cc/claude-opus-5-5, medium): Approved, no issues. Recommendations 1, 3, 5 applied as wording fixes (Step 3 check reworded for parallel runs; renderer logs reveal steps; prompts labelled with pNN and slide). Recommendation 2: workers retry on index.lock per the worker rules. Recommendation 4: models are recorded in this ledger.
+- Models: Task 1 Sonnet medium (clear scripting task); Task 2 Opus high (material accuracy and safety is the core of the review); Task 3 Sol medium (audience judgment); Task 4 Sonnet medium (visual checks against stated criteria); Task 5 main agent.
