@@ -13,6 +13,9 @@ with single-file HTML decks for business users building a Financial App.
 | [decks/day3-s1.html](decks/day3-s1.html) | Byte-identical copy of v1, kept for existing links |
 | [decks/day3-s2.html](decks/day3-s2.html) | Session 2 deck, 27 slides (v3: review fixes, worked examples) |
 | [decks/day3-s3.html](decks/day3-s3.html) | Session 3 deck, 22 slides |
+| [decks/session-1-external-data-visual.html](decks/session-1-external-data-visual.html) | Visual track, Session 1: Frankfurter FX + Google Drive MCP, 18 slides. Not a replacement for `day3-s*`: the visual track covers different topics |
+| [decks/session-2-access-control-visual.html](decks/session-2-access-control-visual.html) | Visual track, Session 2: login, roles, admin page and audit trail, 18 slides |
+| [decks/session-3-vps-deployment-visual.html](decks/session-3-vps-deployment-visual.html) | Visual track, Session 3: native VPS deployment, 16 slides. Outlines: `docs/outlines/session-*-visual.md` |
 | [demos/git-basics.html](demos/git-basics.html) | Reusable Git demo |
 | [.frontend-slides/slide-previews/](.frontend-slides/slide-previews/) | Three style options used to choose Swiss Modern |
 
