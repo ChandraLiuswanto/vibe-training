@@ -26,3 +26,7 @@
 - Decision: V17 (S3 small captions, P2) — lowered to P3 after measuring 18–19 px in the browser, larger than S1/S2's smallest text; one claim in V24 corrected (chips are 17 px) — main
 - Decision: quiz finding severity where reviewers differed (V1 P1, A10 P3) — kept at P1, S1 slide 7 has no question on the slide — main
 - Task 5 done (main): docs/reviews/2026-11-17-day4-decks-review.md (47 merged findings: 1 P0, 20 P1, 14 P2, 12 P3), docs/project-log.md entry, .review/day4-fontsize.mjs (measurement script); checks: all 54 raw IDs appear in the report, decks guard empty.
+- Final review (cc/claude-opus-5-5, high): PASS, 6 Minor findings, no Critical or Important. No re-review needed.
+- Minor fixes applied by main, not independently reviewed (3, 4 changed lines in the report): #47 re-scoped to S1 slides 2 and 3 after measuring the slide 2 caption at 15 px; #42 evidence corrected (S3 captions are about 24 px on screen, mock-up labels about 18 px; slide 3 removed); coordinator note on #14 now shows the reviewers' disagreement on the fix as well as on severity.
+- Minor findings left as notes: #8 omits M9's point that HTTPS ends at the proxy (it is in the raw review); some report rows (#19, #22, #24, #28) quote no wording and rely on the raw IDs for evidence; the Task 4 ledger line above miscounts the visuals review, which has 18 P2 and 7 P3, not 17 and 8 (the report's merged counts are correct).
+- All workers and reviewers archived.
