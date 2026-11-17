@@ -54,11 +54,11 @@ class Offer:
     """One plan in one location, with the price the provider's own site shows for exactly that."""
     provider: str
     plan: str             # as the website names it
-    vcpu: int
-    ram_gb: int
+    vcpu: int | None      # None when the plan list could not be read
+    ram_gb: int | None
     disk: str
     location: str         # one place
-    in_indonesia: bool
+    in_indonesia: bool | None  # None when the site does not say where the server is
     price_text: str       # as shown on the site
     currency: str         # key of PER_USD
     amount: float | None  # monthly, before tax, in `currency`; None when not confirmed
@@ -141,6 +141,71 @@ OFFERS = [
           "Regular price used; Rp499.000 is a new-customer promo. The page says 'Data Center di Indonesia' without naming "
           "the city, and does not say whether PPN is included. Listed for reference only.",
           "https://www.biznetgio.com/product/neo-lite"),
+    # Indonesian providers
+    Offer("Rumahweb", "VPS Indonesia X4L (Linux)", 16, 64, "1,200 GB SSD", "Bogor", True,
+          "Rp3.750.000/bulan", "IDR", 3750000, "Monthly", "Yes", "Confirmed", "2026-11-17",
+          "Zone A, TechnoVillage Bogor (Tier 3). Regular price used; the page advertised 50% off Linux plans from Paket S up "
+          "(promo terms not read). Unmetered bandwidth. The page does not say whether PPN is included.",
+          "https://www.rumahweb.com/vps-indonesia/"),
+    Offer("Rumahweb", "VPS Indonesia X4L (Linux)", 16, 64, "1,200 GB SSD", "Bekasi", True,
+          "Rp3.760.000/bulan", "IDR", 3760000, "Monthly", "Yes", "Confirmed", "2026-11-17",
+          "Zone B, DCI Indonesia Bekasi (Tier 4). Regular price used; the page advertised 50% off Linux plans from Paket S up "
+          "(promo terms not read). Unmetered bandwidth. The page does not say whether PPN is included.",
+          "https://www.rumahweb.com/vps-indonesia/"),
+    Offer("Qwords", "Cloud VPS KVM SC64", 16, 64, "1,280 GB SSD (RAID 10)", "Jakarta", True,
+          "Rp6.850.000/bulan (Rp6.750.000/bulan on a yearly cycle)", "IDR", 6850000, "Monthly; also 3, 6 or 12 months",
+          "Yes", "Confirmed", "2026-11-17",
+          "The page preselects the yearly cycle, so it shows Rp6.750.000; one month costs Rp6.850.000. No setup fee. "
+          "Shared ('equal share') CPU. The page does not say whether PPN is included.",
+          "https://www.qwords.com/vps-indonesia/cloud-vps-kvm-ssd/"),
+    Offer("DomaiNesia", "Cloud VPS Turbo 64GB", 16, 64, "960 GB SSD NVMe", "Jakarta", True,
+          "Rp9.600.000/bulan (first cycle Rp4.800.000/bulan, Diskon 50%)", "IDR", 9600000, "Monthly; also 3, 6 or 12 months",
+          "Yes", "Confirmed", "2026-11-17",
+          "Regular price used: the page gives it as the renewal price ('Harga perpanjangan'). New orders get 50% off with promo code CLOUDHANDAL, on any cycle from 1 month. "
+          "The cart adds PPN on top, so this is the price before tax.",
+          "https://www.domainesia.com/cloud-vps/"),
+    Offer("Jagoan Hosting", "VPS NextGen MULTIVERSE (custom) 16 core / 96 GB", 16, 96, "1,000 GB", "Indonesia", True,
+          "Rp4.360.000/bln (16 x Rp30.000 + 96 x Rp30.000 + 1,000 x Rp1.000)", "IDR", 4360000, "Monthly",
+          "No (16 cores requires at least 96 GB RAM and 1,000 GB disk)", "Confirmed", "2026-11-17",
+          "Built from the configurator's unit prices: Rp30.000 per core, Rp30.000 per GB RAM, Rp1.000 per GB disk. "
+          "Larger than the target, so it would work, at a higher price. Price excludes PPN 11%. The page calls the product "
+          "'VPS Indonesia' without naming the data centre. Fixed plans stop at 6 core / 6 GB.",
+          "https://www.jagoanhosting.com/vps-indonesia/"),
+    Offer("CloudKilat", "Kilat VPS XL (largest)", 32, 32, "320 GB SSD", "Indonesia", True,
+          "Rp2.880.000/bulan", "IDR", 2880000, "Monthly", "No (max 32 GB RAM)", "Confirmed", "2026-11-17",
+          "Listed for reference only. NEX Data Center, Tier 3. Paket L is 16 vCPU / 16 GB at Rp1.440.000. "
+          "The page does not say whether PPN is included.",
+          "https://www.cloudkilat.com/id/kilat-vps/"),
+    Offer("Hostinger", "KVM 8 (largest)", 8, 32, "400 GB NVMe", "Jakarta", True,
+          "Rp853.900/bln on renewal (Rp426.900/bln for the first 24 months)", "IDR", 853900,
+          "24-month term, prepaid (Rp10.245.600 up front)", "No (max 8 vCPU / 32 GB)", "Confirmed", "2026-11-17",
+          "Listed for reference only. Renewal price used; the first 24-month term costs half. Prices exclude PPN. "
+          "Jakarta is one of the 10 data centres the page lists.",
+          "https://www.hostinger.com/id/hosting-vps"),
+    Offer("Biznet Gio", "NEO Lite Pro LL.24.12 (largest NEO Lite Pro)", 12, 24, "100 GB NVMe", "Indonesia", True,
+          "Rp2.849.000/bulan (promo Rp2.299.000)", "IDR", 2849000, "Monthly", "No (max 12 vCPU / 24 GB)", "Confirmed",
+          "2026-11-17",
+          "Listed for reference only. Struck-through price used as the regular price; Rp2.299.000 is a promo. Dedicated vCPU "
+          "and RAM. The page says 'Data Center Lokal' without naming the city, and does not say whether PPN is included.",
+          "https://www.biznetgio.com/product/neo-lite-pro"),
+    Offer("Biznet Gio", "NEO Virtual Compute", None, None, "-", "Indonesia", None,
+          "Not found", "IDR", None, "-", "No (product not found on the site)",
+          "Not confirmed (biznetgio.com has no NEO Virtual Compute page and its product list does not show it)",
+          "2026-11-17", "The larger Biznet line the old plan expected. Ask Biznet Gio sales whether it is still sold.",
+          "https://www.biznetgio.com/product"),
+    Offer("IDCloudHost", "Cloud VPS", None, None, "-", "Indonesia", None,
+          "Not read", "IDR", None, "-", "No (plan list could not be read)", "Not confirmed (the site blocks automated reading; open the link in a browser)", "2026-11-17",
+          "Indonesian provider. Sizes and prices need a manual look.",
+          "https://idcloudhost.com/cloud-vps/"),
+    Offer("Dewaweb", "Cloud VPS", None, None, "-", "Indonesia", None,
+          "Not read", "IDR", None, "-", "No (plan list could not be read)", "Not confirmed (the site blocks automated reading; open the link in a browser)", "2026-11-17",
+          "Indonesian provider. Sizes and prices need a manual look.",
+          "https://www.dewaweb.com/cloud-vps"),
+    Offer("Niagahoster", "Cloud VPS", None, None, "-", "Indonesia", None,
+          "Not read", "IDR", None, "-", "No (plan list could not be read)",
+          "Not confirmed (site redirects to Hostinger)", "2026-11-17",
+          "niagahoster.co.id now forwards to hostinger.com/id. See the Hostinger row.",
+          "https://www.niagahoster.co.id/"),
 ]
 
 
@@ -157,6 +222,10 @@ def evidence_key(o: Offer) -> str:
     return f"{o.provider} | {o.plan} | {o.location}"
 
 
+def indonesia_text(o: Offer) -> str:
+    return {True: "Yes", False: "No", None: "Not confirmed"}[o.in_indonesia]
+
+
 def build_providers(wb) -> None:
     if "VPS Providers" in wb.sheetnames:
         del wb["VPS Providers"]
@@ -165,7 +234,7 @@ def build_providers(wb) -> None:
         ws.cell(1, c, h).font = Font(bold=True)
     offers = sorted_offers()
     for r, o in enumerate(offers, start=2):
-        row = [o.provider, o.plan, o.vcpu, o.ram_gb, o.disk, o.location, "Yes" if o.in_indonesia else "No",
+        row = [o.provider, o.plan, o.vcpu, o.ram_gb, o.disk, o.location, indonesia_text(o),
                o.price_text, usd(o), o.billing, o.fits, o.status, o.checked, o.notes, o.link]
         for c, v in enumerate(row, start=1):
             ws.cell(r, c, v)

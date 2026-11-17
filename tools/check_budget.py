@@ -6,13 +6,15 @@ from pathlib import Path
 import openpyxl
 
 sys.path.insert(0, str(Path(__file__).parent))
-from build_budget import OFFERS, PER_USD, PROVIDER_HEADER, ROWS, XLSX, evidence_key, sorted_offers, usd  # noqa: E402
+from build_budget import OFFERS, PER_USD, PROVIDER_HEADER, ROWS, XLSX, evidence_key, indonesia_text, sorted_offers, usd  # noqa: E402
 
 HEADER = ["Item Name", "Plan", "Period", "Quantity", "Price", "Tax (%)", "Total Amount"]
 EXPECTED_TOTAL = 602.13  # 1.11 * (200 + 12 + 320 + 10.46)
 EVIDENCE = Path(__file__).resolve().parent.parent / "docs/reviews/2026-11-17-vps-price-evidence.md"
 REQUIRED_PROVIDERS = {"Vultr", "Hetzner", "Akamai Linode", "AWS Lightsail", "UpCloud", "DigitalOcean", "Contabo",
-                      "OVHcloud", "Biznet Gio"}
+                      "OVHcloud", "Biznet Gio",
+                      "IDCloudHost", "CloudKilat", "Dewaweb", "DomaiNesia", "Hostinger", "Niagahoster", "Rumahweb",
+                      "Qwords", "Jagoan Hosting"}
 
 
 def check_offers(wb) -> None:
@@ -26,7 +28,8 @@ def check_offers(wb) -> None:
     for r, o in enumerate(ordered, start=2):
         tag = f"row {r} {evidence_key(o)}"
         assert [pv.cell(r, 1).value, pv.cell(r, 2).value, pv.cell(r, 6).value] == [o.provider, o.plan, o.location], f"order {tag}"
-        assert pv.cell(r, 7).value == ("Yes" if o.in_indonesia else "No"), tag
+        assert pv.cell(r, 7).value == indonesia_text(o), tag
+        assert pv.cell(r, 7).value in ("Yes", "No", "Not confirmed"), tag
         assert pv.cell(r, 9).value == usd(o), f"usd {tag}"
         assert pv.cell(r, 15).hyperlink.target == o.link and o.link.startswith("https://"), f"link {tag}"
         assert "/" not in o.location and "surcharge" not in o.location.lower(), f"location {tag}"
@@ -45,6 +48,7 @@ def check_offers(wb) -> None:
         if "incl. tax" in o.price_text.lower():
             assert "before tax" in o.notes.lower(), f"tax-inclusive price without note {tag}"
     assert pv.cell(len(ordered) + 2, 1).value is None, "rows beyond the offers"
+    assert any(o.provider == "Biznet Gio" and "NEO Virtual Compute" in o.plan for o in OFFERS), "Biznet NEO Virtual Compute row missing"
 
 
 
