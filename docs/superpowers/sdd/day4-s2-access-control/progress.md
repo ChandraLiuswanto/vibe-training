@@ -12,3 +12,9 @@
 - Task 2 done (w2, randy/cx/gpt-6.1-sol medium): decks/session-2-access-control-visual.html (shell, 7 prompts, 18 placeholders); checks 3,4,5,6,7,8,10 PASS (re-run by main); commit 66db0d7.
 - Task 3 done (w3, cc/claude-opus-5-5 high, core visual work): deck slides 1-9 + s2- styles; checks pass for slides 1-9 (only placeholder-note failures on 10-18 remain); commit 8c3f6c2.
 - Task 4 done (w3 reused, cc/claude-opus-5-5 high): deck slides 10-18; full check PASS exit 0 (re-run by main); commit e2f9d86. Deviation: slide 14 terminal text shortened from the plan's wording to meet the 40-word budget; slide 18 has an extra 'Finish checklist' button opening prompt 7 (as S1's last slide does).
+- Final review (cc/claude-opus-5-5, high: final review): first attempt errored with a provider 503; retried once on the same id.
+- Final review result (after retry, no model substitution): VERDICT PASS, 7 Minor findings, no Critical or Important.
+- Minor fixes by main (not independently reviewed): (1) slide 4 "Checked once" -> "Proved once" and its note; (2) slide 5 note presents roles-in-the-app as this course's choice; (3) prompt 2 names a slow hash (scrypt or PBKDF2) and a SameSite=Lax cookie. Full check PASS after the fixes.
+- Minor findings left open: new tint colours and Consolas in the Session 2 CSS block (spec §3 wording); slide 14 step labels shorter than the plan; check 3 cannot see content clipped inside an overflow:hidden box (slide 9 mock-up body is cut by about 47 px, not visible) or overlap with the control bar; check 1 does not compare visible titles (slide 3 uses curly quotes).
+- Decision: keep the extra "Finish checklist" button on slide 18? — yes, it mirrors S1's last slide and opens prompt 7 — main
+- Decision: accept slide 14 wording shortened below the plan's text? — yes, the 40-word budget wins and the note carries the full points — main
