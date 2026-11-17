@@ -1,7 +1,8 @@
 // Render check for the slide deck. Usage:
 //   node tools/deck-check/render.mjs DECK.html [--slides 1-4] [--out DIR] [--reduced-motion]
 // Checks per slide, per step, at 1920x1080 and 1280x720: (a) bounds, (b) font size,
-// (c) word count, (d) step PNG differs from previous step, (e) prev() restores the previous step's .in set.
+// (c) word count, (d) step PNG differs from previous step, (e) prev() restores the previous step's .in set,
+// (f) at step 0: controls in not-yet-shown [data-step] are inert, and Space on a visible .prompt button does not advance.
 import { chromium } from 'playwright-core';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
@@ -58,6 +59,10 @@ function inspect() {
   const attr = slide.getAttribute('data-words-max');
   const limit = attr ? +attr : (slide.querySelector('.ho, .choices') ? 60 : 40);
   if (words > limit) probs.push(`words ${words}>${limit}`);
+  // (f) focusable controls in hidden steps must be unreachable (inert)
+  for (const st of slide.querySelectorAll('[data-step]:not(.in)'))
+    for (const el of st.querySelectorAll('button, a, [tabindex]'))
+      if (!el.closest('[inert]')) probs.push(`focus-hidden ${lab(el)}`);
   const inSet = [...slide.querySelectorAll('.in')].map((e) => e.outerHTML.slice(0, 80) + '#' + [...e.parentNode.children].indexOf(e)).join('|');
   return { probs, inSet, n: slide.dataset.n, steps: window.__deck.maxStep(), hasChoices: !!slide.querySelector('.choices') };
 }
@@ -84,6 +89,26 @@ for (const [W, H] of SIZES) {
       if (k > 0) { await page.evaluate(() => window.__deck.next()); await sleep(WAIT); }
       const r = await page.evaluate(inspect);
       const probs = [...r.probs];
+      if (k === 0) {
+        const hasBtn = await page.evaluate(() => {
+          const b = [...document.querySelectorAll('.slide.active .prompt button')].find((x) => x.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }));
+          if (!b) return false;
+          b.focus();
+          return document.activeElement === b;
+        });
+        if (hasBtn) {
+          const before = await page.evaluate(() => window.__deck.step);
+          await page.keyboard.press('Space');
+          await sleep(300);
+          const after = await page.evaluate(() => window.__deck.step);
+          if (after !== before) {
+            probs.push('space-advances');
+            await page.evaluate(([p]) => window.__deck.go(p), [pos - 1]);
+            await sleep(WAIT);
+          }
+          await page.evaluate(() => document.activeElement && document.activeElement.blur());
+        }
+      }
       const png = await page.screenshot({ path: join(out, `s${String(pos).padStart(2, '0')}-${r.n}-step${k}-${W}.png`) });
       pngs++;
       if (prevPng && Buffer.compare(png, prevPng) === 0) probs.push('same-png-as-previous-step');

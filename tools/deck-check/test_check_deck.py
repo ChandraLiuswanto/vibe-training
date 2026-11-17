@@ -94,7 +94,7 @@ def test_timing_sum_and_run_floor():
 
 
 def test_v2_deck_fails_known_checks():
-    html = (ROOT / "decks" / "day3-s1-v2.html").read_text(encoding="utf-8")
+    html = (ROOT / "tools" / "deck-check" / "fixtures" / "day3-s1-v2.html").read_text(encoding="utf-8")
     errs = cd.check_banned(cd.load_slides(html))
     assert any("24a" in e and "Allow it" in e for e in errs)
     assert any(e.startswith("slide 23") and "backend/" in e for e in errs)
@@ -167,3 +167,48 @@ def test_live_as_verb_is_allowed():
     assert cd.check_banned([s]) == []
     s2 = cd.Slide(n="5", title="T", visible="live prices", notes="")
     assert len(cd.check_banned([s2])) == 1
+
+def test_s2_profile_bans_v2_overclaims():
+    s = mk("1", "allow them", notes="So the model answers from the page, not from memory.")
+    assert len(cd.check_banned([s], profile="s2")) == 2
+    assert cd.check_banned([mk("1", "", notes="So the model answers from the page, not from memory.")], profile="s1") == []
+
+def test_s2_profile_has_no_tested_prefixes():
+    s = mk("1")
+    s.pres = ["X"]
+    assert cd.check_prompts([s], ["X"], profile="s2") == []
+
+def test_placeholders_flag_brackets_except_fix():
+    s = mk("1")
+    s.pres = ["Replace from [CHECKPOINT URL]", 'message "<msg>"', "[What I did]. I expected [what should happen], but I saw [what happened]. Explain the cause in plain words, then fix it."]
+    errs = cd.check_placeholders([s])
+    assert errs == [
+        "slide 1: placeholder in prompt: Replace from [CHECKPOINT URL]",
+        'slide 1: placeholder in prompt: message "<msg>"',
+    ]
+
+def test_placeholders_fix_prefix_does_not_hide_others():
+    s = mk("1")
+    s.pres = ["[What I did]. Then open [CHECKPOINT URL]"]
+    assert cd.check_placeholders([s]) == [
+        "slide 1: placeholder in prompt: [What I did]. Then open [CHECKPOINT URL]"]
+
+def test_placeholders_allow_json_shapes():
+    s = mk("1")
+    s.pres = ["GET /api/watchlist → [{ticker, name}]"]
+    assert cd.check_placeholders([s]) == []
+
+def test_placeholders_allow_saved_prices_date_label():
+    s = mk("1")
+    s.pres = ['Show "Saved prices as of <date>" under the table', 'Show "<date>" alone', 'Say "Saved prices as of <day>"']
+    errs = cd.check_placeholders([s])
+    assert errs == [
+        'slide 1: placeholder in prompt: Show "<date>" alone',
+        'slide 1: placeholder in prompt: Say "Saved prices as of <day>"',
+    ]
+
+def test_s2_v2_deck_fails_s2_profile():
+    slides = cd.load_slides((ROOT / "tools" / "deck-check" / "fixtures" / "day3-s2-v2.html").read_text(encoding="utf-8"))
+    errs = cd.check_banned(slides, "s2")
+    assert any(e.startswith("slide 3:") and "CHECKPOINT URL" in e for e in errs)
+    assert any(e.startswith("slide 14:") and "answers from the page" in e for e in errs)
