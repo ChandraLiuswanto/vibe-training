@@ -1,6 +1,6 @@
 # Day 4 visual decks — fix the review findings — design
 
-Status: reviewed (READY TO PLAN after 2 rounds), awaiting owner approval · 2026-11-18
+Status: approved by the owner on 2026-11-18, after spec review (READY TO PLAN, 2 rounds)
 Branch: `autopilot/day4-decks-fixes` (created from `main`).
 Source of the work: `docs/reviews/2026-11-17-day4-decks-review.md`, findings #1–#47. "#N" below is a finding number in that report.
 Tags: *(user)* = decided by the owner · *(call)* = coordinator's call, correctable.
