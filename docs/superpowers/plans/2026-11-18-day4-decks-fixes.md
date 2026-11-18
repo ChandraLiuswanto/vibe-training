@@ -80,8 +80,10 @@ Task 1 runs first. Tasks 2, 3, 4 and 5 write disjoint files and run in parallel.
   - Check 8 reads the file as text. For each S3 slide: the section source contains `slides[i].visual` verbatim; `slides[i].title` equals `data-title`; `slides[i].notes` equals the speaker note's text; `slides[i].minutes` equals `data-minutes`; `slides[i].words` equals the check-2 count. Also: `deck-data` parses as JSON; `slides.length` is 16; `prompts.length` is 7 and every prompt has a non-empty `summary`; `card` has `notice` and the 11 fields listed in spec §7; `pack` contains every `prompts[i].text` in full and contains UNTESTED; the sum of `minutes` is 60.
   - Check 9 measures font size as `.review/day4-fontsize.mjs` does and reports the text and its size for each failure.
   - Check 10 clicks a wrong option first and requires, on S1 slide 7, that the "÷" and the result tile are still not visible; then clicks the correct option. To find them, the check uses two hooks that Task 2 must add: `data-quiz-hidden` on the "÷" element and on the result tile.
-  - **Check 14 (new):** from slide 1, press ArrowRight until the last slide; the counter text is `N / N`; pressing the Notes control makes `#notes` visible with non-empty text; no page error occurred.
-  - Check 13 prints each sheet to PDF with Playwright's `page.pdf({ format: 'A4' })` and counts pages.
+  - **Check 14 (new):** from slide 1, press ArrowRight until the last slide; the counter shows the last slide of N (compare the two numbers, not the exact string: S3 pads them, "16 / 16" in the control bar and "08 / 16" style in the footer); pressing the Notes control makes `#notes` visible with non-empty text; no page error occurred.
+  - Check 13 prints each sheet to PDF with Playwright's `page.pdf({ format: 'A4' })` and counts pages. It counts prompt rows as the elements carrying the attribute `data-prompt-row`, which Task 5 puts on each of the seven prompt rows.
+  - Check 1 for S3 compares the section's `data-title` with the outline; check 8 then ties the JSON `title` to the section, so the JSON title is covered through the two together.
+  - Check 8 finds each S3 slide's `visual` and `actions` by matching the `<div>` nesting properly (or by cutting at `<div class="actions">`), never with a non-greedy pattern that stops at the first nested `</div>`.
 
 - [ ] **Step 3: Run it against today's decks and confirm it fails for the right reasons.**
 
@@ -111,7 +113,9 @@ Each deck worker owns one deck file and follows this cycle:
 - [ ] **Look before editing.** Open the PNGs in `.review/day4-fix-shots/<deck>/` for every slide the task changes.
 - [ ] **Make the changes** in the order the task gives.
 - [ ] **Watch it pass.** Run the same command until it prints `PASS`. Then open the PNG of every changed slide and confirm: the new line is readable, nothing overlaps, arrows do not cross labels, and the reading order is clear.
-- [ ] **Commit** the owned files only.
+- [ ] **Commit** the owned files only, naming the paths in the commit itself: `git add <paths>` then `git commit -m "..." -- <paths>`. Other workers share this checkout and its Git index at the same time; a commit without paths can pick up their staged files.
+
+Every deck task also adds one sentence to the speaker notes of its practice slide (S1 slide 17, S2 slide 17, S3 slide 15), telling the facilitator to hand out that session's participant sheet (`handouts/session-N-participant-sheet.html`) before practice starts (spec §7, last line).
 
 Do not run `.review/day4-render.mjs`; it rewrites the screenshots of all three decks. Do not run a practice prompt or install anything.
 
@@ -128,12 +132,12 @@ Do not run `.review/day4-render.mjs`; it rewrites the screenshots of all three d
 - [ ] **Step 3: Safety wording.** Apply spec §5.2 rows #1, #2, #3, #4, #5 and #36: ASK on slides 10 and 16, DATA on slide 13, UNTESTED in `promptDialog`, the `drive-setup` prompt changes (ask-first step per spec §4.4 before the first read; "the version the facilitator chose (not a security review)"), and the slide 14 lines.
 - [ ] **Step 4: Teaching fixes.** Apply spec §5.2 rows #14 (slide 7 quiz, with `data-quiz-hidden` on the "÷" element and the result tile, both hidden until the correct option is clicked), #16, #17, #29 (the six-step order given in the spec), #38.
 - [ ] **Step 5: Visual fixes.** Apply spec §5.2 rows #30, #31, #32, #33, #46, #47. New styles go in a new block that starts with `/* Session 1 additions */`, placed after line 10. Lines 7 and 10 stay untouched.
-- [ ] **Step 6: Facilitator checklist.** Add the S1 items of spec §8 to the "Setup help" window.
+- [ ] **Step 6: Facilitator checklist and hand-out note.** Add the S1 items of spec §8 to the "Setup help" window. Add the hand-out sentence to the slide 17 speaker notes.
 - [ ] **Step 7:** Run the shared "watch it pass" step, then commit:
 
 ```bash
 git add decks/session-1-external-data-visual.html
-git commit -m "Deck S1: review fixes (ask-first wording, data rule, quiz, labels)"
+git commit -m "Deck S1: review fixes (ask-first wording, data rule, quiz, labels)" -- decks/session-1-external-data-visual.html
 ```
 
 ### Task 3: S2 fixes
@@ -146,12 +150,12 @@ git commit -m "Deck S1: review fixes (ask-first wording, data rule, quiz, labels
 - [ ] **Step 3: Wording.** Apply spec §5.3 rows #2, #6, #7, #12, #13, #15, #39.
 - [ ] **Step 4: Quiz.** Apply spec §5.3 row #14 (slide 9).
 - [ ] **Step 5: Visual fixes.** Apply spec §5.3 rows #33, #34, #35, #45. New styles go in the existing `/* Session 2 additions */` block. Lines 7 and 10 stay untouched.
-- [ ] **Step 6: Facilitator checklist.** Add the S2 item of spec §8 ("Rehearse every prompt; all are untested") to the help window.
+- [ ] **Step 6: Facilitator checklist and hand-out note.** Add the S2 item of spec §8 ("Rehearse every prompt; all are untested") to the help window. Add the hand-out sentence to the slide 17 speaker notes.
 - [ ] **Step 7:** Run the shared "watch it pass" step, then commit:
 
 ```bash
 git add decks/session-2-access-control-visual.html
-git commit -m "Deck S2: review fixes (ask-first wording, audit and directory wording, quiz, Session 3 readiness)"
+git commit -m "Deck S2: review fixes (ask-first wording, audit and directory wording, quiz, Session 3 readiness)" -- decks/session-2-access-control-visual.html
 ```
 
 ### Task 4: S3 fixes and restyle
@@ -161,7 +165,7 @@ git commit -m "Deck S2: review fixes (ask-first wording, audit and directory wor
 - Create: `tools/day4-s3-sync.mjs`
 
 **Interfaces:**
-- Produces: `node tools/day4-s3-sync.mjs` rewrites, for each of the 16 slides, `slides[i].title`, `eyebrow`, `visual`, `notes`, `minutes`, `actions` and `words` in the `deck-data` JSON from the slide's `<section>`. `visual` is the exact source text between `<div class="visual">` and its closing tag; `words` uses the check-2 counting rule. It leaves `kind`, `prompts`, `pack` and `card` alone, keeps the JSON on one line, and prints how many fields changed. With `--check` it changes nothing and exits 1 if any field differs.
+- Produces: `node tools/day4-s3-sync.mjs` rewrites, for each of the 16 slides, `slides[i].title`, `eyebrow`, `visual`, `notes`, `minutes`, `actions` and `words` in the `deck-data` JSON from the slide's `<section>`. `visual` is the exact source text between `<div class="visual">` and its closing tag; `words` uses the check-2 counting rule. It leaves `kind`, `prompts`, `pack` and `card` alone, keeps the JSON on one line, and prints how many fields changed. With `--check` it changes nothing and exits 1 if any field differs. It needs a browser (`playwright-core` with Edge, as the check script uses) to compute `words`, because the counting rule depends on what is actually rendered. It finds `visual` and `actions` by matching `<div>` nesting properly, not with a non-greedy pattern.
 
 - [ ] **Step 1:** Run the shared "watch it fail" and "look before editing" steps for `s3`.
 - [ ] **Step 2: Write the sync helper first.** Run `node tools/day4-s3-sync.mjs --check` on the untouched deck. Expected: it reports differences only in `words` (the stored counts used another rule) and in no other field. Any other difference means the helper reads the sections wrongly: fix the helper. From here on, edit the sections and run the helper after each step.
@@ -170,12 +174,12 @@ git commit -m "Deck S2: review fixes (ask-first wording, audit and directory wor
 - [ ] **Step 5: Redraw the flagged diagrams.** Apply spec §5.4 rows #8 (slide 4, including the visible quiz question and "A ·" / "B ·" options), #9 (slide 5), #21 (slide 13), #25 (slide 8), #26 (slide 3), #27 (slide 6), #28 (slide 14), #42 (slide 9), #43 (slide 8).
 - [ ] **Step 6: New visible lines.** Apply spec §5.4 rows #2 (slide 8, ASK, conditional notes), #10 (slide 6), #11 (slide 2), #18 (slide 3), #19 (slide 11), #20 (slide 15).
 - [ ] **Step 7: Prompts.** In `prompts` **and** in `pack`: add the ask-first step of spec §4.4 to prompt `plan`. Add a `summary` key to each of the seven prompts and show it above the prompt text in the prompt window. Show UNTESTED in every prompt window, keeping the existing "Training VPS only…" line. Add UNTESTED once to the header of `pack`.
-- [ ] **Step 8: Facilitator checklist.** Add the S3 items of spec §8 to the "Facilitator setup + limitations" window.
+- [ ] **Step 8: Facilitator checklist and hand-out note.** Add the S3 items of spec §8 to the "Facilitator setup + limitations" window. Add the hand-out sentence to the slide 15 speaker notes.
 - [ ] **Step 9:** Run `node tools/day4-s3-sync.mjs`, then the shared "watch it pass" step. Open all 16 PNGs, not only the changed slides, and compare three of them side by side with `.review/day4-shots/s1/s05.png` and `.review/day4-shots/s2/s10.png` for the look. Then commit:
 
 ```bash
 git add decks/session-3-vps-deployment-visual.html tools/day4-s3-sync.mjs
-git commit -m "Deck S3: review fixes and restyle to match Sessions 1 and 2"
+git commit -m "Deck S3: review fixes and restyle to match Sessions 1 and 2" -- decks/session-3-vps-deployment-visual.html tools/day4-s3-sync.mjs
 ```
 
 ### Task 5: Participant sheets
@@ -185,6 +189,10 @@ git commit -m "Deck S3: review fixes and restyle to match Sessions 1 and 2"
 
 **Interfaces:**
 - Consumes: the prompt numbers, titles and full texts in `.review/day4-text/s1.md`, `s2.md`, `s3.md` (section "Practice prompts"). Prompt titles do not change in this plan. The "unexplained words" tables in `docs/reviews/2026-11-17-day4-decks-review.md` list the words that must be translated or avoided.
+- **Two prompts are being changed by other tasks at the same time**, so those text files show their old wording. Write these two rows for the new wording:
+  - S1 prompt 4 (`drive-setup`): it gains a step, before the first read, in which the agent proposes a change that makes OpenCode ask before every use of the Drive tools and then proves it by attempting one harmless action (spec §4.4). It also now calls the tool "the version the facilitator chose (not a security review)" (spec §5.2 #5).
+  - S3 prompt 1 (`plan`): it gains the same kind of step for server commands, before any command that reaches the server (spec §4.4, §5.4 #2).
+  The participant approves that settings change, so both rows say so.
 
 - [ ] **Step 1: Watch it fail.** Run `node tools/day4-deck-check.mjs --only=sheets`. Expected: check 13 fails because the files do not exist.
 - [ ] **Step 2: Write the three sheets** as spec §7 defines them: the four-column table with seven rows, the untested notice and DATA at the top, and the session-specific blocks of the spec §7 table. Each row is written from the full prompt text, in plain words. Mark every table row for a prompt with the attribute `data-prompt-row` so the check can count them.
@@ -194,7 +202,7 @@ git commit -m "Deck S3: review fixes and restyle to match Sessions 1 and 2"
 
 ```bash
 git add handouts/session-1-participant-sheet.html handouts/session-2-participant-sheet.html handouts/session-3-participant-sheet.html
-git commit -m "Handouts: one participant sheet per Day 4 session"
+git commit -m "Handouts: one participant sheet per Day 4 session" -- handouts/session-1-participant-sheet.html handouts/session-2-participant-sheet.html handouts/session-3-participant-sheet.html
 ```
 
 ---
@@ -206,6 +214,7 @@ git commit -m "Handouts: one participant sheet per Day 4 session"
 
 - [ ] **Step 1: Full check.** Run `node tools/day4-deck-check.mjs` and `node tools/day4-s3-sync.mjs --check`. Expected: `PASS` and exit code 0 from both.
 - [ ] **Step 2: Render.** Run `node .review/day4-render.mjs && node .review/day4-render.mjs --check`. Expected: `PASS`.
+- [ ] **Step 2b: Sheets against the final prompts.** Read the final text of S1 prompt 4 (`drive-setup`) and S3 prompt 1 (`plan`) in the decks, and the matching rows of the Session 1 and Session 3 sheets. Each row must mention approving the ask-first settings change. Check that each practice slide's notes (S1 17, S2 17, S3 15) name the participant sheet. Fix any mismatch through the owning worker.
 - [ ] **Step 3: Scope guard.** Run `git diff --stat main -- decks/day3-s1.html decks/day3-s1-v1.html decks/day3-s1-v2.html decks/day3-s1-v3.html decks/day3-s2.html decks/day3-s3.html prompts demos tools/deck-check`. Expected: no output.
 - [ ] **Step 4: Records.** Apply spec §10: the README row for `handouts/`, the check command and the reworded open item; the "Corrections after the review" section in the review report with the #8 correction and a pointer to the spec; one dated entry at the end of `docs/project-log.md` listing what changed, the untested prompts and the two findings left to the facilitator (spec §8).
 - [ ] **Step 5: Commit.**
