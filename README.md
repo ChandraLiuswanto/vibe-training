@@ -16,6 +16,7 @@ with single-file HTML decks for business users building a Financial App.
 | [decks/session-1-external-data-visual.html](decks/session-1-external-data-visual.html) | Visual track, Session 1: Frankfurter FX + Google Drive MCP, 18 slides. Not a replacement for `day3-s*`: the visual track covers different topics |
 | [decks/session-2-access-control-visual.html](decks/session-2-access-control-visual.html) | Visual track, Session 2: login, roles, admin page and audit trail, 18 slides |
 | [decks/session-3-vps-deployment-visual.html](decks/session-3-vps-deployment-visual.html) | Visual track, Session 3: native VPS deployment, 16 slides. Outlines: `docs/outlines/session-*-visual.md` |
+| [handouts/](handouts/) | Visual track participant sheets, one per session (`session-N-participant-sheet.html`): printable, two A4 pages each. The facilitator hands them out before practice |
 | [demos/git-basics.html](demos/git-basics.html) | Reusable Git demo |
 | [.frontend-slides/slide-previews/](.frontend-slides/slide-previews/) | Three style options used to choose Swiss Modern |
 
@@ -48,8 +49,22 @@ pinned [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-s
 - [Outlines](docs/outlines/) and [slide copy](docs/copy/)
 - [Project log](docs/project-log.md)
 
+## Check the visual track decks
+
+```bash
+node tools/day4-deck-check.mjs                 # all three decks and the sheets
+node tools/day4-deck-check.mjs --only=s3       # one deck: s1, s2, s3, or sheets
+node tools/day4-s3-sync.mjs --check            # Session 3 keeps each slide twice; this confirms the copies match
+```
+
+Session 3 stores every slide both as a section and in its `deck-data` JSON. After
+editing a Session 3 section, run `node tools/day4-s3-sync.mjs` to rebuild the JSON copy.
+
+The practice prompts in all three visual track decks are untested and are labelled so.
+Rehearse them before class.
+
 ## Open items
 
-- Participant handouts and the `verify.mjs` checker referenced in the project log
-  are not in this repository.
+- The visual track participant sheets are in `handouts/`. The Day 3 participant handouts
+  and the `verify.mjs` checker referenced in the project log are not in this repository.
 - A licence has not yet been chosen.

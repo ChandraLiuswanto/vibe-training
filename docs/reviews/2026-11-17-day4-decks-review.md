@@ -236,3 +236,14 @@ The pattern across all three decks: low word counts do not make a slide easy whe
 - **Not confirmed by a second source:** #7 (single sign-on) rests on the reviewer's knowledge. #2 rests on the same OpenCode documentation as #1.
 - **No finding was dropped.** Every P0 and P1 from the raw reviews appears above.
 - **Process note.** All three first-choice models failed with connection errors partway through; the reviews were completed on a later attempt with the same models. The audience reviewer's final confirmation message did not reach the coordinator, who checked its file directly (10 findings, three ratings, all cells filled, committed as `69541ec`).
+
+---
+
+## Corrections after the review
+
+Added 2026-11-18, when the findings were fixed. The findings tables above are left as they were written.
+
+- **#8 (S3 slide 4) described the slide wrongly.** The two boxes at the bottom ("Browser → laptop localhost", "Browser → assigned HTTPS") were clickable quiz options with feedback, not unmarked labels. No reviewer clicked them, and nothing on the slide said they were a question. The fix makes the quiz visible (a question, "A ·" and "B ·" options) and shows the crossed-out laptop path only after an answer is clicked.
+- **The fixes are specified in** `docs/superpowers/specs/2026-11-18-day4-decks-fixes-design.md`, which lists the change made for each finding #1–#47.
+- **Two findings cannot be fixed by editing** and are now facilitator checklist items in the decks' help windows: #20 (whether sixty minutes is enough for Session 3 is unknown until a timed rehearsal) and #5 (bank IT has not confirmed the Drive tool may be used on work laptops).
+- **Nothing was tested live.** Every practice prompt, and the new step that sets OpenCode to ask before Drive and server actions, is untested and labelled so.
