@@ -63,8 +63,9 @@ Decks, with the short names used below:
 
 ### 4.2 How each deck is built (verified 2026-11-18)
 - **S1 and S2 share a shell.** Lines 7 and 10 of each file are CSS blocks that are byte-identical between the two decks. They must stay byte-identical and unchanged. S2 puts its own styles in a block starting `/* Session 2 additions */`. S1 has no such block: S1's new styles go in a new block starting `/* Session 1 additions */` *(call)*.
-- **S1 and S2:** each slide is a `<section class="slide visual-slide" data-title="…">` with one heading and one `<aside class="speaker-note">`. Prompts are a JavaScript array `const prompts=[{id,title,text}, …]`, seven per deck. `promptDialog(id)` builds the prompt window.
-- **S3 stores every slide twice.** Each slide exists as a `<section class="slide" data-title="…" data-minutes="…">` and again inside `<script id="deck-data" type="application/json">` as `slides[i]` with the keys `title`, `eyebrow`, `visual`, `notes`, `minutes`, `kind`, `actions`, `words`. The running deck reads `title` and `notes` from the JSON, and `prompts`, `pack` and `card` only from the JSON. No generator for this file is in the repository. **Every S3 edit must change both copies**, and `words` must equal the new visible word count.
+- **S1 and S2:** each slide is a `<section class="slide visual-slide" data-title="…">` with one title heading (`h1` on slide 1, `h2` on the others; cards inside a slide may carry `h3` headings) and one `<aside class="speaker-note">`. Prompts are a JavaScript array `const prompts=[{id,title,text}, …]`, seven per deck. `promptDialog(id)` builds the prompt window.
+- **S3 stores every slide twice.** Each slide exists as a `<section class="slide" data-title="…" data-minutes="…">` and again inside `<script id="deck-data" type="application/json">` as `slides[i]` with the keys `title`, `eyebrow`, `visual`, `notes`, `minutes`, `kind`, `actions`, `words`. The running deck reads `title` and `notes` from the JSON, and `prompts`, `pack` and `card` only from the JSON. No generator for this file is in the repository. **Every S3 slide edit must change both copies**, and `words` must equal the new visible word count.
+- **S3 stores every prompt twice.** Each prompt's full text is in `prompts[i].text` and again, word for word, inside the single `pack` string of the same JSON (the file behind "Download prompt pack"). **Every S3 prompt edit must be made in both.** `pack` already contains a rehearsal warning; it also gets the UNTESTED line once, in its header. The one-line summaries of #41 are shown in the prompt window only and are stored as a new key `summary` on each prompt; they are not added to `pack`.
 - S3's stage is 1920×1080, scaled to the window; S1 and S2 use 1600×900. Unchanged.
 - S3's speaker notes each begin with their minutes ("4 min.") and total 60. Keep the total at 60.
 
@@ -123,7 +124,7 @@ Imperative titles ("Ask the agent…") are accepted as full sentences; S3 alread
 | #16 | 14 | Notes and participant sheet carry the worked consent example (§7). On the slide, replace "Review consent" with wording that names the decision: what access is expected, and "anything else: stop and ask". |
 | #17 | 6 | Add a plain translation next to the request: "Ask: what is one USD worth in IDR?"; label `GET` as "a read request", `base` as "from currency", `quote` as "to currency". |
 | #14 | 7 | New title. Add a visible question in the body: "160,000 IDR at 16,000 IDR per USD: multiply, divide or relabel?" Hide the "÷" sign and the result tile until an answer is clicked; the correct answer reveals both. The existing answer text stays. |
-| #29 | 15 | Number the six steps 1–6 in their true order, alternating agent and participant. |
+| #29 | 15 | Number the six existing steps 1–6 in this order, which follows the `drive-setup` prompt: 1 Inspect version (agent) · 2 Propose configuration (agent) · 3 Approve installation (you) · 4 Sign in through Google (you) · 5 Review permissions (you) · 6 Check connection (agent). The two columns stay; the numbers show the order. |
 | #30 | 12 | Replace the sideways "APP" and "AGENT" labels with horizontal row headings at heading size. |
 | #31 | 4 | Add row labels "Coffee shop" and "Our app". |
 | #38 | 4 | Under "Service counter", change "A defined request" to "Takes defined orders". |
@@ -156,7 +157,7 @@ Every row below changes both copies of the slide (§4.2).
 
 | Finding | Slide | Change |
 |---|---|---|
-| #2 | 8 | Add ASK as a visible line. Notes: the facilitator has set OpenCode to ask before server commands for this lab (§4.4, §8). |
+| #2 | 8 | Add ASK as a visible line. Notes, worded conditionally: OpenCode asks before each server command only if the facilitator set it before class or the prompt's ask-first step was confirmed; otherwise the prompt only asks (§4.4, §8). |
 | #2 | prompt `plan` | Add the ask-first step of §4.4 for shell commands, before any command that reaches the server. |
 | #4 | prompt window | Every prompt window shows UNTESTED in addition to the existing "Training VPS only…" line. |
 | #8 | 4 | New title (spelling). **Correction to the report:** the two bottom boxes are clickable quiz options with feedback (`data-answer`, `data-feedback`), not unmarked labels. Make that visible: add the question "Which address works for a colleague?", prefix the options "A ·" and "B ·" as S1 and S2 do, and keep the feedback on click. In the picture: add a "Website files" box served at the entry point, label the hop to FastAPI "inside the server", and draw the laptop-address path as a crossed-out arrow. |
@@ -233,15 +234,15 @@ New file `tools/day4-deck-check.mjs`, run as `node tools/day4-deck-check.mjs` (a
 
 | # | Check |
 |---|---|
-| 1 | Slide count is 18 / 18 / 16. Each slide has exactly one heading and one speaker note. `data-title` equals the heading text and equals line N of that deck's outline in `docs/outlines/`. |
+| 1 | Slide count is 18 / 18 / 16. Each slide has exactly one title heading (`h1` or `h2`; `h3` card headings are not counted) and one speaker note. `data-title` equals the title heading's text and equals line N of that deck's outline in `docs/outlines/`. |
 | 2 | Visible words, title and footer excluded: at most 40, and at most 60 on S1 17, S2 17, S3 15. |
 | 3 | At 1600×900 and 1280×720, no visible element of the active slide lies outside the stage. |
 | 4 | No console error, no page error, no request that is not `file:`, `data:` or `blob:`. |
 | 5 | Each deck has seven prompts. Every prompt window contains UNTESTED. S3: every prompt window has a non-empty summary line. |
 | 6 | Shared wording: ASK is visible on S1 slides 10 and 16, S2 slide 14, S3 slide 8. DATA is visible on S1 slide 13. |
 | 7 | Banned in titles and visible text: "only after you approve", "one-time", "never edited", "test password". Banned in S1's prompts: "reviewed package". Banned in S3's titles, visible text, labels and notes: "backend", "frontend". |
-| 8 | S3 only: for every slide, the JSON `title` and `notes` equal the section's `data-title` and speaker note, the JSON `visual` equals the section's visual markup, and `words` equals the count from check 2. Notes minutes total 60. |
-| 9 | Text-size floor: every visible text element inside a slide's content is at least 16 px tall on screen at 1600×900. Excluded: the footer line, the slide counter and the control bar. |
+| 8 | S3 only: for every slide, the JSON `title` and `notes` equal the section's `data-title` and speaker note, the JSON `visual` equals the section's visual markup, and `words` equals the count from check 2. Notes minutes total 60. `pack` contains every prompt's `text` in full and contains UNTESTED. |
+| 9 | Text-size floor: for every visible text element inside a slide's content, computed font size × stage scale is at least 16 px at a 1600×900 window, measured the way `.review/day4-fontsize.mjs` does (for SVG text, font size × the element's on-screen scale). This is font size, not glyph or box height. Excluded: the footer line, the slide counter and the control bar. |
 | 10 | Quizzes (S1 slide 7, S2 slide 9, S3 slide 4): before any click the answer text is empty; on S1 slide 7 the "÷" and the result tile are not visible. After clicking the correct option the answer text is non-empty and, on S1 slide 7, both are visible. |
 | 11 | S1 and S2: lines 7 and 10 of the two files are identical to each other. |
 | 12 | S3: no `@keyframes` and no `animation` in the file. Every footer contains "Financial App · Session 3". |
