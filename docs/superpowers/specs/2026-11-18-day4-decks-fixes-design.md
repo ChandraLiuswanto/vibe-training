@@ -1,6 +1,6 @@
 # Day 4 visual decks — fix the review findings — design
 
-Status: draft for approval · 2026-11-18
+Status: reviewed (READY TO PLAN after 2 rounds), awaiting owner approval · 2026-11-18
 Branch: `autopilot/day4-decks-fixes` (created from `main`).
 Source of the work: `docs/reviews/2026-11-17-day4-decks-review.md`, findings #1–#47. "#N" below is a finding number in that report.
 Tags: *(user)* = decided by the owner · *(call)* = coordinator's call, correctable.
@@ -57,6 +57,7 @@ Decks, with the short names used below:
 ### 4.1 Rules that already apply
 - `AGENTS.md` deck rules: single self-contained HTML file per deck, no network requests; full-sentence titles; visible words (title and footer excluded) at most 40 per slide and 60 on exercise slides; over budget means move text to the speaker notes, never shrink type.
 - Exercise slides, limit 60: S1 slide 17, S2 slide 17, S3 slide 15. All other slides: 40.
+- **How visible words are counted:** the way `.review/day4-render.mjs` already counts them (its `collect` function): every rendered text node in the active slide, including the eyebrow, button labels and quiz options, except the title heading (`h1`, `h2`), the speaker note and the footer. The counts quoted in the review (S1 20–54, S2 23–57, S3 15–25) come from this rule. S3's stored `words` values were produced by a different count; they are rewritten from the check script's output for all 16 slides.
 - Several slides gain a line and are already near the limit (S1 slides 10, 13, 14, 16; S2 slides 14, 17, 18). The builder makes room by moving existing lower-value text into that slide's speaker notes.
 - Language: English.
 - Colours: only the variables each deck already defines. S1 and S2: `--paper`, `--ink`, `--accent` (`#f30`), `--muted`, `--line`, `--wash`, `--green`.
@@ -78,8 +79,9 @@ These exact strings are used wherever the tables in §5 name them.
 | DATA | `What the agent reads goes to the AI provider. Made-up files only, never customer or bank data.` |
 | UNTESTED | `Untested — rehearse before class.` (S2 already uses this text) |
 
-- **Spelling:** "back end" and "front end" (two words) in every title, visible slide text, diagram label, `aria-label` and speaker note. S3 currently uses "backend" 63 times and "frontend" 15 times. Text inside practice prompts, file paths and code identifiers is left as it is *(call)*.
-- **One name:** "practice password", never "test password", in titles, visible text, diagram labels and notes.
+- **Spelling:** "back end" and "front end" (two words) in every title, visible slide text, diagram label, `aria-label` and speaker note. S3 currently uses "backend" 63 times and "frontend" 15 times. 
+- **One name:** "practice password", never "test password".
+- **Scope of both rules** *(call)*: slide sections and, in S3, their JSON copies: titles, visible slide text, diagram labels, `aria-label`s and speaker notes. Out of scope and left as they are: practice prompt text, S3's `pack`, the help windows, file paths, code identifiers and CSS class names such as `.backend-core`.
 
 ### 4.4 The ask-first setting *(user: approach B)*
 - No slide and no prompt hard-codes OpenCode configuration keys *(call)*. Reason: OpenCode's permissions page (read 2026-11-17) documents `permissions` rules of the form `{ "action", "resource", "effect" }` with `"effect": "ask"`, and warns that the earlier version uses different field and action names. The version on the class laptops is not known.
@@ -186,7 +188,8 @@ Every row below changes both copies of the slide (§4.2).
 - **Opening slide (slide 1):** the S1/S2 hero layout: a kicker "Financial App · Session 3 of 3", the title as the large statement, two chips "60 min · presentation" and "60 min · practice", and the existing laptop-to-VPS picture at reduced size on the right.
 - **Footer:** every slide's footer carries "Financial App · Session 3 · VPS deployment" on the left, as S1 and S2 carry theirs. The slide counter stays on the right.
 - **Buttons:** a slide's main prompt button is filled black with white text (S3 already defines `.btn.dark`); secondary buttons stay outlined. Buttons sit with the content they belong to, not alone at the bottom left.
-- **Arrows:** solid lines in `#f30` with an arrowhead. No dashes, no travelling dots. S3's flow-dash and packet animations are removed; S1 and S2 have no animation.
+- **Arrows:** solid lines in `#f30` with an arrowhead. No dashes, no travelling dots.
+- **Animation:** all of S3's animation is removed, in both copies of each slide: the four `@keyframes` (`route-flow`, `packet-travel`, `gear-turn`, `arrive`), every `animation` declaration and every inline `animation-delay`. S1 and S2 have no animation.
 - **Cards:** each diagram part sits on a white rounded card with a thin border, as in S1 and S2. Icons are stroke-only.
 - **Titles:** letter-spacing no tighter than `-0.02em`, and no title leaves a single word on its last line (`text-wrap: balance` or a narrower `max-width`). Titles are not reworded for this.
 - **Kept:** S3's embedded typefaces (Archivo, Nunito, JetBrains Mono), its 1920×1080 stage, its deck-data structure, its prompt pack and deployment-card download.
@@ -224,7 +227,7 @@ The decks do not link to the sheets (a link would break when a deck is copied al
 | #20 — S3 has seven prompts in sixty minutes | The slide and sheet changes in §5.4 and §7, plus a facilitator checklist item: "Rehearse the full practice on a participant-like laptop and time it." Whether sixty minutes is enough stays unknown until that rehearsal. |
 | #5 — the Drive tool is not approved by anyone | The wording change in §5.2, plus a facilitator checklist item: "Confirm with bank IT that the Drive tool may be used on work laptops." |
 
-Facilitator checklist items go in each deck's existing help window (S1 "Setup help", S2 help, S3 "Facilitator setup"). Each deck's checklist also gets: "Rehearse every prompt; all are untested" and "Set OpenCode to ask before Drive actions (S1) / server commands (S3), or run the ask-first prompt step and confirm it asks."
+Facilitator checklist items go in each deck's existing help window (S1 "Setup help", S2 help, S3 "Facilitator setup"). Every deck's checklist also gets "Rehearse every prompt; all are untested." S1's and S3's checklists also get "Set OpenCode to ask before Drive actions (S1) / server commands (S3), or run the ask-first prompt step and confirm it asks." S2 has no ask-first step and gets only the rehearsal item.
 
 ## 9. Checking
 
@@ -234,13 +237,13 @@ New file `tools/day4-deck-check.mjs`, run as `node tools/day4-deck-check.mjs` (a
 
 | # | Check |
 |---|---|
-| 1 | Slide count is 18 / 18 / 16. Each slide has exactly one title heading (`h1` or `h2`; `h3` card headings are not counted) and one speaker note. `data-title` equals the title heading's text and equals line N of that deck's outline in `docs/outlines/`. |
+| 1 | Slide count is 18 / 18 / 16. Each slide has exactly one title heading (`h1` or `h2`; `h3` card headings are not counted) and one speaker note. `data-title` equals the title heading's text and equals numbered item N of that deck's outline in `docs/outlines/`. |
 | 2 | Visible words, title and footer excluded: at most 40, and at most 60 on S1 17, S2 17, S3 15. |
 | 3 | At 1600×900 and 1280×720, no visible element of the active slide lies outside the stage. |
 | 4 | No console error, no page error, no request that is not `file:`, `data:` or `blob:`. |
 | 5 | Each deck has seven prompts. Every prompt window contains UNTESTED. S3: every prompt window has a non-empty summary line. |
 | 6 | Shared wording: ASK is visible on S1 slides 10 and 16, S2 slide 14, S3 slide 8. DATA is visible on S1 slide 13. |
-| 7 | Banned in titles and visible text: "only after you approve", "one-time", "never edited", "test password". Banned in S1's prompts: "reviewed package". Banned in S3's titles, visible text, labels and notes: "backend", "frontend". |
+| 7 | Within the scope set in §4.3 (slide sections and S3's JSON copies; not prompts, `pack`, help windows or class names). Banned in titles and visible slide text: "only after you approve", "one-time", "never edited". Banned in titles, visible slide text, labels and notes: "test password", and in S3 "backend" and "frontend". Separately, banned in S1's prompt text: "reviewed package". |
 | 8 | S3 only: for every slide, the JSON `title` and `notes` equal the section's `data-title` and speaker note, the JSON `visual` equals the section's visual markup, and `words` equals the count from check 2. Notes minutes total 60. `pack` contains every prompt's `text` in full and contains UNTESTED. |
 | 9 | Text-size floor: for every visible text element inside a slide's content, computed font size × stage scale is at least 16 px at a 1600×900 window, measured the way `.review/day4-fontsize.mjs` does (for SVG text, font size × the element's on-screen scale). This is font size, not glyph or box height. Excluded: the footer line, the slide counter and the control bar. |
 | 10 | Quizzes (S1 slide 7, S2 slide 9, S3 slide 4): before any click the answer text is empty; on S1 slide 7 the "÷" and the result tile are not visible. After clicking the correct option the answer text is non-empty and, on S1 slide 7, both are visible. |
@@ -254,8 +257,8 @@ Not checkable by script, checked by the final reviewer from the screenshots: dia
 
 ## 10. Other files
 
-- `docs/outlines/session-1-external-data-visual.md`, `session-2-access-control-visual.md`, `session-3-vps-deployment-visual.md`: titles per §5.1, and a dated line saying the owner approved them with this spec.
-- `README.md`: a row for `handouts/`, and the check command.
+- `docs/outlines/session-1-external-data-visual.md`, `session-2-access-control-visual.md`, `session-3-vps-deployment-visual.md`: titles per §5.1, and a dated line saying the owner approved them with this spec. In the S3 outline, the sentence "They are unchanged." is replaced, since four titles change.
+- `README.md`: a row for `handouts/`, and the check command. The open item "Participant handouts … are not in this repository" is reworded: the Day 4 sheets now exist; the Day 3 handouts still do not.
 - `docs/reviews/2026-11-17-day4-decks-review.md`: a new section "Corrections after the review" with the #8 correction (§5.4), and a line pointing to this spec. The findings tables are not rewritten.
 - `docs/project-log.md`: one dated entry at the end.
 
