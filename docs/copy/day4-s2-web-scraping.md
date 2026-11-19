@@ -51,7 +51,7 @@ Format per slide: eyebrow · title · visible text (by reveal step) · actions �
 ## 7 · The site's reply code tells you what happened.
 - **Eyebrow:** Reading the answer
 - **Visible:**
-  - 200 OK: but check what came back
+  - 200 OK: check what came back
   - 429 Too many requests: slow down
   - 403 Forbidden: the site decided you're a bot
   - Quick check: a scraper gets 429. What should it do?
@@ -108,6 +108,7 @@ Format per slide: eyebrow · title · visible text (by reveal step) · actions �
     - B. Switch to a proxy
     - C. Stop and show the last saved results ✓
 - **Notes (4 min):** Three checks before any live request: the site's terms of use, its robots.txt file (the site's note to bots about where they may go), and approval inside the company. robots.txt isn't permission on its own. Some news sites name AI agents directly: on 19 November, Antara, Kontan and Republika named ClaudeBot. Proxies and solvers are how people get past a "no". Whether to do that is decided by the business and legal teams, before anyone writes code. Run the quiz: let two people argue A and B before revealing C.
+- **Budget exception:** quiz choices (AGENTS.md allows); ~43 words.
 - **Source:** old 6 + 7; `SKILL.md` §0
 
 ## 13 · One feed item shows what to keep.
