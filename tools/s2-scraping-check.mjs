@@ -10,9 +10,9 @@ const deckPath = path.join(root, 'decks/session-2-web-scraping-visual.html');
 const copyPath = path.join(root, 'docs/copy/day4-s2-web-scraping.md');
 const shots = process.argv.includes('--shots');
 const shotDir = path.join(root, '.scratch/s2-rebuild/shots');
-const EXPECTED = 25;
-const BUDGET = n => (n >= 22 ? 60 : 40);
-const BUDGET_EXCEPT = { 12: 'essential reference table (proxy types)', 15: 'quiz choices' };
+const EXPECTED = 23;
+const BUDGET = n => (n >= 20 ? 60 : 40);
+const BUDGET_EXCEPT = {};
 
 let failures = 0;
 const fail = (check, slide, msg) => { failures++; console.log(`FAIL ${check} slide ${slide}: ${msg}`); };
@@ -139,9 +139,9 @@ try {
 
   // 4b. Quizzes write to their own slide
   await go(15);
-  await page.click('.slide.active .quiz[data-answer="right"]');
-  const ans = await page.evaluate(() => document.querySelector('.slide.active .answer').textContent);
-  if (!/^Yes/.test(ans)) fail(4, 15, `quiz answer not shown on slide 12 ("${ans}")`);
+  if (await page.locator('.slide.active [data-step]').count() !== 3) fail(4, 15, 'expected three recap reveals');
+  await go(5);
+  if (await page.locator('.slide.active .s2-rung:visible').count() !== 6 || await page.locator('.slide.active [data-step]').count()) fail(4, 5, 'all ladder rungs must be visible on arrival');
 
   // 5. Prompt modal, copy, downloads, print
   await page.click('#controls [data-action="prompts"]');
@@ -161,7 +161,7 @@ try {
   const promptText = await page.evaluate(() => document.getElementById('prompt-text')?.textContent || '');
   for (const must of ['FinancialAppTraining/1.0', 'no proxies, no CAPTCHA solving', 'Just a moment', 'sample-news-feed.xml']) if (!promptText.includes(must)) fail(5, 0, `prompt lacks "${must}"`);
   await page.click('#close-modal');
-  await go(24);
+  await go(22);
   await page.click('.slide.active [data-action="help"]');
   const help = await page.evaluate(() => document.getElementById('modal-body').textContent);
   if (/Antara is a candidate/.test(help) || !/Start with a feed/.test(help)) fail(5, 24, 'help dialog still has the old wording');

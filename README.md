@@ -14,7 +14,7 @@ with single-file HTML decks for business users building a Financial App.
 | [decks/day3-s2.html](decks/day3-s2.html) | Session 2 deck, 27 slides (v3: review fixes, worked examples) |
 | [decks/day3-s3.html](decks/day3-s3.html) | Session 3 deck, 22 slides |
 | [decks/session-1-external-data-visual.html](decks/session-1-external-data-visual.html) | Visual track, Session 1: Frankfurter FX + Google Drive MCP, 18 slides. Not a replacement for `day3-s*`: the visual track covers different topics |
-| [decks/session-2-web-scraping-visual.html](decks/session-2-web-scraping-visual.html) | Visual track, Session 2: watchlist news, scraping concepts and a feed-first lab, 25 slides. [Participant sheet](handouts/session-2-participant-sheet.html) |
+| [decks/session-2-web-scraping-visual.html](decks/session-2-web-scraping-visual.html) | Visual track, Session 2: watchlist news, scraping concepts and a feed-first lab, 23 slides. [Participant sheet](handouts/session-2-participant-sheet.html) |
 | [decks/session-3-vps-deployment-visual.html](decks/session-3-vps-deployment-visual.html) | Visual track, Session 3: native VPS deployment, 16 slides. Outlines: `docs/outlines/session-*-visual.md` |
 | [handouts/](handouts/) | Visual track participant sheets, one per session (`session-N-participant-sheet.html`): printable, two A4 pages each. The facilitator hands them out before practice |
 | [demos/git-basics.html](demos/git-basics.html) | Reusable Git demo |

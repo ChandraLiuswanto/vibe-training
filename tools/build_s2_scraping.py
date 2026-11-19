@@ -17,7 +17,7 @@ from s2_deck_shell import DECK, esc, join, split  # noqa: E402
 
 from s2_round2 import build as build_round2, CSS as ROUND2_CSS
 
-TOTAL = 25
+TOTAL = 23
 
 # ---------------------------------------------------------------- helpers
 

@@ -1,10 +1,10 @@
-# Day 4 · Session 2 — Web scraping · copy deck (round 2)
+# Day 4 · Session 2 — Web scraping · copy deck (presenter revision)
 
-Plan: `docs/superpowers/plans/2026-11-19-day4-s2-web-scraping-rebuild.md` §10 (25-slide outline, approved 2026-11-19).
+Plan: `docs/superpowers/plans/2026-11-19-day4-s2-web-scraping-rebuild.md` §10 (23-slide outline, approved 2026-11-19).
 Status: reviewed by fedora/sol (READY WITH FIXES); fixes applied 2026-11-19. Visible text is what the room reads; speaker notes don't count toward the word budget.
 Per slide: eyebrow · title · visual · visible text (by click step) · actions · notes (minutes) · source.
 
-Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on the lab and instruction slides (22–25). Exceptions are listed on the slide.
+Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on the lab and instruction slides (20–23). Exceptions are listed on the slide.
 
 ---
 
@@ -22,27 +22,24 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (1 min):** Three short chunks, then the lab. Chunk 1 is the order scrapers try things in. Chunk 2 is what happens when a website doesn't want to be scraped, and the tools people use against it. Chunk 3 is what we do in this course. Each chunk ends with a quick question.
 - **Source:** new (plan §10.1 gap 6)
 
-## 3 · A useful result shows a headline, a date and a source.
+## 3 · The news panel links to the article without copying its body.
 - **Eyebrow:** What a reader needs
-- **Visual:** three columns.
-- **Visible:** Headline: what the story is about · Date: when it was published · Source: where to check it
-- **Notes (2 min):** Ask: if you saw a headline with no date and no source, what would you check before acting on it? A story might mention the company only in passing. Every row we save keeps all three, so anyone can click through and read the original.
+- **Visual:** Two panels: full article and watchlist card.
+- **Visible:** Publisher’s article: headline, date, article body. Watchlist card: headline, date, source, link.
+- **Notes (2 min):** Point to the body on the left: that is the full story. The watchlist helps someone decide whether to open it. We save the headline, date, source and link; the publisher keeps the article body.
 - **Source:** old 3
 
-## 4 · A web page is built for people; a scraper picks out the few details your app needs.
+## 4 · A scraper turns a news page into a row your app can use.
 - **Eyebrow:** What scraping means
-- **Visual:** moving: a news page (menu, ads, cards) → scraper → three fields; a dot travels along the arrow.
-- **Visible:**
-  - News page: menu · ads · result cards
-  - Click 1: Scraper keeps → headline · date · link
-- **Notes (2 min):** A news page mixes stories with menus, ads and links to other sections. A scraper is a small program that reads the page and keeps only the fields the app needs. It doesn't copy the whole article. Pages change their layout, so a scraper needs tests and a clear message when it stops finding things.
+- **Visual:** Two panels: page and extracted row.
+- **Visible:** What a person sees: menu, ad, headline and article body. What the app keeps: headline, date, source and link.
+- **Notes (3 min):** Say: “A person sees a whole page. Our app needs one record per story.” Point to the menu, ad and article body on the left. Then point to the headline, date and link on the right. Those fields become one row. The example article is fictional.
 - **Source:** old 4 + 5
 
 ## 5 · Scrapers try the cheapest way to the data first.
 - **Eyebrow:** 1 · How scrapers reach data
-- **Visual:** ladder of six rungs, one added per click; a cost arrow down the side.
+- **Visual:** All six rungs shown at once.
 - **Visible:** 1 Feed or API · 2 Data inside the page · 3 Plain page request · 4 Real browser · 5 AI reads messy pages · 6 Paid service · ↓ more cost, more breakage · Stop at the first step that works.
-- **Steps:** rungs 1–3, then 4–6, then the rule.
 - **Notes (3 min):** This is the order experienced scrapers follow. Each step down costs more, runs slower and breaks more often when the site changes. Most jobs finish on steps 1 to 3. A browser is a different way of showing up at a site; it isn't automatically stronger. Notice what isn't on the ladder: proxies and CAPTCHA tools. Those are what people reach for when a site blocks them, and that's the next chunk. Today's lab stays on step 1.
 - **Source:** web-scraping `SKILL.md` §1
 
@@ -56,45 +53,39 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (3 min):** Step 1: an RSS feed is a list of the latest stories a site publishes for other programs: title, link and exact time. Many WordPress sites also answer a simple data request with the same fields. Step 2: even when there's no feed, the page often carries its data in a hidden block for search engines, called JSON-LD. A scraper reads that block instead of the layout. Step 3 is a plain request for the page and reading the layout itself: it works, but it can break when the layout changes. (API: a way for apps to request data.) Session 1's exchange-rate service was step 1 too. Each capture came from one request on 19 November with a training identity.
 - **Source:** `data-sources.md` rungs 1–2; captures 2026-11-19
 
-## 7 · AI writes the scraper; plain code reads the pages.
+## 7 · AI can suggest what to extract, and code checks the result.
 - **Eyebrow:** Steps 5 and 6
-- **Visual:** moving: a sample page goes to AI once → AI produces rules → plain code applies the rules to many pages (many dots).
-- **Visible:**
-  - AI reads one page once → writes the rules · Code reads every page
-  - Click 1: Our scraper, 20 Oct – 19 Nov 2026: 35 automated repairs by an AI agent. · Paid service: rule of thumb, upkeep over 2 days a month.
-- **Notes (3 min):** Step 5. When pages are too messy for fixed rules, an AI model can read them. Sending every page to a model is slow and costly, so the smarter split is: the model reads one example and writes the extraction rules, and ordinary code applies them to thousands of pages. That's one approach, and our news scraper uses a version of it: when a site changes and the nightly check fails, an AI agent rewrites that one site's settings and has to show the site's check passing before the fix is kept. Its history has 35 commits labelled as these automated repairs between 20 October and 19 November 2026. Step 6. A common rule of thumb: a paid scraping service makes sense when keeping your own scraper working costs more than about two days a month. Compare price per thousand usable records, not per request, and don't trust the vendor's success-rate claims.
+- **Visual:** Three cards: sample, suggestion, check.
+- **Visible:** Sample title → AI suggests reading the title in each news card → Code reads it and flags a missing title.
+- **Notes (4 min):** Point to the fictional headline on slide 4. Ask: “Where is the headline in this news card?” AI can suggest a rule for finding it. Code uses the rule on the next card and flags a missing value. The lab uses the feed’s named fields, so it does not need AI to read each item. If you buy a service, compare the cost per usable result.
 - **Source:** `llm-extraction.md` §1; `SKILL.md` §1 rung 6; `~/news_api` git log 2026-10-20 → 2026-11-19, `newsscrape/repair.py`
 
-## 8 · A site checks four things before it trusts a visitor.
+## 8 · Sites can consider four kinds of signals when a request arrives.
 - **Eyebrow:** 2 · When sites push back
-- **Visual:** moving: a request passes four gates in a row; a red stop at the last gate.
-- **Visible:** Who you say you are · How you connect · Where you connect from · How you behave · Sites block when these don't match. · In this course: we learn these to recognise a block, not to get past it.
-- **Notes (2 min):** Say the course rule first: before any live request we check the site's terms, its robots.txt and internal approval, and if a site blocks us we stop. This chunk explains what's happening when that happens, and what tools you'll hear vendors and AI agents suggest. Sites may consider several signals, usually these four. Who: the browser name your request announces. How: the technical handshake your software makes, which differs between Chrome and a Python script. Where: an office line, a home line, a phone network or a cloud server. Behave: speed and pattern, such as 50 pages in a second. Sites block when these disagree. A refusal does not tell you which signal mattered.
+- **Visual:** Four cards, explained one at a time.
+- **Visible:** Identity · Connection · Network · Behavior
+- **Notes (2 min):** Walk through the cards one at a time. Identity is what software the request says it uses. Connection is how that software starts talking to the server. Network is where a request comes from, such as a company or cloud network. Behavior is how often requests arrive. A refusal does not tell you which signal mattered.
 - **Source:** `blocked.md` §2
 
-## 9 · The site's reply code tells you what happened.
+## 9 · An HTTP status code tells you how the server answered.
 - **Eyebrow:** Reading the answer
-- **Visual:** moving: request → site → reply card; three cards.
-- **Visible:** 200 OK: check what came back · 429 Too many requests: asking too often · 403 Forbidden: the site refused; the code doesn't say why · In our lab: 429 or 403 means stop and keep saved results.
-- **Notes (2 min):** Every reply from a website starts with a three-digit code. 429 means you asked too often. In general, scrapers wait and ask less often; in our lab the app doesn't retry on its own: it stops, keeps the saved results, and you try again later by pressing Refresh. 403 means the site refused. The code doesn't say why: it could be the rules, the address or something about the request. Asking again won't change it.
+- **Visual:** Definition followed by three status cards.
+- **Visible:** 200: request succeeded. 403: refused. 429: rate limited.
+- **Notes (2 min):** An HTTP status code is a three-digit number sent with a server reply. 200 means the request succeeded, not that the body contains what you wanted. 403 means the server refused it. 429 means the server is limiting requests. The next slide compares two replies with the same code.
 - **Source:** `SKILL.md` §2
 
-## 10 · A 200 reply can still be a failure.
+## 10 · Two replies can both say 200 OK and contain different things.
 - **Eyebrow:** Silent failures
-- **Visual:** four small mock replies, each tagged "200 OK", labelled Illustration.
-- **Visible:** Check page: "Just a moment…" · Expected fields missing · Login page instead of news · Yesterday's copy · All four can say 200 OK.
-- **Notes (3 min):** These are the expensive failures, because nothing crashes. The scraper "succeeds" and saves a check page, a page without the expected fields, a login page or a stale copy. The fix is to look at what came back: is it the feed we expected, with the fields we expect, and how many rows compared with last time? A sudden drop from 20 rows to 2 is worth a look. Careful: a real feed with no story about your company today is a valid result, "no matches". It's different from a reply that isn't the feed at all. The lab tests both.
+- **Visual:** Two illustrated response panels with the same status badge.
+- **Visible:** 200 OK: expected RSS feed. 200 OK: browser check page.
+- **Notes (4 min):** Read the response body as well as the code. On the left, the app got the feed it expected, so it can read the items. A valid feed can have no matching stories. On the right, it got a browser check instead of a feed. Stop and keep the saved results. Both replies are illustrations.
 - **Source:** `production.md` §3; `SKILL.md` §4
 
-## 11 · A headless browser runs without a visible window.
+## 11 · Headed browsers show a window, and headless browsers run without one.
 - **Eyebrow:** Headless vs headed
-- **Visual:** side by side: an empty dashed frame "no window" vs a real browser frame; click reveals the headed side.
-- **Visible:**
-  - Headless: no window · fast and cheap · leaves tell-tale signs
-  - Click 1: Headed: a visible window · useful for watching what the page does
-  - Both are still automation.
-  - Callout: Our scraper's settings, 10 Nov 2026: Tempo's index needed a headed browser.
-- **Notes (2 min):** Some pages only show their news after the browser runs the page's code. For those, scrapers drive a real browser. Headless means the browser runs without a window, controlled by a program. It's fast, but it leaves small traces that check scripts look for. Headed means a normal visible window.  The Tempo note comes from our scraper's settings on 10 November. On 19 November one load of the same page wasn't blocked either way. Blocks come and go, which is part of the cost.
+- **Visual:** Two equal-width panels.
+- **Visible:** Headed: visible window. Headless: no visible window.
+- **Notes (2 min):** Both are browsers and can run page JavaScript. A headed browser is useful when you want to watch the page load. A headless browser can run automated checks without a display. Neither changes whether the site has granted permission.
 - **Source:** `blocked.md` §3 step 3; `~/news_api/sites/tempo.toml`; check 2026-11-19
 
 ## 12 · A proxy changes where your request seems to come from.
@@ -126,27 +117,14 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (2 min):** reCAPTCHA is Google's; Turnstile is Cloudflare's, and it often shows nothing at all: the page scores your behaviour in the background. A check page can arrive with code 200, which is the silent failure from three slides ago. Paid solving services exist; using them usually breaks the site's terms, and in this course the answer is no. On 19 November one load of Bisnis.com showed no check page; the callout records what our scraper saw on 27 September and 10 November.
 - **Source:** `production.md` §3; `llm-extraction.md`; `~/news_api/sites/bisnis.toml`; reCAPTCHA demo capture
 
-## 14 · Our own scraper shows how often sites push back.
-- **Eyebrow:** From our news scraper
-- **Visual:** one bar of 454 sites; 122 highlighted; small breakdown.
-- **Visible:** 19 Nov 2026: 454 enabled site settings · 122 use one or more: 94 a browser or browser-like client · 61 a Cloudflare solver · 30 a proxy · 7 a visible browser · Counts overlap.
-- **Notes (2 min):** These are the settings of the news scraper we run, read on 19 November. 332 sites have none of these settings: they use feeds, sitemaps, data APIs or plain page requests. 122, about one in four, use something heavier, and a site can use more than one, so the numbers overlap. The settings show what the scraper is configured to do, not that each site needs it today. Every extra tool is another thing that breaks and another cost.
-- **Source:** `~/news_api/sites/*.toml`, enabled configs, 2026-11-19
-
-## 15 · Knowing these tools is not permission: we check the rules and stop when blocked.
+## 14 · We check permission before fetching and stop if blocked.
 - **Eyebrow:** 3 · The rules we follow
-- **Visual:** three check chips; quiz below.
-- **Visible:**
-  - Site terms · robots.txt · Internal approval
-  - Quiz: the news site blocks your request. What should the app do?
-    - A. Try again until it works
-    - B. Switch to a proxy
-    - C. Stop and show the last saved results ✓
-- **Budget exception:** quiz choices; ~43 words.
-- **Notes (3 min):** Three checks before any live request: the site's terms of use, its robots.txt file (the site's note to bots about where they may go), and approval inside the company. robots.txt isn't permission on its own. Some news sites name AI agents directly: on 19 November, Antara, Kontan and Republika named ClaudeBot. Do not change tools to work around a refusal. Robots.txt observations are from 19 November; terms have not been reviewed. Run the quiz: let two people argue A and B before revealing C.
+- **Visual:** Three checklist cards; no quiz.
+- **Visible:** Site terms · Robots guidance · Internal approval · Stop on a block.
+- **Notes (3 min):** Review the terms and robots guidance for the exact route. Get internal approval before any live request. If blocked, stop, keep the last good results and report what happened. Do not change tools to get around it.
 - **Source:** old 6 + 7; `SKILL.md` §0
 
-## 16 · A good scraper uses the cheapest door, checks what came back and stops when blocked.
+## 15 · A good scraper uses the cheapest door, checks what came back and stops when blocked.
 - **Eyebrow:** Recap · your turn
 - **Visual:** three scenario cards; each answer appears on its own click.
 - **Visible:**
@@ -156,7 +134,7 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (3 min):** Read each scenario aloud and take an answer from the room before clicking. These are the three habits the lab needs: look for the cheapest door, read what actually came back, and stop when the site says no.
 - **Source:** new (plan §10.1 gap 6)
 
-## 17 · One feed item shows what to keep.
+## 16 · One feed item shows what to keep.
 - **Eyebrow:** Worked example · CNBC Indonesia Market RSS
 - **Visual:** real feed tags mapped to fields.
 - **Visible:**
@@ -168,40 +146,33 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (3 min):** This is a real item captured from the feed on 19 November. Point to how the feed already labels each field, so nothing has to be dug out of a page layout. The date is exact. A search page would only say "2 jam lalu" (two hours ago). We keep headline, date, link and the time we fetched it, never the full article. If the room has no internet or the source isn't approved, the sample feed and sample page have three made-up stories with the same fields.
 - **Source:** old 8 + 11; live feed 2026-11-19
 
-## 18 · Saved results feed the panel, and Refresh is the only fetch.
-- **Eyebrow:** You control when it runs
-- **Visual:** moving: feed → saved results → panel; a refresh dot that fails turns red and the panel keeps its rows.
-- **Visible:** Feed → Saved results → News panel · Opening the panel: shows saved rows · Refresh: one request · Refresh fails: keep the last good rows
-- **Notes (2 min):** Opening the dashboard never contacts the news site; it shows what's saved. Only the Refresh button sends a request, and only one. If the refresh fails, the panel keeps the last good results and shows how old they are. The panel labels four states: sample, empty, stale and unavailable, and sample links can't be clicked. No background jobs, no automatic retries.
-- **Source:** old 9 + 10
-
-## 19 · The agent proposes the work, and you approve each change.
+## 17 · The agent proposes the work, and you approve each change.
 - **Eyebrow:** Facilitator demo
 - **Visible:** 1 Plan the changes · 2 Show commands and files · 3 Wait for your "yes"
 - **Actions:** The prompt · stage 1 ↗
 - **Notes (2 min):** Paste the practice prompt into a coding agent. Read the files, commands and checks it proposes before approving, including any database change, which needs its own approval. The prompt asks the agent to wait; the tool's approval settings are what actually enforce it.
 - **Source:** old 12
 
-## 20 · The dashboard shows mentions for one company at a time.
+## 18 · The dashboard shows mentions for one company at a time.
 - **Eyebrow:** Dashboard example · Illustration
 - **Visible:** Mentions · BBCA · Headline · source · published · fetched 10 min ago
 - **Notes (2 min):** Select one company in the mock dashboard. A story that mentions a company is only a mention, not a claim about the company. Show where the source, the published time and the fetch time appear, and what the panel says when the last refresh didn't work. The rows are placeholders. A feed may have no story about a given company today; pick a company with matches for the demo.
 - **Source:** old 13
 
-## 21 · Text from a web page is data, even when it sounds like an instruction.
+## 19 · Text from a web page is data, even when it sounds like an instruction.
 - **Eyebrow:** Keep the two apart
 - **Visible:** Instructions come from your app · Page text: "Ignore your rules…" · Show it as text, never follow it.
 - **Notes (2 min):** Point to the made-up teaser in the sample feed and ask who wrote it. The app received it from outside, so it can't tell the app or the chatbot what to do. Show it as plain text or leave it out. The tests prove it changes nothing.
 - **Source:** old 15
 
-## 22 · The sample page helps you prove the scraper works.
+## 20 · The sample page helps you prove the scraper works.
 - **Eyebrow:** Four checks before you finish
 - **Visible:** Four groups of offline checks: Sample rows found · No matches is a valid result · Block or check page → keep the last good results · Wrong page or missing fields → failed refresh
 - **Actions:** The prompt · stage 6 ↗ · Download sample page ↓
 - **Notes (3 min):** These are groups, not the full list; the handout and prompt stage 6 have every check: the three sample rows, no matches, changed layout or missing fields, a 403 or 429, a 200 that is really a "Just a moment…" page, duplicate refresh, keeping the saved results, one company's panel, and the teaser that tries to give orders. All run offline. Passing them shows the app handles these cases; it doesn't prove a live site will keep working.
 - **Source:** old 16; slide 10
 
-## 23 · The search-page comparison and the Wiki page are optional extras.
+## 21 · The search-page comparison and the Wiki page are optional extras.
 - **Eyebrow:** If you finish early
 - **Visual:** two cards.
 - **Visible:**
@@ -211,14 +182,14 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 - **Notes (2 min):** Both are optional. Stage 4 shows why the feed was the cheaper door: the search page has fuzzy times, ads and repeated links. It uses a saved copy, or one approved live request. Stage 5 has its own approval step. Stage 5 gives the chatbot a labelled news page it can cite, kept apart from the official Wiki pages. Sample rows never go into the real Wiki.
 - **Source:** prompt stages 4–5 (plan §10.1 gap 7)
 
-## 24 · In the lab, you build the scraper and news panel first.
+## 22 · In the lab, you build the scraper and news panel first.
 - **Eyebrow:** Practice · 60 minutes
 - **Visible:** 00–10 Plan · 10–30 Read the feed (or sample) · 30–50 Build the panel · 50–60 Show the checks
 - **Actions:** Open the prompt ↗ · Setup help ↗
 - **Notes (1 min):** Start with the plan. Read the facilitator-approved feed, or the sample if offline. Wire the results into the news panel, then use the last ten minutes for checks. Extras only if time allows.
 - **Source:** old 17
 
-## 25 · You finish by showing what works and what you couldn't verify.
+## 23 · You finish by showing what works and what you couldn't verify.
 - **Eyebrow:** Finish check
 - **Visible:** Scraper: show the rows · News panel: show one company · Checks: passed, failed, blocked, not run · Live feed: used, skipped or blocked · Next → sign-in, roles and audit trail
 - **Actions:** The prompt · finish check ↗
@@ -229,8 +200,7 @@ Budgets (AGENTS.md): ≤40 visible words per slide and per reveal step; ≤60 on
 
 ## Placeholders and things to verify before class
 - Feeds, robots.txt and screenshots: one request each on 19 Nov 2026; site terms not reviewed.
-- Slide 17's headline is a real 19 Nov item; it will be old news by class day.
-- Fleet numbers (slides 7, 14) are a 19 Nov snapshot of `~/news_api` settings and git history (35 repair commits counted from 20 Oct 00:00 to 19 Nov 2026).
+- Slide 16's headline is a real 19 Nov item; it will be old news by class day.
 - Tempo and Bisnis.com cases are past observations from `~/news_api` configs, not reproduced on 19 Nov.
 - Proxy cost bands, the headless/headed test, and the residential-network findings: 2026 scraping-guide snapshot.
 - Slides 10, 13 (check page) and 20 contain mock content, labelled Illustration.
