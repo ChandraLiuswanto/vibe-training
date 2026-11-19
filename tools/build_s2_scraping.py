@@ -15,7 +15,9 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from s2_deck_shell import DECK, esc, join, split  # noqa: E402
 
-TOTAL = 20
+from s2_round2 import build as build_round2, CSS as ROUND2_CSS
+
+TOTAL = 25
 
 # ---------------------------------------------------------------- helpers
 
@@ -329,7 +331,7 @@ S.append(dict(
     notes='Everyone shows the scraper\'s rows and the news panel for one company. Each person says which checks ran, which were skipped, and whether they used the live feed or the sample. Session 3 adds sign-in, roles and an audit trail. (1 min)',
 ))
 
-assert len(S) == TOTAL, len(S)
+S = build_round2(S, step, btn_prompt)
 
 # ---------------------------------------------------------------- prompt
 
@@ -616,7 +618,7 @@ def main():
                      ('SAMPLE: Training project starts', 'SAMPLE: BBCA training project starts')]:
         data['sample'] = data['sample'].replace(old, new)
     sections = ''.join(section(i, s) for i, s in enumerate(S))
-    out = join(src, sections=sections, data=data, print_html=PRINT_HTML, extra_css=CSS, runtime_patch=RUNTIME)
+    out = join(src, sections=sections, data=data, print_html=PRINT_HTML, extra_css=CSS + ROUND2_CSS, runtime_patch=RUNTIME)
     if out != src:
         open(DECK, 'w', encoding='utf-8').write(out)
     print('slides', len(S), 'minutes', sum(s['minutes'] for s in S), 'bytes', len(out), 'changed', out != src)

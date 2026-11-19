@@ -157,7 +157,7 @@ Owner review of round 1: "still missing a lot of parts". Owner chose **fix all**
 
 | # | Gap in round 1 | Fix |
 |---|---|---|
-| 1 | Ladder wrong vs the skill: "Proxy" at rung 5, AI extraction missing | Skill's ladder: feed/API → data inside page → plain request → browser → AI reads messy pages → paid service. Proxies move to the "when blocked" chunk as a fix, not a rung |
+| 1 | Ladder wrong vs the skill: "Proxy" at rung 5, AI extraction missing | Skill's ladder: feed/API → data inside page → plain request → browser → AI reads messy pages → paid service. Proxies are explained as network intermediaries, not a way to continue after a block |
 | 2 | `~/news_api` real cases only in notes | Visible dated callouts on slides 11–13 and a fleet slide (14) |
 | 3 | Rungs 2, 3, 6 never explained | Slide 6 covers 1–3 with real captures; slide 7 covers 5–6 |
 | 4 | No silent-failure visual | New slide 10: a 200 that is a challenge page, empty list, login wall or stale copy |
@@ -196,7 +196,7 @@ Owner review of round 1: "still missing a lot of parts". Owner chose **fix all**
 | 24 | In the lab, you build the scraper and news panel first. | 1 | timeline |
 | 25 | You finish by showing what works and what you couldn't verify. | 1 | finish check |
 
-Total 57 min.
+Total 56 min in the reviewed copy.
 
 ### 10.3 Moving diagrams
 - Inline SVG, one request "packet" travelling along a path (CSS `offset-path`, the mechanism the old deck used). Starts when the slide becomes active; plays a few times, then rests in its final state so the slide is readable when still.
