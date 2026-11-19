@@ -1,8 +1,8 @@
 # Day 4 · Session 2 — web-scraping deck rebuild (design + plan)
 
-Status: approved by owner 2026-11-19 (approach, outline, sources). Copy deck still needs owner review (Task 1 gate).
-Target: `decks/session-2-web-scraping-visual.html` (rewrite in place; merged in PR #9).
-Branch: `day4-s2-scraping-rebuild` (create from `main`).
+Status: round 1 shipped to `main` 2026-11-19 (`f9e2a23`, 20 slides). **Round 2 approved 2026-11-19, see §10**; it supersedes §5 and §8 where they differ.
+Target: `decks/session-2-web-scraping-visual.html` (rewrite in place).
+Branch: work on `main` and push to `origin/main` (owner: no PR).
 
 ## 1. Why
 
@@ -13,7 +13,7 @@ After the session a participant can tell what "use residential proxies" or "solv
 ## 2. Goals, non-goals, anti-goals
 
 - **Goals:** one connected story built on the web-scraping skill's "cheapest door first" ladder; status codes as "how you know you hit a wall" (a 200 can still be wrong); the four things a site checks; headless vs headed; the four proxy types; CAPTCHA and challenge pages; a lab that reads a real feed.
-- **Non-goals:** handouts; the stale Day 4 tools and docs left by PR #9; scraping a page behind a login; full article text.
+- **Non-goals:** the session-3 and VPS handouts; the stale Day 4 tools and docs left by PR #9; scraping a page behind a login; full article text.
 - **Anti-goals:** the deck reads as a how-to for getting past blocks; prices, vendors or pass rates shown as current facts on slides; the "check the rules, stop when blocked" rule weakened.
 
 ## 3. Decisions (owner)
@@ -148,3 +148,77 @@ Prompt check: dry-run stage 2 against the default feed once (one request) and ag
 ## 9. Open
 - No extra "Diagnose the scraper" exercise (owner skipped it 2026-11-19); the two quick checks on slides 7 and 12 stay.
 - Session 3 handout and the stale Day 4 tools still use the old numbering (out of scope here).
+
+## 10. Round 2 (owner approved 2026-11-19)
+
+Owner review of round 1: "still missing a lot of parts". Owner chose **fix all** of the gaps below, approved the 25-slide outline, and asked for better visuals: **moving diagrams** and **real screenshots**. Handout: **overwrite** `handouts/session-2-participant-sheet.html` (leave session-3 / VPS sheets alone).
+
+### 10.1 Gaps fixed
+
+| # | Gap in round 1 | Fix |
+|---|---|---|
+| 1 | Ladder wrong vs the skill: "Proxy" at rung 5, AI extraction missing | Skill's ladder: feed/API → data inside page → plain request → browser → AI reads messy pages → paid service. Proxies move to the "when blocked" chunk as a fix, not a rung |
+| 2 | `~/news_api` real cases only in notes | Visible dated callouts on slides 11–13 and a fleet slide (14) |
+| 3 | Rungs 2, 3, 6 never explained | Slide 6 covers 1–3 with real captures; slide 7 covers 5–6 |
+| 4 | No silent-failure visual | New slide 10: a 200 that is a challenge page, empty list, login wall or stale copy |
+| 5 | Static boxes; old deck had moving SVG flows | Moving request diagrams (see 10.3) and real screenshots (10.4) |
+| 6 | Seven talking slides, one check, no recap | Agenda (2), recap with a 3-scenario check before the lab (16) |
+| 7 | Prompt stages 4–5 had no slide; no stage-2 button | Slide 23 (extras); stage-2 button on slide 17 |
+| 8 | Handout still access control | New session-2 participant sheet for the scraping lab |
+
+### 10.2 Outline (supersedes §5)
+
+| # | Title | Min | Visual |
+|---|---|---|---|
+| 1 | Your watchlist can show company news. | 2 | app mock |
+| 2 | Today: how scraping works, then you build the news panel. | 1 | agenda: 3 chunks + lab |
+| 3 | A useful result shows a headline, a date and a source. | 2 | three fields |
+| 4 | A web page is built for people; a scraper picks out the few details your app needs. | 2 | moving: page → scraper → 3 fields |
+| 5 | Scrapers try the cheapest way to the data first. | 3 | ladder, 6 rungs, builds one per click; cost arrow |
+| 6 | The data is often already in a feed or behind the page. | 3 | real captures: CNBC RSS, Infobanknews WordPress JSON, JSON-LD in CNBC page source |
+| 7 | AI writes the scraper; plain code reads the pages. | 3 | moving: page → AI (once) → rules → code reads every page; repair-agent fact; paid-service rule |
+| 8 | A site checks four things before it trusts a visitor. | 2 | moving: request passes four gates |
+| 9 | The site's reply code tells you what happened. | 2 | moving: request → site → 200 / 429 / 403 |
+| 10 | A 200 reply can still be a failure. | 3 | four mock replies (challenge, empty, login, stale), labelled Illustration |
+| 11 | A hidden browser is easy to spot; a visible one gets further. | 2 | headless vs headed side by side; Tempo dated callout |
+| 12 | A proxy changes where your request seems to come from. | 3 | moving: you → proxy → site; table; Antara regionals callout |
+| 13 | A CAPTCHA asks the visitor to prove it is human. | 2 | real reCAPTCHA demo capture + "Just a moment…" Illustration; Bisnis.com dated callout |
+| 14 | Our own scraper shows how often sites push back. | 2 | fleet bar: 454 live sites, 122 need a browser, proxy or solver |
+| 15 | Knowing these tools is not permission: we check the rules and stop when blocked. | 3 | three checks + quiz |
+| 16 | Before you build: cheapest door first, read what came back, stop when blocked. | 3 | recap + 3 scenarios, answers revealed per click |
+| 17 | One feed item shows what to keep. | 3 | real RSS item mapped to fields; stage 2 button |
+| 18 | Saved results feed the panel, and Refresh is the only fetch. | 2 | moving: feed → saved → panel; refresh fail path |
+| 19 | The agent proposes the work, and you approve each change. | 2 | 3 steps |
+| 20 | The dashboard shows mentions for one company at a time. | 2 | dashboard mock |
+| 21 | Text from a web page is data, even when it sounds like an instruction. | 2 | two columns |
+| 22 | The sample page helps you prove the scraper works. | 3 | four checks |
+| 23 | Extras: compare the search page, then add news to the Wiki. | 2 | stage 4 and 5 cards with buttons |
+| 24 | In the lab, you build the scraper and news panel first. | 1 | timeline |
+| 25 | You finish by showing what works and what you couldn't verify. | 1 | finish check |
+
+Total 57 min.
+
+### 10.3 Moving diagrams
+- Inline SVG, one request "packet" travelling along a path (CSS `offset-path`, the mechanism the old deck used). Starts when the slide becomes active; plays a few times, then rests in its final state so the slide is readable when still.
+- Meaning only: the packet is a request; red stop marks a block. No decorative motion.
+- `prefers-reduced-motion` and print: no motion, final state shown.
+- Swiss Modern tokens only.
+
+### 10.4 Real screenshots
+- Captured 2026-11-19, one page load each with `FinancialAppTraining/1.0 (classroom training exercise)`, cropped and embedded as base64 (no external requests). Each carries a "Captured 19 Nov 2026 · source" label.
+- Usable: CNBC Market RSS, Infobanknews WordPress JSON, JSON-LD in the CNBC Market page source, Google's public reCAPTCHA demo.
+- Not reproducible today: Bisnis.com showed no challenge and Tempo's index returned the same page headless and headed (one load each, no retries). Those stay as dated callouts from `~/news_api` configs ("Sept/Nov 2026, our scraper saw…"), never as current facts; the "Just a moment…" page is a labelled Illustration.
+- Keep the deck size reasonable: JPEG/PNG crops, target < 1.2 MB total.
+
+### 10.5 Tasks (round 2)
+1. Copy deck update: rewrite `docs/copy/day4-s2-web-scraping.md` for the 25-slide outline (same rules as Task 1; clarity + writing-like-a-human). Fix round-1 notes that state the Tempo case as current.
+2. Captures: crop the four screenshots, plus a JSON-LD source view; save under `.scratch/`, embed via the build script.
+3. Build: extend `tools/build_s2_scraping.py` (slides, moving-diagram helper, image embedding, new CSS). Keep the round-trip shell and runtime patches.
+4. Check: update `tools/s2-scraping-check.mjs` for 25 slides, the copy deck titles, image labels, reduced-motion final state, deck size, and slide 16's per-click answers.
+5. Look at every click state at 1920 and 1280; fix what the check can't see.
+6. Handout: rewrite `handouts/session-2-participant-sheet.html` (two A4 pages, same frame as the other sheets): page 1 the six prompt stages with "what you approve / good result / call the facilitator if"; page 2 the approved feeds, the stop rules (403, 429, CAPTCHA, challenge-as-200), and the four tests.
+7. Refresh `.review/day4-text/s2-web-scraping.md`; update the README row for decks and handouts that PR #9 left stale for Session 2 only.
+8. Commit on `main`, push to `origin/main`, Taildrop the deck and handout to `oppo-reno15-5g`.
+
+### 10.6 Placeholders to report
+Screenshots age (dated labels); fleet numbers are a 2026-11-19 snapshot of `~/news_api` configs; Tempo/Bisnis.com cases are past observations not reproduced today; proxy cost bands and the headless test are the 2026 guide's snapshot; prompt not rehearsed end to end.
